@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eccbe4f8732e437d95fa9493c2dce081, type: 3}
+  m_Name: CharacterSpriteResource
+  m_EditorClassIdentifier: 
+  Left:
+  - {fileID: -1459763828, guid: 6a8ef10d03de23940897450655bd06d7, type: 3}
+  - {fileID: 1785922876, guid: 6a8ef10d03de23940897450655bd06d7, type: 3}
+  - {fileID: -2020238156, guid: 6a8ef10d03de23940897450655bd06d7, type: 3}
+  Right:
+  - {fileID: -145645798, guid: 6a8ef10d03de23940897450655bd06d7, type: 3}
+  - {fileID: -1808079782, guid: 6a8ef10d03de23940897450655bd06d7, type: 3}
+  - {fileID: 1779047002, guid: 6a8ef10d03de23940897450655bd06d7, type: 3}
+  Up:
+  - {fileID: 888089462, guid: 6a8ef10d03de23940897450655bd06d7, type: 3}
+  - {fileID: 1166028299, guid: 6a8ef10d03de23940897450655bd06d7, type: 3}
+  - {fileID: -2123870898, guid: 6a8ef10d03de23940897450655bd06d7, type: 3}
+  Down:
+  - {fileID: 2112290218, guid: 6a8ef10d03de23940897450655bd06d7, type: 3}
+  - {fileID: -2114835242, guid: 6a8ef10d03de23940897450655bd06d7, type: 3}
+  - {fileID: 918497168, guid: 6a8ef10d03de23940897450655bd06d7, type: 3}

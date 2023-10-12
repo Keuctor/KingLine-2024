@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "SP6qU2Mjft/cV+OfTf/k5SQzSxvjENsnygBdZ67InhKRhqPthcMGTghdWhAaZ1ztmPCGAkvSWmfUSPyI8Gsdwg==",
+  "success": true,
+  "projectFilePath": "D:\\KingLineServer\\KingLineServer\\KingLineServer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Hector\\.nuget\\packages\\litenetlib\\1.1.0\\litenetlib.1.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}

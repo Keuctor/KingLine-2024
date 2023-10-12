@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10783edbf49458cb7c14c64b1d8e6c1, type: 3}
+  m_Name: StructureList
+  m_EditorClassIdentifier: 
+  Structures:
+  - Id: 0
+    Name: Stone Mine
+    Description: You can mine stone here
+    EnterDescription: Welcome to the Stone Mine.
+    Icon: {fileID: 21300000, guid: fada21f61a120244ab6cff11a187b680, type: 3}
+    DefaultOptions: Mine,Talk to People,Visit Market,Pillage,Leave

@@ -1,0 +1,17 @@
+D:\KingLineServer\KingLineServer\bin\Debug\net6.0\KingLineServer.exe
+D:\KingLineServer\KingLineServer\bin\Debug\net6.0\KingLineServer.deps.json
+D:\KingLineServer\KingLineServer\bin\Debug\net6.0\KingLineServer.runtimeconfig.json
+D:\KingLineServer\KingLineServer\bin\Debug\net6.0\KingLineServer.dll
+D:\KingLineServer\KingLineServer\bin\Debug\net6.0\KingLineServer.pdb
+D:\KingLineServer\KingLineServer\bin\Debug\net6.0\LiteNetLib.dll
+D:\KingLineServer\KingLineServer\obj\Debug\net6.0\KingLineServer.csproj.AssemblyReference.cache
+D:\KingLineServer\KingLineServer\obj\Debug\net6.0\KingLineServer.GeneratedMSBuildEditorConfig.editorconfig
+D:\KingLineServer\KingLineServer\obj\Debug\net6.0\KingLineServer.AssemblyInfoInputs.cache
+D:\KingLineServer\KingLineServer\obj\Debug\net6.0\KingLineServer.AssemblyInfo.cs
+D:\KingLineServer\KingLineServer\obj\Debug\net6.0\KingLineServer.csproj.CoreCompileInputs.cache
+D:\KingLineServer\KingLineServer\obj\Debug\net6.0\KingLineServer.csproj.CopyComplete
+D:\KingLineServer\KingLineServer\obj\Debug\net6.0\KingLineServer.dll
+D:\KingLineServer\KingLineServer\obj\Debug\net6.0\refint\KingLineServer.dll
+D:\KingLineServer\KingLineServer\obj\Debug\net6.0\KingLineServer.pdb
+D:\KingLineServer\KingLineServer\obj\Debug\net6.0\KingLineServer.genruntimeconfig.cache
+D:\KingLineServer\KingLineServer\obj\Debug\net6.0\ref\KingLineServer.dll
