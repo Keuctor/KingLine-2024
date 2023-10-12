@@ -2,12 +2,47 @@
 using KingLineServer.Utils;
 using LiteNetLib;
 using LiteNetLib.Utils;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace KingLineServer
 {
+    class Time
+    {
+        public const int TARGET_FPS = 30;
+
+        private readonly Stopwatch stopwatch = new();
+        private ulong nextTickId = 0;
+
+        // The stopwatch time right now
+        public double Now => stopwatch.Elapsed.TotalSeconds;
+        // The stopwatch time at the beginning of this tick
+        public double TickTime { get; private set; }
+        // The ID of the current tick
+        public ulong TickId { get; private set; }
+
+        public void Start()
+        {
+            stopwatch.Start();
+        }
+
+        public bool ShouldTick()
+        {
+            bool shouldTick = Now * TARGET_FPS > nextTickId;
+
+            if (shouldTick)
+            {
+                TickTime = Now;
+                TickId = nextTickId++;
+            }
+
+            return shouldTick;
+        }
+    }
+
     public class KingLineServer : INetEventListener
     {
         public Dictionary<NetPeer, Player> Players = new Dictionary<NetPeer, Player>();
@@ -61,38 +96,41 @@ namespace KingLineServer
 
         public void Run()
         {
-            new Thread(new ThreadStart(ConsoleInputThread)).Start();
             Cw.Log("KING LINE SERVER");
             server.Start(connectionData.Port);
             Cw.Log($"\tServer Started | Port : {connectionData.Port}\n\tVersion:{connectionData.Version}\n\tReady for clients!");
-            const int targetFps = 30;
-            double targetFrameTime = 1000.0 / targetFps;
-            while (true)
+            CancellationTokenSource cts = new();
+            Console.CancelKeyPress += (s, e) =>
             {
-                var frameStartTime = DateTime.Now;
+                cts.Cancel();
+                e.Cancel = true;
+            };
 
-                Update();
+            Time time = new();
 
-                var frameEndTime = DateTime.Now;
-                var frameElapsedTime = (frameEndTime - frameStartTime).TotalMilliseconds;
+            time.Start();
 
-                int sleepTime = (int)(targetFrameTime - frameElapsedTime);
-                if (sleepTime > 0)
+            OnStart();
+            while (!cts.IsCancellationRequested)
+            {
+                while (time.ShouldTick())
                 {
-                    Thread.Sleep(sleepTime);
+                    OnUpdate();
                 }
-                else
-                {
-                    Cw.Log($"Can't keep up for {targetFps}fps", ConsoleColor.Red);
-                }
+                Thread.Sleep(1);
             }
+            OnExit();
         }
-
-        private void Update()
+        private void OnStart() {
+            Cw.Log("\tOnStart...",ConsoleColor.Magenta);
+        }
+        private void OnExit() { 
+            Cw.Log("\tOn Exit...",ConsoleColor.Magenta);
+        }
+        private void OnUpdate()
         {
             server.PollEvents();
         }
-
         private void OnRequestPlayerMove(ReqPlayerMove request, NetPeer peer)
         {
             var target = Players[peer];
@@ -106,7 +144,6 @@ namespace KingLineServer
             };
             BroadcastPackage(packet);
         }
-
         public void BroadcastPackage<T>(T packet) where T : class, new()
         {
             foreach (var p in Players)
@@ -139,19 +176,6 @@ namespace KingLineServer
         }
 
         public bool ServerLoop = true;
-
-        private void ConsoleInputThread()
-        {
-            while (true)
-            {
-                if (Console.ReadLine() == "q")
-                {
-                    ServerLoop = false;
-                    break;
-                }
-            }
-        }
-
 
 
         public void OnPeerConnected(NetPeer peer)

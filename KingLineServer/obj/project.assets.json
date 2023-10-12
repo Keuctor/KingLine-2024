@@ -55,11 +55,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\KingLineServer\\KingLineServer\\KingLineServer.csproj",
+      "projectUniqueName": "D:\\KingLineServer\\KingLine-Libgdx\\KingLineServer\\KingLineServer.csproj",
       "projectName": "KingLineServer",
-      "projectPath": "D:\\KingLineServer\\KingLineServer\\KingLineServer.csproj",
+      "projectPath": "D:\\KingLineServer\\KingLine-Libgdx\\KingLineServer\\KingLineServer.csproj",
       "packagesPath": "C:\\Users\\Hector\\.nuget\\packages\\",
-      "outputPath": "D:\\KingLineServer\\KingLineServer\\obj\\",
+      "outputPath": "D:\\KingLineServer\\KingLine-Libgdx\\KingLineServer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Hector\\AppData\\Roaming\\NuGet\\NuGet.Config",
