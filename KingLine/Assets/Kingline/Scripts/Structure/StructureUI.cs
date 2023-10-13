@@ -3,6 +3,7 @@ using Kingline.Scripts.Structure;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class StructureUI : MonoBehaviour
@@ -48,5 +49,9 @@ public class StructureUI : MonoBehaviour
     {
         OnResult?.Invoke(id);
         Debug.Log("clicked:" + id);
+        if (id == 0)
+        {
+            SceneManager.LoadScene("Mine", LoadSceneMode.Single);
+        }
     }
 }

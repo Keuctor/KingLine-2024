@@ -123,3 +123,18 @@ public class ResPlayerMove
     public float y { get; set; }
     public float x { get; set; }
 }
+public partial class ItemStack : INetSerializable
+{
+    public int Id { get; set; }
+    public short Count { get; set; }
+    public void Deserialize(NetDataReader reader)
+    {
+        Id = reader.GetInt();
+        Count = reader.GetShort();
+    }
+    public void Serialize(NetDataWriter writer)
+    {
+        writer.Put(Id);
+        writer.Put(Count);
+    }
+}

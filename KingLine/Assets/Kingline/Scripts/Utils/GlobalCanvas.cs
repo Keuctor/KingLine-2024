@@ -1,24 +1,13 @@
 using TMPro;
 using UnityEngine;
 
-public class GlobalCanvas : MonoBehaviour
+public class GlobalCanvas : Singleton<GlobalCanvas>
 {
-    private static GlobalCanvas m_instance;
-
     [SerializeField]
     private TMP_Text m_latencyText;
 
     [SerializeField]
     private TMP_Text M_IdText;
-
-    public static GlobalCanvas Instance
-    {
-        get
-        {
-            m_instance = FindObjectOfType<GlobalCanvas>();
-            return m_instance;
-        }
-    }
 
     public void SetLatency(int latency)
     {

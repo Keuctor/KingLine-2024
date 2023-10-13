@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using LiteNetLib;
 using LiteNetLib.Utils;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class NetworkManager : MonoBehaviour, INetEventListener
 {
@@ -16,9 +17,12 @@ public class NetworkManager : MonoBehaviour, INetEventListener
     private ConnectionHandlerUI m_connectionHandlerUI;
 
     private NetManager m_client;
-    private bool m_connectionFirstHeartBeatReceived;
+    [NonSerialized]
+    public bool Connected;
 
     private ConnectionHandlerUI m_connectionHandlerUIInstance;
+    
+    
 
     private bool m_isServerStarted;
 
@@ -28,29 +32,46 @@ public class NetworkManager : MonoBehaviour, INetEventListener
     public Action OnDisconnectedFromServer;
 
     public NetPeer Server;
+    
 
     private readonly NetDataWriter writer = new();
 
     public NetPacketProcessor NetPacketProcessor { get; } = new();
 
 
-    private void Awake()
+    public static NetworkManager Instance;
+
+    public void OnEnable()
     {
-        CreateConnectionUI();
-        InitializeNetPacketProcessor();
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            CreateConnectionUI();
+            InitializeNetPacketProcessor();
+        }
     }
+
+    private void OnDisable()
+    {
+        if (Instance == this)
+        {
+            if (m_isServerStarted) m_client.Stop();
+        }
+    }
+
 
     private void FixedUpdate()
     {
         if (m_isServerStarted)
             m_client.PollEvents();
     }
-
-    private void OnDisable()
-    {
-        if (m_isServerStarted) m_client.Stop();
-    }
-
 
     public void OnPeerConnected(NetPeer peer)
     {
@@ -64,16 +85,16 @@ public class NetworkManager : MonoBehaviour, INetEventListener
     public void OnPeerDisconnected(NetPeer peer, DisconnectInfo disconnectInfo)
     {
         GlobalCanvas.Instance.SetLatency(-1);
-        Debug.Log(m_connectionFirstHeartBeatReceived);
+        Debug.Log(Connected);
 
-        if (m_connectionFirstHeartBeatReceived)
+        if (Connected)
             LoadingHandler.Instance.ShowLoading("Disconnected from server " + disconnectInfo.Reason);
         else
             LoadingHandler.Instance.ShowLoading($"Can't connect to server try again later: {disconnectInfo.Reason}");
 
         LoadingHandler.Instance.HideAfterSeconds(4f);
         m_isServerStarted = false;
-        m_connectionFirstHeartBeatReceived = false;
+        Connected = false;
         OnDisconnectedFromServer?.Invoke();
         Server = null;
         CreateConnectionUI();
@@ -102,7 +123,7 @@ public class NetworkManager : MonoBehaviour, INetEventListener
 
     public void OnNetworkLatencyUpdate(NetPeer peer, int latency)
     {
-        m_connectionFirstHeartBeatReceived = true;
+        Connected = true;
         GlobalCanvas.Instance.SetLatency(latency);
     }
 

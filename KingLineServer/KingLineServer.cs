@@ -43,10 +43,15 @@ namespace KingLineServer
         }
     }
 
+
+
+   
     public class KingLineServer : INetEventListener
     {
         public Dictionary<NetPeer, Player> Players = new Dictionary<NetPeer, Player>();
         public Dictionary<int, Structure> Structures = new Dictionary<int, Structure>();
+
+        public Dictionary<string, ItemStack[]> PlayerItems = new Dictionary<string, ItemStack[]>();
 
         static ConnectionData connectionData = new ConnectionData();
         private readonly NetPacketProcessor _netPacketProcessor = new NetPacketProcessor();

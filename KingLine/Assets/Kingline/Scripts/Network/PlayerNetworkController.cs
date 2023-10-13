@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Cinemachine;
 using Kingline.Scripts.Utils;
@@ -30,22 +31,41 @@ public class PlayerNetworkController : NetworkController
 
     private bool m_islocalPlayerMoving = false;
 
-    private void Start()
+    public override void SubscribeResponse()
     {
-        m_networkManager.NetPacketProcessor
+        NetworkManager.Instance.NetPacketProcessor
             .SubscribeReusable<ResPlayers>(OnPlayersResponse);
 
-        m_networkManager.NetPacketProcessor
+        NetworkManager.Instance.NetPacketProcessor
             .SubscribeReusable<ResPlayerPosition>(OnUpdatePlayerPositionResponse);
 
-        m_networkManager.NetPacketProcessor
+        NetworkManager.Instance.NetPacketProcessor
             .SubscribeReusable<ResPlayerMove>(OnPlayerTargetChangeResponse);
 
-        m_networkManager.NetPacketProcessor
+        NetworkManager.Instance.NetPacketProcessor
             .SubscribeReusable<ResPlayerJoin>(OnPlayerJoinedResponse);
 
-        m_networkManager.NetPacketProcessor
+        NetworkManager.Instance.NetPacketProcessor
             .SubscribeReusable<ResPlayerLeave>(OnPlayerLeaveResponse);
+    }
+
+    public override void HandleRequest()
+    {
+        NetworkManager.Instance.Send(new ReqPlayers());
+    }
+
+    public override void UnSubscribeResponse()
+    {
+        NetworkManager.Instance.NetPacketProcessor
+            .RemoveSubscription<ResPlayers>();
+        NetworkManager.Instance.NetPacketProcessor
+            .RemoveSubscription<ResPlayerPosition>();
+        NetworkManager.Instance.NetPacketProcessor
+            .RemoveSubscription<ResPlayerMove>();
+        NetworkManager.Instance.NetPacketProcessor
+            .RemoveSubscription<ResPlayerJoin>();
+        NetworkManager.Instance.NetPacketProcessor
+            .RemoveSubscription<ResPlayerLeave>();
     }
 
     private void Update()
@@ -174,17 +194,6 @@ public class PlayerNetworkController : NetworkController
         if (IsLocalPlayerMoved()) ClientSendPositionUpdate();
     }
 
-    private void OnDestroy()
-    {
-        m_networkManager.OnConnectedToServer -= OnConnectedToServer;
-        m_networkManager.OnDisconnectedFromServer -= OnDisconnectedFromServer;
-    }
-
-    public override void OnConnectedToServer()
-    {
-        m_networkManager.Send(new ReqPlayers());
-    }
-
     private void CreatePlayer(Player player)
     {
         var p = Instantiate(m_playerPrefab);
@@ -214,7 +223,13 @@ public class PlayerNetworkController : NetworkController
                || Mathf.Abs(m_localPlayer.y - position.y) >= MoveTreshold;
     }
 
+
     public override void OnDisconnectedFromServer()
+    {
+        ClearPlayers();
+    }
+
+    private void ClearPlayers()
     {
         foreach (var p in Players)
             Destroy(p.Value.Transform.gameObject);
@@ -229,7 +244,7 @@ public class PlayerNetworkController : NetworkController
             x = m_localPlayer.Transform.position.x,
             y = m_localPlayer.Transform.position.y
         };
-        m_networkManager.Send(positionUpdate);
+        NetworkManager.Instance.Send(positionUpdate);
     }
 
     private void ClientSendTargetPosition(Vector2 mousePosition)
@@ -242,7 +257,7 @@ public class PlayerNetworkController : NetworkController
             x = m_localPlayer.targetX,
             y = m_localPlayer.targetY
         };
-        m_networkManager.Send(moveUpdate);
+        NetworkManager.Instance.Send(moveUpdate);
     }
 
     #region EDITOR

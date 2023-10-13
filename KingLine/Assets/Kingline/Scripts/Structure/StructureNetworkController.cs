@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Kingline.Scripts.Structure;
 using UnityEngine;
@@ -13,29 +14,34 @@ public class StructureNetworkController : NetworkController
 
     private readonly List<StructureBehaviour> m_structureInstances = new();
 
+    private Structure[] m_structures = Array.Empty<Structure>();
+
     [SerializeField]
     private StructureUI m_structureUITemplate;
 
     private StructureUI m_structureUIInstance;
 
-    private static StructureNetworkController m_instance;
-
-    public static StructureNetworkController Instance
+    /// <summary>
+    /// TODO: fix later
+    /// </summary>
+    public static StructureNetworkController Instance => FindObjectOfType<StructureNetworkController>();
+ 
+ 
+    public override void SubscribeResponse()
     {
-        get
-        {
-            if (m_instance == null)
-            {
-                m_instance = FindObjectOfType<StructureNetworkController>();
-            }
-            return m_instance;
-        }
+        NetworkManager.Instance.NetPacketProcessor
+            .SubscribeReusable<ResStructures>(OnStructuresResponse);
     }
 
-    private void Start()
+    public override void HandleRequest()
     {
-        m_networkManager.NetPacketProcessor
-            .SubscribeReusable<ResStructures>(OnStructuresResponse);
+        NetworkManager.Instance.Send(new ReqStructures());
+    }
+
+    public override void UnSubscribeResponse()
+    {
+        NetworkManager.Instance.NetPacketProcessor
+            .RemoveSubscription<ResStructures>();
     }
 
     public void ShowStructureUI(int structureId)
@@ -63,7 +69,13 @@ public class StructureNetworkController : NetworkController
 
     private void OnStructuresResponse(ResStructures obj)
     {
-        foreach (var structure in obj.Structures)
+        m_structures = obj.Structures;
+        CreateStructures();
+    }
+
+    private void CreateStructures()
+    {
+        foreach (var structure in m_structures)
             CreateStructure(structure);
 
         LoadingHandler.Instance.ShowLoading("Completed...");
@@ -85,15 +97,14 @@ public class StructureNetworkController : NetworkController
         m_structureInstances.Add(structureBehaviour);
     }
 
-    public override void OnConnectedToServer()
-    {
-        LoadingHandler.Instance.ShowLoading("Loading structures...");
-        m_networkManager.Send(new ReqStructures());
-    }
-
     public override void OnDisconnectedFromServer()
+    {
+        ClearStructureObjects();
+    }
+    private void ClearStructureObjects()
     {
         foreach (var v in m_structureInstances)
             Destroy(v.gameObject);
+        m_structureInstances.Clear();
     }
 }

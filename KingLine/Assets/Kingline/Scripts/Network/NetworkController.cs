@@ -1,24 +1,32 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class NetworkController : MonoBehaviour
 {
-    [SerializeField]
-    protected NetworkManager m_networkManager;
 
-    private void OnEnable()
+    public void OnEnable()
     {
-        m_networkManager.OnConnectedToServer += OnConnectedToServer;
-        m_networkManager.OnDisconnectedFromServer += OnDisconnectedFromServer;
+        SubscribeResponse();
+        NetworkManager.Instance.OnConnectedToServer += OnConnectedToServer;
+        NetworkManager.Instance.OnDisconnectedFromServer += OnDisconnectedFromServer;
+        if (NetworkManager.Instance.Connected)
+        {
+            HandleRequest();
+        }
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
-        m_networkManager.OnConnectedToServer -= OnConnectedToServer;
-        m_networkManager.OnDisconnectedFromServer -= OnDisconnectedFromServer;
+        UnSubscribeResponse();
+        NetworkManager.Instance.OnConnectedToServer -= OnConnectedToServer;
+        NetworkManager.Instance.OnDisconnectedFromServer -= OnDisconnectedFromServer;
     }
 
+    public virtual void OnConnectedToServer()
+    {
+        HandleRequest();
+    }
+    public abstract void SubscribeResponse();
+    public abstract void HandleRequest();
+    public abstract void UnSubscribeResponse();
     public abstract void OnDisconnectedFromServer();
-
-    public abstract void OnConnectedToServer();
 }
