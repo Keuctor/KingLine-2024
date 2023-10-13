@@ -25,6 +25,7 @@ public abstract class NetworkController : MonoBehaviour
     {
         HandleRequest();
     }
+    
     public abstract void SubscribeResponse();
     public abstract void HandleRequest();
     public abstract void UnSubscribeResponse();

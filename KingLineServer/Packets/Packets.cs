@@ -55,7 +55,7 @@ public partial class Structure : INetSerializable
     }
 }
 
-public partial class ItemStack : INetSerializable
+public class ItemStack : INetSerializable
 {
     public int Id { get; set; }
     public short Count { get; set; }
@@ -80,6 +80,10 @@ public class ReqPlayers
 public class ReqStructures
 {
 
+}
+public class ReqInventory { }
+public class ResInventory { 
+    public ItemStack[] Items { get; set; }
 }
 
 public class ResPlayers

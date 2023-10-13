@@ -175,6 +175,7 @@ public class NetworkManager : MonoBehaviour, INetEventListener
     {
         NetPacketProcessor.RegisterNestedType(() => new Player());
         NetPacketProcessor.RegisterNestedType(() => new Structure());
+        NetPacketProcessor.RegisterNestedType(() => new ItemStack());
         NetPacketProcessor.SubscribeReusable<ResPeerId>(OnPeerIdReceived);
     }
 

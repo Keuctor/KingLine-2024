@@ -72,11 +72,33 @@ public partial class Structure : INetSerializable
     }
 }
 
+public partial class ItemStack : INetSerializable
+{
+    public int Id { get; set; }
+    public short Count { get; set; }
+    public void Deserialize(NetDataReader reader)
+    {
+        Id = reader.GetInt();
+        Count = reader.GetShort();
+    }
+    public void Serialize(NetDataWriter writer)
+    {
+        writer.Put(Id);
+        writer.Put(Count);
+    }
+}
+
+
 public class ReqPlayers
 {
 }
 public class ReqStructures
 {
+}
+public class ReqInventory { }
+
+public class ResInventory { 
+    public ItemStack[] Items { get; set; }
 }
 
 public class ResPlayers
@@ -122,19 +144,4 @@ public class ResPlayerMove
     public int Id { get; set; }
     public float y { get; set; }
     public float x { get; set; }
-}
-public partial class ItemStack : INetSerializable
-{
-    public int Id { get; set; }
-    public short Count { get; set; }
-    public void Deserialize(NetDataReader reader)
-    {
-        Id = reader.GetInt();
-        Count = reader.GetShort();
-    }
-    public void Serialize(NetDataWriter writer)
-    {
-        writer.Put(Id);
-        writer.Put(Count);
-    }
 }

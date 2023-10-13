@@ -45,7 +45,7 @@ namespace KingLineServer
 
 
 
-   
+
     public class KingLineServer : INetEventListener
     {
         public Dictionary<NetPeer, Player> Players = new Dictionary<NetPeer, Player>();
@@ -74,12 +74,41 @@ namespace KingLineServer
             {
                 return new Structure();
             });
+            _netPacketProcessor.RegisterNestedType(() =>
+            {
+                return new ItemStack();
+            });
+
             InitStructures();
             _netPacketProcessor.SubscribeReusable<ReqPlayers, NetPeer>(OnRequestPlayers);
             _netPacketProcessor.SubscribeReusable<ResPlayerPosition, NetPeer>(OnRequestPositionUpdate);
             _netPacketProcessor.SubscribeReusable<ReqPlayerMove, NetPeer>(OnRequestPlayerMove);
             _netPacketProcessor.SubscribeReusable<ReqStructures, NetPeer>(OnRequestStructures);
+            _netPacketProcessor.SubscribeReusable<ReqInventory, NetPeer>(OnRequestInventory);
             PackageSender.PacketProcessor = _netPacketProcessor;
+        }
+
+        private void OnRequestInventory(ReqInventory request, NetPeer peer)
+        {
+            var targetPlayer = Players[peer];
+
+            var response = new ResInventory();
+            if (PlayerItems.TryGetValue(targetPlayer.Name, out ItemStack[] items))
+            {
+                response.Items = items;
+            }
+            else
+            {
+                response.Items = new ItemStack[25];
+                for (int i = 0; i < 25; i++)
+                {
+                    response.Items[i]  = new ItemStack() { 
+                        Count =0,
+                        Id = -1,
+                    };
+                }
+            }
+            PackageSender.SendPacket(peer, response);
         }
 
         private void InitStructures()
@@ -126,11 +155,13 @@ namespace KingLineServer
             }
             OnExit();
         }
-        private void OnStart() {
-            Cw.Log("\tOnStart...",ConsoleColor.Magenta);
+        private void OnStart()
+        {
+            Cw.Log("\tOnStart...", ConsoleColor.Magenta);
         }
-        private void OnExit() { 
-            Cw.Log("\tOn Exit...",ConsoleColor.Magenta);
+        private void OnExit()
+        {
+            Cw.Log("\tOn Exit...", ConsoleColor.Magenta);
         }
         private void OnUpdate()
         {
