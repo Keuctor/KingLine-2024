@@ -55,7 +55,6 @@ public class PlayerNetworkController : NetworkController
 
     public override void UnSubscribeResponse()
     {
-        ClearPlayers();
         NetworkManager.Instance.NetPacketProcessor
             .RemoveSubscription<ResPlayers>();
         NetworkManager.Instance.NetPacketProcessor

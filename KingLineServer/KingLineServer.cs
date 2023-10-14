@@ -87,10 +87,14 @@ namespace KingLineServer
             _netPacketProcessor.SubscribeReusable<ReqInventory, NetPeer>(OnRequestInventory);
             _netPacketProcessor.SubscribeReusable<ReqInventoryMove, NetPeer>(OnRequestInventoryMove);
             _netPacketProcessor.SubscribeReusable<ReqMineStone, NetPeer>(OnRequestMineStone);
+            _netPacketProcessor.SubscribeReusable<ReqMineBone, NetPeer>(OnRequestMineBone);
             PackageSender.PacketProcessor = _netPacketProcessor;
         }
 
-    
+        private void OnRequestMineBone(ReqMineBone request, NetPeer peer)
+        {
+            InventoryAdd(peer, 1, 1);
+        }
 
         private void OnRequestInventoryMove(ReqInventoryMove request, NetPeer peer)
         {

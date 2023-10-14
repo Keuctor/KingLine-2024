@@ -16,3 +16,6 @@ MonoBehaviour:
   - Id: 0
     Icon: {fileID: 21300000, guid: 0455201803ec7274b874ce232e96dc16, type: 3}
     Name: Stone
+  - Id: 1
+    Icon: {fileID: 21300000, guid: 95c465bf9cd81954b82a9485adac0545, type: 3}
+    Name: Bone

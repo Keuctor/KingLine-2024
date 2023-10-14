@@ -99,6 +99,10 @@ public class MineGame : MonoBehaviour
         {
             NetworkManager.Instance.Send(new ReqMineStone());
         }
+        else if (m_mineType == MineType.BONE)
+        {
+            NetworkManager.Instance.Send(new ReqMineBone());
+        }
     }
 
     public IEnumerator SpawnAfterSeconds(float seconds)

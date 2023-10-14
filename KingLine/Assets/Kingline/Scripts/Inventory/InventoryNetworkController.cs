@@ -27,7 +27,7 @@ public class InventoryNetworkController : NetworkController
     public ItemsSO m_itemInfo;
 
     private static InventoryNetworkController m_controller;
-    
+
     [Header("Item Popup")]
     [SerializeField]
     private ItemPopupUI m_itemPopup;
@@ -151,16 +151,19 @@ public class InventoryNetworkController : NetworkController
                 }
             }
         }
-        
-        var popup = Instantiate(m_itemPopup,m_itemPopupContent);
+
+        var itemInfo = m_itemInfo.GetItem(response.Id);
+
+        var popup = Instantiate(m_itemPopup, m_itemPopupContent);
+        popup.Icon.sprite = itemInfo.Icon;
+        popup.CountText.text = "+" + response.Count;
         popup.CanvasGroup.alpha = 0;
         popup.RectTransform.anchoredPosition = new Vector2(0, 0);
         popup.RectTransform.DOAnchorPos(new Vector2(0, 200), 0.2f);
-        popup.CanvasGroup.DOFade(1, 0.2f);        
+        popup.CanvasGroup.DOFade(1, 0.2f);
         popup.RectTransform.DOAnchorPosY(400, 0.2f).SetDelay(1);
         popup.CanvasGroup.DOFade(0, 0.2f).SetDelay(1);
     }
-    
 
 
     public override void UnSubscribeResponse()

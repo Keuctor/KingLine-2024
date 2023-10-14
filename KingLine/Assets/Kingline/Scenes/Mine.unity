@@ -627,6 +627,8 @@ MonoBehaviour:
   m_minSpawnPosition: {x: -2, y: -3}
   m_maxSpawnPosition: {x: 9.5, y: 10}
   m_maxMineCount: 6
+  m_mineType: 0
+  m_loop: 1
 --- !u!4 &1062376633
 Transform:
   m_ObjectHideFlags: 0

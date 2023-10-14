@@ -165,3 +165,8 @@ public class ResInventoryAdd
 public class ReqMineStone { 
     
 }
+
+public class ReqMineBone
+{
+    
+}
