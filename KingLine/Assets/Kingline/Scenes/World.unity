@@ -1571,7 +1571,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2132535164}
         m_TargetAssemblyTypeName: NavigationUI, Assembly-CSharp
         m_MethodName: ShowInventory
         m_Mode: 1

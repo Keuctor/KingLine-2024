@@ -50,7 +50,6 @@
      <Compile Include="Assets\Kingline\Scripts\Menu\LoadingHandlerUI.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemStackView.cs" />
      <Compile Include="Assets\Kingline\Scripts\NavigationUI.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Inventory\InventoryUI.cs" />
      <Compile Include="Assets\Kingline\Scripts\Structure\StructureUI.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\NetworkController.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\PlayerNetworkController.cs" />
