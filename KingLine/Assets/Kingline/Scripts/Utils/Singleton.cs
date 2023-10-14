@@ -17,7 +17,7 @@ where T : Singleton<T>
         }
     }
 
-    public virtual void OnEnable()
+    public virtual void Awake()
     {
         if (m_instance !=null && m_instance!= this)
         {
@@ -28,10 +28,5 @@ where T : Singleton<T>
             m_instance = FindObjectOfType<T>();
             DontDestroyOnLoad(m_instance.gameObject);
         }
-    }
-    
-    public virtual void OnDisable()
-    {
-        
     }
 }

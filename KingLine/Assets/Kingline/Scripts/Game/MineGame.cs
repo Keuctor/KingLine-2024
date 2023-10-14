@@ -8,8 +8,15 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
+
 public class MineGame : MonoBehaviour
 {
+    public enum MineType
+    {
+        STONE,
+        BONE
+    }
+
     [SerializeField]
     private GameObject m_nodePrefab;
 
@@ -24,6 +31,11 @@ public class MineGame : MonoBehaviour
 
     private int m_currentCount = 0;
 
+    [SerializeField]
+    private MineType m_mineType;
+
+    [SerializeField]
+    private bool m_loop;
 
     private void Start()
     {
@@ -47,11 +59,11 @@ public class MineGame : MonoBehaviour
             nodeInstance.transform.localScale = Vector3.zero;
             nodeInstance.transform.DOScale(scale, 0.5f);
         }
-        
+
         nodeInstance.gameObject.SetActive(true);
         var node = nodeInstance.GetComponent<NodeBehaviour>();
         node.SetHealth(100);
-        
+
 
         node.OnClick.AddListener(() => { OnDamage(node); });
         node.OnDestroy.AddListener(OnNodeDestroyed);
@@ -81,8 +93,12 @@ public class MineGame : MonoBehaviour
     private void OnNodeDestroyed()
     {
         AudioManager.Instance.PlayOnce(SoundType.BREAKING_2, true, 0.5f);
-        StartCoroutine(SpawnAfterSeconds(Random.Range(2, 10f)));
-        NetworkManager.Instance.Send(new ReqMineStone());
+        if (m_loop)
+            StartCoroutine(SpawnAfterSeconds(Random.Range(2, 10f)));
+        if (m_mineType == MineType.STONE)
+        {
+            NetworkManager.Instance.Send(new ReqMineStone());
+        }
     }
 
     public IEnumerator SpawnAfterSeconds(float seconds)

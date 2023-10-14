@@ -49,6 +49,7 @@
      <Compile Include="Assets\Kingline\Scripts\Structure\StructureBehaviour.cs" />
      <Compile Include="Assets\Kingline\Scripts\Menu\LoadingHandlerUI.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemStackView.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Menu\GameCanvas.cs" />
      <Compile Include="Assets\Kingline\Scripts\NavigationUI.cs" />
      <Compile Include="Assets\Kingline\Scripts\Structure\StructureUI.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\NetworkController.cs" />

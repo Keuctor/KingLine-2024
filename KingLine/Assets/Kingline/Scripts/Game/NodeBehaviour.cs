@@ -2,6 +2,7 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
 public class NodeBehaviour : MonoBehaviour
@@ -29,14 +30,11 @@ public class NodeBehaviour : MonoBehaviour
 
     private int m_mineIndex;
 
-    public int Remap(int value, int from1, int to1, int from2, int to2)
-    {
-        return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
-    }
-
-
     private void OnMouseDown()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+        
         OnClick?.Invoke();
     }
 

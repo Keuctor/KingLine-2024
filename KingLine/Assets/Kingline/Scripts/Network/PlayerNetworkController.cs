@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Cinemachine;
 using Kingline.Scripts.Utils;
@@ -23,7 +22,7 @@ public class PlayerNetworkController : NetworkController
 
     private bool m_isCreatedPlayers;
 
-    private Player m_localPlayer;
+    public static Player m_localPlayer;
 
     private StructureInfoUI m_structureInfoUI;
 
@@ -56,6 +55,7 @@ public class PlayerNetworkController : NetworkController
 
     public override void UnSubscribeResponse()
     {
+        ClearPlayers();
         NetworkManager.Instance.NetPacketProcessor
             .RemoveSubscription<ResPlayers>();
         NetworkManager.Instance.NetPacketProcessor
@@ -226,11 +226,13 @@ public class PlayerNetworkController : NetworkController
 
     public override void OnDisconnectedFromServer()
     {
+        m_localPlayer = null;
         ClearPlayers();
     }
 
     private void ClearPlayers()
     {
+        m_localPlayer = null;
         foreach (var p in Players)
             Destroy(p.Value.Transform.gameObject);
         Players.Clear();

@@ -75,7 +75,6 @@ public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
                     FromIndex = (short)From,
                     ToIndex = (short)To
                 });
-                Debug.Log("C>" + From + ":" + To);
             }
         }
     }
