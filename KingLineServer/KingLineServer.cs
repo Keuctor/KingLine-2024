@@ -85,7 +85,48 @@ namespace KingLineServer
             _netPacketProcessor.SubscribeReusable<ReqPlayerMove, NetPeer>(OnRequestPlayerMove);
             _netPacketProcessor.SubscribeReusable<ReqStructures, NetPeer>(OnRequestStructures);
             _netPacketProcessor.SubscribeReusable<ReqInventory, NetPeer>(OnRequestInventory);
+            _netPacketProcessor.SubscribeReusable<ReqInventoryMove, NetPeer>(OnRequestInventoryMove);
+            _netPacketProcessor.SubscribeReusable<ReqMineStone, NetPeer>(OnRequestMineStone);
             PackageSender.PacketProcessor = _netPacketProcessor;
+        }
+
+    
+
+        private void OnRequestInventoryMove(ReqInventoryMove request, NetPeer peer)
+        {
+            var targetPlayer = Players[peer];
+            if (PlayerItems.TryGetValue(targetPlayer.Name, out ItemStack[] items))
+            {
+                var item = items[request.FromIndex];
+                if (item != null)
+                {
+                    if (item.Id != -1)
+                    {
+
+                        var to = items[request.ToIndex];
+                        if (to != null)
+                        {
+                            if (to.Id == -1)
+                            {
+                                items[request.ToIndex] = item;
+                                items[request.FromIndex] = new ItemStack()
+                                {
+                                    Count = 0,
+                                    Id = -1
+                                };
+                            }
+                        }
+                    }
+                }
+
+                PlayerItems[targetPlayer.Name] = items;
+                var response = new ResInventoryMove()
+                {
+                    ToIndex = request.ToIndex,
+                    FromIndex = request.FromIndex
+                };
+                PackageSender.SendPacket(peer, response);
+            }
         }
 
         private void OnRequestInventory(ReqInventory request, NetPeer peer)
@@ -102,13 +143,55 @@ namespace KingLineServer
                 response.Items = new ItemStack[25];
                 for (int i = 0; i < 25; i++)
                 {
-                    response.Items[i]  = new ItemStack() { 
-                        Count =0,
+                    response.Items[i] = new ItemStack()
+                    {
+                        Count = 0,
                         Id = -1,
                     };
                 }
+                PlayerItems.Add(targetPlayer.Name, response.Items);
             }
             PackageSender.SendPacket(peer, response);
+        }
+
+        public void InventoryAdd(NetPeer peer, int id, short count)
+        {
+            var player = Players[peer];
+            ItemStack[] items = PlayerItems[player.Name];
+
+            bool found = false;
+            for (var i = 0; i < items.Length; i++)
+            {
+                var item = items[i];
+                if (item.Id == id)
+                {
+                    item.Count += count;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+            {
+                for (var i = 0; i < items.Length; i++)
+                {
+                    if (items[i].Id == -1)
+                    {
+                        items[i].Id = id;
+                        items[i].Count = count;
+                        break;
+                    }
+                }
+            }
+            PlayerItems[player.Name] = items;
+            PackageSender.SendPacket(peer, new ResInventoryAdd()
+            {
+                Count = count,
+                Id = id
+            });
+        }
+        private void OnRequestMineStone(ReqMineStone request, NetPeer peer)
+        {
+            InventoryAdd(peer, 0, 1);
         }
 
         private void InitStructures()

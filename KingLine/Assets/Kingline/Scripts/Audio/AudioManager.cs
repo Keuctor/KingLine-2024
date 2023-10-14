@@ -33,8 +33,6 @@ public class AudioManager : Singleton<AudioManager>
     public void PlayOnce(SoundType soundType,bool randomPitch,float volume)
     {
         var clip = GetClip(soundType);
-
-
         var gm = new GameObject();
         DontDestroyOnLoad(gm);
         var sc = gm.AddComponent<AudioSource>();

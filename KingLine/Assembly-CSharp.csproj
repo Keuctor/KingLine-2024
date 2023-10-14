@@ -49,14 +49,17 @@
      <Compile Include="Assets\Kingline\Scripts\Structure\StructureBehaviour.cs" />
      <Compile Include="Assets\Kingline\Scripts\Menu\LoadingHandlerUI.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemStackView.cs" />
+     <Compile Include="Assets\Kingline\Scripts\NavigationUI.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\InventoryUI.cs" />
      <Compile Include="Assets\Kingline\Scripts\Structure\StructureUI.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\NetworkController.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\PlayerNetworkController.cs" />
      <Compile Include="Assets\Kingline\Scripts\SpriteAnimator.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Inventory\ItemsSO.cs" />
      <Compile Include="Assets\Kingline\Scripts\Utils\Singleton.cs" />
      <Compile Include="Assets\Kingline\Scripts\Game\NodeBehaviour.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\Packets.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Inventory\ItemStackContentView.cs" />
      <Compile Include="Assets\Kingline\Scripts\Utils\GlobalCanvas.cs" />
      <Compile Include="Assets\Kingline\Scripts\Menu\ConnectionHandlerUI.cs" />
      <Compile Include="Assets\Kingline\Scripts\Menu\StructureInfoUI.cs" />
@@ -68,6 +71,7 @@
      <Compile Include="Assets\Kingline\Scripts\Audio\AudioManager.cs" />
      <Compile Include="Assets\Kingline\Scripts\Game\MineGame.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\ConnectionDataSO.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Inventory\ItemPopupUI.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\InventoryNetworkController.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Kingline\Scenes" />
@@ -84,7 +88,9 @@
      <Folder Include="Assets\Kingline\Scripts\Network" />
      <Folder Include="Assets\Kingline\Scripts\Inventory" />
      <Folder Include="Assets\Kingline\Sprites\ArtworkCharacters" />
+     <Folder Include="Assets\Kingline\Prefab\Inventory" />
      <Folder Include="Assets\Kingline\Prefab" />
+     <Folder Include="Assets\Kingline\Resources\Inventory" />
      <Folder Include="Assets\Kingline\Scripts\Game" />
      <Folder Include="Assets\Kingline\Sprites\Icons" />
      <Folder Include="Assets\Kingline\Sprites\Game\Mine" />

@@ -2,8 +2,7 @@
 
 public abstract class NetworkController : MonoBehaviour
 {
-
-    public void OnEnable()
+    public void Start()
     {
         SubscribeResponse();
         NetworkManager.Instance.OnConnectedToServer += OnConnectedToServer;
@@ -14,7 +13,7 @@ public abstract class NetworkController : MonoBehaviour
         }
     }
 
-    public void OnDisable()
+    public void OnDestroy()
     {
         UnSubscribeResponse();
         NetworkManager.Instance.OnConnectedToServer -= OnConnectedToServer;

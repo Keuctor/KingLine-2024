@@ -1,80 +1,82 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class DragInfo
-{
-    public int Index;
-    public Transform ItemContent;
-}
 
-public class ItemStackView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler,
-    IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
+public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler,
+    IPointerExitHandler, IDropHandler
 {
+    public Transform Content;
+
     [SerializeField]
     private Image m_background;
 
-    private int m_index => transform.GetSiblingIndex() - 1;
-    private static ItemStackView m_selectedItemStackView;
-
-    [SerializeField]
-    private Image m_image;
-
-    [SerializeField]
-    private TMP_Text m_count;
-
-    [SerializeField]
-    private Transform m_content;
-
-    private static DragInfo m_dragInfo = new();
-
-    private Image m_dragItem;
+    public int Id;
+    public static int From;
     
+    public static int To;
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        m_dragInfo.Index = this.m_index;
-        m_dragInfo.ItemContent = this.m_content;
-        this.m_content.gameObject.SetActive(false);
-        if (m_dragItem == null)
-        {
-            m_dragItem =FindObjectOfType<InventoryNetworkController>().DragImage; 
-            m_dragItem.gameObject.SetActive(true);
-        }
-    }
+    public static ItemStackView _selectedItemView;
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        m_dragItem.transform.position = eventData.position;
-    }
+    public static Color SELECTED_BACKGROUND_COLOR = new Color(0.5f, 0.6f, 0.7f, 0.5f);
+    public static Color NOT_SELECTED_BACKGROUND_COLOR = new Color(0.4f, 0.4f, 0.4f, 1f);
+    public static Color POINTER_OVER_BACKGROUND_COLOR = new Color(0.5f, 0.5f, 0.5f, 1f);
+    public static Color POINTER_NOT_BACKGROUND_COLOR = new Color(0.4f, 0.4f, 0.5f, 1f);
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        m_dragInfo.ItemContent.gameObject.SetActive(true);
-        m_dragItem.gameObject.SetActive(false);
-    }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    void Start()
     {
-        if (m_selectedItemStackView != this)
-            m_background.color = new Color(1, 0.9f, 0.8f, 1);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (m_selectedItemStackView != this)
-            m_background.color = Color.white;
+        this.m_background.color = NOT_SELECTED_BACKGROUND_COLOR;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (m_selectedItemStackView != null)
+        if (_selectedItemView != null)
         {
-            m_selectedItemStackView.m_background.color = Color.white;
+            _selectedItemView.m_background.color = NOT_SELECTED_BACKGROUND_COLOR;
         }
 
-        m_selectedItemStackView = this;
-        m_background.color = new Color(1, 0.7f, 0.5f, 1);
+        _selectedItemView = this;
+        _selectedItemView.m_background.color = SELECTED_BACKGROUND_COLOR;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (_selectedItemView != this)
+        {
+            m_background.color = POINTER_OVER_BACKGROUND_COLOR;
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (_selectedItemView != this)
+        {
+            m_background.color = NOT_SELECTED_BACKGROUND_COLOR;
+        }
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        GameObject dropped = eventData.pointerDrag;
+        ItemStackContentView view = dropped.GetComponent<ItemStackContentView>();
+        if (view != null)
+        {
+            if (Content.childCount == 0)
+            {
+                view.ParentAfterDrag = transform;
+                ItemStackView.To = this.Id;
+                OnPointerDown(eventData);
+                NetworkManager.Instance.Send(new ReqInventoryMove()
+                {
+                    FromIndex = (short)From,
+                    ToIndex = (short)To
+                });
+                Debug.Log("C>" + From + ":" + To);
+            }
+        }
     }
 }

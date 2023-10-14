@@ -82,7 +82,8 @@ public class ReqStructures
 
 }
 public class ReqInventory { }
-public class ResInventory { 
+public class ResInventory
+{
     public ItemStack[] Items { get; set; }
 }
 
@@ -128,4 +129,25 @@ public class ResPlayerMove
     public int Id { get; set; }
     public float y { get; set; }
     public float x { get; set; }
+}
+
+public class ReqInventoryMove
+{
+    public short FromIndex { get; set; }
+    public short ToIndex { get; set; }
+}
+
+public class ResInventoryMove
+{
+    public short FromIndex { get; set; }
+    public short ToIndex { get; set; }
+}
+
+public class ResInventoryAdd
+{
+    public int Id { get; set; }
+    public short Count { get; set; }
+}
+public class ReqMineStone { 
+    
 }

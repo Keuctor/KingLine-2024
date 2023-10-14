@@ -82,6 +82,7 @@ public class MineGame : MonoBehaviour
     {
         AudioManager.Instance.PlayOnce(SoundType.BREAKING_2, true, 0.5f);
         StartCoroutine(SpawnAfterSeconds(Random.Range(2, 10f)));
+        NetworkManager.Instance.Send(new ReqMineStone());
     }
 
     public IEnumerator SpawnAfterSeconds(float seconds)
