@@ -117,6 +117,8 @@ public class InventoryNetworkController : NetworkController
 
     public override void SubscribeResponse()
     {
+        if (m_controller != this)
+            return;
         NetworkManager.Instance.NetPacketProcessor
             .SubscribeReusable<ResInventory>(OnInventoryResult);
         NetworkManager.Instance.NetPacketProcessor
@@ -125,6 +127,16 @@ public class InventoryNetworkController : NetworkController
             .SubscribeReusable<ResInventoryAdd>(OnInventoryAdd);
     }
 
+    
+    public override void UnSubscribeResponse()
+    {
+        if (m_controller != this)
+            return;
+        NetworkManager.Instance.NetPacketProcessor
+            .RemoveSubscription<ResInventory>();
+        NetworkManager.Instance.NetPacketProcessor
+            .RemoveSubscription<ResInventoryMove>();
+    }
     private void OnInventoryAdd(ResInventoryAdd response)
     {
         bool found = false;
@@ -163,16 +175,11 @@ public class InventoryNetworkController : NetworkController
         popup.CanvasGroup.DOFade(1, 0.2f);
         popup.RectTransform.DOAnchorPosY(400, 0.2f).SetDelay(1);
         popup.CanvasGroup.DOFade(0, 0.2f).SetDelay(1);
+        
+        Destroy(popup.gameObject,2f);
     }
 
 
-    public override void UnSubscribeResponse()
-    {
-        NetworkManager.Instance.NetPacketProcessor
-            .RemoveSubscription<ResInventory>();
-        NetworkManager.Instance.NetPacketProcessor
-            .RemoveSubscription<ResInventoryMove>();
-    }
 
     public override void OnDisconnectedFromServer()
     {

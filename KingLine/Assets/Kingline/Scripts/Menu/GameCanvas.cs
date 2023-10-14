@@ -28,7 +28,10 @@ public class GameCanvas : Singleton<GameCanvas>
     {
         if (PlayerNetworkController.m_localPlayer == null)
             return false;
-        
+
+        if (PlayerNetworkController.m_localPlayer.Transform == null)
+            return false;
+
         return Vector2.Distance(m_lastLookAroundPosition,
             PlayerNetworkController.m_localPlayer.Transform.position) >= 5;
     }
