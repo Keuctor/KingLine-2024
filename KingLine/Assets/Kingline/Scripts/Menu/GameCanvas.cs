@@ -26,14 +26,14 @@ public class GameCanvas : Singleton<GameCanvas>
 
     bool CanCheckAround()
     {
-        if (PlayerNetworkController.m_localPlayer == null)
+        if (PlayerMovementController.m_localPlayer == null)
             return false;
 
-        if (PlayerNetworkController.m_localPlayer.Transform == null)
+        if (PlayerMovementController.m_localPlayer.Transform == null)
             return false;
 
         return Vector2.Distance(m_lastLookAroundPosition,
-            PlayerNetworkController.m_localPlayer.Transform.position) >= 5;
+            PlayerMovementController.m_localPlayer.Transform.position) >= 5;
     }
 
     private void Update()
@@ -46,7 +46,7 @@ public class GameCanvas : Singleton<GameCanvas>
 
     public void LookAround()
     {
-        m_lastLookAroundPosition = PlayerNetworkController.m_localPlayer.Transform.position;
+        m_lastLookAroundPosition = PlayerMovementController.m_localPlayer.Transform.position;
         SceneManager.LoadScene("Around");
     }
 }

@@ -70,15 +70,18 @@
      <Compile Include="Assets\Kingline\Scripts\Utils\PrefabsSO.cs" />
      <Compile Include="Assets\Kingline\Scripts\Audio\AudioManager.cs" />
      <Compile Include="Assets\Kingline\Scripts\Game\MineGame.cs" />
+     <Compile Include="Assets\Kingline\Scripts\PlayerMovementController.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\ConnectionDataSO.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemPopupUI.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\InventoryNetworkController.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Kingline\Scenes" />
      <Folder Include="Assets\Kingline" />
+     <Folder Include="Assets\Kingline\Sprites\Game\Around" />
      <Folder Include="Assets\Kingline\Scripts" />
      <Folder Include="Assets\Kingline\Font" />
      <Folder Include="Assets\Kingline\Scripts\Structure" />
+     <Folder Include="Assets\Kingline\Sprites\Game\Around\Sprites" />
      <Folder Include="Assets\Kingline\Scripts\ScriptableObjects" />
      <Folder Include="Assets\Kingline\Prefab\Structure" />
      <Folder Include="Assets\Kingline\Prefab\UI_Elements" />
@@ -107,6 +110,7 @@
      <Folder Include="Assets\Kingline\Resources\Networking" />
      <Folder Include="Assets\Kingline\Resources" />
      <Folder Include="Assets\Kingline\Prefab\Player" />
+     <Folder Include="Assets\Kingline\Sprites\Game\Around\Material" />
      <Folder Include="Assets\Kingline\Sprites\Player" />
      <Folder Include="Assets\Kingline\Sprites\UI" />
      <Folder Include="Assets\Resources" />

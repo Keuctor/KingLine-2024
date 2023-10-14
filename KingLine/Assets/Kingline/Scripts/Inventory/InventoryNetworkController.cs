@@ -1,9 +1,7 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class InventoryNetworkController : NetworkController
+public class InventoryNetworkController : NetworkController<InventoryNetworkController>
 {
     [SerializeField]
     private GameObject m_inventoryView;
@@ -26,8 +24,6 @@ public class InventoryNetworkController : NetworkController
     [SerializeField]
     public ItemsSO m_itemInfo;
 
-    private static InventoryNetworkController m_controller;
-
     [Header("Item Popup")]
     [SerializeField]
     private ItemPopupUI m_itemPopup;
@@ -35,21 +31,7 @@ public class InventoryNetworkController : NetworkController
     [SerializeField]
     private Transform m_itemPopupContent;
 
-    private void Awake()
-    {
-        if (m_controller != null)
-        {
-            if (m_controller != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-        }
-
-        m_controller = this;
-        DontDestroyOnLoad(gameObject);
-    }
-
+  
 
     private void OnInventoryMove(ResInventoryMove obj)
     {
@@ -117,8 +99,6 @@ public class InventoryNetworkController : NetworkController
 
     public override void SubscribeResponse()
     {
-        if (m_controller != this)
-            return;
         NetworkManager.Instance.NetPacketProcessor
             .SubscribeReusable<ResInventory>(OnInventoryResult);
         NetworkManager.Instance.NetPacketProcessor
@@ -130,8 +110,6 @@ public class InventoryNetworkController : NetworkController
     
     public override void UnSubscribeResponse()
     {
-        if (m_controller != this)
-            return;
         NetworkManager.Instance.NetPacketProcessor
             .RemoveSubscription<ResInventory>();
         NetworkManager.Instance.NetPacketProcessor

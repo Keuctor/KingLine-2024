@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Kingline.Scripts.Structure;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class StructureNetworkController : NetworkController
+public class StructureNetworkController : NetworkController<StructureNetworkController>
 {
     [SerializeField]
     private StructureBehaviour m_structureBehaviour;
@@ -21,12 +22,15 @@ public class StructureNetworkController : NetworkController
 
     private StructureUI m_structureUIInstance;
 
-    /// <summary>
-    /// TODO: fix later
-    /// </summary>
-    public static StructureNetworkController Instance => FindObjectOfType<StructureNetworkController>();
- 
- 
+
+    public override void OnStart()
+    {
+        if (m_structures.Length > 0 && SceneManager.GetActiveScene().name == "World")
+        {
+            CreateStructures();
+        }
+    }
+
     public override void SubscribeResponse()
     {
         NetworkManager.Instance.NetPacketProcessor
@@ -47,7 +51,7 @@ public class StructureNetworkController : NetworkController
     public void ShowStructureUI(int structureId)
     {
         var structureInfo = m_structureList.GetStructureInfo(structureId);
-        
+
         if (m_structureUIInstance != null)
         {
             Destroy(m_structureUIInstance.gameObject);
@@ -101,6 +105,7 @@ public class StructureNetworkController : NetworkController
     {
         ClearStructureObjects();
     }
+
     private void ClearStructureObjects()
     {
         foreach (var v in m_structureInstances)
