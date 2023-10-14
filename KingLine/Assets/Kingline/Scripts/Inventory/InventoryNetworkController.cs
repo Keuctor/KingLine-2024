@@ -115,6 +115,7 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
         NetworkManager.Instance.NetPacketProcessor
             .RemoveSubscription<ResInventoryMove>();
     }
+    
     private void OnInventoryAdd(ResInventoryAdd response)
     {
         bool found = false;

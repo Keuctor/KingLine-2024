@@ -22,6 +22,7 @@ where T : Singleton<T>
         if (m_instance !=null && m_instance!= this)
         {
             Destroy(gameObject);
+            return;
         }
         if (m_instance == null)
         {

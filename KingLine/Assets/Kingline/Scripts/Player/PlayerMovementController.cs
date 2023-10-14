@@ -4,10 +4,14 @@ using Kingline.Scripts.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    private bool m_islocalPlayerMoving = false;
+    [SerializeField]
+    private PrefabsSO m_prefabs;
+    
+    private bool m_isLocalPlayerMoving = false;
 
     private bool m_createdPlayers = false;
 
@@ -16,10 +20,8 @@ public class PlayerMovementController : MonoBehaviour
 
     public static Player m_localPlayer;
 
-    public float MoveTreshold = 0.16f;
-
     [SerializeField]
-    private PrefabsSO m_prefabs;
+    private float m_moveTreshold = 0.16f;
 
     private StructureInfoUI m_structureInfoUI;
 
@@ -42,7 +44,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void ClientSendTargetPosition(Vector2 mousePosition)
     {
-        m_islocalPlayerMoving = true;
+        m_isLocalPlayerMoving = true;
         m_localPlayer.targetX = mousePosition.x;
         m_localPlayer.targetY = mousePosition.y;
         var moveUpdate = new ReqPlayerMove
@@ -62,18 +64,15 @@ public class PlayerMovementController : MonoBehaviour
             CreatePlayers();
             return;
         }
-        Debug.Log("Is created players: "+ PlayerNetworkController.Instance.Completed);
         PlayerNetworkController.Instance.OnPlayerListRefresh.AddListener(CreatePlayers);
     }
 
     private void CreatePlayers()
     {
-        Debug.Log("Create players");
         foreach (var v in PlayerNetworkController.Instance.Players)
         {
             CreatePlayer(v.Value);
         }
-
         m_createdPlayers = true;
     }
 
@@ -118,7 +117,7 @@ public class PlayerMovementController : MonoBehaviour
             {
                 if (player.IsLocalPlayer)
                 {
-                    if (m_islocalPlayerMoving)
+                    if (m_isLocalPlayerMoving)
                     {
                         if (m_targetStructure != null)
                         {
@@ -126,7 +125,7 @@ public class PlayerMovementController : MonoBehaviour
                                 .ShowStructureUI(m_targetStructure.Id);
                         }
 
-                        m_islocalPlayerMoving = false;
+                        m_isLocalPlayerMoving = false;
                     }
                 }
 
@@ -214,7 +213,7 @@ public class PlayerMovementController : MonoBehaviour
     private bool IsLocalPlayerMoved()
     {
         var position = m_localPlayer.Transform.position;
-        return Mathf.Abs(m_localPlayer.x - position.x) >= MoveTreshold
-               || Mathf.Abs(m_localPlayer.y - position.y) >= MoveTreshold;
+        return Mathf.Abs(m_localPlayer.x - position.x) >= m_moveTreshold
+               || Mathf.Abs(m_localPlayer.y - position.y) >= m_moveTreshold;
     }
 }

@@ -51,9 +51,10 @@
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemStackView.cs" />
      <Compile Include="Assets\Kingline\Scripts\Menu\GameCanvas.cs" />
      <Compile Include="Assets\Kingline\Scripts\NavigationUI.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Player\PlayerNetworkController.cs" />
      <Compile Include="Assets\Kingline\Scripts\Structure\StructureUI.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\NetworkController.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Network\PlayerNetworkController.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Player\PlayerMovementController.cs" />
      <Compile Include="Assets\Kingline\Scripts\SpriteAnimator.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemsSO.cs" />
      <Compile Include="Assets\Kingline\Scripts\Utils\Singleton.cs" />
@@ -70,7 +71,6 @@
      <Compile Include="Assets\Kingline\Scripts\Utils\PrefabsSO.cs" />
      <Compile Include="Assets\Kingline\Scripts\Audio\AudioManager.cs" />
      <Compile Include="Assets\Kingline\Scripts\Game\MineGame.cs" />
-     <Compile Include="Assets\Kingline\Scripts\PlayerMovementController.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\ConnectionDataSO.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemPopupUI.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\InventoryNetworkController.cs" />
@@ -101,6 +101,7 @@
      <Folder Include="Assets\Kingline\Sprites\Game\Mine\Sprites" />
      <Folder Include="Assets\Kingline\Scripts\Menu" />
      <Folder Include="Assets\Kingline\Sprites\Places" />
+     <Folder Include="Assets\Kingline\Scripts\Player" />
      <Folder Include="Assets\Kingline\Prefab\UI_Elements\UIParts" />
      <Folder Include="Assets\Kingline\Resources\Structures" />
      <Folder Include="Assets\Kingline\Sprites\Game\Mine\Sound" />

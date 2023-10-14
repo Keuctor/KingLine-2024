@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
@@ -49,8 +50,11 @@ public class PlayerNetworkController : NetworkController<PlayerNetworkController
     }
 
 
+    [NonSerialized]
     public UnityEvent OnPlayerListRefresh = new();
+    [NonSerialized]
     public UnityEvent<int> OnPlayerJoin = new();
+    [NonSerialized]
     public UnityEvent<int> OnPlayerLeave = new();
 
     #region NETWORK_RESPONSE
