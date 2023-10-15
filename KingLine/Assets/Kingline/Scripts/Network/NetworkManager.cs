@@ -21,8 +21,19 @@ public class NetworkManager : MonoBehaviour, INetEventListener
     public bool Connected;
 
     private ConnectionHandlerUI m_connectionHandlerUIInstance;
-    
-    
+
+    public string UniqueKey
+    {
+        get
+        {
+            if (!PlayerPrefs.HasKey(nameof(UniqueKey)))
+            {
+                PlayerPrefs.SetString(nameof(UniqueKey),Guid.NewGuid().ToString().Substring(0,12));
+            }
+            return PlayerPrefs.GetString(nameof(UniqueKey));
+        }
+    }
+
 
     private bool m_isServerStarted;
 
@@ -166,10 +177,13 @@ public class NetworkManager : MonoBehaviour, INetEventListener
         writer.Reset();
         writer.Put(m_connectionData.Version);
         writer.Put(userName);
+        writer.Put(UniqueKey);
         m_client.Connect(m_connectionData.Adress, m_connectionData.Port,
             writer);
         m_isServerStarted = true;
     }
+
+  
 
     private void InitializeNetPacketProcessor()
     {

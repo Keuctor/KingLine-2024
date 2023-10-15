@@ -1,4 +1,5 @@
-﻿using KingLineServer.Network;
+﻿using KingLineServer.Inventory;
+using KingLineServer.Network;
 using KingLineServer.Utils;
 using LiteNetLib;
 using LiteNetLib.Utils;
@@ -10,57 +11,19 @@ using System.Text;
 
 namespace KingLineServer
 {
-    class Time
-    {
-        public const int TARGET_FPS = 30;
-
-        private readonly Stopwatch stopwatch = new();
-        private ulong nextTickId = 0;
-
-        // The stopwatch time right now
-        public double Now => stopwatch.Elapsed.TotalSeconds;
-        // The stopwatch time at the beginning of this tick
-        public double TickTime { get; private set; }
-        // The ID of the current tick
-        public ulong TickId { get; private set; }
-
-        public void Start()
-        {
-            stopwatch.Start();
-        }
-
-        public bool ShouldTick()
-        {
-            bool shouldTick = Now * TARGET_FPS > nextTickId;
-
-            if (shouldTick)
-            {
-                TickTime = Now;
-                TickId = nextTickId++;
-            }
-
-            return shouldTick;
-        }
-    }
-
-
-
 
     public class KingLineServer : INetEventListener
     {
-        public Dictionary<NetPeer, Player> Players = new Dictionary<NetPeer, Player>();
-        public Dictionary<int, Structure> Structures = new Dictionary<int, Structure>();
-
-        public Dictionary<string, ItemStack[]> PlayerItems = new Dictionary<string, ItemStack[]>();
-
         static ConnectionData connectionData = new ConnectionData();
         private readonly NetPacketProcessor _netPacketProcessor = new NetPacketProcessor();
 
+        private List<INetworkController> INetworkControllers;
         NetManager server;
         static void Main(string[] args)
         {
             new KingLineServer().Run();
         }
+
         public KingLineServer()
         {
             server = new NetManager(this);
@@ -78,141 +41,16 @@ namespace KingLineServer
             {
                 return new ItemStack();
             });
+            INetworkControllers = new List<INetworkController>
+            {
+                new NetworkPlayerController(),
+                new NetworkStructureController(),
+                new NetworkInventoryController()
+            };
 
-            InitStructures();
-            _netPacketProcessor.SubscribeReusable<ReqPlayers, NetPeer>(OnRequestPlayers);
-            _netPacketProcessor.SubscribeReusable<ResPlayerPosition, NetPeer>(OnRequestPositionUpdate);
-            _netPacketProcessor.SubscribeReusable<ReqPlayerMove, NetPeer>(OnRequestPlayerMove);
-            _netPacketProcessor.SubscribeReusable<ReqStructures, NetPeer>(OnRequestStructures);
-            _netPacketProcessor.SubscribeReusable<ReqInventory, NetPeer>(OnRequestInventory);
-            _netPacketProcessor.SubscribeReusable<ReqInventoryMove, NetPeer>(OnRequestInventoryMove);
-            _netPacketProcessor.SubscribeReusable<ReqMineStone, NetPeer>(OnRequestMineStone);
-            _netPacketProcessor.SubscribeReusable<ReqMineBone, NetPeer>(OnRequestMineBone);
+            INetworkControllers.ForEach(c => c.Subscribe(_netPacketProcessor));
+
             PackageSender.PacketProcessor = _netPacketProcessor;
-        }
-
-        private void OnRequestMineBone(ReqMineBone request, NetPeer peer)
-        {
-            InventoryAdd(peer, 1, 1);
-        }
-
-        private void OnRequestInventoryMove(ReqInventoryMove request, NetPeer peer)
-        {
-            var targetPlayer = Players[peer];
-            if (PlayerItems.TryGetValue(targetPlayer.Name, out ItemStack[] items))
-            {
-                var item = items[request.FromIndex];
-                if (item != null)
-                {
-                    if (item.Id != -1)
-                    {
-
-                        var to = items[request.ToIndex];
-                        if (to != null)
-                        {
-                            if (to.Id == -1)
-                            {
-                                items[request.ToIndex] = item;
-                                items[request.FromIndex] = new ItemStack()
-                                {
-                                    Count = 0,
-                                    Id = -1
-                                };
-                            }
-                        }
-                    }
-                }
-
-                PlayerItems[targetPlayer.Name] = items;
-                var response = new ResInventoryMove()
-                {
-                    ToIndex = request.ToIndex,
-                    FromIndex = request.FromIndex
-                };
-                PackageSender.SendPacket(peer, response);
-            }
-        }
-
-        private void OnRequestInventory(ReqInventory request, NetPeer peer)
-        {
-            var targetPlayer = Players[peer];
-
-            var response = new ResInventory();
-            if (PlayerItems.TryGetValue(targetPlayer.Name, out ItemStack[] items))
-            {
-                response.Items = items;
-            }
-            else
-            {
-                response.Items = new ItemStack[25];
-                for (int i = 0; i < 25; i++)
-                {
-                    response.Items[i] = new ItemStack()
-                    {
-                        Count = 0,
-                        Id = -1,
-                    };
-                }
-                PlayerItems.Add(targetPlayer.Name, response.Items);
-            }
-            PackageSender.SendPacket(peer, response);
-        }
-
-        public void InventoryAdd(NetPeer peer, int id, short count)
-        {
-            var player = Players[peer];
-            ItemStack[] items = PlayerItems[player.Name];
-
-            bool found = false;
-            for (var i = 0; i < items.Length; i++)
-            {
-                var item = items[i];
-                if (item.Id == id)
-                {
-                    item.Count += count;
-                    found = true;
-                    break;
-                }
-            }
-            if (!found)
-            {
-                for (var i = 0; i < items.Length; i++)
-                {
-                    if (items[i].Id == -1)
-                    {
-                        items[i].Id = id;
-                        items[i].Count = count;
-                        break;
-                    }
-                }
-            }
-            PlayerItems[player.Name] = items;
-            PackageSender.SendPacket(peer, new ResInventoryAdd()
-            {
-                Count = count,
-                Id = id
-            });
-        }
-        private void OnRequestMineStone(ReqMineStone request, NetPeer peer)
-        {
-            InventoryAdd(peer, 0, 1);
-        }
-
-        private void InitStructures()
-        {
-            Structures.Add(0, new Structure()
-            {
-                Id = 0,
-                x = 0,
-                y = 0,
-            });
-        }
-
-        private void OnRequestStructures(ReqStructures request, NetPeer peer)
-        {
-            var packet = new ResStructures();
-            packet.Structures = Structures.Values.ToArray();
-            PackageSender.SendPacket(peer, packet);
         }
 
         public void Run()
@@ -254,71 +92,15 @@ namespace KingLineServer
         {
             server.PollEvents();
         }
-        private void OnRequestPlayerMove(ReqPlayerMove request, NetPeer peer)
-        {
-            var target = Players[peer];
-            target.targetX = request.x;
-            target.targetY = request.y;
-            var packet = new ResPlayerMove()
-            {
-                Id = peer.Id,
-                x = request.x,
-                y = request.y,
-            };
-            BroadcastPackage(packet);
-        }
-        public void BroadcastPackage<T>(T packet) where T : class, new()
-        {
-            foreach (var p in Players)
-            {
-                PackageSender.SendPacket(p.Key, packet);
-            }
-        }
-
-        private void OnRequestPositionUpdate(ResPlayerPosition position, NetPeer peer)
-        {
-            var target = this.Players.FirstOrDefault(t => t.Value.Id == peer.Id);
-            this.Players[peer].x = position.x;
-            this.Players[peer].y = position.y;
-            var packet = new ResPlayerPosition()
-            {
-                Id = peer.Id,
-                x = position.x,
-                y = position.y,
-            };
-            BroadcastPackage(packet);
-        }
-
-        private void OnRequestPlayers(ReqPlayers request, NetPeer peer)
-        {
-            var packet = new ResPlayers()
-            {
-                Players = Players.Values.ToArray(),
-            };
-            PackageSender.SendPacket(peer, packet);
-        }
 
         public bool ServerLoop = true;
-
-
-        public void OnPeerConnected(NetPeer peer)
-        {
-            var player = Players[peer];
-            foreach (var p in Players)
-            {
-                if (p.Key.Id != peer.Id)
-                {
-                    var package = new ResPlayerJoin() { Player = player };
-                    PackageSender.SendPacket(p.Key, package);
-                }
-            }
-        }
 
         public void OnConnectionRequest(ConnectionRequest request)
         {
             var data = request.Data;
             var version = data.GetString();
             var userName = data.GetString(16);
+            var idendifier = data.GetString(32);
             try
             {
                 if (server.ConnectedPeersCount < 1000)
@@ -326,16 +108,7 @@ namespace KingLineServer
                     if (version == connectionData.Version)
                     {
                         var peer = request.Accept();
-                        Players.Add(peer, new Player()
-                        {
-                            Name = userName,
-                            Id = peer.Id,
-                            x = 0,
-                            y = 0,
-                            speed = 1.5f,
-                            targetX = 0,
-                            targetY = 0,
-                        });
+                        INetworkControllers.ForEach(t => t.OnPeerConnectionRequest(peer, idendifier,userName));
                         PackageSender.SendPacket(peer, new ResPeerId { Id = peer.Id });
                         Cw.Log($"\tPeer {peer.Id} Client {userName} connected.", ConsoleColor.Green);
                     }
@@ -392,22 +165,12 @@ namespace KingLineServer
 
         public void OnPeerDisconnected(NetPeer peer, DisconnectInfo disconnectInfo)
         {
-            var player = Players[peer];
-            foreach (var p in Players)
-            {
-                if (p.Key.Id != peer.Id)
-                {
-                    PackageSender.SendPacket(peer, new ResPlayerLeave() { Player = player });
-                }
-            }
-            if (Players.Remove(peer, out _))
-            {
-                Cw.Log($"\tPeer Id: {peer.Id} Name: {player.Name} Disconnected", ConsoleColor.Gray);
-            }
-            else
-            {
-                Cw.Log($"\tClient does not exist in table", ConsoleColor.Red);
-            }
+            INetworkControllers.ForEach(t => t.OnPeerDisconnected(peer));
+        }
+
+        public void OnPeerConnected(NetPeer peer)
+        {
+            INetworkControllers.ForEach(t => t.OnPeerConnected(peer));
         }
     }
 }

@@ -1,8 +1,12 @@
 ﻿
 
 using KingLineServer;
+using LiteNetLib;
 using LiteNetLib.Utils;
 
+public partial class Player {
+    public string UniqueIdendifier;
+}
 public partial class Player : INetSerializable
 {
     public int Id { get; set; }
