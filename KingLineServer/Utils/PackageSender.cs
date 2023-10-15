@@ -1,10 +1,6 @@
 ﻿using LiteNetLib;
 using LiteNetLib.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static KingLineServer.Utils.PackageSender;
 
 namespace KingLineServer.Utils
 {
@@ -13,7 +9,7 @@ namespace KingLineServer.Utils
         public static NetDataWriter _writer = new();
         public static NetPacketProcessor PacketProcessor;
         static bool debug = true;
-        
+
         public static NetDataWriter WritePacket<T>(T packet) where T : class, new()
         {
             _writer.Reset();
@@ -24,7 +20,7 @@ namespace KingLineServer.Utils
         {
             if (debug)
             {
-                Cw.Log($"Sending packet to {peer.Id} {typeof(T)}",ConsoleColor.Gray);
+                Cw.Log($"Sending packet to {peer.Id} {typeof(T)}", ConsoleColor.Gray);
             }
             peer.Send(WritePacket(packet), DeliveryMethod.ReliableOrdered);
         }

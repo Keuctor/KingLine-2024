@@ -3,6 +3,80 @@ using KingLineServer.Utils;
 using LiteNetLib;
 using LiteNetLib.Utils;
 
+public partial class Player
+{
+    public string UniqueIdendifier = string.Empty;
+}
+public partial class Player : INetSerializable
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public float x { get; set; }
+    public float y { get; set; }
+    public float targetX { get; set; }
+    public float targetY { get; set; }
+    public float speed { get; set; }
+
+    public void Serialize(NetDataWriter writer)
+    {
+        writer.Put(Id);
+        writer.Put(Name);
+        writer.Put(x);
+        writer.Put(y);
+        writer.Put(targetX);
+        writer.Put(targetY);
+        writer.Put(speed);
+    }
+    public void Deserialize(NetDataReader reader)
+    {
+        this.Id = reader.GetInt();
+        this.Name = reader.GetString(16);
+        this.x = reader.GetFloat();
+        this.y = reader.GetFloat();
+        this.targetX = reader.GetFloat();
+        this.targetY = reader.GetFloat();
+        this.speed = reader.GetFloat();
+    }
+}
+
+public class ReqPlayers
+{
+
+}
+public class ResPlayers
+{
+    public Player[] Players { get; set; }
+}
+public class ResPlayerPosition
+{
+    public int Id { get; set; }
+    public float x { get; set; }
+    public float y { get; set; }
+}
+
+
+public class ResPlayerJoin
+{
+    public Player Player { get; set; }
+}
+
+public class ResPlayerLeave
+{
+    public Player Player { get; set; }
+}
+public class ReqPlayerMove
+{
+    public float x { get; set; }
+    public float y { get; set; }
+}
+
+public class ResPlayerMove
+{
+    public int Id { get; set; }
+    public float y { get; set; }
+    public float x { get; set; }
+}
+
 namespace KingLineServer.Inventory
 {
     public class NetworkPlayerController : INetworkController
@@ -10,6 +84,10 @@ namespace KingLineServer.Inventory
         public static Dictionary<NetPeer, Player> Players = new Dictionary<NetPeer, Player>();
         public void Subscribe(NetPacketProcessor processor)
         {
+            processor.RegisterNestedType(() =>
+            {
+                return new Player();
+            });
             processor.SubscribeReusable<ReqPlayers, NetPeer>(OnRequestPlayers);
             processor.SubscribeReusable<ResPlayerPosition, NetPeer>(OnRequestPositionUpdate);
             processor.SubscribeReusable<ReqPlayerMove, NetPeer>(OnRequestPlayerMove);
@@ -35,7 +113,6 @@ namespace KingLineServer.Inventory
                 PackageSender.SendPacket(p.Key, packet);
             }
         }
-
         private void OnRequestPositionUpdate(ResPlayerPosition position, NetPeer peer)
         {
             var target = Players.FirstOrDefault(t => t.Value.Id == peer.Id);

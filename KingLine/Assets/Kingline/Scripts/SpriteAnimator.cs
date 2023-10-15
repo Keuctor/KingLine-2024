@@ -42,8 +42,11 @@ public class SpriteAnimator : MonoBehaviour
 
     public void SetPlay(bool play)
     {
+        if (m_play == play)
+            return;
+        
         m_play = play;
-        if (m_play == false) m_renderer.sprite = m_current[m_idleIndex];
+        if (!m_play) m_renderer.sprite = m_current[m_idleIndex];
     }
 
 

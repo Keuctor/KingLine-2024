@@ -4,7 +4,6 @@ using System.Net.Sockets;
 using LiteNetLib;
 using LiteNetLib.Utils;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class NetworkManager : MonoBehaviour, INetEventListener
 {
@@ -17,6 +16,7 @@ public class NetworkManager : MonoBehaviour, INetEventListener
     private ConnectionHandlerUI m_connectionHandlerUI;
 
     private NetManager m_client;
+
     [NonSerialized]
     public bool Connected;
 
@@ -28,8 +28,9 @@ public class NetworkManager : MonoBehaviour, INetEventListener
         {
             if (!PlayerPrefs.HasKey(nameof(UniqueKey)))
             {
-                PlayerPrefs.SetString(nameof(UniqueKey),Guid.NewGuid().ToString().Substring(0,12));
+                PlayerPrefs.SetString(nameof(UniqueKey), Guid.NewGuid().ToString().Substring(0, 12));
             }
+
             return PlayerPrefs.GetString(nameof(UniqueKey));
         }
     }
@@ -43,7 +44,7 @@ public class NetworkManager : MonoBehaviour, INetEventListener
     public Action OnDisconnectedFromServer;
 
     public NetPeer Server;
-    
+
 
     private readonly NetDataWriter writer = new();
 
@@ -64,8 +65,8 @@ public class NetworkManager : MonoBehaviour, INetEventListener
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            CreateConnectionUI();
             InitializeNetPacketProcessor();
+            CreateConnectionUI();
         }
     }
 
@@ -183,13 +184,13 @@ public class NetworkManager : MonoBehaviour, INetEventListener
         m_isServerStarted = true;
     }
 
-  
 
     private void InitializeNetPacketProcessor()
     {
         NetPacketProcessor.RegisterNestedType(() => new Player());
         NetPacketProcessor.RegisterNestedType(() => new Structure());
         NetPacketProcessor.RegisterNestedType(() => new ItemStack());
+
         NetPacketProcessor.SubscribeReusable<ResPeerId>(OnPeerIdReceived);
     }
 

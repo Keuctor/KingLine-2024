@@ -1,10 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Cinemachine;
 using Kingline.Scripts.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 public class PlayerMovementController : MonoBehaviour
 {
@@ -59,12 +59,28 @@ public class PlayerMovementController : MonoBehaviour
     {
         PlayerNetworkController.Instance.OnPlayerJoin.AddListener(OnPlayerJoin);
         PlayerNetworkController.Instance.OnPlayerLeave.AddListener(OnPlayerLeave);
+        NetworkManager.Instance.OnDisconnectedFromServer+=(OnDisconnectedFromServer);
         if (PlayerNetworkController.Instance.Completed)
         {
             CreatePlayers();
             return;
         }
         PlayerNetworkController.Instance.OnPlayerListRefresh.AddListener(CreatePlayers);
+    }
+
+    private void OnDestroy()
+    {
+        NetworkManager.Instance.OnDisconnectedFromServer-=(OnDisconnectedFromServer);
+    }
+
+    private void OnDisconnectedFromServer()
+    {
+        m_createdPlayers = false;
+
+        foreach(var v in playerInstances)
+            Destroy(v.Value);
+        
+        playerInstances.Clear();
     }
 
     private void CreatePlayers()
@@ -128,7 +144,6 @@ public class PlayerMovementController : MonoBehaviour
                         m_isLocalPlayerMoving = false;
                     }
                 }
-
                 player.Animator.SetPlay(false);
             }
 

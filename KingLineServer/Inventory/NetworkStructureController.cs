@@ -1,11 +1,36 @@
 ﻿using KingLineServer.Utils;
 using LiteNetLib;
 using LiteNetLib.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+public partial class Structure : INetSerializable
+{
+    public int Id { get; set; }
+    public float x { get; set; }
+    public float y { get; set; }
+    public void Serialize(NetDataWriter writer)
+    {
+        writer.Put(Id);
+        writer.Put(x);
+        writer.Put(y);
+    }
+
+    public void Deserialize(NetDataReader reader)
+    {
+        Id = reader.GetInt();
+        x = reader.GetFloat();
+        y = reader.GetFloat();
+    }
+}
+
+
+public class ReqStructures
+{
+}
+public class ResStructures
+{
+    public Structure[] Structures { get; set; }
+}
+
 
 namespace KingLineServer.Inventory
 {
@@ -22,7 +47,10 @@ namespace KingLineServer.Inventory
 
         public void Subscribe(NetPacketProcessor processor)
         {
-           
+            processor.RegisterNestedType(() =>
+            {
+                return new Structure();
+            });
             processor.SubscribeReusable<ReqStructures, NetPeer>(OnRequestStructures);
         }
 
@@ -41,12 +69,10 @@ namespace KingLineServer.Inventory
         public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
         {
         }
-
         public void OnExit()
         {
 
         }
-
         public void OnStart()
         {
             Structures.Add(new Structure()

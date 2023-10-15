@@ -47,6 +47,7 @@ public class PlayerNetworkController : NetworkController<PlayerNetworkController
 
     public override void OnDisconnectedFromServer()
     {
+        Players.Clear();
     }
 
 
@@ -56,7 +57,7 @@ public class PlayerNetworkController : NetworkController<PlayerNetworkController
     public UnityEvent<int> OnPlayerJoin = new();
     [NonSerialized]
     public UnityEvent<int> OnPlayerLeave = new();
-
+    
     #region NETWORK_RESPONSE
 
     private void OnPlayersResponse(ResPlayers res)

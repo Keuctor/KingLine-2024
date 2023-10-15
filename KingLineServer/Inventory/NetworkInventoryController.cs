@@ -2,6 +2,52 @@
 using LiteNetLib;
 using LiteNetLib.Utils;
 
+public class ItemStack : INetSerializable
+{
+    public int Id { get; set; }
+    public short Count { get; set; }
+    public void Deserialize(NetDataReader reader)
+    {
+        Id = reader.GetInt();
+        Count = reader.GetShort();
+    }
+    public void Serialize(NetDataWriter writer)
+    {
+        writer.Put(Id);
+        writer.Put(Count);
+    }
+}
+
+public class ReqInventory { }
+public class ResInventory
+{
+    public ItemStack[] Items { get; set; }
+}
+public class ReqInventoryMove
+{
+    public short FromIndex { get; set; }
+    public short ToIndex { get; set; }
+}
+
+public class ResInventoryMove
+{
+    public short FromIndex { get; set; }
+    public short ToIndex { get; set; }
+}
+
+public class ResInventoryAdd
+{
+    public int Id { get; set; }
+    public short Count { get; set; }
+}
+public class ReqMineStone
+{
+}
+
+public class ReqMineBone
+{
+}
+
 namespace KingLineServer.Inventory
 {
     public class NetworkInventoryController : INetworkController
@@ -9,6 +55,10 @@ namespace KingLineServer.Inventory
         public static Dictionary<string, ItemStack[]> PlayerItems = new Dictionary<string, ItemStack[]>();
         public void Subscribe(NetPacketProcessor processor)
         {
+            processor.RegisterNestedType(() =>
+            {
+                return new ItemStack();
+            });
             processor.SubscribeReusable<ReqInventory, NetPeer>(OnRequestInventory);
             processor.SubscribeReusable<ReqInventoryMove, NetPeer>(OnRequestInventoryMove);
             processor.SubscribeReusable<ReqMineStone, NetPeer>(OnRequestMineStone);
@@ -18,15 +68,17 @@ namespace KingLineServer.Inventory
         private void OnRequestMineBone(ReqMineBone request, NetPeer peer)
         {
             InventoryAdd(peer, 1, 1);
+            NetworkPlayerLevelController.AddXp(peer, 2);
         }
         private void OnRequestMineStone(ReqMineStone request, NetPeer peer)
         {
             InventoryAdd(peer, 0, 1);
+            NetworkPlayerLevelController.AddXp(peer, 6);
         }
 
         public void InventoryAdd(NetPeer peer, int id, short count)
         {
-            var player = NetworkPlayerController.Players[peer]; 
+            var player = NetworkPlayerController.Players[peer];
             ItemStack[] items = PlayerItems[player.UniqueIdendifier];
 
             bool found = false;

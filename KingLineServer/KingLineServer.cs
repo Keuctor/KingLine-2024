@@ -3,15 +3,17 @@ using KingLineServer.Network;
 using KingLineServer.Utils;
 using LiteNetLib;
 using LiteNetLib.Utils;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
+
+public class ResPeerId
+{
+    public int Id { get; set; }
+}
 
 namespace KingLineServer
 {
-
     public class KingLineServer : INetEventListener
     {
         static ConnectionData connectionData = new ConnectionData();
@@ -29,27 +31,15 @@ namespace KingLineServer
             server = new NetManager(this);
             server.DisconnectTimeout = 10000;
             _netPacketProcessor = new NetPacketProcessor();
-            _netPacketProcessor.RegisterNestedType(() =>
-            {
-                return new Player();
-            });
-            _netPacketProcessor.RegisterNestedType(() =>
-            {
-                return new Structure();
-            });
-            _netPacketProcessor.RegisterNestedType(() =>
-            {
-                return new ItemStack();
-            });
             INetworkControllers = new List<INetworkController>
             {
                 new NetworkPlayerController(),
                 new NetworkStructureController(),
-                new NetworkInventoryController()
+                new NetworkInventoryController(),
+                new NetworkPlayerProgressionController(),
+                new NetworkPlayerLevelController()
             };
-
             INetworkControllers.ForEach(c => c.Subscribe(_netPacketProcessor));
-
             PackageSender.PacketProcessor = _netPacketProcessor;
         }
 

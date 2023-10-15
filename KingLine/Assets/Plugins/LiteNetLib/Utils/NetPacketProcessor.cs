@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace LiteNetLib.Utils
 {
@@ -9,7 +10,6 @@ namespace LiteNetLib.Utils
         {
             public static readonly ulong Id;
 
-            //FNV-1 64 bit hash
             static HashCache()
             {
                 ulong hash = 14695981039346656037UL; //offset
@@ -92,7 +92,9 @@ namespace LiteNetLib.Utils
         public void ReadAllPackets(NetDataReader reader)
         {
             while (reader.AvailableBytes > 0)
+            {
                 ReadPacket(reader);
+            }
         }
 
         /// <summary>
