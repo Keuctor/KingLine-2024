@@ -106,5 +106,13 @@ namespace KingLineServer.Inventory
                 UniqueIdendifier = idendifier
             });
         }
+
+        public void OnExit()
+        {
+        }
+
+        public void OnStart()
+        {
+        }
     }
 }

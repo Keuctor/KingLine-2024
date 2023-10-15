@@ -80,20 +80,21 @@ namespace KingLineServer
             }
             OnExit();
         }
+
         private void OnStart()
         {
             Cw.Log("\tOnStart...", ConsoleColor.Magenta);
+            INetworkControllers.ForEach(c => c.OnStart());
         }
         private void OnExit()
         {
             Cw.Log("\tOn Exit...", ConsoleColor.Magenta);
+            INetworkControllers.ForEach(c => c.OnExit());
         }
         private void OnUpdate()
         {
             server.PollEvents();
         }
-
-        public bool ServerLoop = true;
 
         public void OnConnectionRequest(ConnectionRequest request)
         {

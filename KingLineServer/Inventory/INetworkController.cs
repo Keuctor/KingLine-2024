@@ -9,5 +9,7 @@ namespace KingLineServer.Inventory
         public void OnPeerConnectionRequest(NetPeer peer,string idendifier,string username);
         public void OnPeerConnected(NetPeer peer);
         public void Subscribe(NetPacketProcessor processor);
+        void OnExit();
+        void OnStart();
     }
 }

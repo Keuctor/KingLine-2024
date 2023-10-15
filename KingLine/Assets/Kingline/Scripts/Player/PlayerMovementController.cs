@@ -153,17 +153,17 @@ public class PlayerMovementController : MonoBehaviour
             Vector2 mousePosition = m_mainCamera.ScreenToWorldPoint(Input.mousePosition);
             var hits = Physics2D.RaycastAll(mousePosition, Vector2.zero);
             m_targetStructure = null;
-            for (var i = 0; i < hits.Length; i++)
+            foreach (var hit in hits)
             {
-                if (hits[i].transform.CompareTag("Structure"))
+                if (hit.transform.CompareTag("Structure"))
                 {
-                    var structureBehaviour = hits[i].collider.GetComponent<StructureBehaviour>();
+                    var structureBehaviour = hit.collider.GetComponent<StructureBehaviour>();
                     if (m_structureInfoUI == null)
                     {
                         m_structureInfoUI = Instantiate(m_prefabs.StructureInfoUI);
-                        m_structureInfoUI.OnClicked.AddListener(i =>
+                        m_structureInfoUI.OnClicked.AddListener(x =>
                         {
-                            if (i == 0) ClientSendTargetPosition(structureBehaviour.transform.position);
+                            if (x == 0) ClientSendTargetPosition(structureBehaviour.transform.position);
                             m_targetStructure = structureBehaviour;
                             Destroy(m_structureInfoUI.gameObject);
                             m_structureInfoUI = null;
@@ -171,6 +171,7 @@ public class PlayerMovementController : MonoBehaviour
                     }
 
                     m_structureInfoUI.SetView(structureBehaviour);
+                    break;
                 }
             }
 

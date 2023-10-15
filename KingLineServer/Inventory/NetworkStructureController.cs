@@ -22,12 +22,7 @@ namespace KingLineServer.Inventory
 
         public void Subscribe(NetPacketProcessor processor)
         {
-            Structures.Add(new Structure()
-            {
-                Id = 0,
-                x = 0,
-                y = 0,
-            });
+           
             processor.SubscribeReusable<ReqStructures, NetPeer>(OnRequestStructures);
         }
 
@@ -45,6 +40,21 @@ namespace KingLineServer.Inventory
 
         public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
         {
+        }
+
+        public void OnExit()
+        {
+
+        }
+
+        public void OnStart()
+        {
+            Structures.Add(new Structure()
+            {
+                Id = 0,
+                x = 0,
+                y = 0,
+            });
         }
     }
 }

@@ -102,7 +102,7 @@ namespace KingLineServer.Inventory
         {
             var player = NetworkPlayerController.Players[peer];
             var response = new ResInventory();
-            if (PlayerItems.TryGetValue(player.Name, out ItemStack[] items))
+            if (PlayerItems.TryGetValue(player.UniqueIdendifier, out ItemStack[] items))
             {
                 response.Items = items;
             }
@@ -129,6 +129,14 @@ namespace KingLineServer.Inventory
         {
         }
         public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
+        {
+        }
+
+        public void OnExit()
+        {
+        }
+
+        public void OnStart()
         {
         }
     }
