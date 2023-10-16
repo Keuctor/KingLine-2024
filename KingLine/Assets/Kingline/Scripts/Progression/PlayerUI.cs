@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -14,12 +13,32 @@ public class PlayerUI : MonoBehaviour
     [SerializeField]
     private TMP_Text m_xpText;
 
+    [SerializeField]
+    private TMP_Text m_skillPointText;
+
     private Dictionary<string, SkillItemView> m_createdSkillItemViews = new();
+
+
+    private void Start()
+    {
+        ProgressionNetworkController.Instance.OnLevelChange.AddListener(OnLevelChange);
+        ProgressionNetworkController.Instance.OnSkillValueChanged.AddListener(OnSkillChanged);
+    }
+
+    private void OnSkillChanged(string skill, byte value)
+    {
+        m_createdSkillItemViews[skill].ValueText.text = value + "";
+    }
 
     private void OnEnable()
     {
         ClearViews();
         CreateViews();
+    }
+
+    private void OnLevelChange(int level)
+    {
+        Debug.Log("LEVEL UP " + level);
     }
 
     private void CreateViews()
@@ -30,11 +49,20 @@ public class PlayerUI : MonoBehaviour
             CreateSkillView(skill);
         }
 
-        var xpManager = ProgressionNetworkController.Instance.XpManager;
-        var xp = ProgressionNetworkController.Instance.Xp;
-        var level = xpManager.getLevel(ProgressionNetworkController.Instance.Xp);
-        var neededXp = xpManager.getNeededXpForNextLevel(xp);
-        m_xpText.text = $"Level {level}({xp}/{neededXp})";
+        var xp = ProgressionNetworkController.Instance.CurrentExp;
+        var level = ProgressionNetworkController.Instance.Level;
+        var neededXp = ProgressionNetworkController.Instance.MaxExp;
+        m_xpText.text = $"Level {level}  ({xp}/{neededXp})";
+        SetSkillViews();
+    }
+
+    public void SetSkillViews()
+    {
+        m_skillPointText.text = $"You have {ProgressionNetworkController.Instance.LevelPoint} Points";
+        foreach (var m in m_createdSkillItemViews.Values)
+        {
+            m.IncrementButton.gameObject.SetActive(ProgressionNetworkController.Instance.LevelPoint > 0);
+        }
     }
 
     public void CreateSkillView(Skill skill)
@@ -48,10 +76,11 @@ public class PlayerUI : MonoBehaviour
 
     private void OnIncrementSkillPointClicked(Skill skill)
     {
-        Debug.Log(skill.Name);
-
-        skill.Value += 1;
-        m_createdSkillItemViews[skill.Name].ValueText.text = skill.Value + "";
+        if (ProgressionNetworkController.Instance.LevelPoint <= 0)
+            return;
+        ProgressionNetworkController.Instance.LevelPoint--;
+        ProgressionNetworkController.Instance.SendSkillIncrement(skill.Name);
+        SetSkillViews();
     }
 
     private void ClearViews()

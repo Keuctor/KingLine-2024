@@ -1,6 +1,7 @@
 ﻿using KingLineServer.Utils;
 using LiteNetLib;
 using LiteNetLib.Utils;
+using System.Reflection.PortableExecutable;
 
 [Serializable]
 public class Skill : INetSerializable
@@ -30,12 +31,23 @@ public class ResPlayerProgression
     public Skill[] Skills { get; set; }
 }
 
+
+public class ReqSkillIncrement
+{
+    public string SkillName { get; set; }
+}
+public class ResSkillValueChange
+{
+    public string SkillName { get; set; }
+    public byte Value { get; set; }
+}
+
 namespace KingLineServer.Inventory
 {
     public class NetworkPlayerProgressionController : INetworkController
     {
 
-        public Dictionary<string, Skill[]> Progressions
+        public static Dictionary<string, Skill[]> Progressions
              = new Dictionary<string, Skill[]>();
         public void OnStart()
         {
@@ -63,6 +75,35 @@ namespace KingLineServer.Inventory
             });
 
             processor.SubscribeReusable<ReqPlayerProgression, NetPeer>(OnPlayerProgressionRequest);
+            processor.SubscribeReusable<ReqSkillIncrement, NetPeer>(OnSkillIncrement);
+        }
+
+        private void OnSkillIncrement(ReqSkillIncrement request, NetPeer peer)
+        {
+            var player = NetworkPlayerController.Players[peer];
+            var playerLevel = NetworkPlayerLevelController.GetPlayerLevel(player.UniqueIdendifier);
+
+            var progression = Progressions[player.UniqueIdendifier];
+            var lvl = playerLevel;
+            foreach (var p in progression)
+                lvl -= (p.Value - 1);
+
+            if (lvl > 0)
+            {
+                foreach (var s in Progressions[player.UniqueIdendifier])
+                {
+                    if (s.Name.Equals(request.SkillName))
+                    {
+                        s.Value++;
+                        var response = new ResSkillValueChange()
+                        {
+                            SkillName = s.Name,
+                            Value = s.Value
+                        };
+                        PackageSender.SendPacket(peer, response);
+                    }
+                }
+            }
         }
 
         private void OnPlayerProgressionRequest(ReqPlayerProgression request, NetPeer peer)

@@ -314,7 +314,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2322350020710577856, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
       propertyPath: m_Name
-      value: Kingline_MediumText
+      value: SkillPoints
       objectReference: {fileID: 0}
     - target: {fileID: 3715845303187900682, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
       propertyPath: m_Pivot.x
@@ -398,7 +398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7030955256061076588, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
       propertyPath: m_text
-      value: Skills (5 Skill point unused)
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7030955256061076588, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
       propertyPath: m_VerticalAlignment
@@ -414,6 +414,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3715845303187900682, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
   m_PrefabInstance: {fileID: 138515744}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &143389232 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7030955256061076588, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
+  m_PrefabInstance: {fileID: 138515744}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &220420687
 GameObject:
   m_ObjectHideFlags: 0
@@ -642,9 +653,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31614b6acc6096e4d959af82cdc41a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Xp: 0
+  Level: -1
+  MaxExp: 0
+  CurrentExp: 0
   Skills: []
   PlayerUI: {fileID: 269301236}
+  LevelPoint: 0
 --- !u!4 &260503332
 Transform:
   m_ObjectHideFlags: 0
@@ -779,6 +793,7 @@ MonoBehaviour:
   m_skillItemViewContent: {fileID: 392737929}
   m_skillItemView: {fileID: 7163883472196607990, guid: 7a88830629604e445a2aba8e4337d934, type: 3}
   m_xpText: {fileID: 1256276336}
+  m_skillPointText: {fileID: 143389232}
 --- !u!1 &392737928
 GameObject:
   m_ObjectHideFlags: 0
