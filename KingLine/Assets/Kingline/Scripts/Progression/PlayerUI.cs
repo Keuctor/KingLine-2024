@@ -19,6 +19,8 @@ public class PlayerUI : MonoBehaviour
     private Dictionary<string, SkillItemView> m_createdSkillItemViews = new();
 
 
+    
+    
     private void Start()
     {
         ProgressionNetworkController.Instance.OnLevelChange.AddListener(OnLevelChange);
@@ -38,7 +40,6 @@ public class PlayerUI : MonoBehaviour
 
     private void OnLevelChange(int level)
     {
-        Debug.Log("LEVEL UP " + level);
     }
 
     private void CreateViews()
@@ -58,10 +59,10 @@ public class PlayerUI : MonoBehaviour
 
     public void SetSkillViews()
     {
-        m_skillPointText.text = $"You have {ProgressionNetworkController.Instance.LevelPoint} Points";
+        m_skillPointText.text = $"You have {ProgressionNetworkController.Instance.SkillPoint} Points";
         foreach (var m in m_createdSkillItemViews.Values)
         {
-            m.IncrementButton.gameObject.SetActive(ProgressionNetworkController.Instance.LevelPoint > 0);
+            m.IncrementButton.gameObject.SetActive(ProgressionNetworkController.Instance.SkillPoint > 0);
         }
     }
 
@@ -76,9 +77,9 @@ public class PlayerUI : MonoBehaviour
 
     private void OnIncrementSkillPointClicked(Skill skill)
     {
-        if (ProgressionNetworkController.Instance.LevelPoint <= 0)
+        if (ProgressionNetworkController.Instance.SkillPoint <= 0)
             return;
-        ProgressionNetworkController.Instance.LevelPoint--;
+        ProgressionNetworkController.Instance.SkillPoint--;
         ProgressionNetworkController.Instance.SendSkillIncrement(skill.Name);
         SetSkillViews();
     }

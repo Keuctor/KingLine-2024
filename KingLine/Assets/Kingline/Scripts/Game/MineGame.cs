@@ -81,7 +81,8 @@ public class MineGame : MonoBehaviour
     private static void OnDamage(NodeBehaviour node)
     {
         if (node.IsDead) return;
-        node.Damage(50);
+        var skill = ProgressionNetworkController.Instance.GetSkill("Strength");
+        node.Damage(10*skill);
         AudioManager.Instance.PlayOnce(SoundType.BREAKING_1, true, 0.3f);
     }
 

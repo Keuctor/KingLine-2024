@@ -66,6 +66,7 @@
      <Compile Include="Assets\Kingline\Scripts\Utils\GlobalCanvas.cs" />
      <Compile Include="Assets\Kingline\Scripts\Menu\ConnectionHandlerUI.cs" />
      <Compile Include="Assets\Kingline\Scripts\Menu\StructureInfoUI.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Progression\LevelUpPopup.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\NetworkManager.cs" />
      <Compile Include="Assets\Kingline\Scripts\Structure\StructureNetworkController.cs" />
      <Compile Include="Assets\Kingline\Scripts\Progression\SkillItemView.cs" />

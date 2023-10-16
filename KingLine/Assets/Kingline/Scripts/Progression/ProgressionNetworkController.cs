@@ -75,8 +75,17 @@ public class ProgressionNetworkController : NetworkController<ProgressionNetwork
     [NonSerialized]
     public readonly UnityEvent<string,byte> OnSkillValueChanged = new();
 
-    public int LevelPoint = 0;
+    [NonSerialized]
+    public int SkillPoint = 0;
+    
+    [SerializeField]
+    private LevelUpPopup m_leveLUpPopup;
 
+    [SerializeField]
+    private Transform m_levelUpContent;
+
+ 
+    
     public override void SubscribeResponse()
     {
         NetworkManager.Instance.NetPacketProcessor.RegisterNestedType(() => new Skill());
@@ -120,18 +129,28 @@ public class ProgressionNetworkController : NetworkController<ProgressionNetwork
             if (this.Level != obj.Level)
             {
                 OnLevelChange?.Invoke(obj.Level);
+                Instantiate(m_leveLUpPopup, m_levelUpContent);
             }
         }
 
         this.Level = obj.Level;
-        LevelPoint = this.Level;
+        SkillPoint = this.Level;
         foreach (var n in Skills)
-            LevelPoint -= (n.Value - 1);
+            SkillPoint -= (n.Value - 1);
     }
 
     private void OnPlayerProgressionResponse(ResPlayerProgression obj)
     {
         Skills = obj.Skills;
+    }
+    public byte GetSkill(string name)
+    {
+        for (int i = 0; i < Skills.Length; i++)
+        {
+            if (Skills[i].Name.Equals(name))
+                return Skills[i].Value;
+        }
+        return 0;
     }
 
     public override void HandleRequest()
@@ -160,4 +179,6 @@ public class ProgressionNetworkController : NetworkController<ProgressionNetwork
             SkillName = skillName
         });
     }
+
+
 }
