@@ -10,6 +10,8 @@ public class Item
     public string Name;
 }
 
+
+
 [CreateAssetMenu]
 public class ItemsSO : ScriptableObject
 {

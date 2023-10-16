@@ -163,4 +163,9 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
     public override void OnDisconnectedFromServer()
     {
     }
+
+    public void GetHand(Item item)
+    {
+        throw new System.NotImplementedException();
+    }
 }
