@@ -68,12 +68,12 @@ namespace KingLineServer.Inventory
         private void OnRequestMineBone(ReqMineBone request, NetPeer peer)
         {
             InventoryAdd(peer, 1, 1);
-            NetworkPlayerLevelController.AddXp(peer, 2);
+            NetworkPlayerLevelController.AddXp(peer, 1);
         }
         private void OnRequestMineStone(ReqMineStone request, NetPeer peer)
         {
             InventoryAdd(peer, 0, 1);
-            NetworkPlayerLevelController.AddXp(peer, 500);
+            NetworkPlayerLevelController.AddXp(peer, 2);
         }
 
         public void InventoryAdd(NetPeer peer, int id, short count)
