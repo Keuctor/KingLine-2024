@@ -10,7 +10,7 @@ public class PlayerMovementController : MonoBehaviour
 {
     [SerializeField]
     private PrefabsSO m_prefabs;
-    
+
     private bool m_isLocalPlayerMoving = false;
 
     private bool m_createdPlayers = false;
@@ -59,27 +59,28 @@ public class PlayerMovementController : MonoBehaviour
     {
         PlayerNetworkController.Instance.OnPlayerJoin.AddListener(OnPlayerJoin);
         PlayerNetworkController.Instance.OnPlayerLeave.AddListener(OnPlayerLeave);
-        NetworkManager.Instance.OnDisconnectedFromServer+=(OnDisconnectedFromServer);
+        NetworkManager.Instance.OnDisconnectedFromServer += (OnDisconnectedFromServer);
         if (PlayerNetworkController.Instance.Completed)
         {
             CreatePlayers();
             return;
         }
+
         PlayerNetworkController.Instance.OnPlayerListRefresh.AddListener(CreatePlayers);
     }
 
     private void OnDestroy()
     {
-        NetworkManager.Instance.OnDisconnectedFromServer-=(OnDisconnectedFromServer);
+        NetworkManager.Instance.OnDisconnectedFromServer -= (OnDisconnectedFromServer);
     }
 
     private void OnDisconnectedFromServer()
     {
         m_createdPlayers = false;
 
-        foreach(var v in playerInstances)
+        foreach (var v in playerInstances)
             Destroy(v.Value);
-        
+
         playerInstances.Clear();
     }
 
@@ -89,6 +90,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             CreatePlayer(v.Value);
         }
+
         m_createdPlayers = true;
     }
 
@@ -118,16 +120,16 @@ public class PlayerMovementController : MonoBehaviour
                 var angle = Vector2.SignedAngle(Vector2.up,
                     new Vector3(player.targetX, player.targetY) - player.Transform.position);
 
-                if (angle >= -45 && angle < 45)
-                    player.Animator.SetDirection(SpriteAnimator.MoveDirection.UP);
-                else if (angle >= 45 && angle < 135)
-                    player.Animator.SetDirection(SpriteAnimator.MoveDirection.LEFT);
-                else if (angle >= -135 && angle < -45)
-                    player.Animator.SetDirection(SpriteAnimator.MoveDirection.RIGHT);
+                Vector2 dirr = new Vector2(player.targetX - player.x, player.targetY - player.y).normalized;
+                if (dirr.x > 0)
+                {
+                    player.Animator.SetDirection(MoveDirection.Right);
+                }
                 else
-                    player.Animator.SetDirection(SpriteAnimator.MoveDirection.DOWN);
+                {
+                    player.Animator.SetDirection(MoveDirection.Left);
+                }
 
-                player.Animator.Animate();
             }
             else
             {
@@ -144,6 +146,7 @@ public class PlayerMovementController : MonoBehaviour
                         m_isLocalPlayerMoving = false;
                     }
                 }
+
                 player.Animator.SetPlay(false);
             }
 

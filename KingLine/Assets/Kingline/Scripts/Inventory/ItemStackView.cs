@@ -59,7 +59,7 @@ public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         }
     }
 
-    public void OnDrop(PointerEventData eventData)
+    public virtual void OnDrop(PointerEventData eventData)
     {
         GameObject dropped = eventData.pointerDrag;
         ItemStackContentView view = dropped.GetComponent<ItemStackContentView>();

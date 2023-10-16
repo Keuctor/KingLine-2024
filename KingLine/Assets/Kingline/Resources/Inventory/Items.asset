@@ -16,6 +16,36 @@ MonoBehaviour:
   - Id: 0
     Icon: {fileID: 21300000, guid: 0455201803ec7274b874ce232e96dc16, type: 3}
     Name: Stone
+    Type: 
+    Stackable: 1
+    Value: 5
   - Id: 1
     Icon: {fileID: 21300000, guid: 95c465bf9cd81954b82a9485adac0545, type: 3}
     Name: Bone
+    Type: 
+    Stackable: 1
+    Value: 10
+  - Id: 2
+    Icon: {fileID: 21300000, guid: 940b9a044d175fc41b6cbf0a39def7d3, type: 3}
+    Name: GuildHelmet
+    Type: Helmet
+    Stackable: 0
+    Value: 3
+  - Id: 3
+    Icon: {fileID: 21300000, guid: 1e1eaf038a082f04c8d03ad077e54b11, type: 3}
+    Name: ArcArmor
+    Type: Armor
+    Stackable: 0
+    Value: 3
+  - Id: 4
+    Icon: {fileID: 21300000, guid: 1f05f7d282a343489ba374a0bba09a51, type: 3}
+    Name: BoneClub
+    Type: Sword
+    Stackable: 0
+    Value: 3
+  - Id: 5
+    Icon: {fileID: 21300000, guid: a3fed30b3534e3d47b0a309e946f9aff, type: 3}
+    Name: Stone Pickaxe
+    Type: Pickaxe
+    Stackable: 0
+    Value: 3

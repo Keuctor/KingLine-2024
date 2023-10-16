@@ -1,4 +1,7 @@
-﻿using DG.Tweening;
+﻿using System;
+using System.Linq;
+using Assets.HeroEditor.FantasyInventory.Scripts.Interface.Elements;
+using DG.Tweening;
 using UnityEngine;
 
 public class InventoryNetworkController : NetworkController<InventoryNetworkController>
@@ -10,12 +13,16 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
     private ItemStackView m_itemViewTemplate;
 
     [SerializeField]
+    private ItemStackView[] m_gearSets;
+
+    [SerializeField]
     private ItemStackContentView m_itemViewContentTemplate;
 
     [SerializeField]
     private Transform m_itemViewContent;
 
-    private ItemStack[] m_items = new ItemStack[25];
+    public ItemStack[] Items = new ItemStack[28];
+
 
     private bool m_shown;
 
@@ -31,17 +38,23 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
     [SerializeField]
     private Transform m_itemPopupContent;
 
-  
 
     private void OnInventoryMove(ResInventoryMove obj)
     {
-        m_items[obj.ToIndex] = m_items[obj.FromIndex];
-        m_items[obj.FromIndex] = new ItemStack()
+        Items[obj.ToIndex] = Items[obj.FromIndex];
+        Items[obj.FromIndex] = new ItemStack()
         {
             Count = 0,
             Id = -1,
         };
+
+        if (obj.ToIndex >= 25 || obj.FromIndex >= 25)
+        {
+            OnGearChange?.Invoke();
+        }
     }
+
+    public Action OnGearChange;
 
     public void ShowInventory()
     {
@@ -50,8 +63,21 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
         m_shown = true;
         m_inventoryView.gameObject.SetActive(true);
         int index = 0;
-        foreach (var m in m_items)
+        for (var i = 0; i < Items.Length; i++)
         {
+            var m = Items[i];
+            if (i >= 25)
+            {
+                var gearView = m_gearSets[Mathf.Abs(25 - i)];
+                gearView.Id = i;
+                var gearItem = m_itemInfo.GetItem(m.Id);
+                if (gearItem != null)
+                {
+                    var contentView = Instantiate(m_itemViewContentTemplate, gearView.Content);
+                    contentView.SetContext(gearItem.Icon, m.Count);
+                }
+                continue;
+            }
             var view = Instantiate(m_itemViewTemplate, m_itemViewContent);
             view.Id = index++;
             var item = m_itemInfo.GetItem(m.Id);
@@ -83,11 +109,19 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
     {
         for (int i = 0; i < m_itemViewContent.transform.childCount; i++)
             Destroy(m_itemViewContent.transform.GetChild(i).gameObject);
+
+        for (int i = 0; i < m_gearSets.Length; i++)
+        {
+            if (m_gearSets[i].transform.childCount > 0)
+            {
+                Destroy(m_gearSets[i].transform.GetChild(0).gameObject);
+            }
+        }
     }
 
     private void OnInventoryResult(ResInventory result)
     {
-        m_items = result.Items;
+        Items = result.Items;
         if (m_shown)
             ShowInventory();
     }
@@ -107,7 +141,7 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
             .SubscribeReusable<ResInventoryAdd>(OnInventoryAdd);
     }
 
-    
+
     public override void UnSubscribeResponse()
     {
         NetworkManager.Instance.NetPacketProcessor
@@ -115,13 +149,13 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
         NetworkManager.Instance.NetPacketProcessor
             .RemoveSubscription<ResInventoryMove>();
     }
-    
+
     private void OnInventoryAdd(ResInventoryAdd response)
     {
         bool found = false;
-        for (var i = 0; i < m_items.Length; i++)
+        for (var i = 0; i < Items.Length - 3; i++)
         {
-            var item = m_items[i];
+            var item = Items[i];
             if (item.Id == response.Id)
             {
                 item.Count += response.Count;
@@ -132,12 +166,12 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
 
         if (!found)
         {
-            for (var i = 0; i < m_items.Length; i++)
+            for (var i = 0; i < Items.Length - 3; i++)
             {
-                if (m_items[i].Id == -1)
+                if (Items[i].Id == -1)
                 {
-                    m_items[i].Id = response.Id;
-                    m_items[i].Count = response.Count;
+                    Items[i].Id = response.Id;
+                    Items[i].Count = response.Count;
                     break;
                 }
             }
@@ -154,17 +188,16 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
         popup.CanvasGroup.DOFade(1, 0.2f);
         popup.RectTransform.DOAnchorPosY(400, 0.2f).SetDelay(1);
         popup.CanvasGroup.DOFade(0, 0.2f).SetDelay(1);
-        
-        Destroy(popup.gameObject,2f);
-    }
 
+        Destroy(popup.gameObject, 2f);
+    }
 
 
     public override void OnDisconnectedFromServer()
     {
     }
 
-    public void GetHand(Item item)
+    public void GetHand(ItemData item)
     {
         throw new System.NotImplementedException();
     }

@@ -123,7 +123,6 @@ namespace KingLineServer.Inventory
                 {
                     if (item.Id != -1)
                     {
-
                         var to = items[request.ToIndex];
                         if (to != null)
                         {
@@ -160,8 +159,9 @@ namespace KingLineServer.Inventory
             }
             else
             {
-                response.Items = new ItemStack[25];
-                for (int i = 0; i < 25; i++)
+                //Last 4 will be helmet / body / hand 
+                response.Items = new ItemStack[28];
+                for (int i = 0; i < 28; i++)
                 {
                     response.Items[i] = new ItemStack()
                     {
@@ -169,6 +169,27 @@ namespace KingLineServer.Inventory
                         Id = -1,
                     };
                 }
+                response.Items[25] = new ItemStack()
+                {
+                    Count = 1,
+                    Id = 2,
+                };
+                response.Items[26] = new ItemStack()
+                {
+                    Count = 1,
+                    Id = 3,
+                };
+                response.Items[27] = new ItemStack()
+                {
+                    Count = 1,
+                    Id = 4,
+                };
+                response.Items[0] = new ItemStack()
+                {
+                    Count = 1,
+                    Id = 5,
+                };
+
                 PlayerItems.Add(player.UniqueIdendifier, response.Items);
             }
             PackageSender.SendPacket(peer, response);

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteNetLib", "LiteNetLib.csproj", "{1ea8c636-11e4-a21a-4a12-cde2127be78a}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{3be692b1-e10a-3716-4fe4-ca0e933ab8e4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{df02c05d-f3d8-aa16-d536-33c4a28c4747}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteNetLib", "LiteNetLib.csproj", "{1ea8c636-11e4-a21a-4a12-cde2127be78a}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{a5dad2a9-688c-ee82-356d-73e9cb77245e}"
 EndProject
@@ -14,10 +16,12 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1ea8c636-11e4-a21a-4a12-cde2127be78a}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1ea8c636-11e4-a21a-4a12-cde2127be78a}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3be692b1-e10a-3716-4fe4-ca0e933ab8e4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3be692b1-e10a-3716-4fe4-ca0e933ab8e4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{df02c05d-f3d8-aa16-d536-33c4a28c4747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{df02c05d-f3d8-aa16-d536-33c4a28c4747}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ea8c636-11e4-a21a-4a12-cde2127be78a}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ea8c636-11e4-a21a-4a12-cde2127be78a}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{a5dad2a9-688c-ee82-356d-73e9cb77245e}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{a5dad2a9-688c-ee82-356d-73e9cb77245e}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49ebf241-e0ce-3a54-5fd1-b7f3d760f1c2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

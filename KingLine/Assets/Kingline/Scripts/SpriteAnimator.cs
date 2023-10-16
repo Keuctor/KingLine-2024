@@ -1,100 +1,107 @@
 using System;
+using Assets.HeroEditor.Common.CharacterScripts;
+using Assets.HeroEditor.Common.CommonScripts;
+using HeroEditor.Common;
+using HeroEditor.Common.Enums;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using Random = UnityEngine.Random;
 
 public class SpriteAnimator : MonoBehaviour
 {
-    public enum MoveDirection
-    {
-        RIGHT,
-        LEFT,
-        UP,
-        DOWN
-    }
-
     [SerializeField]
-    private SpriteRenderer m_renderer;
+    private Character m_character;
 
-    [SerializeField]
-    private int m_idleIndex;
-
-    [SerializeField]
-    private CharacterSpriteResource m_characterSpriteResource;
-
-    [SerializeField]
-    private bool m_play;
-
-    private Sprite[] m_current;
-
-    private MoveDirection m_currentMoveDirection;
-
-    private int m_frameIndex;
-
-    private MoveDirection m_moveDirection;
-
-    private float timer;
-
-    private readonly float timerInterval = 0.15f;
+    private Vector3 m_scale;
 
     private void Start()
     {
-        m_current = m_characterSpriteResource.Right;
+        m_scale = m_character.transform.localScale;
+        m_character.ResetEquipment();
+        OnGearChange();
+        InventoryNetworkController.Instance.OnGearChange += OnGearChange;
     }
+
+    private void OnDestroy()
+    {
+        InventoryNetworkController.Instance.OnGearChange -= OnGearChange;
+    }
+
+    private void OnGearChange()
+    {
+        var items = InventoryNetworkController.Instance.Items;
+        if (items[25].Id != -1)
+        {
+            var helmets = m_character.SpriteCollection.Helmet;
+            var itemInfo = InventoryNetworkController.Instance.m_itemInfo.GetItem(items[25].Id);
+            for (int i = 0; i < helmets.Count; i++)
+            {
+                if (helmets[i].Name.Equals(itemInfo.Name))
+                {
+                    m_character.Equip(helmets[i], EquipmentPart.Helmet);
+                    break;
+                }
+            }
+        }
+        else
+        {
+            m_character.UnEquip(EquipmentPart.Helmet);
+        }
+        
+        if (items[26].Id != -1)
+        {
+            var armor = m_character.SpriteCollection.Armor;
+            var itemInfo = InventoryNetworkController.Instance.m_itemInfo.GetItem(items[26].Id);
+            for (int i = 0; i < armor.Count; i++)
+            {
+                if (armor[i].Name.Equals(itemInfo.Name))
+                {
+                    m_character.Equip(armor[i], EquipmentPart.Armor);
+                    break;
+                }
+            }
+        }
+        else
+        {
+            m_character.UnEquip(EquipmentPart.Armor);
+        }
+      
+        if (items[27].Id != -1)
+        {
+            var weapons = m_character.SpriteCollection.MeleeWeapon1H;
+            var itemInfo = InventoryNetworkController.Instance.m_itemInfo.GetItem(items[27].Id);
+            for (int i = 0; i < weapons.Count; i++)
+            {
+                if (weapons[i].Name.Equals(itemInfo.Name))
+                {
+                    Debug.Log("EQUIPPED?");
+                    m_character.Equip(weapons[i], EquipmentPart.MeleeWeapon1H);
+                    break;
+                }
+            }
+        }
+        else
+        {
+            m_character.UnEquip(EquipmentPart.MeleeWeapon1H);
+        }
+    }
+
 
     public void SetPlay(bool play)
     {
-        if (m_play == play)
-            return;
-        
-        m_play = play;
-        if (!m_play) m_renderer.sprite = m_current[m_idleIndex];
+        m_character.SetState(play ? CharacterState.Run : CharacterState.Idle);
     }
 
 
     public void SetDirection(MoveDirection moveDirection)
     {
-        if (m_currentMoveDirection == moveDirection)
-            return;
-
-        m_currentMoveDirection = moveDirection;
-        m_frameIndex = m_idleIndex;
-        switch (moveDirection)
+        if (moveDirection == MoveDirection.Right)
         {
-            case MoveDirection.UP:
-                m_current = m_characterSpriteResource.Up;
-                break;
-            case MoveDirection.DOWN:
-                m_current = m_characterSpriteResource.Down;
-                break;
-            case MoveDirection.RIGHT:
-                m_current = m_characterSpriteResource.Right;
-                break;
-            case MoveDirection.LEFT:
-                m_current = m_characterSpriteResource.Left;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(moveDirection), moveDirection, null);
+            m_character.transform.localScale = new Vector3(m_scale.x, m_scale.y, m_scale.z);
         }
-
-        m_renderer.sprite = m_current[m_idleIndex];
-    }
-
-    public void Animate()
-    {
-        if (m_play)
+        else if (moveDirection == MoveDirection.Left)
         {
-            timer += Time.deltaTime;
-            if (timer >= timerInterval)
-            {
-                m_renderer.sprite = m_current[m_frameIndex++];
-                if (m_frameIndex >= m_current.Length)
-                    m_frameIndex = 0;
-                timer = 0f;
-            }
-        }
-        else
-        {
-            m_frameIndex = 0;
-            m_renderer.sprite = m_current[m_idleIndex];
+            m_character.transform.localScale = new Vector3(-m_scale.x, m_scale.y, m_scale.z);
         }
     }
 }

@@ -3,21 +3,23 @@ using System.Linq;
 using UnityEngine;
 
 [Serializable]
-public class Item
+public class ItemData
 {
     public int Id;
     public Sprite Icon;
     public string Name;
+    public string Type;
+    public bool Stackable;
+    public int Value;
 }
-
 
 
 [CreateAssetMenu]
 public class ItemsSO : ScriptableObject
 {
-    public Item[] Items;
+    public ItemData[] Items;
 
-    public Item GetItem(int mId)
+    public ItemData GetItem(int mId)
     {
         return Items.FirstOrDefault(t => t.Id == mId);
     }
