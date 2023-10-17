@@ -97,7 +97,6 @@ public class NetworkManager : MonoBehaviour, INetEventListener
     public void OnPeerDisconnected(NetPeer peer, DisconnectInfo disconnectInfo)
     {
         GlobalCanvas.Instance.SetLatency(-1);
-        Debug.Log(Connected);
 
         if (Connected)
             LoadingHandler.Instance.ShowLoading("Disconnected from server " + disconnectInfo.Reason);

@@ -317,6 +317,9 @@
      <Reference Include="UnityEditor.LinuxStandalone.Extensions">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.10f1\Editor\Data\PlaybackEngines\LinuxStandaloneSupport\UnityEditor.LinuxStandalone.Extensions.dll</HintPath>
      </Reference>
+     <Reference Include="HeroEditor.Common.Editor">
+     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\HeroEditor\Common\Editor\HeroEditor.Common.Editor.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.VisualScripting.YamlDotNet">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.visualscripting@1.9.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll</HintPath>
      </Reference>
@@ -332,11 +335,17 @@
      <Reference Include="Unity.Plastic.Newtonsoft.Json">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.collab-proxy@2.0.7\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
      </Reference>
+     <Reference Include="Ookii.Dialogs">
+     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\HeroEditor\StandaloneFileBrowser\Plugins\Ookii.Dialogs.dll</HintPath>
+     </Reference>
      <Reference Include="log4netPlastic">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.collab-proxy@2.0.7\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualScripting.IonicZip">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.visualscripting@1.9.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll</HintPath>
+     </Reference>
+     <Reference Include="HeroEditor.Common">
+     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\HeroEditor\Common\HeroEditor.Common.dll</HintPath>
      </Reference>
      <Reference Include="DOTween">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
@@ -347,20 +356,11 @@
      <Reference Include="Unity.VisualScripting.TextureAssets">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.visualscripting@1.9.0\Editor\VisualScripting.Core\EditorAssetResources\Unity.VisualScripting.TextureAssets.dll</HintPath>
      </Reference>
-     <Reference Include="unityplastic">
-     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.collab-proxy@2.0.7\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
-     </Reference>
-     <Reference Include="Ookii.Dialogs">
-     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\HeroEditor\StandaloneFileBrowser\Plugins\Ookii.Dialogs.dll</HintPath>
-     </Reference>
-     <Reference Include="HeroEditor.Common">
-     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\HeroEditor\Common\HeroEditor.Common.dll</HintPath>
-     </Reference>
      <Reference Include="System.Windows.Forms">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\HeroEditor\StandaloneFileBrowser\Plugins\System.Windows.Forms.dll</HintPath>
      </Reference>
-     <Reference Include="HeroEditor.Common.Editor">
-     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\HeroEditor\Common\Editor\HeroEditor.Common.Editor.dll</HintPath>
+     <Reference Include="unityplastic">
+     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.collab-proxy@2.0.7\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
      </Reference>
      <Reference Include="nunit.framework">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>

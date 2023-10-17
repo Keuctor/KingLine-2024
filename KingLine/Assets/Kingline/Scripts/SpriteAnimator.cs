@@ -74,7 +74,6 @@ public class SpriteAnimator : MonoBehaviour
             {
                 if (weapons[i].Name.Equals(itemInfo.Name))
                 {
-                    Debug.Log("EQUIPPED?");
                     m_character.Equip(weapons[i], EquipmentPart.MeleeWeapon1H);
                     break;
                 }
