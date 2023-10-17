@@ -8,7 +8,6 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
     [SerializeField]
     private GameObject m_inventoryView;
 
-
     [SerializeField]
     private ItemStackView m_itemViewTemplate;
 
@@ -23,11 +22,9 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
 
     public ItemStack[] Items = new ItemStack[28];
 
-
     private bool m_shown;
 
     public bool IsVisible => m_shown;
-
 
     public ItemRegistry ItemRegistry = new ItemRegistry();
 
@@ -73,21 +70,20 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
             {
                 var gearView = m_gearSets[Mathf.Abs(25 - i)];
                 gearView.Id = i;
-                var gearItem = ItemRegistry.GetItem(m.Id);
-                if (gearItem != null)
+                if (m.Id!=-1)
                 {
+                    var gearItem = ItemRegistry.GetItem(m.Id);
                     var contentView = Instantiate(m_itemViewContentTemplate, gearView.Content);
                     contentView.SetContext(SpriteLoader.LoadSprite(gearItem.Name), m.Count);
                 }
-
                 continue;
             }
 
             var view = Instantiate(m_itemViewTemplate, m_itemViewContent);
             view.Id = i;
-            var item = ItemRegistry.GetItem(m.Id);
-            if (item != null)
+            if (m.Id!=-1)
             {
+                var item = ItemRegistry.GetItem(m.Id);
                 var contentView = Instantiate(m_itemViewContentTemplate, view.Content);
                 contentView.SetContext(SpriteLoader.LoadSprite(item.Name), m.Count);
             }
