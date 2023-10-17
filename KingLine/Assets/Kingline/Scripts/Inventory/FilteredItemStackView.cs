@@ -1,10 +1,18 @@
 
 
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class FilteredItemStackView : ItemStackView
 {
+    private void Awake()
+    {
+        SELECTED_BACKGROUND_COLOR = Color.green;
+        NOT_SELECTED_BACKGROUND_COLOR = Color.white;
+        POINTER_OVER_BACKGROUND_COLOR = Color.white;
+    }
+
     public override void OnDrop(PointerEventData eventData)
     {
         GameObject dropped = eventData.pointerDrag;

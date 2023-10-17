@@ -1842,7 +1842,7 @@ GameObject:
   - component: {fileID: 1862248967}
   - component: {fileID: 1862248966}
   m_Layer: 5
-  m_Name: Mine
+  m_Name: MineToolSelectionUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

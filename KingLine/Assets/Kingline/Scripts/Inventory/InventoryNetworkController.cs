@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Linq;
-using Assets.HeroEditor.FantasyInventory.Scripts.Interface.Elements;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class InventoryNetworkController : NetworkController<InventoryNetworkController>
 {
     [SerializeField]
     private GameObject m_inventoryView;
-    
+
 
     [SerializeField]
     private ItemStackView m_itemViewTemplate;
@@ -29,7 +28,7 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
 
     public bool IsVisible => m_shown;
 
-    
+
     public ItemRegistry ItemRegistry = new ItemRegistry();
 
     [Header("Item Popup")]
@@ -39,6 +38,8 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
     [SerializeField]
     private Transform m_itemPopupContent;
 
+    public TMP_Text TotalStrengthText;
+    public TMP_Text TotalArmorText;
 
 
     private void OnInventoryMove(ResInventoryMove obj)
@@ -53,6 +54,7 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
         if (obj.ToIndex >= 25 || obj.FromIndex >= 25)
         {
             OnGearChange?.Invoke();
+            DisplayGearsetValues();
         }
     }
 
@@ -77,8 +79,10 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
                     var contentView = Instantiate(m_itemViewContentTemplate, gearView.Content);
                     contentView.SetContext(SpriteLoader.LoadSprite(gearItem.Name), m.Count);
                 }
+
                 continue;
             }
+
             var view = Instantiate(m_itemViewTemplate, m_itemViewContent);
             view.Id = i;
             var item = ItemRegistry.GetItem(m.Id);
@@ -88,6 +92,42 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
                 contentView.SetContext(SpriteLoader.LoadSprite(item.Name), m.Count);
             }
         }
+
+        DisplayGearsetValues();
+    }
+
+    private void DisplayGearsetValues()
+    {
+        var helmet = Items[25].Id;
+        var chest = Items[26].Id;
+        var hand = Items[27].Id;
+
+        var baseStrength = ProgressionNetworkController.Instance.GetSkill("Strength");
+        var baseDefence = ProgressionNetworkController.Instance.GetSkill("Defence");
+
+        if (helmet != -1)
+        {
+            var item = ItemRegistry.GetItem(helmet);
+            var armorMaterial = (ArmorItemMaterial)item;
+            baseDefence += (byte)armorMaterial.Armor;
+        }
+
+        if (chest != -1)
+        {
+            var item = ItemRegistry.GetItem(chest);
+            var armorMaterial = (ArmorItemMaterial)item;
+            baseDefence += (byte)armorMaterial.Armor;
+        }
+
+        if (hand != -1)
+        {
+            var item = ItemRegistry.GetItem(hand);
+            var armorMaterial = (WeaponItemMaterial)item;
+            baseStrength += (byte)armorMaterial.Attack;
+        }
+
+        TotalArmorText.text = baseDefence + "";
+        TotalStrengthText.text = baseStrength + "";
     }
 
     private void Update()

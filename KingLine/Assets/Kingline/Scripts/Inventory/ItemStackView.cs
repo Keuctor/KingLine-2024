@@ -21,10 +21,9 @@ public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 
     public static ItemStackView _selectedItemView;
 
-    public static Color SELECTED_BACKGROUND_COLOR = new Color(0.5f, 0.6f, 0.7f, 0.5f);
-    public static Color NOT_SELECTED_BACKGROUND_COLOR = new Color(0.4f, 0.4f, 0.4f, 1f);
-    public static Color POINTER_OVER_BACKGROUND_COLOR = new Color(0.5f, 0.5f, 0.5f, 1f);
-    public static Color POINTER_NOT_BACKGROUND_COLOR = new Color(0.4f, 0.4f, 0.5f, 1f);
+    public  Color SELECTED_BACKGROUND_COLOR = new(0.5f, 0.6f, 0.7f, 0.5f);
+    public  Color NOT_SELECTED_BACKGROUND_COLOR = new(0.4f, 0.4f, 0.4f, 1f);
+    public  Color POINTER_OVER_BACKGROUND_COLOR = new(0.5f, 0.5f, 0.5f, 1f);
 
 
     void Start()
@@ -36,7 +35,7 @@ public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     {
         if (_selectedItemView != null)
         {
-            _selectedItemView.m_background.color = NOT_SELECTED_BACKGROUND_COLOR;
+            _selectedItemView.m_background.color =  _selectedItemView.NOT_SELECTED_BACKGROUND_COLOR;
         }
 
         _selectedItemView = this;

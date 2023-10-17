@@ -75,9 +75,10 @@ public class NetworkPlayerProgressionController : INetworkController
         }
         else
         {
-            response.Skills = new Skill[5]
+            response.Skills = new Skill[6]
             {
                     CreateSkill("Strength",1),
+                    CreateSkill("Defence",1),
                     CreateSkill("Agility",1),
                     CreateSkill("Intelligence",1),
                     CreateSkill("Charisma",1),

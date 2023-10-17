@@ -30,7 +30,7 @@ public class ItemStackContentView : MonoBehaviour, IBeginDragHandler, IEndDragHa
     {
         ItemStackView.From = transform.parent.GetComponent<ItemStackView>().Id;
         ParentAfterDrag = transform.parent;
-        transform.SetParent(ParentAfterDrag.parent.parent);
+        transform.SetParent(ParentAfterDrag.parent.parent.parent);
         transform.SetAsLastSibling();
         m_background.raycastTarget = false;
         _backgroundColor = m_background.color;
