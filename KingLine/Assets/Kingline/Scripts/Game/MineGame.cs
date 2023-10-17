@@ -20,7 +20,6 @@ public class MineGame : MonoBehaviour
         BONE
     }
 
-    
 
     [SerializeField]
     private GameObject m_nodePrefab;
@@ -41,10 +40,10 @@ public class MineGame : MonoBehaviour
 
     [SerializeField]
     private bool m_loop;
-    
+
     [SerializeField]
     private PrefabsSO m_prefabs;
-    
+
     private static int m_selectedToolIndex = -1;
 
     [SerializeField]
@@ -57,6 +56,7 @@ public class MineGame : MonoBehaviour
     private TMP_Text m_selectedToolNameText;
 
     public float ToolModifier;
+    
 
 
     public void SelectTool()
@@ -67,16 +67,24 @@ public class MineGame : MonoBehaviour
 
     private void DisplayTool(int index)
     {
+        m_selectedToolPropertiesText.text = "Modifier: x" + 0.5f;
+        ToolModifier = 0.5f;
+        m_selectedToolNameText.text = "Hand";
+        m_selectedToolImage.enabled = false;
+
+        if (index < 0)
+            return;
+        
         var item = InventoryNetworkController.Instance.Items[index];
         if (item.Id == -1)
             return;
-            
+
         var material = InventoryNetworkController.Instance.ItemRegistry.GetItem(item.Id);
         if (material.Type != "Tool")
         {
             return;
         }
-            
+
         var toolItemMaterial = (ToolItemMaterial)material;
         m_selectedToolIndex = index;
         m_selectedToolPropertiesText.text = "Modifier: x" + toolItemMaterial.ToolValue;
@@ -93,16 +101,7 @@ public class MineGame : MonoBehaviour
         {
             Spawn(true);
         }
-        
-        m_selectedToolPropertiesText.text = "Modifier: x" + 0.5f;
-        ToolModifier = 0.5f;
-        m_selectedToolNameText.text = "Hand";
-        m_selectedToolImage.enabled = false;
-        
-        if (m_selectedToolIndex != -1)
-        {
-            DisplayTool(m_selectedToolIndex);
-        }
+        DisplayTool(m_selectedToolIndex);
     }
 
     public void Spawn(bool instant)
@@ -142,9 +141,12 @@ public class MineGame : MonoBehaviour
     {
         if (node.IsDead) return;
         var skill = ProgressionNetworkController.Instance.GetSkill("Strength");
-        node.Damage(10*skill*ToolModifier);
+        
+        node.Damage(10 * (Mathf.Max(1,skill/2f) * ToolModifier));
         AudioManager.Instance.PlayOnce(SoundType.BREAKING_1, true, 0.3f);
     }
+
+    
 
     private void OnNodeCompletePart()
     {
@@ -155,7 +157,7 @@ public class MineGame : MonoBehaviour
     {
         AudioManager.Instance.PlayOnce(SoundType.BREAKING_2, true, 0.5f);
         if (m_loop)
-            StartCoroutine(SpawnAfterSeconds(Random.Range(2, 10f)));
+            StartCoroutine(SpawnAfterSeconds(Random.Range(2, 4f)));
         if (m_mineType == MineType.STONE)
         {
             NetworkManager.Instance.Send(new ReqMineStone());

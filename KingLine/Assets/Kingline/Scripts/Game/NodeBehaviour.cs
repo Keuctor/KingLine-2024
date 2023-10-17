@@ -1,8 +1,10 @@
 ﻿using System;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 public class NodeBehaviour : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class NodeBehaviour : MonoBehaviour
     private float max_health;
     private int m_click;
     private int m_clickAddition;
+    [SerializeField]
+    private TMP_Text m_damageTextTemplate;
 
     [SerializeField]
     private Sprite[] m_sprites;
@@ -59,8 +63,20 @@ public class NodeBehaviour : MonoBehaviour
         transform.DOPunchPosition(Vector3.one * 0.03f, 0.3f);
 
         this.m_health -= damage;
+        
+        var damageText = Instantiate(m_damageTextTemplate);
+        damageText.gameObject.SetActive(true);
+        damageText.text = "-"+damage;
+        damageText.transform.position = transform.position;
+        damageText.transform.DOMoveY(transform.position.y+5,1f);
+        damageText.DOColor(Color.clear, 0.5f).SetDelay(0.5f);
+        Destroy(damageText.gameObject,1.3f);
+        
         if (m_health <= 0)
         {
+          
+                
+                
             OnComplete?.Invoke();
             m_mineIndex++;
             m_particleSystem.Play();

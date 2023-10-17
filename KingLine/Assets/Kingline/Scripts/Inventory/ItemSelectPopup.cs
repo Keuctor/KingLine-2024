@@ -20,11 +20,13 @@ public class ItemSelectPopup : MonoBehaviour
         for (var i = 0; i < 25; i++)
         {
             var m = items[i];
+
+            var view = Instantiate(m_itemSelectionViewTemplate, m_parent);
+            view.OnClick.AddListener(OnClick);
+            view.Id = i;
+            
             if (m.Id != -1)
             {
-                var view = Instantiate(m_itemSelectionViewTemplate, m_parent);
-                view.OnClick.AddListener(OnClick);
-                view.Id = i;
                 var item = InventoryNetworkController.Instance.ItemRegistry.GetItem(m.Id);
                 var contentView = Instantiate(m_itemSelectionViewContent, view.Content);
                 contentView.SetContext(SpriteLoader.LoadSprite(item.Name), m.Count);
