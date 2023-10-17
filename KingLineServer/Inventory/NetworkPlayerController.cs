@@ -104,7 +104,8 @@ public class NetworkPlayerController : INetworkController
             speed = 1.5f,
             targetX = 0,
             targetY = 0,
-            Token = idendifier
+            Token = idendifier,
+            Coin = 35,
         });
     }
 

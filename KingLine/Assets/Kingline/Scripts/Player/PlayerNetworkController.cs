@@ -8,6 +8,8 @@ public class PlayerNetworkController : NetworkController<PlayerNetworkController
 
     public bool Completed;
 
+    public Player LocalPlayer => Players[NetworkManager.LocalPlayerPeerId];
+
     public override void SubscribeResponse()
     {
         NetworkManager.Instance.NetPacketProcessor

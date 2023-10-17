@@ -293,6 +293,7 @@ MonoBehaviour:
   m_itemPopupContent: {fileID: 1725047876}
   TotalStrengthText: {fileID: 455307495}
   TotalArmorText: {fileID: 2115071777}
+  CoinText: {fileID: 1019339333}
 --- !u!4 &42736598
 Transform:
   m_ObjectHideFlags: 0

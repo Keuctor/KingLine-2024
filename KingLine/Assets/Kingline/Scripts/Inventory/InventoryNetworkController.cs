@@ -37,6 +37,7 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
 
     public TMP_Text TotalStrengthText;
     public TMP_Text TotalArmorText;
+    public TMP_Text CoinText;
 
 
     private void OnInventoryMove(ResInventoryMove obj)
@@ -124,6 +125,7 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
 
         TotalArmorText.text = baseDefence + "";
         TotalStrengthText.text = baseStrength + "";
+        CoinText.text = PlayerNetworkController.Instance.LocalPlayer.Coin+"";
     }
 
     private void Update()
