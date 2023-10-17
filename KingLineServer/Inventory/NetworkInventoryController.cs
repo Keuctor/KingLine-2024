@@ -157,8 +157,6 @@ public class NetworkInventoryController : INetworkController
             PlayerItems.Add(player.Token, response.Items);
         }
         PackageSender.SendPacket(peer, response);
-
-        //
     }
 
     public void OnPeerDisconnected(NetPeer peer)
