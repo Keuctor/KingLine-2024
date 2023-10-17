@@ -1,8 +1,6 @@
 ﻿using LiteNetLib;
 using LiteNetLib.Utils;
 
-namespace KingLineServer.Inventory
-{
     public interface INetworkController
     {
         public void OnPeerDisconnected(NetPeer peer);
@@ -12,4 +10,3 @@ namespace KingLineServer.Inventory
         void OnExit();
         void OnStart();
     }
-}

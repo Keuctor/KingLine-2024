@@ -289,7 +289,6 @@ MonoBehaviour:
   - {fileID: 472906686}
   m_itemViewContentTemplate: {fileID: 3326708398012921060, guid: 15acd7386d636634882d143ce57c3c5e, type: 3}
   m_itemViewContent: {fileID: 220420688}
-  m_itemInfo: {fileID: 11400000, guid: de9d394cd21e99544bf22facb18dcb85, type: 2}
   m_itemPopup: {fileID: 2813665920314612623, guid: 07d8ce6b330680f4fb5eb3815bdea086, type: 3}
   m_itemPopupContent: {fileID: 1725047876}
 --- !u!4 &42736598

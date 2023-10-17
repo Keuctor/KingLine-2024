@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Prefabs
   m_EditorClassIdentifier: 
   StructureInfoUI: {fileID: 9199848806029340611, guid: 0880a3133b2d40d4fad5582a0f925379, type: 3}
+  ItemSelectPopup: {fileID: 3705014527671699567, guid: 269c09d05e32a6f4aa7fa1fe83ec7adc, type: 3}

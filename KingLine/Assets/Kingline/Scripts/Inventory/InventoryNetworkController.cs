@@ -8,6 +8,7 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
 {
     [SerializeField]
     private GameObject m_inventoryView;
+    
 
     [SerializeField]
     private ItemStackView m_itemViewTemplate;
@@ -28,8 +29,8 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
 
     public bool IsVisible => m_shown;
 
-    [SerializeField]
-    public ItemsSO m_itemInfo;
+    
+    public ItemRegistry ItemRegistry = new ItemRegistry();
 
     [Header("Item Popup")]
     [SerializeField]
@@ -37,6 +38,7 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
 
     [SerializeField]
     private Transform m_itemPopupContent;
+
 
 
     private void OnInventoryMove(ResInventoryMove obj)
@@ -62,7 +64,6 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
 
         m_shown = true;
         m_inventoryView.gameObject.SetActive(true);
-        int index = 0;
         for (var i = 0; i < Items.Length; i++)
         {
             var m = Items[i];
@@ -70,21 +71,21 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
             {
                 var gearView = m_gearSets[Mathf.Abs(25 - i)];
                 gearView.Id = i;
-                var gearItem = m_itemInfo.GetItem(m.Id);
+                var gearItem = ItemRegistry.GetItem(m.Id);
                 if (gearItem != null)
                 {
                     var contentView = Instantiate(m_itemViewContentTemplate, gearView.Content);
-                    contentView.SetContext(gearItem.Icon, m.Count);
+                    contentView.SetContext(SpriteLoader.LoadSprite(gearItem.Name), m.Count);
                 }
                 continue;
             }
             var view = Instantiate(m_itemViewTemplate, m_itemViewContent);
-            view.Id = index++;
-            var item = m_itemInfo.GetItem(m.Id);
+            view.Id = i;
+            var item = ItemRegistry.GetItem(m.Id);
             if (item != null)
             {
                 var contentView = Instantiate(m_itemViewContentTemplate, view.Content);
-                contentView.SetContext(item.Icon, m.Count);
+                contentView.SetContext(SpriteLoader.LoadSprite(item.Name), m.Count);
             }
         }
     }
@@ -177,10 +178,10 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
             }
         }
 
-        var itemInfo = m_itemInfo.GetItem(response.Id);
+        var itemInfo = ItemRegistry.GetItem(response.Id);
 
         var popup = Instantiate(m_itemPopup, m_itemPopupContent);
-        popup.Icon.sprite = itemInfo.Icon;
+        popup.Icon.sprite = SpriteLoader.LoadSprite(itemInfo.Name);
         popup.CountText.text = "+" + response.Count;
         popup.CanvasGroup.alpha = 0;
         popup.RectTransform.anchoredPosition = new Vector2(0, 0);
@@ -195,10 +196,5 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
 
     public override void OnDisconnectedFromServer()
     {
-    }
-
-    public void GetHand(ItemData item)
-    {
-        throw new System.NotImplementedException();
     }
 }

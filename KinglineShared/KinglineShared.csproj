@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+    <BaseOutputPath>C:\Users\Hector\Desktop</BaseOutputPath>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="&#xD;&#xA;xcopy /y /d $(OutDir)KinglineShared.dll &quot;D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Kingline\Shared&quot;&#xD;&#xA;" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="LiteNetLib" Version="1.1.0" />
+  </ItemGroup>
+
+</Project>

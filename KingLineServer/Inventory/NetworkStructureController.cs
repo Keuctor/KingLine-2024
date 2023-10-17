@@ -2,85 +2,52 @@
 using LiteNetLib;
 using LiteNetLib.Utils;
 
-public partial class Structure : INetSerializable
+public class NetworkStructureController
+    : INetworkController
 {
-    public int Id { get; set; }
-    public float x { get; set; }
-    public float y { get; set; }
-    public void Serialize(NetDataWriter writer)
+    public static List<Structure> Structures = new List<Structure>();
+    private void OnRequestStructures(ReqStructures request, NetPeer peer)
     {
-        writer.Put(Id);
-        writer.Put(x);
-        writer.Put(y);
+        var packet = new ResStructures();
+        packet.Structures = Structures.ToArray();
+        PackageSender.SendPacket(peer, packet);
     }
 
-    public void Deserialize(NetDataReader reader)
+    public void Subscribe(NetPacketProcessor processor)
     {
-        Id = reader.GetInt();
-        x = reader.GetFloat();
-        y = reader.GetFloat();
+        processor.RegisterNestedType(() =>
+        {
+            return new Structure();
+        });
+        processor.SubscribeReusable<ReqStructures, NetPeer>(OnRequestStructures);
     }
-}
 
-
-public class ReqStructures
-{
-}
-public class ResStructures
-{
-    public Structure[] Structures { get; set; }
-}
-
-
-namespace KingLineServer.Inventory
-{
-    public class NetworkStructureController 
-        : INetworkController
+    public void OnPeerDisconnected(NetPeer peer)
     {
-        public static List<Structure> Structures = new List<Structure>();
-        private void OnRequestStructures(ReqStructures request, NetPeer peer)
-        {
-            var packet = new ResStructures();
-            packet.Structures = Structures.ToArray();
-            PackageSender.SendPacket(peer, packet);
-        }
+    }
 
-        public void Subscribe(NetPacketProcessor processor)
-        {
-            processor.RegisterNestedType(() =>
-            {
-                return new Structure();
-            });
-            processor.SubscribeReusable<ReqStructures, NetPeer>(OnRequestStructures);
-        }
+    public void OnPeerConnectionRequest(NetPeer peer, string username)
+    {
+    }
 
-        public void OnPeerDisconnected(NetPeer peer)
-        {
-        }
+    public void OnPeerConnected(NetPeer peer)
+    {
+    }
 
-        public void OnPeerConnectionRequest(NetPeer peer, string username)
-        {
-        }
+    public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
+    {
+    }
+    public void OnExit()
+    {
 
-        public void OnPeerConnected(NetPeer peer)
+    }
+    public void OnStart()
+    {
+        Structures.Add(new Structure()
         {
-        }
-
-        public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
-        {
-        }
-        public void OnExit()
-        {
-
-        }
-        public void OnStart()
-        {
-            Structures.Add(new Structure()
-            {
-                Id = 0,
-                x = 0,
-                y = 0,
-            });
-        }
+            Id = 0,
+            x = 0,
+            y = 0,
+        });
     }
 }

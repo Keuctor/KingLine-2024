@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "KingLineServer/1.0.0": {
         "dependencies": {
+          "KinglineShared": "1.0.0",
           "LiteNetLib": "1.1.0"
         },
         "runtime": {
@@ -20,6 +21,14 @@
             "assemblyVersion": "1.1.0.0",
             "fileVersion": "1.1.0.0"
           }
+        }
+      },
+      "KinglineShared/1.0.0": {
+        "dependencies": {
+          "LiteNetLib": "1.1.0"
+        },
+        "runtime": {
+          "KinglineShared.dll": {}
         }
       }
     }
@@ -36,6 +45,11 @@
       "sha512": "sha512-GavpDPs65Y4vvAeECbApWXynTOn7f7IVIHmRKpPmzLWSf3vllcxHN4XPN+Tu3YFqIwOYUdgI8fhkCMhn4FLQCw==",
       "path": "litenetlib/1.1.0",
       "hashPath": "litenetlib.1.1.0.nupkg.sha512"
+    },
+    "KinglineShared/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

@@ -12,7 +12,7 @@ public class FilteredItemStackView : ItemStackView
         if (view != null)
         {
             var item = InventoryNetworkController.Instance.Items[ItemStackView.From];
-            var itemInfo = InventoryNetworkController.Instance.m_itemInfo.GetItem(item.Id);
+            var itemInfo = InventoryNetworkController.Instance.ItemRegistry.GetItem(item.Id);
             if (Id == 25)
             {
                 if (itemInfo.Type.Equals("Helmet"))
@@ -29,7 +29,7 @@ public class FilteredItemStackView : ItemStackView
             }
             else if (Id == 27)
             {
-                if (itemInfo.Type.Equals("Sword") || itemInfo.Type.Equals("Pickaxe"))
+                if (itemInfo.Type.Equals("Weapon") || itemInfo.Type.Equals("Pickaxe"))
                 {
                     DragItem(view,eventData);
                 }

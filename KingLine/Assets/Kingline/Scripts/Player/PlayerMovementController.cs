@@ -6,6 +6,15 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+public class GamePlayer
+{
+    public Player Player;
+    public bool IsLocalPlayer;
+    public TMP_Text NameText;
+    public Transform Transform;
+    public SpriteAnimator Animator;
+}
+
 public class PlayerMovementController : MonoBehaviour
 {
     [SerializeField]
@@ -18,7 +27,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField]
     private GameObject m_playerPrefab;
 
-    public static Player m_localPlayer;
+    public static GamePlayer m_localPlayer;
 
     [SerializeField]
     private float m_moveTreshold = 0.16f;
@@ -30,7 +39,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField]
     private Camera m_mainCamera;
 
-    public Dictionary<int, GameObject> playerInstances = new Dictionary<int, GameObject>();
+    public Dictionary<int, GamePlayer> playerInstances = new Dictionary<int, GamePlayer>();
 
     private void ClientSendPositionUpdate()
     {
@@ -45,12 +54,12 @@ public class PlayerMovementController : MonoBehaviour
     private void ClientSendTargetPosition(Vector2 mousePosition)
     {
         m_isLocalPlayerMoving = true;
-        m_localPlayer.targetX = mousePosition.x;
-        m_localPlayer.targetY = mousePosition.y;
+        m_localPlayer.Player.targetX = mousePosition.x;
+        m_localPlayer.Player.targetY = mousePosition.y;
         var moveUpdate = new ReqPlayerMove
         {
-            x = m_localPlayer.targetX,
-            y = m_localPlayer.targetY
+            x = m_localPlayer.Player.targetX,
+            y = m_localPlayer.Player.targetY
         };
         NetworkManager.Instance.Send(moveUpdate);
     }
@@ -79,7 +88,7 @@ public class PlayerMovementController : MonoBehaviour
         m_createdPlayers = false;
 
         foreach (var v in playerInstances)
-            Destroy(v.Value);
+            Destroy(v.Value.Transform.gameObject);
 
         playerInstances.Clear();
     }
@@ -96,7 +105,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void OnPlayerLeave(int obj)
     {
-        Destroy(playerInstances[obj]);
+        Destroy(playerInstances[obj].Transform.gameObject);
         playerInstances.Remove(obj);
     }
 
@@ -110,30 +119,31 @@ public class PlayerMovementController : MonoBehaviour
         if (!m_createdPlayers)
             return;
 
-        foreach (var p in PlayerNetworkController.Instance.Players)
+        foreach (var p in playerInstances)
         {
-            var player = p.Value;
-            if (Vector2.Distance(player.Transform.position, new Vector2(player.targetX, player.targetY)) >
+            var gamePlayer = p.Value;
+            var player = p.Value.Player;
+            if (Vector2.Distance(gamePlayer.Transform.position, new Vector2(player.targetX, player.targetY)) >
                 float.Epsilon)
             {
-                player.Animator.SetPlay(true);
+                gamePlayer.Animator.SetPlay(true);
                 var angle = Vector2.SignedAngle(Vector2.up,
-                    new Vector3(player.targetX, player.targetY) - player.Transform.position);
+                    new Vector3(player.targetX, player.targetY) - gamePlayer.Transform.position);
 
                 Vector2 dirr = new Vector2(player.targetX - player.x, player.targetY - player.y).normalized;
                 if (dirr.x > 0)
                 {
-                    player.Animator.SetDirection(MoveDirection.Right);
+                    gamePlayer.Animator.SetDirection(MoveDirection.Right);
                 }
                 else
                 {
-                    player.Animator.SetDirection(MoveDirection.Left);
+                    gamePlayer.Animator.SetDirection(MoveDirection.Left);
                 }
 
             }
             else
             {
-                if (player.IsLocalPlayer)
+                if (gamePlayer.IsLocalPlayer)
                 {
                     if (m_isLocalPlayerMoving)
                     {
@@ -147,19 +157,19 @@ public class PlayerMovementController : MonoBehaviour
                     }
                 }
 
-                player.Animator.SetPlay(false);
+                gamePlayer.Animator.SetPlay(false);
             }
 
-            player.Transform.position = Vector2.MoveTowards(player.Transform.position,
+            gamePlayer.Transform.position = Vector2.MoveTowards(gamePlayer.Transform.position,
                 new Vector2(player.targetX, player.targetY),
                 player.speed * Time.deltaTime);
 
-            if (Mathf.Abs(player.Transform.position.x - player.x) > 6f ||
-                Mathf.Abs(player.Transform.position.y - player.y) > 6f)
+            if (Mathf.Abs(gamePlayer.Transform.position.x - player.x) > 6f ||
+                Mathf.Abs(gamePlayer.Transform.position.y - player.y) > 6f)
             {
                 player.targetX = player.x;
                 player.targetY = player.y;
-                player.Transform.position = new Vector2(player.x, player.y);
+                gamePlayer.Transform.position = new Vector2(player.x, player.y);
             }
         }
 
@@ -208,18 +218,24 @@ public class PlayerMovementController : MonoBehaviour
         if (IsLocalPlayerMoved()) ClientSendPositionUpdate();
     }
 
-    private void CreatePlayer(Player player)
+    private void CreatePlayer(Player pl)
     {
         var p = Instantiate(m_playerPrefab);
+
+        var player = new GamePlayer()
+        {
+            Player =  pl,
+        };
+        player.IsLocalPlayer = NetworkManager.LocalPlayerPeerId == player.Player.Id;
         player.Animator = p.GetComponent<SpriteAnimator>();
         player.Transform = p.transform;
-        player.NameLabel = player.Transform.GetChild(0).GetComponent<TMP_Text>();
+        player.NameText = player.Transform.GetChild(0).GetComponent<TMP_Text>();
 
-        player.NameLabel.text = player.Name;
+        player.NameText.text = player.Player.Name;
         player.Transform.position =
-            new Vector2(player.x, player.y);
+            new Vector2(player.Player.x, player.Player.y);
 
-        playerInstances.Add(player.Id, p);
+        playerInstances.Add(player.Player.Id, player);
         if (player.IsLocalPlayer)
         {
             m_localPlayer = player;
@@ -232,7 +248,7 @@ public class PlayerMovementController : MonoBehaviour
     private bool IsLocalPlayerMoved()
     {
         var position = m_localPlayer.Transform.position;
-        return Mathf.Abs(m_localPlayer.x - position.x) >= m_moveTreshold
-               || Mathf.Abs(m_localPlayer.y - position.y) >= m_moveTreshold;
+        return Mathf.Abs(m_localPlayer.Player.x - position.x) >= m_moveTreshold
+               || Mathf.Abs(m_localPlayer.Player.y - position.y) >= m_moveTreshold;
     }
 }

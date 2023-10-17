@@ -1,65 +1,7 @@
 using System;
-using LiteNetLib.Utils;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
-
-[Serializable]
-public class Skill : INetSerializable
-{
-    public string Name { get; set; }
-    public byte Value { get; set; }
-
-    public void Serialize(NetDataWriter writer)
-    {
-        writer.Put(Name);
-        writer.Put(Value);
-    }
-
-    public void Deserialize(NetDataReader reader)
-    {
-        Name = reader.GetString();
-        Value = reader.GetByte();
-    }
-}
-
-
-public class ReqPlayerProgression
-{
-}
-
-public class ResPlayerProgression
-{
-    public Skill[] Skills { get; set; }
-}
-
-public class ResPlayerXp
-{
-    public int Xp { get; set; }
-    public int Level { get; set; }
-    public int NeededXpForNextLevel { get; set; }
-}
-
-public class ResPlayerAddXp
-{
-    public int Xp { get; set; }
-}
-
-public class ReqPlayerXp
-{
-}
-
-public class ReqSkillIncrement
-{
-    public string SkillName { get; set; }
-}
-
-public class ResSkillValueChange
-{
-    public string SkillName { get; set; }
-    public byte Value { get; set; }
-}
 
 
 public class ProgressionNetworkController : NetworkController<ProgressionNetworkController>

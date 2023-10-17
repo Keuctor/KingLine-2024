@@ -89,7 +89,6 @@
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Data\ItemParams.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Extensions.cs" />
      <Compile Include="Assets\Kingline\Scripts\SpriteAnimator.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Inventory\ItemsSO.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\Enums\MagazineType.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\CharacterSetup.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\FirearmCollection.cs" />
@@ -103,7 +102,6 @@
      <Compile Include="Assets\Kingline\Scripts\Game\NodeBehaviour.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\Elements\ScrollInventoryFilter.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\Elements\Equipment.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Network\Packets.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\ShopBase.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Data\Property.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\DontDestroyOnLoad.cs" />
@@ -111,11 +109,14 @@
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemStackContentView.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\ItemTag.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\SoloState.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Inventory\SelectionItemStackView.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\AttackingExample.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\Springs\ScaleSpring.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Utils\SpriteLoader.cs" />
      <Compile Include="Assets\Kingline\Scripts\Utils\GlobalCanvas.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\Elements\ItemSlot.cs" />
      <Compile Include="Assets\Kingline\Scripts\Menu\ConnectionHandlerUI.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Inventory\ItemSelectPopup.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\StandaloneFileBrowserEditor.cs" />
      <Compile Include="Assets\Kingline\Scripts\Menu\StructureInfoUI.cs" />
      <Compile Include="Assets\Kingline\Scripts\Progression\LevelUpPopup.cs" />
@@ -178,6 +179,7 @@
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\ElementComponents.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\ItemCollection.cs" />
      <Compile Include="Assets\HeroEditor\Common\Data\FirearmParams.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Inventory\SelectionItemStackViewContent.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\InventoryNetworkController.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\Scarecrow.cs" />
      <Folder Include="Assets" />
@@ -336,6 +338,7 @@
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\Equipment\Boots\Mummies" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Sprites\Equipment\Supplies\Basic\Throwing" />
      <None Include="Assets\HeroEditor\Extensions\Style\Readme.txt" />
+     <Folder Include="Assets\Kingline\Shared" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\BodyParts\Ears\Zombies" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\BodyParts\Body\Demon" />
      <None Include="Assets\HeroEditor\Common\Shaders\GrayPaintURP2DLit\GrayPaintURP2DLit.shader" />
@@ -667,7 +670,7 @@
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Sprites\Equipment\Helmet\Knights" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\Equipment\Helmet\Furry" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon1H\Basic" />
-     <Folder Include="Assets\Kingline\Resources\Inventory" />
+     <Folder Include="Assets\Kingline\Resources\ItemIcons" />
      <Folder Include="Assets\HeroEditor\Extensions\VillageInventory" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon1H\SwampLords\Spear" />
      <Folder Include="Assets\HeroEditor\Common\Animation\Lower" />
@@ -743,7 +746,7 @@
      <Folder Include="Assets\HeroEditor\Extensions\VillageInventory\Sprites\Equipment\MeleeWeapon2H\Basic\Axe" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\Equipment\Helmet" />
      <Folder Include="Assets\HeroEditor\Common\Sprites\BodyParts\Ears" />
-     <Folder Include="Assets\Kingline\Sprites\Inventory" />
+     <Folder Include="Assets\Kingline\Sprites\World" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\Equipment\Armor" />
      <Folder Include="Assets\HeroEditor\Extensions\AbandonedWorkshop\Icons\WithoutBackground\Equipment\MeleeWeapon2H" />
      <Folder Include="Assets\HeroEditor\Extensions\AbandonedWorkshop\Sprites\Equipment\MeleeWeapon2H\AbandonedWorkshop" />
@@ -1273,6 +1276,9 @@
      </Reference>
      <Reference Include="System.Windows.Forms">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\HeroEditor\StandaloneFileBrowser\Plugins\System.Windows.Forms.dll</HintPath>
+     </Reference>
+     <Reference Include="KinglineShared">
+     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Kingline\Shared\KinglineShared.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Android.Types">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.10f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>

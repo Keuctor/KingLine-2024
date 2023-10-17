@@ -53,11 +53,13 @@ public class PlayerNetworkController : NetworkController<PlayerNetworkController
 
     [NonSerialized]
     public UnityEvent OnPlayerListRefresh = new();
+
     [NonSerialized]
     public UnityEvent<int> OnPlayerJoin = new();
+
     [NonSerialized]
     public UnityEvent<int> OnPlayerLeave = new();
-    
+
     #region NETWORK_RESPONSE
 
     private void OnPlayersResponse(ResPlayers res)
@@ -66,6 +68,7 @@ public class PlayerNetworkController : NetworkController<PlayerNetworkController
         {
             Players.Add(res.Players[i].Id, res.Players[i]);
         }
+
         Completed = true;
         OnPlayerListRefresh?.Invoke();
     }
@@ -73,8 +76,6 @@ public class PlayerNetworkController : NetworkController<PlayerNetworkController
     private void OnPlayerTargetChangeResponse(ResPlayerMove target)
     {
         var p = Players[target.Id];
-        if (p.IsLocalPlayer) return;
-
         p.targetX = target.x;
         p.targetY = target.y;
     }

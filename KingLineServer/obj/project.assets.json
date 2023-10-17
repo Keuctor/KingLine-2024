@@ -14,6 +14,19 @@
             "related": ".xml"
           }
         }
+      },
+      "KinglineShared/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "dependencies": {
+          "LiteNetLib": "1.1.0"
+        },
+        "compile": {
+          "bin/placeholder/KinglineShared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/KinglineShared.dll": {}
+        }
       }
     }
   },
@@ -42,10 +55,16 @@
         "litenetlib.1.1.0.nupkg.sha512",
         "litenetlib.nuspec"
       ]
+    },
+    "KinglineShared/1.0.0": {
+      "type": "project",
+      "path": "../KinglineShared/KinglineShared.csproj",
+      "msbuildProject": "../KinglineShared/KinglineShared.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "KinglineShared >= 1.0.0",
       "LiteNetLib >= 1.1.0"
     ]
   },
@@ -75,7 +94,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\KingLineServer\\KingLine-Libgdx\\KinglineShared\\KinglineShared.csproj": {
+              "projectPath": "D:\\KingLineServer\\KingLine-Libgdx\\KinglineShared\\KinglineShared.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

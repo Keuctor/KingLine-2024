@@ -6,7 +6,8 @@ namespace Kingline.Scripts.Utils
     [CreateAssetMenu]
     public class PrefabsSO : ScriptableObject
     {
-        [FormerlySerializedAs("PlaceInfoUI")]
         public StructureInfoUI StructureInfoUI;
+
+        public ItemSelectPopup ItemSelectPopup;
     }
 }

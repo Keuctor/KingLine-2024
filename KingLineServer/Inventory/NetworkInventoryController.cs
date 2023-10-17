@@ -2,54 +2,8 @@
 using LiteNetLib;
 using LiteNetLib.Utils;
 
-public class ItemStack : INetSerializable
-{
-    public int Id { get; set; }
-    public short Count { get; set; }
-    public void Deserialize(NetDataReader reader)
-    {
-        Id = reader.GetInt();
-        Count = reader.GetShort();
-    }
-    public void Serialize(NetDataWriter writer)
-    {
-        writer.Put(Id);
-        writer.Put(Count);
-    }
-}
 
-public class ReqInventory { }
-public class ResInventory
-{
-    public ItemStack[] Items { get; set; }
-}
-public class ReqInventoryMove
-{
-    public short FromIndex { get; set; }
-    public short ToIndex { get; set; }
-}
 
-public class ResInventoryMove
-{
-    public short FromIndex { get; set; }
-    public short ToIndex { get; set; }
-}
-
-public class ResInventoryAdd
-{
-    public int Id { get; set; }
-    public short Count { get; set; }
-}
-public class ReqMineStone
-{
-}
-
-public class ReqMineBone
-{
-}
-
-namespace KingLineServer.Inventory
-{
     public class NetworkInventoryController : INetworkController
     {
         public static Dictionary<string, ItemStack[]> PlayerItems = new Dictionary<string, ItemStack[]>();
@@ -79,7 +33,7 @@ namespace KingLineServer.Inventory
         public void InventoryAdd(NetPeer peer, int id, short count)
         {
             var player = NetworkPlayerController.Players[peer];
-            ItemStack[] items = PlayerItems[player.UniqueIdendifier];
+            ItemStack[] items = PlayerItems[player.Token];
 
             bool found = false;
             for (var i = 0; i < items.Length; i++)
@@ -104,7 +58,7 @@ namespace KingLineServer.Inventory
                     }
                 }
             }
-            PlayerItems[player.UniqueIdendifier] = items;
+            PlayerItems[player.Token] = items;
             PackageSender.SendPacket(peer, new ResInventoryAdd()
             {
                 Count = count,
@@ -116,7 +70,7 @@ namespace KingLineServer.Inventory
         private void OnRequestInventoryMove(ReqInventoryMove request, NetPeer peer)
         {
             var player = NetworkPlayerController.Players[peer];
-            if (PlayerItems.TryGetValue(player.UniqueIdendifier, out ItemStack[] items))
+            if (PlayerItems.TryGetValue(player.Token, out ItemStack[] items))
             {
                 var item = items[request.FromIndex];
                 if (item != null)
@@ -139,7 +93,7 @@ namespace KingLineServer.Inventory
                     }
                 }
 
-                PlayerItems[player.UniqueIdendifier] = items;
+                PlayerItems[player.Token] = items;
                 var response = new ResInventoryMove()
                 {
                     ToIndex = request.ToIndex,
@@ -153,7 +107,7 @@ namespace KingLineServer.Inventory
         {
             var player = NetworkPlayerController.Players[peer];
             var response = new ResInventory();
-            if (PlayerItems.TryGetValue(player.UniqueIdendifier, out ItemStack[] items))
+            if (PlayerItems.TryGetValue(player.Token, out ItemStack[] items))
             {
                 response.Items = items;
             }
@@ -169,28 +123,29 @@ namespace KingLineServer.Inventory
                         Id = -1,
                     };
                 }
+
                 response.Items[25] = new ItemStack()
                 {
                     Count = 1,
-                    Id = 2,
+                    Id = MaterialType.PEASANT_CAP.ID(),
                 };
                 response.Items[26] = new ItemStack()
                 {
                     Count = 1,
-                    Id = 3,
+                    Id = MaterialType.PEASANT_CLOTHING.ID(),
                 };
                 response.Items[27] = new ItemStack()
                 {
                     Count = 1,
-                    Id = 4,
+                    Id = MaterialType.BONE_CLUP.ID(),
                 };
                 response.Items[0] = new ItemStack()
                 {
                     Count = 1,
-                    Id = 5,
+                    Id = MaterialType.STONE_PICKAXE.ID(),
                 };
 
-                PlayerItems.Add(player.UniqueIdendifier, response.Items);
+                PlayerItems.Add(player.Token, response.Items);
             }
             PackageSender.SendPacket(peer, response);
         }
@@ -213,4 +168,3 @@ namespace KingLineServer.Inventory
         {
         }
     }
-}

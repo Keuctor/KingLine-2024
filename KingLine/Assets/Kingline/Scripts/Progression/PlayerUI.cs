@@ -19,8 +19,6 @@ public class PlayerUI : MonoBehaviour
     private Dictionary<string, SkillItemView> m_createdSkillItemViews = new();
 
 
-    
-    
     private void Start()
     {
         ProgressionNetworkController.Instance.OnLevelChange.AddListener(OnLevelChange);

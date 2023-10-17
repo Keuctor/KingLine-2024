@@ -1,0 +1,13 @@
+D:\KingLineServer\KingLine-Libgdx\KinglineShared\bin\Debug\netstandard2.1\KinglineShared.deps.json
+D:\KingLineServer\KingLine-Libgdx\KinglineShared\bin\Debug\netstandard2.1\KinglineShared.dll
+D:\KingLineServer\KingLine-Libgdx\KinglineShared\bin\Debug\netstandard2.1\KinglineShared.pdb
+D:\KingLineServer\KingLine-Libgdx\KinglineShared\obj\Debug\netstandard2.1\KinglineShared.csproj.AssemblyReference.cache
+D:\KingLineServer\KingLine-Libgdx\KinglineShared\obj\Debug\netstandard2.1\KinglineShared.GeneratedMSBuildEditorConfig.editorconfig
+D:\KingLineServer\KingLine-Libgdx\KinglineShared\obj\Debug\netstandard2.1\KinglineShared.AssemblyInfoInputs.cache
+D:\KingLineServer\KingLine-Libgdx\KinglineShared\obj\Debug\netstandard2.1\KinglineShared.AssemblyInfo.cs
+D:\KingLineServer\KingLine-Libgdx\KinglineShared\obj\Debug\netstandard2.1\KinglineShared.csproj.CoreCompileInputs.cache
+D:\KingLineServer\KingLine-Libgdx\KinglineShared\obj\Debug\netstandard2.1\KinglineShared.dll
+D:\KingLineServer\KingLine-Libgdx\KinglineShared\obj\Debug\netstandard2.1\KinglineShared.pdb
+C:\Users\Hector\Desktop\Debug\netstandard2.1\KinglineShared.deps.json
+C:\Users\Hector\Desktop\Debug\netstandard2.1\KinglineShared.dll
+C:\Users\Hector\Desktop\Debug\netstandard2.1\KinglineShared.pdb

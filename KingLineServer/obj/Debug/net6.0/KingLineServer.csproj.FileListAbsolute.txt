@@ -32,3 +32,5 @@ D:\KingLineServer\KingLine-Libgdx\KingLineServer\obj\Debug\net6.0\refint\KingLin
 D:\KingLineServer\KingLine-Libgdx\KingLineServer\obj\Debug\net6.0\KingLineServer.pdb
 D:\KingLineServer\KingLine-Libgdx\KingLineServer\obj\Debug\net6.0\KingLineServer.genruntimeconfig.cache
 D:\KingLineServer\KingLine-Libgdx\KingLineServer\obj\Debug\net6.0\ref\KingLineServer.dll
+D:\KingLineServer\KingLine-Libgdx\KingLineServer\bin\Debug\net6.0\KinglineShared.dll
+D:\KingLineServer\KingLine-Libgdx\KingLineServer\bin\Debug\net6.0\KinglineShared.pdb

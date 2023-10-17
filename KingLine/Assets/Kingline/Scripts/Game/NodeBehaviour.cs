@@ -3,18 +3,17 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 public class NodeBehaviour : MonoBehaviour
 {
-    private int m_health;
-    private int max_health;
+    private float m_health;
+    private float max_health;
     private int m_click;
     private int m_clickAddition;
 
     [SerializeField]
     private Sprite[] m_sprites;
-    
+
     private SpriteRenderer m_spriteRenderer;
 
     private ParticleSystem m_particleSystem;
@@ -34,19 +33,19 @@ public class NodeBehaviour : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
-        
+
         OnClick?.Invoke();
     }
 
     public bool IsDead => m_health <= 0;
 
-    public void SetHealth(int health)
+    public void SetHealth(float health)
     {
         this.m_health = health;
         this.max_health = health;
     }
 
-    public void Damage(int damage)
+    public void Damage(float damage)
     {
         if (m_health <= 0)
             return;

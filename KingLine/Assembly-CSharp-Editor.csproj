@@ -362,6 +362,9 @@
      <Reference Include="unityplastic">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.collab-proxy@2.0.7\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
      </Reference>
+     <Reference Include="KinglineShared">
+     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Kingline\Shared\KinglineShared.dll</HintPath>
+     </Reference>
      <Reference Include="nunit.framework">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
      </Reference>

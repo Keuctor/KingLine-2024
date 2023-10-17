@@ -1,5 +1,4 @@
-﻿using KingLineServer.Inventory;
-using KingLineServer.Network;
+﻿using KingLineServer.Network;
 using KingLineServer.Utils;
 using LiteNetLib;
 using LiteNetLib.Utils;
@@ -7,10 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-public class ResPeerId
-{
-    public int Id { get; set; }
-}
+
 
 namespace KingLineServer
 {

@@ -48,7 +48,6 @@ public class StructureUI : MonoBehaviour
     private void OnAnswered(int id)
     {
         OnResult?.Invoke(id);
-        Debug.Log("clicked:" + id);
         if (id == 0)
         {
             SceneManager.LoadScene("Mine", LoadSceneMode.Single);

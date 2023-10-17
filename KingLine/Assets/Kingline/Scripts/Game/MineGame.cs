@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Kingline.Scripts.Utils;
+using KinglineShared.Item;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -16,6 +19,8 @@ public class MineGame : MonoBehaviour
         STONE,
         BONE
     }
+
+    
 
     [SerializeField]
     private GameObject m_nodePrefab;
@@ -36,12 +41,67 @@ public class MineGame : MonoBehaviour
 
     [SerializeField]
     private bool m_loop;
+    
+    [SerializeField]
+    private PrefabsSO m_prefabs;
+    
+    private static int m_selectedToolIndex = -1;
+
+    [SerializeField]
+    private TMP_Text m_selectedToolPropertiesText;
+
+    [SerializeField]
+    private Image m_selectedToolImage;
+
+    [SerializeField]
+    private TMP_Text m_selectedToolNameText;
+
+    public float ToolModifier;
+
+
+    public void SelectTool()
+    {
+        var popup = Instantiate(m_prefabs.ItemSelectPopup);
+        popup.OnSelect.AddListener(DisplayTool);
+    }
+
+    private void DisplayTool(int index)
+    {
+        var item = InventoryNetworkController.Instance.Items[index];
+        if (item.Id == -1)
+            return;
+            
+        var material = InventoryNetworkController.Instance.ItemRegistry.GetItem(item.Id);
+        if (material.Type != "Tool")
+        {
+            return;
+        }
+            
+        var toolItemMaterial = (ToolItemMaterial)material;
+        m_selectedToolIndex = index;
+        m_selectedToolPropertiesText.text = "Modifier: x" + toolItemMaterial.ToolValue;
+        m_selectedToolImage.sprite = SpriteLoader.LoadSprite(toolItemMaterial.Name);
+        m_selectedToolImage.enabled = true;
+        m_selectedToolNameText.text = toolItemMaterial.Name;
+        ToolModifier = toolItemMaterial.ToolValue;
+    }
+
 
     private void Start()
     {
         for (int i = 0; i < m_maxMineCount; i++)
         {
             Spawn(true);
+        }
+        
+        m_selectedToolPropertiesText.text = "Modifier: x" + 0.5f;
+        ToolModifier = 0.5f;
+        m_selectedToolNameText.text = "Hand";
+        m_selectedToolImage.enabled = false;
+        
+        if (m_selectedToolIndex != -1)
+        {
+            DisplayTool(m_selectedToolIndex);
         }
     }
 
@@ -78,11 +138,11 @@ public class MineGame : MonoBehaviour
         }
     }
 
-    private static void OnDamage(NodeBehaviour node)
+    private void OnDamage(NodeBehaviour node)
     {
         if (node.IsDead) return;
         var skill = ProgressionNetworkController.Instance.GetSkill("Strength");
-        node.Damage(10*skill);
+        node.Damage(10*skill*ToolModifier);
         AudioManager.Instance.PlayOnce(SoundType.BREAKING_1, true, 0.3f);
     }
 
