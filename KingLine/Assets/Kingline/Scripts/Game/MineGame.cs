@@ -57,7 +57,11 @@ public class MineGame : MonoBehaviour
 
     public float ToolModifier;
     
+    private InventoryNetworkController m_controller;
+    private ItemRegistry m_registry;
 
+
+    
 
     public void SelectTool()
     {
@@ -75,11 +79,11 @@ public class MineGame : MonoBehaviour
         if (index < 0)
             return;
         
-        var item = InventoryNetworkController.Instance.Items[index];
+        var item = m_controller.Items[index];
         if (item.Id == -1)
             return;
 
-        var material = InventoryNetworkController.Instance.ItemRegistry.GetItem(item.Id);
+        var material = m_registry.GetItem(item.Id);
         if (material.Type != "Tool")
         {
             return;
@@ -97,6 +101,9 @@ public class MineGame : MonoBehaviour
 
     private void Start()
     {
+        m_controller = NetworkManager.Instance.GetController<InventoryNetworkController>();
+        m_registry = FindObjectOfType<InventoryController>().ItemRegistry;
+        
         for (int i = 0; i < m_maxMineCount; i++)
         {
             Spawn(true);
@@ -140,7 +147,8 @@ public class MineGame : MonoBehaviour
     private void OnDamage(NodeBehaviour node)
     {
         if (node.IsDead) return;
-        var skill = ProgressionNetworkController.Instance.GetSkill("Strength");
+        var controller = NetworkManager.Instance.GetController<ProgressionNetworkController>();
+        var skill = controller.GetSkill("Strength");
         
         node.Damage(10 * (Mathf.Max(1,skill/2f) * ToolModifier));
         AudioManager.Instance.PlayOnce(SoundType.BREAKING_1, true, 0.3f);

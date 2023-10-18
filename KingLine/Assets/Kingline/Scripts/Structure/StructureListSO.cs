@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Kingline.Scripts.Structure
-{
+
     [Serializable]
     public class StructureInfo
     {
@@ -28,4 +27,3 @@ namespace Kingline.Scripts.Structure
             return Structures.FirstOrDefault(t => t.Id == structureId);
         }
     }
-}

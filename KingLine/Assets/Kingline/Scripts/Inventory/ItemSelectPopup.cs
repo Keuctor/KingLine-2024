@@ -16,7 +16,8 @@ public class ItemSelectPopup : MonoBehaviour
 
     private void Start()
     {
-        var items = InventoryNetworkController.Instance.Items;
+        var controller = NetworkManager.Instance.GetController<InventoryNetworkController>();
+        var items =  controller.Items;
         for (var i = 0; i < 25; i++)
         {
             var m = items[i];
@@ -27,7 +28,7 @@ public class ItemSelectPopup : MonoBehaviour
             
             if (m.Id != -1)
             {
-                var item = InventoryNetworkController.Instance.ItemRegistry.GetItem(m.Id);
+                var item =  FindObjectOfType<InventoryController>().ItemRegistry.GetItem(m.Id);
                 var contentView = Instantiate(m_itemSelectionViewContent, view.Content);
                 contentView.SetContext(SpriteLoader.LoadSprite(item.Name), m.Count);
             }

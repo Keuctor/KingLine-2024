@@ -1,57 +1,14 @@
 using System;
 using System.Collections.Generic;
+using LiteNetLib;
+using LiteNetLib.Utils;
 using UnityEngine.Events;
 
-public class PlayerNetworkController : NetworkController<PlayerNetworkController>
+public class PlayerNetworkController : INetworkController
 {
     public readonly Dictionary<int, Player> Players = new();
 
-    public bool Completed;
-
     public Player LocalPlayer => Players[NetworkManager.LocalPlayerPeerId];
-
-    public override void SubscribeResponse()
-    {
-        NetworkManager.Instance.NetPacketProcessor
-            .SubscribeReusable<ResPlayers>(OnPlayersResponse);
-
-        NetworkManager.Instance.NetPacketProcessor
-            .SubscribeReusable<ResPlayerPosition>(OnUpdatePlayerPositionResponse);
-
-        NetworkManager.Instance.NetPacketProcessor
-            .SubscribeReusable<ResPlayerMove>(OnPlayerTargetChangeResponse);
-
-        NetworkManager.Instance.NetPacketProcessor
-            .SubscribeReusable<ResPlayerJoin>(OnPlayerJoinedResponse);
-
-        NetworkManager.Instance.NetPacketProcessor
-            .SubscribeReusable<ResPlayerLeave>(OnPlayerLeaveResponse);
-    }
-
-    public override void HandleRequest()
-    {
-        NetworkManager.Instance.Send(new ReqPlayers());
-    }
-
-    public override void UnSubscribeResponse()
-    {
-        NetworkManager.Instance.NetPacketProcessor
-            .RemoveSubscription<ResPlayers>();
-        NetworkManager.Instance.NetPacketProcessor
-            .RemoveSubscription<ResPlayerPosition>();
-        NetworkManager.Instance.NetPacketProcessor
-            .RemoveSubscription<ResPlayerMove>();
-        NetworkManager.Instance.NetPacketProcessor
-            .RemoveSubscription<ResPlayerJoin>();
-        NetworkManager.Instance.NetPacketProcessor
-            .RemoveSubscription<ResPlayerLeave>();
-    }
-
-    public override void OnDisconnectedFromServer()
-    {
-        Players.Clear();
-    }
-
 
     [NonSerialized]
     public UnityEvent OnPlayerListRefresh = new();
@@ -62,16 +19,49 @@ public class PlayerNetworkController : NetworkController<PlayerNetworkController
     [NonSerialized]
     public UnityEvent<int> OnPlayerLeave = new();
 
-    #region NETWORK_RESPONSE
+    public Player GetPlayer(int i)
+    {
+        return Players[i];
+    }
 
+    public void OnPeerDisconnected(NetPeer peer)
+    {
+        Players.Clear();
+    }
+    public void OnPeerConnected(NetPeer peer)
+    {
+        NetworkManager.Instance.Send(new ReqPlayers());
+    }
+    
+    public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
+    {
+        
+    }
+
+    public void Subscribe(NetPacketProcessor processor)
+    {
+        processor.SubscribeReusable<ResPlayers>(OnPlayersResponse);
+        processor.SubscribeReusable<ResPlayerPosition>(OnUpdatePlayerPositionResponse);
+        processor.SubscribeReusable<ResPlayerMove>(OnPlayerTargetChangeResponse);
+        processor.SubscribeReusable<ResPlayerJoin>(OnPlayerJoinedResponse);
+        processor.SubscribeReusable<ResPlayerLeave>(OnPlayerLeaveResponse);
+    }
+
+    public void OnExit()
+    {
+    }
+
+    public void OnStart()
+    {
+    }
+    
+    
     private void OnPlayersResponse(ResPlayers res)
     {
         for (var i = 0; i < res.Players.Length; i++)
         {
             Players.Add(res.Players[i].Id, res.Players[i]);
         }
-
-        Completed = true;
         OnPlayerListRefresh?.Invoke();
     }
 
@@ -106,10 +96,4 @@ public class PlayerNetworkController : NetworkController<PlayerNetworkController
             }
     }
 
-    #endregion
-
-    public Player GetPlayer(int i)
-    {
-        return Players[i];
-    }
 }

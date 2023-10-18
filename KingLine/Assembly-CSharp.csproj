@@ -60,6 +60,7 @@
      <Compile Include="Assets\Kingline\Scripts\Menu\LoadingHandlerUI.cs" />
      <Compile Include="Assets\HeroEditor\Common\SimpleColorPicker\Scripts\RainbowGenerator.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\Extensions.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Structure\StructureController.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemStackView.cs" />
      <Compile Include="Assets\Kingline\Scripts\Menu\GameCanvas.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\InventoryBase.cs" />
@@ -150,6 +151,7 @@
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\QuickStart.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\MeleeWeapon.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\ModificatorType.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Inventory\InventoryController.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\CharacterAnimation.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\PlayingAnimations.cs" />
      <Compile Include="Assets\Kingline\Scripts\Audio\AudioManager.cs" />
@@ -167,6 +169,7 @@
      <Compile Include="Assets\Kingline\Scripts\Network\ConnectionDataSO.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\RuntimeSetup.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\AnchorManager.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Progression\ProgressionController.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemPopupUI.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\Firearm.cs" />

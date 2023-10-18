@@ -21,10 +21,11 @@ public class LevelUpPopup : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.Instance.PlayOnce(SoundType.LEVEL_UP,true,0.4f);
-        this.m_levelText.text = $"LEVEL {ProgressionNetworkController.Instance.Level}";
+        var m_progressionNetworkController = NetworkManager.Instance.GetController<ProgressionNetworkController>();
+        AudioManager.Instance.PlayOnce(SoundType.LEVEL_UP, true, 0.4f);
+        this.m_levelText.text = $"LEVEL {m_progressionNetworkController.Level}";
         this.m_unspentSkillPointText.text =
-            $"You have {ProgressionNetworkController.Instance.SkillPoint} unspent skill points";
+            $"You have {m_progressionNetworkController.SkillPoint} unspent skill points";
 
 
         StartCoroutine(UpdateUI());

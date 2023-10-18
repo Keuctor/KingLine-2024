@@ -6,7 +6,7 @@ public class NavigationUI : MonoBehaviour
 {
     public void ShowInventory()
     {
-        var inventoryController = FindObjectOfType<InventoryNetworkController>();
+        var inventoryController = FindObjectOfType<InventoryController>();
         if (inventoryController.IsVisible)
         {
             inventoryController.HideInventory();

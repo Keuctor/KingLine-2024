@@ -1,44 +1,18 @@
 ﻿using System;
 using DG.Tweening;
+using LiteNetLib;
+using LiteNetLib.Utils;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class InventoryNetworkController : NetworkController<InventoryNetworkController>
+public class InventoryNetworkController : INetworkController
 {
-    [SerializeField]
-    private GameObject m_inventoryView;
-
-    [SerializeField]
-    private ItemStackView m_itemViewTemplate;
-
-    [SerializeField]
-    private ItemStackView[] m_gearSets;
-
-    [SerializeField]
-    private ItemStackContentView m_itemViewContentTemplate;
-
-    [SerializeField]
-    private Transform m_itemViewContent;
-
     public ItemStack[] Items = new ItemStack[28];
 
-    private bool m_shown;
-
-    public bool IsVisible => m_shown;
-
-    public ItemRegistry ItemRegistry = new ItemRegistry();
-
-    [Header("Item Popup")]
-    [SerializeField]
-    private ItemPopupUI m_itemPopup;
-
-    [SerializeField]
-    private Transform m_itemPopupContent;
-
-    public TMP_Text TotalStrengthText;
-    public TMP_Text TotalArmorText;
-    public TMP_Text CoinText;
-
+    public readonly UnityEvent OnGearChange = new();
+    public readonly UnityEvent OnInventory = new();
+    public readonly UnityEvent<int,int> OnAddItem = new();
 
     private void OnInventoryMove(ResInventoryMove obj)
     {
@@ -48,146 +22,19 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
             Count = 0,
             Id = -1,
         };
-
         if (obj.ToIndex >= 25 || obj.FromIndex >= 25)
         {
             OnGearChange?.Invoke();
-            DisplayGearsetValues();
         }
     }
+    
 
-    public Action OnGearChange;
-
-    public void ShowInventory()
-    {
-        if (m_shown) return;
-
-        m_shown = true;
-        m_inventoryView.gameObject.SetActive(true);
-        for (var i = 0; i < Items.Length; i++)
-        {
-            var m = Items[i];
-            if (i >= 25)
-            {
-                var gearView = m_gearSets[Mathf.Abs(25 - i)];
-                gearView.Id = i;
-                if (m.Id!=-1)
-                {
-                    var gearItem = ItemRegistry.GetItem(m.Id);
-                    var contentView = Instantiate(m_itemViewContentTemplate, gearView.Content);
-                    contentView.SetContext(SpriteLoader.LoadSprite(gearItem.Name), m.Count);
-                }
-                continue;
-            }
-
-            var view = Instantiate(m_itemViewTemplate, m_itemViewContent);
-            view.Id = i;
-            if (m.Id!=-1)
-            {
-                var item = ItemRegistry.GetItem(m.Id);
-                var contentView = Instantiate(m_itemViewContentTemplate, view.Content);
-                contentView.SetContext(SpriteLoader.LoadSprite(item.Name), m.Count);
-            }
-        }
-
-        DisplayGearsetValues();
-    }
-
-    private void DisplayGearsetValues()
-    {
-        var helmet = Items[25].Id;
-        var chest = Items[26].Id;
-        var hand = Items[27].Id;
-
-        var baseStrength = ProgressionNetworkController.Instance.GetSkill("Strength");
-        var baseDefence = ProgressionNetworkController.Instance.GetSkill("Defence");
-
-        if (helmet != -1)
-        {
-            var item = ItemRegistry.GetItem(helmet);
-            var armorMaterial = (ArmorItemMaterial)item;
-            baseDefence += (byte)armorMaterial.Armor;
-        }
-
-        if (chest != -1)
-        {
-            var item = ItemRegistry.GetItem(chest);
-            var armorMaterial = (ArmorItemMaterial)item;
-            baseDefence += (byte)armorMaterial.Armor;
-        }
-
-        if (hand != -1)
-        {
-            var item = ItemRegistry.GetItem(hand);
-            var armorMaterial = (WeaponItemMaterial)item;
-            baseStrength += (byte)armorMaterial.Attack;
-        }
-
-        TotalArmorText.text = baseDefence + "";
-        TotalStrengthText.text = baseStrength + "";
-        CoinText.text = PlayerNetworkController.Instance.LocalPlayer.Coin+"";
-    }
-
-    private void Update()
-    {
-        if (m_shown)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-                HideInventory();
-        }
-    }
-
-    public void HideInventory()
-    {
-        m_inventoryView.gameObject.SetActive(false);
-        m_shown = false;
-        ClearInventoryUI();
-    }
-
-    private void ClearInventoryUI()
-    {
-        for (int i = 0; i < m_itemViewContent.transform.childCount; i++)
-            Destroy(m_itemViewContent.transform.GetChild(i).gameObject);
-
-        for (int i = 0; i < m_gearSets.Length; i++)
-        {
-            if (m_gearSets[i].transform.childCount > 0)
-            {
-                Destroy(m_gearSets[i].transform.GetChild(0).gameObject);
-            }
-        }
-    }
-
-    private void OnInventoryResult(ResInventory result)
+    private void OnInventoryResponse(ResInventory result)
     {
         Items = result.Items;
-        if (m_shown)
-            ShowInventory();
+        OnInventory?.Invoke();
     }
-
-    public override void HandleRequest()
-    {
-        NetworkManager.Instance.Send(new ReqInventory());
-    }
-
-    public override void SubscribeResponse()
-    {
-        NetworkManager.Instance.NetPacketProcessor
-            .SubscribeReusable<ResInventory>(OnInventoryResult);
-        NetworkManager.Instance.NetPacketProcessor
-            .SubscribeReusable<ResInventoryMove>(OnInventoryMove);
-        NetworkManager.Instance.NetPacketProcessor
-            .SubscribeReusable<ResInventoryAdd>(OnInventoryAdd);
-    }
-
-
-    public override void UnSubscribeResponse()
-    {
-        NetworkManager.Instance.NetPacketProcessor
-            .RemoveSubscription<ResInventory>();
-        NetworkManager.Instance.NetPacketProcessor
-            .RemoveSubscription<ResInventoryMove>();
-    }
+  
 
     private void OnInventoryAdd(ResInventoryAdd response)
     {
@@ -202,7 +49,6 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
                 break;
             }
         }
-
         if (!found)
         {
             for (var i = 0; i < Items.Length - 3; i++)
@@ -215,24 +61,35 @@ public class InventoryNetworkController : NetworkController<InventoryNetworkCont
                 }
             }
         }
-
-        var itemInfo = ItemRegistry.GetItem(response.Id);
-
-        var popup = Instantiate(m_itemPopup, m_itemPopupContent);
-        popup.Icon.sprite = SpriteLoader.LoadSprite(itemInfo.Name);
-        popup.CountText.text = "+" + response.Count;
-        popup.CanvasGroup.alpha = 0;
-        popup.RectTransform.anchoredPosition = new Vector2(0, 0);
-        popup.RectTransform.DOAnchorPos(new Vector2(0, 200), 0.2f);
-        popup.CanvasGroup.DOFade(1, 0.2f);
-        popup.RectTransform.DOAnchorPosY(400, 0.2f).SetDelay(1);
-        popup.CanvasGroup.DOFade(0, 0.2f).SetDelay(1);
-
-        Destroy(popup.gameObject, 2f);
+        OnAddItem?.Invoke(response.Id,response.Count);
+    }
+ 
+    public void OnPeerDisconnected(NetPeer peer)
+    {
+       
     }
 
+    public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
+    {
+    }
 
-    public override void OnDisconnectedFromServer()
+    public void OnPeerConnected(NetPeer peer)
+    {
+        NetworkManager.Instance.Send(new ReqInventory());
+    }
+
+    public void Subscribe(NetPacketProcessor processor)
+    {
+        processor.SubscribeReusable<ResInventory>(OnInventoryResponse);
+        processor.SubscribeReusable<ResInventoryMove>(OnInventoryMove);
+        processor.SubscribeReusable<ResInventoryAdd>(OnInventoryAdd);
+    }
+
+    public void OnExit()
+    {
+    }
+
+    public void OnStart()
     {
     }
 }

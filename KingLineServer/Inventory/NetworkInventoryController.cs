@@ -2,8 +2,6 @@
 using LiteNetLib;
 using LiteNetLib.Utils;
 
-
-
 public class NetworkInventoryController : INetworkController
 {
     public static Dictionary<string, ItemStack[]> PlayerItems = new Dictionary<string, ItemStack[]>();

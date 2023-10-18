@@ -1,43 +1,26 @@
 using System;
+using LiteNetLib;
+using LiteNetLib.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 
 
-
-public class ProgressionNetworkController : NetworkController<ProgressionNetworkController>
+public class ProgressionNetworkController : INetworkController
 {
     public int Level = -1;
     public int MaxExp;
     public int CurrentExp;
     public Skill[] Skills;
-    public PlayerUI PlayerUI;
 
     [NonSerialized]
     public readonly UnityEvent<int> OnLevelChange = new();
+
     [NonSerialized]
-    public readonly UnityEvent<string,byte> OnSkillValueChanged = new();
+    public readonly UnityEvent<string, byte> OnSkillValueChanged = new();
 
     [NonSerialized]
     public int SkillPoint = 0;
-    
-    [SerializeField]
-    private LevelUpPopup m_leveLUpPopup;
 
-    [SerializeField]
-    private Transform m_levelUpContent;
-
- 
-    
-    public override void SubscribeResponse()
-    {
-        NetworkManager.Instance.NetPacketProcessor.RegisterNestedType(() => new Skill());
-        NetworkManager.Instance.NetPacketProcessor
-            .SubscribeReusable<ResPlayerProgression>(OnPlayerProgressionResponse);
-
-        NetworkManager.Instance.NetPacketProcessor.SubscribeReusable<ResPlayerXp>(OnXpResponse);
-        NetworkManager.Instance.NetPacketProcessor.SubscribeReusable<ResPlayerAddXp>(OnXpAdd);
-        NetworkManager.Instance.NetPacketProcessor.SubscribeReusable<ResSkillValueChange>(OnSkillIncrement);
-    }
 
     private void OnSkillIncrement(ResSkillValueChange obj)
     {
@@ -71,7 +54,6 @@ public class ProgressionNetworkController : NetworkController<ProgressionNetwork
             if (this.Level != obj.Level)
             {
                 OnLevelChange?.Invoke(obj.Level);
-                Instantiate(m_leveLUpPopup, m_levelUpContent);
             }
         }
 
@@ -85,6 +67,7 @@ public class ProgressionNetworkController : NetworkController<ProgressionNetwork
     {
         Skills = obj.Skills;
     }
+
     public byte GetSkill(string name)
     {
         for (int i = 0; i < Skills.Length; i++)
@@ -92,27 +75,10 @@ public class ProgressionNetworkController : NetworkController<ProgressionNetwork
             if (Skills[i].Name.Equals(name))
                 return Skills[i].Value;
         }
+
         return 0;
     }
 
-    public override void HandleRequest()
-    {
-        NetworkManager.Instance.Send(new ReqPlayerProgression());
-        NetworkManager.Instance.Send(new ReqPlayerXp());
-    }
-
-    public override void UnSubscribeResponse()
-    {
-    }
-
-    public void OpenProgressionMenu()
-    {
-        PlayerUI.gameObject.SetActive(!PlayerUI.gameObject.activeInHierarchy);
-    }
-
-    public override void OnDisconnectedFromServer()
-    {
-    }
 
     public void SendSkillIncrement(string skillName)
     {
@@ -123,4 +89,33 @@ public class ProgressionNetworkController : NetworkController<ProgressionNetwork
     }
 
 
+    public void OnPeerDisconnected(NetPeer peer)
+    {
+    }
+
+    public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
+    {
+    }
+
+    public void OnPeerConnected(NetPeer peer)
+    {
+        NetworkManager.Instance.Send(new ReqPlayerProgression());
+        NetworkManager.Instance.Send(new ReqPlayerXp());
+    }
+
+    public void Subscribe(NetPacketProcessor processor)
+    {
+        processor.SubscribeReusable<ResPlayerProgression>(OnPlayerProgressionResponse);
+        processor.SubscribeReusable<ResPlayerXp>(OnXpResponse);
+        processor.SubscribeReusable<ResPlayerAddXp>(OnXpAdd);
+        processor.SubscribeReusable<ResSkillValueChange>(OnSkillIncrement);
+    }
+
+    public void OnExit()
+    {
+    }
+
+    public void OnStart()
+    {
+    }
 }

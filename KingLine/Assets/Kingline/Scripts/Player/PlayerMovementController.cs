@@ -36,10 +36,16 @@ public class PlayerMovementController : MonoBehaviour
 
     private StructureBehaviour m_targetStructure;
 
+    public PlayerNetworkController m_playerNetworkController;
+    
+
     [SerializeField]
     private Camera m_mainCamera;
 
     public Dictionary<int, GamePlayer> playerInstances = new Dictionary<int, GamePlayer>();
+
+    [SerializeField]
+    private StructureController m_structureController;
 
     private void ClientSendPositionUpdate()
     {
@@ -63,19 +69,20 @@ public class PlayerMovementController : MonoBehaviour
         };
         NetworkManager.Instance.Send(moveUpdate);
     }
-
+    
     private void Start()
     {
-        PlayerNetworkController.Instance.OnPlayerJoin.AddListener(OnPlayerJoin);
-        PlayerNetworkController.Instance.OnPlayerLeave.AddListener(OnPlayerLeave);
+        m_playerNetworkController = NetworkManager.Instance.GetController<PlayerNetworkController>();
+        m_playerNetworkController.OnPlayerJoin.AddListener(OnPlayerJoin);
+        m_playerNetworkController.OnPlayerLeave.AddListener(OnPlayerLeave);
         NetworkManager.Instance.OnDisconnectedFromServer += (OnDisconnectedFromServer);
-        if (PlayerNetworkController.Instance.Completed)
+        if (m_playerNetworkController.Players.Count>0)
         {
             CreatePlayers();
             return;
         }
 
-        PlayerNetworkController.Instance.OnPlayerListRefresh.AddListener(CreatePlayers);
+        m_playerNetworkController.OnPlayerListRefresh.AddListener(CreatePlayers);
     }
 
     private void OnDestroy()
@@ -95,7 +102,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void CreatePlayers()
     {
-        foreach (var v in PlayerNetworkController.Instance.Players)
+        foreach (var v in m_playerNetworkController.Players)
         {
             CreatePlayer(v.Value);
         }
@@ -111,7 +118,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void OnPlayerJoin(int obj)
     {
-        CreatePlayer(PlayerNetworkController.Instance.GetPlayer(obj));
+        CreatePlayer(m_playerNetworkController.GetPlayer(obj));
     }
 
     private void Update()
@@ -149,7 +156,7 @@ public class PlayerMovementController : MonoBehaviour
                     {
                         if (m_targetStructure != null)
                         {
-                            StructureNetworkController.Instance
+                            m_structureController
                                 .ShowStructureUI(m_targetStructure.Id);
                         }
 

@@ -18,13 +18,9 @@ public class PlayerUI : MonoBehaviour
 
     private Dictionary<string, SkillItemView> m_createdSkillItemViews = new();
 
+    private ProgressionNetworkController m_progressionNetworkController;
 
-    private void Start()
-    {
-        ProgressionNetworkController.Instance.OnLevelChange.AddListener(OnLevelChange);
-        ProgressionNetworkController.Instance.OnSkillValueChanged.AddListener(OnSkillChanged);
-    }
-
+ 
     private void OnSkillChanged(string skill, byte value)
     {
         m_createdSkillItemViews[skill].ValueText.text = value + "";
@@ -32,6 +28,9 @@ public class PlayerUI : MonoBehaviour
 
     private void OnEnable()
     {
+        m_progressionNetworkController = NetworkManager.Instance.GetController<ProgressionNetworkController>();
+        m_progressionNetworkController.OnLevelChange.AddListener(OnLevelChange);
+        m_progressionNetworkController.OnSkillValueChanged.AddListener(OnSkillChanged);
         ClearViews();
         CreateViews();
     }
@@ -42,25 +41,25 @@ public class PlayerUI : MonoBehaviour
 
     private void CreateViews()
     {
-        var playerSkill = ProgressionNetworkController.Instance.Skills;
+        var playerSkill = m_progressionNetworkController.Skills;
         foreach (var skill in playerSkill)
         {
             CreateSkillView(skill);
         }
 
-        var xp = ProgressionNetworkController.Instance.CurrentExp;
-        var level = ProgressionNetworkController.Instance.Level;
-        var neededXp = ProgressionNetworkController.Instance.MaxExp;
+        var xp = m_progressionNetworkController.CurrentExp;
+        var level = m_progressionNetworkController.Level;
+        var neededXp = m_progressionNetworkController.MaxExp;
         m_xpText.text = $"Level {level}  ({xp}/{neededXp})";
         SetSkillViews();
     }
 
     public void SetSkillViews()
     {
-        m_skillPointText.text = $"You have {ProgressionNetworkController.Instance.SkillPoint} Points";
+        m_skillPointText.text = $"You have {m_progressionNetworkController.SkillPoint} Points";
         foreach (var m in m_createdSkillItemViews.Values)
         {
-            m.IncrementButton.gameObject.SetActive(ProgressionNetworkController.Instance.SkillPoint > 0);
+            m.IncrementButton.gameObject.SetActive(m_progressionNetworkController.SkillPoint > 0);
         }
     }
 
@@ -75,10 +74,10 @@ public class PlayerUI : MonoBehaviour
 
     private void OnIncrementSkillPointClicked(Skill skill)
     {
-        if (ProgressionNetworkController.Instance.SkillPoint <= 0)
+        if (m_progressionNetworkController.SkillPoint <= 0)
             return;
-        ProgressionNetworkController.Instance.SkillPoint--;
-        ProgressionNetworkController.Instance.SendSkillIncrement(skill.Name);
+        m_progressionNetworkController.SkillPoint--;
+        m_progressionNetworkController.SendSkillIncrement(skill.Name);
         SetSkillViews();
     }
 
