@@ -18,6 +18,8 @@ public class FilteredItemStackView : ItemStackView
 
     public override void OnDrop(PointerEventData eventData)
     {
+        if (Id == From)
+            return;
         GameObject dropped = eventData.pointerDrag;
         ItemStackContentView view = dropped.GetComponent<ItemStackContentView>();
         if (view != null)
