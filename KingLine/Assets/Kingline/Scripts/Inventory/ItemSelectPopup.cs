@@ -27,7 +27,7 @@ public class ItemSelectPopup : MonoBehaviour
 
             if (m.Id != -1)
             {
-                var item = FindObjectOfType<InventoryController>().ItemRegistry.GetItem(m.Id);
+                var item = ItemRegistry.GetItem(m.Id);
                 var contentView = Instantiate(m_itemSelectionViewContent, view.Content);
                 contentView.SetContext(SpriteLoader.LoadSprite(item.Name), m.Count, item.Stackable);
             }

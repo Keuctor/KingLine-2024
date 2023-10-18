@@ -4,13 +4,8 @@ using UnityEngine.EventSystems;
 
 public class FilteredItemStackView : ItemStackView
 {
-    private InventoryNetworkController m_controller;
-    private ItemRegistry m_registry;
-
     private void Awake()
     {
-        m_controller = NetworkManager.Instance.GetController<InventoryNetworkController>();
-        m_registry = FindObjectOfType<InventoryController>().ItemRegistry;
         SELECTED_BACKGROUND_COLOR = Color.green;
         NOT_SELECTED_BACKGROUND_COLOR = Color.white;
         POINTER_OVER_BACKGROUND_COLOR = Color.white;
@@ -20,49 +15,33 @@ public class FilteredItemStackView : ItemStackView
     {
         if (Id == From)
             return;
-        GameObject dropped = eventData.pointerDrag;
-        ItemStackContentView view = dropped.GetComponent<ItemStackContentView>();
-        if (view != null)
+        var dropped = eventData.pointerDrag;
+        var view = dropped.GetComponent<ItemStackContentView>();
+        if (view == null) return;
+        var inv = InventoryNetworkController.Inventory;
+        var item = inv.Items[From];
+        var itemInfo = ItemRegistry.GetItem(item.Id);
+
+        if (Id is NetworkInventory.HAND_SLOT_INDEX or NetworkInventory.ARMOR_SLOT_INDEX
+            or NetworkInventory.HELMET_SLOT_INDEX)
         {
-            var item = InventoryNetworkController.Inventory.Items[ItemStackView.From];
-            var itemInfo = m_registry.GetItem(item.Id);
-            if (Id == 25)
+            if (itemInfo.Type is IType.HELMET or IType.ARMOR or IType.WEAPON)
             {
-                if (itemInfo.Type.Equals("Helmet"))
-                {
-                    DragItem(view, eventData);
-                }
-            }
-            else if (Id == 26)
-            {
-                if (itemInfo.Type.Equals("Armor"))
-                {
-                    DragItem(view, eventData);
-                }
-            }
-            else if (Id == 27)
-            {
-                if (itemInfo.Type.Equals("Weapon") || itemInfo.Type.Equals("Pickaxe"))
-                {
-                    DragItem(view, eventData);
-                }
+                DragItem(view, eventData);
             }
         }
     }
 
     public void DragItem(ItemStackContentView view, PointerEventData eventData)
     {
-        if (Content.childCount == 0)
+        if (Content.childCount != 0) return;
+        view.ParentAfterDrag = transform;
+        To = this.Id;
+        OnPointerDown(eventData);
+        NetworkManager.Instance.Send(new ReqInventoryMove()
         {
-            view.ParentAfterDrag = transform;
-            ItemStackView.To = this.Id;
-            OnPointerDown(eventData);
-
-            NetworkManager.Instance.Send(new ReqInventoryMove()
-            {
-                FromIndex = (short)From,
-                ToIndex = (short)To
-            });
-        }
+            FromIndex = (short)From,
+            ToIndex = (short)To
+        });
     }
 }

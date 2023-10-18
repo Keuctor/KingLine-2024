@@ -35,8 +35,6 @@ public class InventoryController : MonoBehaviour
     private bool m_shown;
 
 
-    public readonly ItemRegistry ItemRegistry = new();
-
     private void Start()
     {
         var controller = NetworkManager.Instance.GetController<InventoryNetworkController>();

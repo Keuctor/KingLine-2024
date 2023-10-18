@@ -13,13 +13,11 @@ public class SpriteAnimator : MonoBehaviour
 
     private InventoryNetworkController m_inventoryNetworkController;
 
-    private ItemRegistry m_itemRegistry;
 
     private void Start()
     {
         m_inventoryNetworkController = NetworkManager.Instance.GetController<InventoryNetworkController>();
         m_inventoryNetworkController.OnGearChange.AddListener(DisplayGear);
-        m_itemRegistry = FindObjectOfType<InventoryController>().ItemRegistry;
         m_character.ResetEquipment();
         DisplayGear();
     }
@@ -33,7 +31,7 @@ public class SpriteAnimator : MonoBehaviour
         if (helmet.Id != -1)
         {
             var helmets = m_character.SpriteCollection.Helmet;
-            var itemInfo = m_itemRegistry.GetItem(helmet.Id);
+            var itemInfo = ItemRegistry.GetItem(helmet.Id);
             for (var i = 0; i < helmets.Count; i++)
             {
                 if (helmets[i].Name.Equals(itemInfo.Name))
@@ -51,7 +49,7 @@ public class SpriteAnimator : MonoBehaviour
         if (armor.Id != -1)
         {
             var armors = m_character.SpriteCollection.Armor;
-            var itemInfo = m_itemRegistry.GetItem(armor.Id);
+            var itemInfo = ItemRegistry.GetItem(armor.Id);
             for (var i = 0; i < armors.Count; i++)
             {
                 if (armors[i].Name.Equals(itemInfo.Name))
@@ -69,7 +67,7 @@ public class SpriteAnimator : MonoBehaviour
         if (hand.Id != -1)
         {
             var weapons = m_character.SpriteCollection.MeleeWeapon1H;
-            var itemInfo = m_itemRegistry.GetItem(hand.Id);
+            var itemInfo = ItemRegistry.GetItem(hand.Id);
             for (int i = 0; i < weapons.Count; i++)
             {
                 if (weapons[i].Name.Equals(itemInfo.Name))

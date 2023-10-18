@@ -58,9 +58,6 @@ public class MineGame : MonoBehaviour
     public float ToolModifier;
     
     private InventoryNetworkController m_controller;
-    private ItemRegistry m_registry;
-
-
     
 
     public void SelectTool()
@@ -83,8 +80,8 @@ public class MineGame : MonoBehaviour
         if (item.Id == -1)
             return;
 
-        var material = m_registry.GetItem(item.Id);
-        if (material.Type != "Tool")
+        var material = ItemRegistry.GetItem(item.Id);
+        if (material.Type != IType.TOOL)
         {
             return;
         }
@@ -102,7 +99,6 @@ public class MineGame : MonoBehaviour
     private void Start()
     {
         m_controller = NetworkManager.Instance.GetController<InventoryNetworkController>();
-        m_registry = FindObjectOfType<InventoryController>().ItemRegistry;
         
         for (int i = 0; i < m_maxMineCount; i++)
         {
