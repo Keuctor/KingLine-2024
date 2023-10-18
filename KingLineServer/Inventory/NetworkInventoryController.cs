@@ -4,7 +4,8 @@ using LiteNetLib.Utils;
 
 public class NetworkInventoryController : INetworkController
 {
-    public static Dictionary<string, ItemStack[]> PlayerItems = new Dictionary<string, ItemStack[]>();
+    public static Dictionary<string, NetworkInventory> PlayerItems = new Dictionary<string, NetworkInventory>();
+
     public void Subscribe(NetPacketProcessor processor)
     {
         processor.RegisterNestedType(() =>
@@ -31,67 +32,24 @@ public class NetworkInventoryController : INetworkController
     public void InventoryAdd(NetPeer peer, int id, short count)
     {
         var player = NetworkPlayerController.Players[peer];
-        ItemStack[] items = PlayerItems[player.Token];
-
-        bool found = false;
-        for (var i = 0; i < items.Length; i++)
+        NetworkInventory inventory = PlayerItems[player.Token];
+        if (inventory.AddItem(id, count))
         {
-            var item = items[i];
-            if (item.Id == id)
+            PackageSender.SendPacket(peer, new ResInventoryAdd()
             {
-                item.Count += count;
-                found = true;
-                break;
-            }
+                Count = count,
+                Id = id
+            });
         }
-        if (!found)
-        {
-            for (var i = 0; i < items.Length; i++)
-            {
-                if (items[i].Id == -1)
-                {
-                    items[i].Id = id;
-                    items[i].Count = count;
-                    break;
-                }
-            }
-        }
-        PlayerItems[player.Token] = items;
-        PackageSender.SendPacket(peer, new ResInventoryAdd()
-        {
-            Count = count,
-            Id = id
-        });
     }
 
 
     private void OnRequestInventoryMove(ReqInventoryMove request, NetPeer peer)
     {
         var player = NetworkPlayerController.Players[peer];
-        if (PlayerItems.TryGetValue(player.Token, out ItemStack[] items))
+        var items = PlayerItems[player.Token];
+        if (items.MoveItem(request.FromIndex, request.ToIndex))
         {
-            var item = items[request.FromIndex];
-            if (item != null)
-            {
-                if (item.Id != -1)
-                {
-                    var to = items[request.ToIndex];
-                    if (to != null)
-                    {
-                        if (to.Id == -1)
-                        {
-                            items[request.ToIndex] = item;
-                            items[request.FromIndex] = new ItemStack()
-                            {
-                                Count = 0,
-                                Id = -1
-                            };
-                        }
-                    }
-                }
-            }
-
-            PlayerItems[player.Token] = items;
             var response = new ResInventoryMove()
             {
                 ToIndex = request.ToIndex,
@@ -104,56 +62,26 @@ public class NetworkInventoryController : INetworkController
     private void OnRequestInventory(ReqInventory request, NetPeer peer)
     {
         var player = NetworkPlayerController.Players[peer];
+
         var response = new ResInventory();
-        if (PlayerItems.TryGetValue(player.Token, out ItemStack[] items))
+
+        if (PlayerItems.TryGetValue(player.Token, out var inv))
         {
-            response.Items = items;
+            response.Items = inv.Items;
         }
         else
         {
-            //Last 4 will be helmet / body / hand 
-            response.Items = new ItemStack[28];
-            for (int i = 0; i < 28; i++)
-            {
-                response.Items[i] = new ItemStack()
-                {
-                    Count = 0,
-                    Id = -1,
-                };
-            }
-
-            response.Items[25] = new ItemStack()
-            {
-                Count = 1,
-                Id = MaterialType.PEASANT_CAP.ID(),
-            };
-            response.Items[26] = new ItemStack()
-            {
-                Count = 1,
-                Id = MaterialType.PEASANT_CLOTHING.ID(),
-            };
-            response.Items[27] = new ItemStack()
-            {
-                Count = 1,
-                Id = MaterialType.BONE_CLUP.ID(),
-            };
-            response.Items[0] = new ItemStack()
-            {
-                Count = 1,
-                Id = MaterialType.STONE_PICKAXE.ID(),
-            };
-            response.Items[1] = new ItemStack()
-            {
-                Count = 1,
-                Id = MaterialType.IRON_PICKAXE.ID(),
-            };
-            response.Items[2] = new ItemStack()
-            {
-                Count = 1,
-                Id = MaterialType.STEEL_PICKAXE.ID(),
-            };
-            PlayerItems.Add(player.Token, response.Items);
+            var inventory = new NetworkInventory();
+            inventory.SetItem(NetworkInventory.HELMET_SLOT_INDEX, MaterialType.PEASANT_CAP.ID());
+            inventory.SetItem(NetworkInventory.ARMOR_SLOT_INDEX, MaterialType.PEASANT_CLOTHING.ID());
+            inventory.SetItem(NetworkInventory.HAND_SLOT_INDEX, MaterialType.BONE_CLUP.ID());
+            inventory.AddItem(MaterialType.STONE_PICKAXE.ID());
+            inventory.AddItem(MaterialType.IRON_PICKAXE.ID());
+            inventory.AddItem(MaterialType.STEEL_PICKAXE.ID());
+            response.Items = inventory.Items;
+            PlayerItems.Add(player.Token, inventory);
         }
+
         PackageSender.SendPacket(peer, response);
     }
 

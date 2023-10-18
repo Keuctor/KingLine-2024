@@ -24,7 +24,7 @@ public class FilteredItemStackView : ItemStackView
         ItemStackContentView view = dropped.GetComponent<ItemStackContentView>();
         if (view != null)
         {
-            var item = m_controller.Items[ItemStackView.From];
+            var item = InventoryNetworkController.Inventory.Items[ItemStackView.From];
             var itemInfo = m_registry.GetItem(item.Id);
             if (Id == 25)
             {

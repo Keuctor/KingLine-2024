@@ -18,21 +18,23 @@ public class SpriteAnimator : MonoBehaviour
     private void Start()
     {
         m_inventoryNetworkController = NetworkManager.Instance.GetController<InventoryNetworkController>();
-        m_inventoryNetworkController.OnGearChange.AddListener(OnGearChange);
+        m_inventoryNetworkController.OnGearChange.AddListener(DisplayGear);
         m_itemRegistry = FindObjectOfType<InventoryController>().ItemRegistry;
         m_character.ResetEquipment();
-        OnGearChange();
+        DisplayGear();
     }
 
-
-    private void OnGearChange()
+    private void DisplayGear()
     {
-        var items = m_inventoryNetworkController.Items;
-        if (items[25].Id != -1)
+        var inventory = InventoryNetworkController.Inventory;
+        var helmet = inventory.GetHelmet();
+        var armor = inventory.GetArmor();
+        var hand = inventory.GetHand();
+        if (helmet.Id != -1)
         {
             var helmets = m_character.SpriteCollection.Helmet;
-            var itemInfo = m_itemRegistry.GetItem(items[25].Id);
-            for (int i = 0; i < helmets.Count; i++)
+            var itemInfo = m_itemRegistry.GetItem(helmet.Id);
+            for (var i = 0; i < helmets.Count; i++)
             {
                 if (helmets[i].Name.Equals(itemInfo.Name))
                 {
@@ -46,15 +48,15 @@ public class SpriteAnimator : MonoBehaviour
             m_character.UnEquip(EquipmentPart.Helmet);
         }
 
-        if (items[26].Id != -1)
+        if (armor.Id != -1)
         {
-            var armor = m_character.SpriteCollection.Armor;
-            var itemInfo = m_itemRegistry.GetItem(items[26].Id);
-            for (int i = 0; i < armor.Count; i++)
+            var armors = m_character.SpriteCollection.Armor;
+            var itemInfo = m_itemRegistry.GetItem(armor.Id);
+            for (var i = 0; i < armors.Count; i++)
             {
-                if (armor[i].Name.Equals(itemInfo.Name))
+                if (armors[i].Name.Equals(itemInfo.Name))
                 {
-                    m_character.Equip(armor[i], EquipmentPart.Armor);
+                    m_character.Equip(armors[i], EquipmentPart.Armor);
                     break;
                 }
             }
@@ -64,10 +66,10 @@ public class SpriteAnimator : MonoBehaviour
             m_character.UnEquip(EquipmentPart.Armor);
         }
 
-        if (items[27].Id != -1)
+        if (hand.Id != -1)
         {
             var weapons = m_character.SpriteCollection.MeleeWeapon1H;
-            var itemInfo = m_itemRegistry.GetItem(items[27].Id);
+            var itemInfo = m_itemRegistry.GetItem(hand.Id);
             for (int i = 0; i < weapons.Count; i++)
             {
                 if (weapons[i].Name.Equals(itemInfo.Name))

@@ -77,17 +77,18 @@ public class NetworkPlayerProgressionController : INetworkController
         {
             response.Skills = new Skill[6]
             {
-                    CreateSkill("Strength",1),
-                    CreateSkill("Defence",1),
-                    CreateSkill("Agility",1),
-                    CreateSkill("Intelligence",1),
-                    CreateSkill("Charisma",1),
-                    CreateSkill("Leadership",1),
+                CreateSkill("Strength",1),
+                CreateSkill("Defence",1),
+                CreateSkill("Agility",1),
+                CreateSkill("Intelligence",1),
+                CreateSkill("Charisma",1),
+                CreateSkill("Leadership",1),
             };
             Progressions.Add(player.Token, response.Skills);
         }
         PackageSender.SendPacket(peer, response);
     }
+
     public Skill CreateSkill(string name, byte value)
     {
         return new Skill()

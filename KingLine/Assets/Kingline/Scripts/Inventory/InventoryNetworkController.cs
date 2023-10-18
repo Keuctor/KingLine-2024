@@ -1,28 +1,24 @@
-﻿using System;
-using DG.Tweening;
-using LiteNetLib;
+﻿using LiteNetLib;
 using LiteNetLib.Utils;
-using TMPro;
-using UnityEngine;
 using UnityEngine.Events;
 
 public class InventoryNetworkController : INetworkController
 {
-    public ItemStack[] Items = new ItemStack[28];
+    public static NetworkInventory Inventory;
 
     public readonly UnityEvent OnGearChange = new();
     public readonly UnityEvent OnInventory = new();
     public readonly UnityEvent<int,int> OnAddItem = new();
 
-    private void OnInventoryMove(ResInventoryMove obj)
+    private bool IsGearIndex(int index)
     {
-        Items[obj.ToIndex] = Items[obj.FromIndex];
-        Items[obj.FromIndex] = new ItemStack()
-        {
-            Count = 0,
-            Id = -1,
-        };
-        if (obj.ToIndex >= 25 || obj.FromIndex >= 25)
+        return index is NetworkInventory.HELMET_SLOT_INDEX or NetworkInventory.ARMOR_SLOT_INDEX or NetworkInventory.HAND_SLOT_INDEX;
+    }
+
+    private void OnInventoryMove(ResInventoryMove inventoryMove)
+    {
+        Inventory.MoveItem(inventoryMove.FromIndex, inventoryMove.ToIndex);
+        if (IsGearIndex(inventoryMove.FromIndex) || IsGearIndex(inventoryMove.ToIndex))
         {
             OnGearChange?.Invoke();
         }
@@ -31,36 +27,14 @@ public class InventoryNetworkController : INetworkController
 
     private void OnInventoryResponse(ResInventory result)
     {
-        Items = result.Items;
+        Inventory = new NetworkInventory(result.Items);
         OnInventory?.Invoke();
     }
   
 
     private void OnInventoryAdd(ResInventoryAdd response)
     {
-        bool found = false;
-        for (var i = 0; i < Items.Length - 3; i++)
-        {
-            var item = Items[i];
-            if (item.Id == response.Id)
-            {
-                item.Count += response.Count;
-                found = true;
-                break;
-            }
-        }
-        if (!found)
-        {
-            for (var i = 0; i < Items.Length - 3; i++)
-            {
-                if (Items[i].Id == -1)
-                {
-                    Items[i].Id = response.Id;
-                    Items[i].Count = response.Count;
-                    break;
-                }
-            }
-        }
+        Inventory.AddItem(response.Id, response.Count);
         OnAddItem?.Invoke(response.Id,response.Count);
     }
  

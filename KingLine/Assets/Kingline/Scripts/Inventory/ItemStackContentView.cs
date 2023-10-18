@@ -12,10 +12,17 @@ public class ItemStackContentView : MonoBehaviour, IBeginDragHandler, IEndDragHa
     [SerializeField]
     private TMP_Text m_countText;
 
-    public void SetContext(Sprite icon, int count)
+    public void SetContext(Sprite icon, int count,bool isStackable)
     {
         this.m_image.sprite = icon;
-        this.m_countText.text = "x"+count;
+        if (isStackable)
+        {
+            this.m_countText.text = "x" + count;
+        }
+        else
+        {
+            this.m_countText.text = "";
+        }
     }
 
     [SerializeField]

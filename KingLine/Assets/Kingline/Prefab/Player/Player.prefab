@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_character: {fileID: 8221073188971126586}
+  m_scale: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!1 &8972550565726596369
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -28,32 +25,31 @@ public class InventoryController : MonoBehaviour
 
     [SerializeField]
     private Transform m_itemPopupContent;
-    
+
     public TMP_Text TotalStrengthText;
     public TMP_Text TotalArmorText;
     public TMP_Text CoinText;
-    
+
     public bool IsVisible => m_shown;
 
     private bool m_shown;
 
-    public InventoryNetworkController m_inventoryNetworkController;
 
-    public ItemRegistry ItemRegistry = new ItemRegistry();
+    public readonly ItemRegistry ItemRegistry = new();
 
     private void Start()
     {
-        m_inventoryNetworkController = NetworkManager.Instance.GetController<InventoryNetworkController>();
-        m_inventoryNetworkController.OnGearChange.AddListener(OnGearsetChanged);
-        m_inventoryNetworkController.OnAddItem.AddListener(ShowItemAddPopup);
+        var controller = NetworkManager.Instance.GetController<InventoryNetworkController>();
+        controller.OnGearChange.AddListener(OnGearsetChanged);
+        controller.OnAddItem.AddListener(ShowItemAddPopup);
     }
 
     void OnGearsetChanged()
     {
-        DisplayGearsetValues();
+        DisplayGear();
     }
 
-    public void ShowItemAddPopup(int id,int count)
+    public void ShowItemAddPopup(int id, int count)
     {
         var itemInfo = ItemRegistry.GetItem(id);
 
@@ -69,16 +65,18 @@ public class InventoryController : MonoBehaviour
 
         Destroy(popup.gameObject, 2f);
     }
-    
+
     public void ShowInventory()
     {
         if (m_shown) return;
 
         m_shown = true;
         m_inventoryView.gameObject.SetActive(true);
-        for (var i = 0; i < m_inventoryNetworkController.Items.Length; i++)
+        var items = InventoryNetworkController.Inventory.Items;
+
+        for (var i = 0; i < items.Length; i++)
         {
-            var m = m_inventoryNetworkController.Items[i];
+            var m = items[i];
             if (i >= 25)
             {
                 var gearView = m_gearSets[Mathf.Abs(25 - i)];
@@ -87,7 +85,7 @@ public class InventoryController : MonoBehaviour
                 {
                     var gearItem = ItemRegistry.GetItem(m.Id);
                     var contentView = Instantiate(m_itemViewContentTemplate, gearView.Content);
-                    contentView.SetContext(SpriteLoader.LoadSprite(gearItem.Name), m.Count);
+                    contentView.SetContext(SpriteLoader.LoadSprite(gearItem.Name), m.Count, gearItem.Stackable);
                 }
 
                 continue;
@@ -99,13 +97,13 @@ public class InventoryController : MonoBehaviour
             {
                 var item = ItemRegistry.GetItem(m.Id);
                 var contentView = Instantiate(m_itemViewContentTemplate, view.Content);
-                contentView.SetContext(SpriteLoader.LoadSprite(item.Name), m.Count);
+                contentView.SetContext(SpriteLoader.LoadSprite(item.Name), m.Count, item.Stackable);
             }
         }
 
-        DisplayGearsetValues();
+        DisplayGear();
     }
-    
+
     private void Update()
     {
         if (m_shown)
@@ -114,14 +112,14 @@ public class InventoryController : MonoBehaviour
                 HideInventory();
         }
     }
-    
+
     public void HideInventory()
     {
         m_inventoryView.gameObject.SetActive(false);
         m_shown = false;
         ClearInventoryUI();
     }
-    
+
     private void ClearInventoryUI()
     {
         for (int i = 0; i < m_itemViewContent.transform.childCount; i++)
@@ -135,35 +133,36 @@ public class InventoryController : MonoBehaviour
             }
         }
     }
-    
-    private void DisplayGearsetValues()
+
+    private void DisplayGear()
     {
-        var helmet = m_inventoryNetworkController.Items[25].Id;
-        var chest = m_inventoryNetworkController.Items[26].Id;
-        var hand = m_inventoryNetworkController.Items[27].Id;
+        var inventory = InventoryNetworkController.Inventory;
+        var helmet = inventory.GetHelmet();
+        var armor = inventory.GetArmor();
+        var hand = inventory.GetHand();
 
         var m_progressionNetworkController = NetworkManager.Instance.GetController<ProgressionNetworkController>();
 
         var baseStrength = m_progressionNetworkController.GetSkill("Strength");
         var baseDefence = m_progressionNetworkController.GetSkill("Defence");
 
-        if (helmet != -1)
+        if (helmet.Id != -1)
         {
-            var item = ItemRegistry.GetItem(helmet);
+            var item = ItemRegistry.GetItem(helmet.Id);
             var armorMaterial = (ArmorItemMaterial)item;
             baseDefence += (byte)armorMaterial.Armor;
         }
 
-        if (chest != -1)
+        if (armor.Id != -1)
         {
-            var item = ItemRegistry.GetItem(chest);
+            var item = ItemRegistry.GetItem(armor.Id);
             var armorMaterial = (ArmorItemMaterial)item;
             baseDefence += (byte)armorMaterial.Armor;
         }
 
-        if (hand != -1)
+        if (hand.Id != -1)
         {
-            var item = ItemRegistry.GetItem(hand);
+            var item = ItemRegistry.GetItem(hand.Id);
             var armorMaterial = (WeaponItemMaterial)item;
             baseStrength += (byte)armorMaterial.Attack;
         }
@@ -172,5 +171,4 @@ public class InventoryController : MonoBehaviour
         TotalStrengthText.text = baseStrength + "";
         CoinText.text = NetworkManager.Instance.GetController<PlayerNetworkController>().LocalPlayer.Coin + "";
     }
-
 }

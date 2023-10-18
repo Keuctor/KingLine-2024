@@ -9,10 +9,16 @@ public class SelectionItemStackViewContent : MonoBehaviour
     [SerializeField]
     private TMP_Text m_countText;
 
-    public void SetContext(Sprite icon, int count)
+    public void SetContext(Sprite icon, int count,bool stackable)
     {
         this.m_image.sprite = icon;
-        this.m_countText.text = "x"+count;
+        if (stackable)
+        {
+            this.m_countText.text = "x" + count;
+        }
+        else
+        {
+            this.m_countText.text = "";
+        }
     }
-
 }
