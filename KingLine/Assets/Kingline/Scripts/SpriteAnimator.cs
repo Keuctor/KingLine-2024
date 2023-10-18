@@ -8,7 +8,8 @@ public class SpriteAnimator : MonoBehaviour
     [SerializeField]
     private Character m_character;
 
-    private Vector3 m_scale;
+    [SerializeField]
+    private Vector3 m_scale = new(0.25f,0.25f,0.25f);
 
     private InventoryNetworkController m_inventoryNetworkController;
 
@@ -19,7 +20,6 @@ public class SpriteAnimator : MonoBehaviour
         m_inventoryNetworkController = NetworkManager.Instance.GetController<InventoryNetworkController>();
         m_inventoryNetworkController.OnGearChange.AddListener(OnGearChange);
         m_itemRegistry = FindObjectOfType<InventoryController>().ItemRegistry;
-        m_scale = m_character.transform.localScale;
         m_character.ResetEquipment();
         OnGearChange();
     }
