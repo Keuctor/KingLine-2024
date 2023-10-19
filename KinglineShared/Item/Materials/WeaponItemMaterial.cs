@@ -11,10 +11,13 @@ public class WeaponItemMaterial : IWeaponItemMaterial
         this.Stackable = false;
         this.Attack = attackValue;
         this.Type = IType.WEAPON;
+        this.Value = this.Attack * 10;
     }
+
     public int Id { get; set; }
     public string Name { get; set; }
     public bool Stackable { get; set; }
     public IType Type { get; set; }
     public int Attack { get; set; }
+    public int Value { get; set; }
 }

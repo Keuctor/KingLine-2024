@@ -14,9 +14,10 @@ public class ItemSelectPopup : MonoBehaviour
 
     public UnityEvent<int> OnSelect = new();
 
-    private void Start()
+    private async void Start()
     {
-        var items = InventoryNetworkController.Inventory.Items;
+        var inventory = await InventoryNetworkController.GetInventoryAsync();
+        var items = inventory.Items;
         for (var i = 0; i < 25; i++)
         {
             var m = items[i];

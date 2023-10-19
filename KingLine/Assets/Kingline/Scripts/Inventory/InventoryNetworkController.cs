@@ -1,4 +1,5 @@
-﻿using LiteNetLib;
+﻿using System.Threading.Tasks;
+using LiteNetLib;
 using LiteNetLib.Utils;
 using UnityEngine.Events;
 
@@ -8,11 +9,21 @@ public class InventoryNetworkController : INetworkController
 
     public readonly UnityEvent OnGearChange = new();
     public readonly UnityEvent OnInventory = new();
-    public readonly UnityEvent<int,int> OnAddItem = new();
+    public readonly UnityEvent<int, int> OnAddItem = new();
+
+    public static async Task<NetworkInventory> GetInventoryAsync()
+    {
+        while (Inventory == null)
+        {
+            await Task.Yield();
+        }
+        return Inventory;
+    }
 
     private bool IsGearIndex(int index)
     {
-        return index is NetworkInventory.HELMET_SLOT_INDEX or NetworkInventory.ARMOR_SLOT_INDEX or NetworkInventory.HAND_SLOT_INDEX;
+        return index is NetworkInventory.HELMET_SLOT_INDEX or NetworkInventory.ARMOR_SLOT_INDEX
+            or NetworkInventory.HAND_SLOT_INDEX;
     }
 
     private void OnInventoryMove(ResInventoryMove inventoryMove)
@@ -23,24 +34,23 @@ public class InventoryNetworkController : INetworkController
             OnGearChange?.Invoke();
         }
     }
-    
+
 
     private void OnInventoryResponse(ResInventory result)
     {
         Inventory = new NetworkInventory(result.Items);
         OnInventory?.Invoke();
     }
-  
+
 
     private void OnInventoryAdd(ResInventoryAdd response)
     {
         Inventory.AddItem(response.Id, response.Count);
-        OnAddItem?.Invoke(response.Id,response.Count);
+        OnAddItem?.Invoke(response.Id, response.Count);
     }
- 
+
     public void OnPeerDisconnected(NetPeer peer)
     {
-       
     }
 
     public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)

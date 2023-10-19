@@ -5,4 +5,5 @@ public interface IItemMaterial
     public string Name { get; set; }
     public bool Stackable{ get; set; }
     public IType Type { get; set; }
+    public int Value { get; set; }
 }

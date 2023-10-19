@@ -1,7 +1,5 @@
 ﻿using LiteNetLib.Utils;
 
-
-
 public partial class Player : INetSerializable
 {
     public int Id { get; set; }

@@ -1,16 +1,22 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using Kingline.Scripts.Utils;
-using KinglineShared.Item;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
+
+/*
+ * - Silahların ve zırhların ek özellikleri + basmak  
+ * - Pazar yeri insanlar buldukları eşyaları satabilmeli
+ * - Açlık
+ * - Chat
+ * - Trade olması lazım
+ * - Item özelliklerinin görünmesi lazım.
+ * 
+ */
 
 public class MineGame : MonoBehaviour
 {

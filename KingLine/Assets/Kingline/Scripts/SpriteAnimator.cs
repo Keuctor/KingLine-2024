@@ -22,9 +22,9 @@ public class SpriteAnimator : MonoBehaviour
         DisplayGear();
     }
 
-    private void DisplayGear()
+    private async void DisplayGear()
     {
-        var inventory = InventoryNetworkController.Inventory;
+        var inventory = await InventoryNetworkController.GetInventoryAsync();
         var helmet = inventory.GetHelmet();
         var armor = inventory.GetArmor();
         var hand = inventory.GetHand();

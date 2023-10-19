@@ -1,6 +1,7 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InventoryController : MonoBehaviour
 {
@@ -34,12 +35,32 @@ public class InventoryController : MonoBehaviour
 
     private bool m_shown;
 
+    [SerializeField]
+    private ItemInfoView m_itemInfoView;
+
+    public static UnityEvent<int> OnItemClick = new();
+
 
     private void Start()
     {
         var controller = NetworkManager.Instance.GetController<InventoryNetworkController>();
         controller.OnGearChange.AddListener(OnGearsetChanged);
         controller.OnAddItem.AddListener(ShowItemAddPopup);
+        OnItemClick.AddListener(OnItemClicked);
+    }
+
+    private void OnItemClicked(int index)
+    {
+        var item = InventoryNetworkController.Inventory.Items[index];
+        if (item.Id == -1)
+        {
+            m_itemInfoView.gameObject.SetActive(false);
+        }
+        else
+        {
+            m_itemInfoView.gameObject.SetActive(true);
+            m_itemInfoView.ShowItemInfo(ItemRegistry.GetItem(item.Id));
+        }
     }
 
     void OnGearsetChanged()
@@ -132,9 +153,9 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    private void DisplayGear()
+    private async void DisplayGear()
     {
-        var inventory = InventoryNetworkController.Inventory;
+        var inventory = await InventoryNetworkController.GetInventoryAsync();
         var helmet = inventory.GetHelmet();
         var armor = inventory.GetArmor();
         var hand = inventory.GetHand();

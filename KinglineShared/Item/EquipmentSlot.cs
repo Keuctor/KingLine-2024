@@ -1,6 +1,4 @@
-﻿
-
-public enum EquipmentSlot
+﻿public enum EquipmentSlot
 {
     HELMET,
     CHEST,

@@ -45,6 +45,7 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.10f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Kingline\Scripts\Inventory\ItemInfoView\ItemInfoView.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\ElementId.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\ItemClass.cs" />
      <Compile Include="Assets\Kingline\Scripts\Progression\PlayerUI.cs" />
@@ -149,6 +150,7 @@
      <Compile Include="Assets\Kingline\Scripts\Utils\PrefabsSO.cs" />
      <Compile Include="Assets\HeroEditor\Common\SimpleColorPicker\Scripts\ColorJoystick.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\QuickStart.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Inventory\ItemInfoView\ItemInfoMetaView.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\MeleeWeapon.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\ModificatorType.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\InventoryController.cs" />
@@ -564,6 +566,7 @@
      <Folder Include="Assets\HeroEditor\Extensions\AbandonedWorkshop\Icons\WithoutBackground\Equipment\Supplies\AbandonedWorkshop\Food" />
      <Folder Include="Assets\HeroEditor\Extensions\EpicHeroes\Sprites\Equipment\MeleeWeapon2H\Legendary\Hammer" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Sprites\Equipment\MeleeWeapon1H\Knights\Sword" />
+     <Folder Include="Assets\Kingline\Scripts\Inventory\ItemInfoView" />
      <Folder Include="Assets\HeroEditor\Common\Sprites\BodyParts\Eyes\Basic" />
      <Folder Include="Assets\HeroEditor\Extensions\AbandonedWorkshop\Sprites\Equipment\MeleeWeapon1H\AbandonedWorkshop\Dagger" />
      <Folder Include="Assets\HeroEditor\FantasyInventory" />
