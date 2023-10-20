@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+using System.Collections;
 using Assets.HeroEditor.Common.CharacterScripts;
 using HeroEditor.Common.Enums;
 using UnityEngine;
@@ -21,12 +21,14 @@ public class SpriteAnimator : MonoBehaviour
         m_inventoryNetworkController = NetworkManager.Instance.GetController<InventoryNetworkController>();
         m_inventoryNetworkController.OnGearChange.AddListener(DisplayGear);
         m_character.ResetEquipment();
-        DisplayGear(PeerId);
     }
 
-    private async void DisplayGear(int id)
+    private void DisplayGear(int id)
     {
-        var inventory = await InventoryNetworkController.GetPlayerGearAsync(PeerId);
+        if (id != PeerId)
+            return;
+        
+        var inventory = InventoryNetworkController.GetPlayerGear(id);
         
         var helmet = inventory[0].Id;
         var armor = inventory[1].Id;

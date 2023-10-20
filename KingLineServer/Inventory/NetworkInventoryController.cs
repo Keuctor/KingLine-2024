@@ -148,7 +148,7 @@ public class NetworkInventoryController : INetworkController
         var me = NetworkPlayerController.Players[peer];
         foreach (var p in NetworkPlayerController.Players)
         {
-            if (me.Id != peer.Id)
+            if (me.Id != p.Key.Id)
             {
                 var myInv = GetOrCreateInventory(me.Token);
                 PackageSender.SendPacket(p.Key, new ResRemoteInventory()

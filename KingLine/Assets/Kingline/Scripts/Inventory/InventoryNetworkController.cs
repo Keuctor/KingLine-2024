@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using LiteNetLib;
 using LiteNetLib.Utils;
+using UnityEngine;
 using UnityEngine.Events;
 
 
@@ -14,7 +15,6 @@ public class InventoryNetworkController : INetworkController
     public readonly UnityEvent<int> OnGearChange = new();
     public readonly UnityEvent OnInventory = new();
     public readonly UnityEvent<int, int> OnAddItem = new();
-
 
 
     public static async Task<NetworkInventory> GetInventoryAsync()
@@ -47,7 +47,9 @@ public class InventoryNetworkController : INetworkController
     {
         LocalInventory = new NetworkInventory(result.Items);
         OnInventory?.Invoke();
+        OnGearChange?.Invoke(NetworkManager.LocalPlayerPeerId);
     }
+    
 
 
     private void OnInventoryAdd(ResInventoryAdd response)
@@ -83,15 +85,16 @@ public class InventoryNetworkController : INetworkController
         if (RemoteInventories.TryGetValue(remoteInventory.Id, out var inv))
         {
             RemoteInventories[remoteInventory.Id] = remoteInventory.Items;
-            OnGearChange?.Invoke(remoteInventory.Id);
         }
         else
         {
             RemoteInventories.Add(remoteInventory.Id, remoteInventory.Items);
         }
+
+        OnGearChange?.Invoke(remoteInventory.Id);
     }
 
-    public static async Task<ItemStack[]> GetPlayerGearAsync(int peerId)
+    public static ItemStack[] GetPlayerGear(int peerId)
     {
         if (peerId == NetworkManager.LocalPlayerPeerId)
         {
@@ -102,8 +105,6 @@ public class InventoryNetworkController : INetworkController
                 LocalInventory.GetHand(),
             };
         }
-        while (!RemoteInventories.ContainsKey(peerId))
-            await Task.Yield();
 
         return RemoteInventories[peerId];
     }
