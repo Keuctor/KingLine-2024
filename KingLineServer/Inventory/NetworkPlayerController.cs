@@ -81,7 +81,7 @@ public class NetworkPlayerController : INetworkController
         {
             if (p.Key.Id != peer.Id)
             {
-                PackageSender.SendPacket(peer, new ResPlayerLeave() { Player = player });
+                PackageSender.SendPacket(p.Key, new ResPlayerLeave() { Player = player });
             }
         }
         if (Players.Remove(peer, out _))
