@@ -235,6 +235,7 @@ public class PlayerMovementController : MonoBehaviour
         };
         player.IsLocalPlayer = NetworkManager.LocalPlayerPeerId == player.Player.Id;
         player.Animator = p.GetComponent<SpriteAnimator>();
+        player.Animator.PeerId = player.Player.Id;
         player.Transform = p.transform;
         player.NameText = player.Transform.GetChild(0).GetComponent<TMP_Text>();
 

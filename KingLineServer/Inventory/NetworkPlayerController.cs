@@ -37,6 +37,7 @@ public class NetworkPlayerController : INetworkController
             PackageSender.SendPacket(p.Key, packet);
         }
     }
+
     private void OnRequestPositionUpdate(ResPlayerPosition position, NetPeer peer)
     {
         var target = Players.FirstOrDefault(t => t.Value.Id == peer.Id);

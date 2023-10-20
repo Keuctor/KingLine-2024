@@ -14,10 +14,10 @@ public class PlayerNetworkController : INetworkController
     public UnityEvent OnPlayerListRefresh = new();
 
     [NonSerialized]
-    public UnityEvent<int> OnPlayerJoin = new();
+    public readonly UnityEvent<int> OnPlayerJoin = new();
 
     [NonSerialized]
-    public UnityEvent<int> OnPlayerLeave = new();
+    public readonly UnityEvent<int> OnPlayerLeave = new();
 
     public Player GetPlayer(int i)
     {
@@ -28,6 +28,7 @@ public class PlayerNetworkController : INetworkController
     {
         Players.Clear();
     }
+    
     public void OnPeerConnected(NetPeer peer)
     {
         NetworkManager.Instance.Send(new ReqPlayers());

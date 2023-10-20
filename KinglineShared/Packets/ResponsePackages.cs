@@ -11,6 +11,13 @@ public class ResPlayerXp
     public int NeededXpForNextLevel { get; set; }
 }
 
+public class ResRemoteInventory
+{
+    public int Id { get; set; }
+
+    public ItemStack[] Items { get; set; }
+}
+
 
 public class ResPlayerAddXp
 {

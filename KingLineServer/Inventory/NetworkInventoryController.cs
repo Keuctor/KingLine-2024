@@ -1,10 +1,11 @@
 ﻿using KingLineServer.Utils;
 using LiteNetLib;
 using LiteNetLib.Utils;
+using System.Numerics;
 
 public class NetworkInventoryController : INetworkController
 {
-    public static Dictionary<string, NetworkInventory> PlayerItems = new Dictionary<string, NetworkInventory>();
+    public static Dictionary<string, NetworkInventory> Inventories = new Dictionary<string, NetworkInventory>();
 
     public void Subscribe(NetPacketProcessor processor)
     {
@@ -32,7 +33,7 @@ public class NetworkInventoryController : INetworkController
     public void InventoryAdd(NetPeer peer, int id, short count)
     {
         var player = NetworkPlayerController.Players[peer];
-        NetworkInventory inventory = PlayerItems[player.Token];
+        NetworkInventory inventory = Inventories[player.Token];
         if (inventory.AddItem(id, count))
         {
             PackageSender.SendPacket(peer, new ResInventoryAdd()
@@ -43,31 +44,66 @@ public class NetworkInventoryController : INetworkController
         }
     }
 
+    private bool IsGearIndex(int index)
+    {
+        return index is NetworkInventory.HELMET_SLOT_INDEX or NetworkInventory.ARMOR_SLOT_INDEX
+            or NetworkInventory.HAND_SLOT_INDEX;
+    }
 
     private void OnRequestInventoryMove(ReqInventoryMove request, NetPeer peer)
     {
         var player = NetworkPlayerController.Players[peer];
-        var items = PlayerItems[player.Token];
-        if (items.MoveItem(request.FromIndex, request.ToIndex))
+        var inventory = Inventories[player.Token];
+
+        if (inventory.MoveItem(request.FromIndex, request.ToIndex))
         {
             var response = new ResInventoryMove()
             {
                 ToIndex = request.ToIndex,
                 FromIndex = request.FromIndex
             };
+
             PackageSender.SendPacket(peer, response);
+
+
+            if (IsGearIndex(request.ToIndex) || IsGearIndex(request.FromIndex))
+            {
+                foreach (var p in NetworkPlayerController.Players)
+                {
+                    var netPeer = p.Key;
+                    if (netPeer.Id != peer.Id)
+                    {
+                        var targetPlayer = GetOrCreateInventory(player.Token);
+                        PackageSender.SendPacket(netPeer, new ResRemoteInventory()
+                        {
+                            Id = peer.Id,
+                            Items = new ItemStack[3]
+                            {
+                                targetPlayer.GetHelmet(),
+                                targetPlayer.GetArmor(),
+                                targetPlayer.GetHand(),
+                            }
+                        });
+                    }
+                }
+            }
         }
     }
 
     private void OnRequestInventory(ReqInventory request, NetPeer peer)
     {
         var player = NetworkPlayerController.Players[peer];
-
         var response = new ResInventory();
+        var inventory = GetOrCreateInventory(player.Token);
+        response.Items = inventory.Items;
+        PackageSender.SendPacket(peer, response);
+    }
 
-        if (PlayerItems.TryGetValue(player.Token, out var inv))
+    public NetworkInventory GetOrCreateInventory(string token)
+    {
+        if (Inventories.TryGetValue(token, out var inv))
         {
-            response.Items = inv.Items;
+            return inv;
         }
         else
         {
@@ -78,19 +114,53 @@ public class NetworkInventoryController : INetworkController
             inventory.AddItem(MaterialType.STONE_PICKAXE.ID());
             inventory.AddItem(MaterialType.IRON_PICKAXE.ID());
             inventory.AddItem(MaterialType.STEEL_PICKAXE.ID());
-            response.Items = inventory.Items;
-            PlayerItems.Add(player.Token, inventory);
+            Inventories.Add(token, inventory);
+            return inventory;
         }
-
-        PackageSender.SendPacket(peer, response);
     }
 
     public void OnPeerDisconnected(NetPeer peer)
     {
     }
+
     public void OnPeerConnected(NetPeer peer)
     {
+        //TODO FIX LATER  This will probably called before player requires inventory.
+        var joinedPlayerInventory = GetOrCreateInventory(NetworkPlayerController.Players[peer].Token);
+        var response = new ResRemoteInventory()
+        {
+            Id = peer.Id,
+            Items = new ItemStack[3]
+            {
+                joinedPlayerInventory.GetHelmet(),
+                joinedPlayerInventory.GetArmor(),
+                joinedPlayerInventory.GetHand(),
+            }
+        };
+
+        foreach (var p in NetworkPlayerController.Players)
+        {
+            var netPeer = p.Key;
+            if (netPeer.Id != peer.Id)
+            {
+                var player = p.Value;
+                var targetPlayer = GetOrCreateInventory(player.Token);
+                PackageSender.SendPacket(peer, new ResRemoteInventory()
+                {
+                    Id = netPeer.Id,
+                    Items = new ItemStack[3]
+                    {
+                        targetPlayer.GetHelmet(),
+                        targetPlayer.GetArmor(),
+                        targetPlayer.GetHand(),
+                    }
+                });
+                PackageSender.SendPacket(p.Key, response);
+            }
+
+        }
     }
+
     public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
     {
     }

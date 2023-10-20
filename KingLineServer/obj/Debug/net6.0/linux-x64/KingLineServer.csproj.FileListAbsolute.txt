@@ -390,3 +390,5 @@ D:\KingLineServer\KingLine-Libgdx\KingLineServer\obj\Debug\net6.0\linux-x64\refi
 D:\KingLineServer\KingLine-Libgdx\KingLineServer\obj\Debug\net6.0\linux-x64\KingLineServer.pdb
 D:\KingLineServer\KingLine-Libgdx\KingLineServer\obj\Debug\net6.0\linux-x64\KingLineServer.genruntimeconfig.cache
 D:\KingLineServer\KingLine-Libgdx\KingLineServer\obj\Debug\net6.0\linux-x64\ref\KingLineServer.dll
+D:\KingLineServer\KingLine-Libgdx\KingLineServer\bin\Debug\net6.0\linux-x64\KinglineShared.dll
+D:\KingLineServer\KingLine-Libgdx\KingLineServer\bin\Debug\net6.0\linux-x64\KinglineShared.pdb

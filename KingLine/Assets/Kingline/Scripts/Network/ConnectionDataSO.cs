@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu]
 public class ConnectionDataSO : ScriptableObject
@@ -22,4 +23,6 @@ public class ConnectionDataSO : ScriptableObject
         m_port;
 
     public string Version => "v0.1";
+    
+    public bool Debug = true;
 }

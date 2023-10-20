@@ -28,6 +28,11 @@ public class NetworkManager : MonoBehaviour, INetEventListener
     {
         get
         {
+            if (m_connectionData.Debug)
+            {
+                return Guid.NewGuid().ToString().Substring(0, 12);
+            }
+            
             if (!PlayerPrefs.HasKey(nameof(UniqueKey)))
             {
                 PlayerPrefs.SetString(nameof(UniqueKey), Guid.NewGuid().ToString().Substring(0, 12));

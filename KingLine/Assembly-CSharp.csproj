@@ -261,6 +261,7 @@
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Sprites\Equipment\MeleeWeapon1H\Samurai" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\Equipment\Armor\Mummies" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\Gloves" />
+     <Folder Include="Assets\Kingline\Prefab\Inventory\ItemInfo" />
      <Folder Include="Assets\HeroEditor\Common\ExampleScripts" />
      <Folder Include="Assets\HeroEditor\Extensions\AbandonedWorkshop\Sprites\Equipment\MeleeWeapon1H\AbandonedWorkshop\Hammer" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\Tweens" />

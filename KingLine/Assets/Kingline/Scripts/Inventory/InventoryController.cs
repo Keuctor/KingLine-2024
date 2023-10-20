@@ -51,7 +51,7 @@ public class InventoryController : MonoBehaviour
 
     private void OnItemClicked(int index)
     {
-        var item = InventoryNetworkController.Inventory.Items[index];
+        var item = InventoryNetworkController.LocalInventory.Items[index];
         if (item.Id == -1)
         {
             m_itemInfoView.gameObject.SetActive(false);
@@ -63,9 +63,10 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    void OnGearsetChanged()
+    void OnGearsetChanged(int id)
     {
-        DisplayGear();
+        if (id == NetworkManager.LocalPlayerPeerId)
+            DisplayGear();
     }
 
     public void ShowItemAddPopup(int id, int count)
@@ -91,7 +92,7 @@ public class InventoryController : MonoBehaviour
 
         m_shown = true;
         m_inventoryView.gameObject.SetActive(true);
-        var items = InventoryNetworkController.Inventory.Items;
+        var items = InventoryNetworkController.LocalInventory.Items;
 
         for (var i = 0; i < items.Length; i++)
         {

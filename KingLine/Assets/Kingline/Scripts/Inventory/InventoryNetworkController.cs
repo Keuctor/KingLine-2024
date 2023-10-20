@@ -1,23 +1,30 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using LiteNetLib;
 using LiteNetLib.Utils;
 using UnityEngine.Events;
 
+
 public class InventoryNetworkController : INetworkController
 {
-    public static NetworkInventory Inventory;
+    public static NetworkInventory LocalInventory;
 
-    public readonly UnityEvent OnGearChange = new();
+    public static Dictionary<int, ItemStack[]> RemoteInventories = new();
+
+    public readonly UnityEvent<int> OnGearChange = new();
     public readonly UnityEvent OnInventory = new();
     public readonly UnityEvent<int, int> OnAddItem = new();
 
+
+
     public static async Task<NetworkInventory> GetInventoryAsync()
     {
-        while (Inventory == null)
+        while (LocalInventory == null)
         {
             await Task.Yield();
         }
-        return Inventory;
+
+        return LocalInventory;
     }
 
     private bool IsGearIndex(int index)
@@ -28,29 +35,30 @@ public class InventoryNetworkController : INetworkController
 
     private void OnInventoryMove(ResInventoryMove inventoryMove)
     {
-        Inventory.MoveItem(inventoryMove.FromIndex, inventoryMove.ToIndex);
+        LocalInventory.MoveItem(inventoryMove.FromIndex, inventoryMove.ToIndex);
         if (IsGearIndex(inventoryMove.FromIndex) || IsGearIndex(inventoryMove.ToIndex))
         {
-            OnGearChange?.Invoke();
+            OnGearChange?.Invoke(NetworkManager.LocalPlayerPeerId);
         }
     }
 
 
     private void OnInventoryResponse(ResInventory result)
     {
-        Inventory = new NetworkInventory(result.Items);
+        LocalInventory = new NetworkInventory(result.Items);
         OnInventory?.Invoke();
     }
 
 
     private void OnInventoryAdd(ResInventoryAdd response)
     {
-        Inventory.AddItem(response.Id, response.Count);
+        LocalInventory.AddItem(response.Id, response.Count);
         OnAddItem?.Invoke(response.Id, response.Count);
     }
 
     public void OnPeerDisconnected(NetPeer peer)
     {
+        RemoteInventories.Remove(peer.Id);
     }
 
     public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
@@ -67,7 +75,39 @@ public class InventoryNetworkController : INetworkController
         processor.SubscribeReusable<ResInventory>(OnInventoryResponse);
         processor.SubscribeReusable<ResInventoryMove>(OnInventoryMove);
         processor.SubscribeReusable<ResInventoryAdd>(OnInventoryAdd);
+        processor.SubscribeReusable<ResRemoteInventory>(OnRemoteInventory);
     }
+
+    private void OnRemoteInventory(ResRemoteInventory remoteInventory)
+    {
+        if (RemoteInventories.TryGetValue(remoteInventory.Id, out var inv))
+        {
+            RemoteInventories[remoteInventory.Id] = remoteInventory.Items;
+            OnGearChange?.Invoke(remoteInventory.Id);
+        }
+        else
+        {
+            RemoteInventories.Add(remoteInventory.Id, remoteInventory.Items);
+        }
+    }
+
+    public static async Task<ItemStack[]> GetPlayerGearAsync(int peerId)
+    {
+        if (peerId == NetworkManager.LocalPlayerPeerId)
+        {
+            return new[]
+            {
+                LocalInventory.GetHelmet(),
+                LocalInventory.GetArmor(),
+                LocalInventory.GetHand(),
+            };
+        }
+        while (!RemoteInventories.ContainsKey(peerId))
+            await Task.Yield();
+
+        return RemoteInventories[peerId];
+    }
+
 
     public void OnExit()
     {

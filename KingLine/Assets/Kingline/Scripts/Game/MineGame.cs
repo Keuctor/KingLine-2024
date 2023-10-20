@@ -82,7 +82,7 @@ public class MineGame : MonoBehaviour
         if (index < 0)
             return;
         
-        var item = InventoryNetworkController.Inventory.Items[index];
+        var item = InventoryNetworkController.LocalInventory.Items[index];
         if (item.Id == -1)
             return;
 
