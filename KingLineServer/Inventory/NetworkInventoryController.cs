@@ -6,7 +6,6 @@ using System.Numerics;
 public class NetworkInventoryController : INetworkController
 {
     public static Dictionary<string, NetworkInventory> Inventories = new Dictionary<string, NetworkInventory>();
-
     public void Subscribe(NetPacketProcessor processor)
     {
         processor.RegisterNestedType(() =>
@@ -64,8 +63,8 @@ public class NetworkInventoryController : INetworkController
             };
 
             PackageSender.SendPacket(peer, response);
-
-
+            
+            //Send my gear changes to other players
             if (IsGearIndex(request.ToIndex) || IsGearIndex(request.FromIndex))
             {
                 foreach (var p in NetworkPlayerController.Players)
@@ -73,15 +72,14 @@ public class NetworkInventoryController : INetworkController
                     var netPeer = p.Key;
                     if (netPeer.Id != peer.Id)
                     {
-                        var targetPlayer = GetOrCreateInventory(player.Token);
                         PackageSender.SendPacket(netPeer, new ResRemoteInventory()
                         {
                             Id = peer.Id,
                             Items = new ItemStack[3]
                             {
-                                targetPlayer.GetHelmet(),
-                                targetPlayer.GetArmor(),
-                                targetPlayer.GetHand(),
+                                inventory.GetHelmet(),
+                                inventory.GetArmor(),
+                                inventory.GetHand(),
                             }
                         });
                     }
@@ -97,6 +95,26 @@ public class NetworkInventoryController : INetworkController
         var inventory = GetOrCreateInventory(player.Token);
         response.Items = inventory.Items;
         PackageSender.SendPacket(peer, response);
+
+        //Send also other players inventories to this player
+        foreach (var p in NetworkPlayerController.Players)
+        {
+            var netPeer = p.Key;
+            if (netPeer.Id != peer.Id)
+            {
+                var targetPlayer = GetOrCreateInventory(p.Value.Token);
+                PackageSender.SendPacket(peer, new ResRemoteInventory()
+                {
+                    Id = netPeer.Id,
+                    Items = new ItemStack[3]
+                    {
+                        targetPlayer.GetHelmet(),
+                        targetPlayer.GetArmor(),
+                        targetPlayer.GetHand(),
+                    }
+                });
+            }
+        }
     }
 
     public NetworkInventory GetOrCreateInventory(string token)
@@ -125,39 +143,25 @@ public class NetworkInventoryController : INetworkController
 
     public void OnPeerConnected(NetPeer peer)
     {
-        //TODO FIX LATER  This will probably called before player requires inventory.
-        var joinedPlayerInventory = GetOrCreateInventory(NetworkPlayerController.Players[peer].Token);
-        var response = new ResRemoteInventory()
-        {
-            Id = peer.Id,
-            Items = new ItemStack[3]
-            {
-                joinedPlayerInventory.GetHelmet(),
-                joinedPlayerInventory.GetArmor(),
-                joinedPlayerInventory.GetHand(),
-            }
-        };
-
+        //im gonna request all the other players inv but
+        //they don't know about my inventory so i have to send them
+        var me = NetworkPlayerController.Players[peer];
         foreach (var p in NetworkPlayerController.Players)
         {
-            var netPeer = p.Key;
-            if (netPeer.Id != peer.Id)
+            if (me.Id != peer.Id)
             {
-                var player = p.Value;
-                var targetPlayer = GetOrCreateInventory(player.Token);
-                PackageSender.SendPacket(peer, new ResRemoteInventory()
+                var myInv = GetOrCreateInventory(me.Token);
+                PackageSender.SendPacket(p.Key, new ResRemoteInventory()
                 {
-                    Id = netPeer.Id,
+                    Id = peer.Id,
                     Items = new ItemStack[3]
                     {
-                        targetPlayer.GetHelmet(),
-                        targetPlayer.GetArmor(),
-                        targetPlayer.GetHand(),
+                        myInv.GetHelmet(),
+                        myInv.GetArmor(),
+                        myInv.GetHand(),
                     }
                 });
-                PackageSender.SendPacket(p.Key, response);
             }
-
         }
     }
 
