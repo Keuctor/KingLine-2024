@@ -5,17 +5,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 
 /*
- * - Silahların ve zırhların ek özellikleri + basmak  
+ * - Silahların ve zırhların ek özellikleri + basmak
  * - Pazar yeri insanlar buldukları eşyaları satabilmeli
  * - Açlık
  * - Chat
  * - Trade olması lazım
  * - Item özelliklerinin görünmesi lazım.
- * 
+ *
  */
 
 public class MineGame : MonoBehaviour
@@ -25,6 +24,8 @@ public class MineGame : MonoBehaviour
         STONE,
         BONE
     }
+
+    private static int m_selectedToolIndex = -1;
 
 
     [SerializeField]
@@ -39,8 +40,6 @@ public class MineGame : MonoBehaviour
     [SerializeField]
     private int m_maxMineCount = 6;
 
-    private int m_currentCount = 0;
-
     [SerializeField]
     private MineType m_mineType;
 
@@ -49,8 +48,6 @@ public class MineGame : MonoBehaviour
 
     [SerializeField]
     private PrefabsSO m_prefabs;
-
-    private static int m_selectedToolIndex = -1;
 
     [SerializeField]
     private TMP_Text m_selectedToolPropertiesText;
@@ -62,9 +59,25 @@ public class MineGame : MonoBehaviour
     private TMP_Text m_selectedToolNameText;
 
     public float ToolModifier;
-    
+
     private InventoryNetworkController m_controller;
-    
+
+    private readonly int m_currentCount = 0;
+
+
+    private void Start()
+    {
+        m_controller = NetworkManager.Instance.GetController<InventoryNetworkController>();
+
+        for (var i = 0; i < m_maxMineCount; i++) Spawn(true);
+        DisplayTool(m_selectedToolIndex);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)) SceneManager.LoadScene("World");
+    }
+
 
     public void SelectTool()
     {
@@ -81,16 +94,13 @@ public class MineGame : MonoBehaviour
 
         if (index < 0)
             return;
-        
+
         var item = InventoryNetworkController.LocalInventory.Items[index];
         if (item.Id == -1)
             return;
 
         var material = ItemRegistry.GetItem(item.Id);
-        if (material.Type != IType.TOOL)
-        {
-            return;
-        }
+        if (material.Type != IType.TOOL) return;
 
         var toolItemMaterial = (ToolItemMaterial)material;
         m_selectedToolIndex = index;
@@ -99,18 +109,6 @@ public class MineGame : MonoBehaviour
         m_selectedToolImage.enabled = true;
         m_selectedToolNameText.text = toolItemMaterial.Name;
         ToolModifier = toolItemMaterial.ToolValue;
-    }
-
-
-    private void Start()
-    {
-        m_controller = NetworkManager.Instance.GetController<InventoryNetworkController>();
-        
-        for (int i = 0; i < m_maxMineCount; i++)
-        {
-            Spawn(true);
-        }
-        DisplayTool(m_selectedToolIndex);
     }
 
     public void Spawn(bool instant)
@@ -138,25 +136,16 @@ public class MineGame : MonoBehaviour
         node.OnComplete.AddListener(OnNodeCompletePart);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene("World");
-        }
-    }
-
     private void OnDamage(NodeBehaviour node)
     {
         if (node.IsDead) return;
         var controller = NetworkManager.Instance.GetController<ProgressionNetworkController>();
         var skill = controller.GetSkill("Strength");
-        
-        node.Damage(10 * (Mathf.Max(1,skill/2f) * ToolModifier));
+
+        node.Damage(10 * (Mathf.Max(1, skill / 2f) * ToolModifier));
         AudioManager.Instance.PlayOnce(SoundType.BREAKING_1, true, 0.3f);
     }
 
-    
 
     private void OnNodeCompletePart()
     {
@@ -169,13 +158,8 @@ public class MineGame : MonoBehaviour
         if (m_loop)
             StartCoroutine(SpawnAfterSeconds(Random.Range(2, 4f)));
         if (m_mineType == MineType.STONE)
-        {
             NetworkManager.Instance.Send(new ReqMineStone());
-        }
-        else if (m_mineType == MineType.BONE)
-        {
-            NetworkManager.Instance.Send(new ReqMineBone());
-        }
+        else if (m_mineType == MineType.BONE) NetworkManager.Instance.Send(new ReqMineBone());
     }
 
     public IEnumerator SpawnAfterSeconds(float seconds)

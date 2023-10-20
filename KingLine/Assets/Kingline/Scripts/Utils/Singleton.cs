@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-public abstract class Singleton<T> : MonoBehaviour 
-where T : Singleton<T>
+public abstract class Singleton<T> : MonoBehaviour
+    where T : Singleton<T>
 {
     private static T m_instance;
 
@@ -9,21 +9,19 @@ where T : Singleton<T>
     {
         get
         {
-            if (m_instance == null)
-            {
-                m_instance = FindObjectOfType<T>();
-            }
+            if (m_instance == null) m_instance = FindObjectOfType<T>();
             return m_instance;
         }
     }
 
     public virtual void Awake()
     {
-        if (m_instance !=null && m_instance!= this)
+        if (m_instance != null && m_instance != this)
         {
             Destroy(gameObject);
             return;
         }
+
         if (m_instance == null)
         {
             m_instance = FindObjectOfType<T>();

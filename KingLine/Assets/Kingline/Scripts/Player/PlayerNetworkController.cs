@@ -6,37 +6,31 @@ using UnityEngine.Events;
 
 public class PlayerNetworkController : INetworkController
 {
-    public readonly Dictionary<int, Player> Players = new();
-
-    public Player LocalPlayer => Players[NetworkManager.LocalPlayerPeerId];
-
-    [NonSerialized]
-    public UnityEvent OnPlayerListRefresh = new();
-
     [NonSerialized]
     public readonly UnityEvent<int> OnPlayerJoin = new();
 
     [NonSerialized]
     public readonly UnityEvent<int> OnPlayerLeave = new();
 
-    public Player GetPlayer(int i)
-    {
-        return Players[i];
-    }
+    public readonly Dictionary<int, Player> Players = new();
+
+    [NonSerialized]
+    public UnityEvent OnPlayerListRefresh = new();
+
+    public Player LocalPlayer => Players[NetworkManager.LocalPlayerPeerId];
 
     public void OnPeerDisconnected(NetPeer peer)
     {
         Players.Clear();
     }
-    
+
     public void OnPeerConnected(NetPeer peer)
     {
         NetworkManager.Instance.Send(new ReqPlayers());
     }
-    
+
     public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
     {
-        
     }
 
     public void Subscribe(NetPacketProcessor processor)
@@ -55,14 +49,16 @@ public class PlayerNetworkController : INetworkController
     public void OnStart()
     {
     }
-    
-    
+
+    public Player GetPlayer(int i)
+    {
+        return Players[i];
+    }
+
+
     private void OnPlayersResponse(ResPlayers res)
     {
-        for (var i = 0; i < res.Players.Length; i++)
-        {
-            Players.Add(res.Players[i].Id, res.Players[i]);
-        }
+        for (var i = 0; i < res.Players.Length; i++) Players.Add(res.Players[i].Id, res.Players[i]);
         OnPlayerListRefresh?.Invoke();
     }
 
@@ -96,5 +92,4 @@ public class PlayerNetworkController : INetworkController
                 break;
             }
     }
-
 }

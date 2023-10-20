@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -23,8 +21,8 @@ public class LevelUpPopup : MonoBehaviour
     {
         var m_progressionNetworkController = NetworkManager.Instance.GetController<ProgressionNetworkController>();
         AudioManager.Instance.PlayOnce(SoundType.LEVEL_UP, true, 0.4f);
-        this.m_levelText.text = $"LEVEL {m_progressionNetworkController.Level}";
-        this.m_unspentSkillPointText.text =
+        m_levelText.text = $"LEVEL {m_progressionNetworkController.Level}";
+        m_unspentSkillPointText.text =
             $"You have {m_progressionNetworkController.SkillPoint} unspent skill points";
 
 

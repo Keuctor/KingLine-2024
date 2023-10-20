@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class NavigationUI : MonoBehaviour
@@ -8,12 +6,8 @@ public class NavigationUI : MonoBehaviour
     {
         var inventoryController = FindObjectOfType<InventoryController>();
         if (inventoryController.IsVisible)
-        {
             inventoryController.HideInventory();
-        }
         else
-        {
             inventoryController.ShowInventory();
-        }
     }
 }

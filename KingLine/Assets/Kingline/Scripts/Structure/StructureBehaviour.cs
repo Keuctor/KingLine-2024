@@ -5,8 +5,10 @@ public class StructureBehaviour : MonoBehaviour
     public int Id;
     public string Name;
     public string Description;
-    
+    public SpriteRenderer Selection;
+
     private Sprite icon;
+
     public Sprite Icon
     {
         get => icon;
@@ -16,5 +18,4 @@ public class StructureBehaviour : MonoBehaviour
             GetComponent<SpriteRenderer>().sprite = value;
         }
     }
-    public SpriteRenderer Selection;
 }

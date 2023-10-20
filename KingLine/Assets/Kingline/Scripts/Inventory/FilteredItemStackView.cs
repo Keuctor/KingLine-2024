@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -23,37 +22,25 @@ public class FilteredItemStackView : ItemStackView
         var itemInfo = ItemRegistry.GetItem(item.Id);
 
         if (Id == NetworkInventory.HAND_SLOT_INDEX)
-        {
             if (itemInfo.Type == IType.WEAPON)
-            {
                 DragItem(view, eventData);
-            }
-        }
 
         if (Id == NetworkInventory.HELMET_SLOT_INDEX)
-        {
             if (itemInfo.Type == IType.HELMET)
-            {
                 DragItem(view, eventData);
-            }
-        }
 
         if (Id == NetworkInventory.ARMOR_SLOT_INDEX)
-        {
             if (itemInfo.Type == IType.ARMOR)
-            {
                 DragItem(view, eventData);
-            }
-        }
     }
 
     public void DragItem(ItemStackContentView view, PointerEventData eventData)
     {
         if (Content.childCount != 0) return;
         view.ParentAfterDrag = transform;
-        To = this.Id;
+        To = Id;
         OnPointerDown(eventData);
-        NetworkManager.Instance.Send(new ReqInventoryMove()
+        NetworkManager.Instance.Send(new ReqInventoryMove
         {
             FromIndex = (short)From,
             ToIndex = (short)To

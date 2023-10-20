@@ -21,7 +21,7 @@ public class ItemInfoView : MonoBehaviour
     [SerializeField]
     private Image m_itemIcon;
 
-    private List<ItemInfoMetaView> _metaViews = new(4);
+    private readonly List<ItemInfoMetaView> _metaViews = new(4);
 
     public void ShowItemInfo(IItemMaterial itemMaterial)
     {
@@ -69,6 +69,7 @@ public class ItemInfoView : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException();
         }
+
         m_priceMetaView.transform.SetAsLastSibling();
     }
 }

@@ -6,19 +6,16 @@ public class SelectionItemStackViewContent : MonoBehaviour
 {
     [SerializeField]
     private Image m_image;
+
     [SerializeField]
     private TMP_Text m_countText;
 
-    public void SetContext(Sprite icon, int count,bool stackable)
+    public void SetContext(Sprite icon, int count, bool stackable)
     {
-        this.m_image.sprite = icon;
+        m_image.sprite = icon;
         if (stackable)
-        {
-            this.m_countText.text = "x" + count;
-        }
+            m_countText.text = "x" + count;
         else
-        {
-            this.m_countText.text = "";
-        }
+            m_countText.text = "";
     }
 }

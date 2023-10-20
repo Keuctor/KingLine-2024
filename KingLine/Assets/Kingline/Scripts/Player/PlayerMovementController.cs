@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Cinemachine;
 using Kingline.Scripts.Utils;
@@ -8,117 +7,58 @@ using UnityEngine.EventSystems;
 
 public class GamePlayer
 {
-    public Player Player;
+    public SpriteAnimator Animator;
     public bool IsLocalPlayer;
     public TMP_Text NameText;
+    public Player Player;
     public Transform Transform;
-    public SpriteAnimator Animator;
 }
 
 public class PlayerMovementController : MonoBehaviour
 {
+    public static GamePlayer m_localPlayer;
+
     [SerializeField]
     private PrefabsSO m_prefabs;
-
-    private bool m_isLocalPlayerMoving = false;
-
-    private bool m_createdPlayers = false;
 
     [SerializeField]
     private GameObject m_playerPrefab;
 
-    public static GamePlayer m_localPlayer;
-
     [SerializeField]
     private float m_moveTreshold = 0.16f;
+
+
+    [SerializeField]
+    private Camera m_mainCamera;
+
+    [SerializeField]
+    private StructureController m_structureController;
+
+    private bool m_createdPlayers;
+
+    private bool m_isLocalPlayerMoving;
+
+    public PlayerNetworkController m_playerNetworkController;
 
     private StructureInfoUI m_structureInfoUI;
 
     private StructureBehaviour m_targetStructure;
 
-    public PlayerNetworkController m_playerNetworkController;
-    
+    public Dictionary<int, GamePlayer> playerInstances = new();
 
-    [SerializeField]
-    private Camera m_mainCamera;
-
-    public Dictionary<int, GamePlayer> playerInstances = new Dictionary<int, GamePlayer>();
-
-    [SerializeField]
-    private StructureController m_structureController;
-
-    private void ClientSendPositionUpdate()
-    {
-        var positionUpdate = new ResPlayerPosition
-        {
-            x = m_localPlayer.Transform.position.x,
-            y = m_localPlayer.Transform.position.y
-        };
-        NetworkManager.Instance.Send(positionUpdate);
-    }
-
-    private void ClientSendTargetPosition(Vector2 mousePosition)
-    {
-        m_isLocalPlayerMoving = true;
-        m_localPlayer.Player.targetX = mousePosition.x;
-        m_localPlayer.Player.targetY = mousePosition.y;
-        var moveUpdate = new ReqPlayerMove
-        {
-            x = m_localPlayer.Player.targetX,
-            y = m_localPlayer.Player.targetY
-        };
-        NetworkManager.Instance.Send(moveUpdate);
-    }
-    
     private void Start()
     {
         m_playerNetworkController = NetworkManager.Instance.GetController<PlayerNetworkController>();
         m_playerNetworkController.OnPlayerJoin.AddListener(OnPlayerJoin);
         m_playerNetworkController.OnPlayerLeave.AddListener(OnPlayerLeave);
-        NetworkManager.Instance.OnDisconnectedFromServer += (OnDisconnectedFromServer);
-        if (m_playerNetworkController.Players.Count>0)
+        NetworkManager.Instance.OnDisconnectedFromServer += OnDisconnectedFromServer;
+        if (m_playerNetworkController.Players.Count > 0)
         {
             CreatePlayers();
             return;
         }
 
         m_playerNetworkController.OnPlayerListRefresh.AddListener(CreatePlayers);
-    }
-
-    private void OnDestroy()
-    {
-        NetworkManager.Instance.OnDisconnectedFromServer -= (OnDisconnectedFromServer);
-    }
-
-    private void OnDisconnectedFromServer()
-    {
-        m_createdPlayers = false;
-
-        foreach (var v in playerInstances)
-            Destroy(v.Value.Transform.gameObject);
-
-        playerInstances.Clear();
-    }
-
-    private void CreatePlayers()
-    {
-        foreach (var v in m_playerNetworkController.Players)
-        {
-            CreatePlayer(v.Value);
-        }
-
-        m_createdPlayers = true;
-    }
-
-    private void OnPlayerLeave(int obj)
-    {
-        Destroy(playerInstances[obj].Transform.gameObject);
-        playerInstances.Remove(obj);
-    }
-
-    private void OnPlayerJoin(int obj)
-    {
-        CreatePlayer(m_playerNetworkController.GetPlayer(obj));
     }
 
     private void Update()
@@ -137,32 +77,23 @@ public class PlayerMovementController : MonoBehaviour
                 var angle = Vector2.SignedAngle(Vector2.up,
                     new Vector3(player.targetX, player.targetY) - gamePlayer.Transform.position);
 
-                Vector2 dirr = new Vector2(player.targetX - player.x, player.targetY - player.y).normalized;
+                var dirr = new Vector2(player.targetX - player.x, player.targetY - player.y).normalized;
                 if (dirr.x > 0)
-                {
                     gamePlayer.Animator.SetDirection(MoveDirection.Right);
-                }
                 else
-                {
                     gamePlayer.Animator.SetDirection(MoveDirection.Left);
-                }
-
             }
             else
             {
                 if (gamePlayer.IsLocalPlayer)
-                {
                     if (m_isLocalPlayerMoving)
                     {
                         if (m_targetStructure != null)
-                        {
                             m_structureController
                                 .ShowStructureUI(m_targetStructure.Id);
-                        }
 
                         m_isLocalPlayerMoving = false;
                     }
-                }
 
                 gamePlayer.Animator.SetPlay(false);
             }
@@ -189,7 +120,6 @@ public class PlayerMovementController : MonoBehaviour
             var hits = Physics2D.RaycastAll(mousePosition, Vector2.zero);
             m_targetStructure = null;
             foreach (var hit in hits)
-            {
                 if (hit.transform.CompareTag("Structure"))
                 {
                     var structureBehaviour = hit.collider.GetComponent<StructureBehaviour>();
@@ -208,7 +138,6 @@ public class PlayerMovementController : MonoBehaviour
                     m_structureInfoUI.SetView(structureBehaviour);
                     break;
                 }
-            }
 
             if (hits.Length == 0)
             {
@@ -225,13 +154,69 @@ public class PlayerMovementController : MonoBehaviour
         if (IsLocalPlayerMoved()) ClientSendPositionUpdate();
     }
 
+    private void OnDestroy()
+    {
+        NetworkManager.Instance.OnDisconnectedFromServer -= OnDisconnectedFromServer;
+    }
+
+    private void ClientSendPositionUpdate()
+    {
+        var positionUpdate = new ResPlayerPosition
+        {
+            x = m_localPlayer.Transform.position.x,
+            y = m_localPlayer.Transform.position.y
+        };
+        NetworkManager.Instance.Send(positionUpdate);
+    }
+
+    private void ClientSendTargetPosition(Vector2 mousePosition)
+    {
+        m_isLocalPlayerMoving = true;
+        m_localPlayer.Player.targetX = mousePosition.x;
+        m_localPlayer.Player.targetY = mousePosition.y;
+        var moveUpdate = new ReqPlayerMove
+        {
+            x = m_localPlayer.Player.targetX,
+            y = m_localPlayer.Player.targetY
+        };
+        NetworkManager.Instance.Send(moveUpdate);
+    }
+
+    private void OnDisconnectedFromServer()
+    {
+        m_createdPlayers = false;
+
+        foreach (var v in playerInstances)
+            Destroy(v.Value.Transform.gameObject);
+
+        playerInstances.Clear();
+    }
+
+    private void CreatePlayers()
+    {
+        foreach (var v in m_playerNetworkController.Players) CreatePlayer(v.Value);
+
+        m_createdPlayers = true;
+    }
+
+    private void OnPlayerLeave(int obj)
+    {
+        Destroy(playerInstances[obj].Transform.gameObject);
+        playerInstances.Remove(obj);
+    }
+
+    private void OnPlayerJoin(int obj)
+    {
+        CreatePlayer(m_playerNetworkController.GetPlayer(obj));
+    }
+
     private void CreatePlayer(Player pl)
     {
         var p = Instantiate(m_playerPrefab);
 
-        var player = new GamePlayer()
+        var player = new GamePlayer
         {
-            Player =  pl,
+            Player = pl
         };
         player.IsLocalPlayer = NetworkManager.LocalPlayerPeerId == player.Player.Id;
         player.Animator = p.GetComponent<SpriteAnimator>();

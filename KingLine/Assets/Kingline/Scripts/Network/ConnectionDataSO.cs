@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu]
 public class ConnectionDataSO : ScriptableObject
@@ -16,6 +15,8 @@ public class ConnectionDataSO : ScriptableObject
     [SerializeField]
     private bool m_isLocal = true;
 
+    public bool Debug = true;
+
     public string Adress =>
         m_isLocal ? m_localAdress : m_serverAdress;
 
@@ -23,6 +24,4 @@ public class ConnectionDataSO : ScriptableObject
         m_port;
 
     public string Version => "v0.1";
-    
-    public bool Debug = true;
 }

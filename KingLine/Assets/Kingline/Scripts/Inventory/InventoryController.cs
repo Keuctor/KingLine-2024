@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class InventoryController : MonoBehaviour
 {
+    public static UnityEvent<int> OnItemClick = new();
+
     [SerializeField]
     private GameObject m_inventoryView;
 
@@ -31,14 +33,10 @@ public class InventoryController : MonoBehaviour
     public TMP_Text TotalArmorText;
     public TMP_Text CoinText;
 
-    public bool IsVisible => m_shown;
-
-    private bool m_shown;
-
     [SerializeField]
     private ItemInfoView m_itemInfoView;
 
-    public static UnityEvent<int> OnItemClick = new();
+    public bool IsVisible { get; private set; }
 
 
     private void Start()
@@ -47,6 +45,13 @@ public class InventoryController : MonoBehaviour
         controller.OnGearChange.AddListener(OnGearsetChanged);
         controller.OnAddItem.AddListener(ShowItemAddPopup);
         OnItemClick.AddListener(OnItemClicked);
+    }
+
+    private void Update()
+    {
+        if (IsVisible)
+            if (Input.GetKeyDown(KeyCode.Escape))
+                HideInventory();
     }
 
     private void OnItemClicked(int index)
@@ -63,7 +68,7 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    void OnGearsetChanged(int id)
+    private void OnGearsetChanged(int id)
     {
         if (id == NetworkManager.LocalPlayerPeerId)
             DisplayGear();
@@ -88,9 +93,9 @@ public class InventoryController : MonoBehaviour
 
     public void ShowInventory()
     {
-        if (m_shown) return;
+        if (IsVisible) return;
 
-        m_shown = true;
+        IsVisible = true;
         m_inventoryView.gameObject.SetActive(true);
         var items = InventoryNetworkController.LocalInventory.Items;
 
@@ -124,34 +129,21 @@ public class InventoryController : MonoBehaviour
         DisplayGear();
     }
 
-    private void Update()
-    {
-        if (m_shown)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-                HideInventory();
-        }
-    }
-
     public void HideInventory()
     {
         m_inventoryView.gameObject.SetActive(false);
-        m_shown = false;
+        IsVisible = false;
         ClearInventoryUI();
     }
 
     private void ClearInventoryUI()
     {
-        for (int i = 0; i < m_itemViewContent.transform.childCount; i++)
+        for (var i = 0; i < m_itemViewContent.transform.childCount; i++)
             Destroy(m_itemViewContent.transform.GetChild(i).gameObject);
 
-        for (int i = 0; i < m_gearSets.Length; i++)
-        {
+        for (var i = 0; i < m_gearSets.Length; i++)
             if (m_gearSets[i].transform.childCount > 0)
-            {
                 Destroy(m_gearSets[i].transform.GetChild(0).gameObject);
-            }
-        }
     }
 
     private async void DisplayGear()
@@ -189,6 +181,6 @@ public class InventoryController : MonoBehaviour
 
         TotalArmorText.text = baseDefence + "";
         TotalStrengthText.text = baseStrength + "";
-        CoinText.text = NetworkManager.Instance.GetController<PlayerNetworkController>().LocalPlayer.Coin + "";
+        CoinText.text = NetworkManager.Instance.GetController<PlayerNetworkController>().LocalPlayer.Currency + "";
     }
 }

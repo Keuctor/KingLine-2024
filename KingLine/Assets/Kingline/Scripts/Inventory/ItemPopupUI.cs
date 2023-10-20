@@ -9,6 +9,7 @@ public class ItemPopupUI : MonoBehaviour
     public CanvasGroup CanvasGroup;
 
     private RectTransform m_rectTransform;
+
     public RectTransform RectTransform
     {
         get

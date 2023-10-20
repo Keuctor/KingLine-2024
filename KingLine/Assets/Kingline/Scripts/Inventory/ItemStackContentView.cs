@@ -9,29 +9,17 @@ public class ItemStackContentView : MonoBehaviour, IBeginDragHandler, IEndDragHa
 {
     [SerializeField]
     private Image m_image;
+
     [SerializeField]
     private TMP_Text m_countText;
 
-    public void SetContext(Sprite icon, int count,bool isStackable)
-    {
-        this.m_image.sprite = icon;
-        if (isStackable)
-        {
-            this.m_countText.text = "x" + count;
-        }
-        else
-        {
-            this.m_countText.text = "";
-        }
-    }
-
     [SerializeField]
     public Image m_background;
-    
-    [NonSerialized]
-    public Transform ParentAfterDrag;
 
     private Color _backgroundColor;
+
+    [NonSerialized]
+    public Transform ParentAfterDrag;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -58,5 +46,14 @@ public class ItemStackContentView : MonoBehaviour, IBeginDragHandler, IEndDragHa
         rect.anchorMin = Vector2.zero;
         rect.anchorMax = Vector2.one;
         rect.anchoredPosition = Vector2.zero;
+    }
+
+    public void SetContext(Sprite icon, int count, bool isStackable)
+    {
+        m_image.sprite = icon;
+        if (isStackable)
+            m_countText.text = "x" + count;
+        else
+            m_countText.text = "";
     }
 }

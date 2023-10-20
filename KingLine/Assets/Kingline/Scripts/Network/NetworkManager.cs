@@ -11,54 +11,56 @@ public class NetworkManager : MonoBehaviour, INetEventListener
 {
     public static int LocalPlayerPeerId;
 
+    public static NetworkManager Instance;
+
     [SerializeField]
     private ConnectionDataSO m_connectionData;
 
     [SerializeField]
     private ConnectionHandlerUI m_connectionHandlerUI;
 
-    private NetManager m_client;
+    private readonly NetDataWriter writer = new();
 
     [NonSerialized]
     public bool Connected;
 
+    private NetManager m_client;
+
     private ConnectionHandlerUI m_connectionHandlerUIInstance;
-
-    public string UniqueKey
-    {
-        get
-        {
-            if (m_connectionData.Debug)
-            {
-                return Guid.NewGuid().ToString().Substring(0, 12);
-            }
-            
-            if (!PlayerPrefs.HasKey(nameof(UniqueKey)))
-            {
-                PlayerPrefs.SetString(nameof(UniqueKey), Guid.NewGuid().ToString().Substring(0, 12));
-            }
-
-            return PlayerPrefs.GetString(nameof(UniqueKey));
-        }
-    }
-
-    private List<INetworkController> m_networkControllers = new List<INetworkController>();
 
 
     private bool m_isServerStarted;
+
+    private readonly List<INetworkController> m_networkControllers = new();
 
     public Action OnConnectedToServer;
     public Action OnDisconnectedFromServer;
 
     public NetPeer Server;
 
-    private readonly NetDataWriter writer = new();
+    public string UniqueKey
+    {
+        get
+        {
+            if (m_connectionData.Debug) return Guid.NewGuid().ToString().Substring(0, 12);
+
+            if (!PlayerPrefs.HasKey(nameof(UniqueKey)))
+                PlayerPrefs.SetString(nameof(UniqueKey), Guid.NewGuid().ToString().Substring(0, 12));
+
+            return PlayerPrefs.GetString(nameof(UniqueKey));
+        }
+    }
 
     public NetPacketProcessor NetPacketProcessor { get; } = new();
 
-    public static NetworkManager Instance;
 
-    public void OnEnable()
+    private void FixedUpdate()
+    {
+        if (m_isServerStarted)
+            m_client.PollEvents();
+    }
+
+    private void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -79,24 +81,12 @@ public class NetworkManager : MonoBehaviour, INetEventListener
         }
     }
 
-    public T GetController<T>() where T : INetworkController
-    {
-        return (T)m_networkControllers.FirstOrDefault(t => t.GetType() == typeof(T));
-    }
 
     private void OnDisable()
     {
         if (Instance == this)
-        {
-            if (m_isServerStarted) m_client.Stop();
-        }
-    }
-
-
-    private void FixedUpdate()
-    {
-        if (m_isServerStarted)
-            m_client.PollEvents();
+            if (m_isServerStarted)
+                m_client.Stop();
     }
 
     public void OnPeerConnected(NetPeer peer)
@@ -159,6 +149,11 @@ public class NetworkManager : MonoBehaviour, INetEventListener
         LoadingHandler.Instance.HideAfterSeconds(1f);
     }
 
+    public T GetController<T>() where T : INetworkController
+    {
+        return (T)m_networkControllers.FirstOrDefault(t => t.GetType() == typeof(T));
+    }
+
     public void DestroyConnectionUI()
     {
         if (m_connectionHandlerUIInstance != null)
@@ -205,7 +200,7 @@ public class NetworkManager : MonoBehaviour, INetEventListener
         NetPacketProcessor.RegisterNestedType(() => new Structure());
         NetPacketProcessor.RegisterNestedType(() => new ItemStack());
         NetPacketProcessor.RegisterNestedType(() => new Skill());
-        
+
         m_networkControllers.ForEach(t => t.Subscribe(NetPacketProcessor));
         NetPacketProcessor.SubscribeReusable<ResPeerId>(OnPeerIdReceived);
     }

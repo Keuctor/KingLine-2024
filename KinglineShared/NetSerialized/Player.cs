@@ -10,7 +10,7 @@ public partial class Player : INetSerializable
     public float targetX { get; set; }
     public float targetY { get; set; }
     public float speed { get; set; }
-    public int Coin { get; set; }
+    public int Currency { get; set; }
 
     public void Serialize(NetDataWriter writer)
     {
@@ -21,7 +21,7 @@ public partial class Player : INetSerializable
         writer.Put(targetX);
         writer.Put(targetY);
         writer.Put(speed);
-        writer.Put(Coin);
+        writer.Put(Currency);
     }
     public void Deserialize(NetDataReader reader)
     {
@@ -32,6 +32,6 @@ public partial class Player : INetSerializable
         this.targetX = reader.GetFloat();
         this.targetY = reader.GetFloat();
         this.speed = reader.GetFloat();
-        this.Coin = reader.GetInt();
+        this.Currency = reader.GetInt();
     }
 }

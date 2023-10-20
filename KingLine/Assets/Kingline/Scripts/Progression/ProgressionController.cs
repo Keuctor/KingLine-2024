@@ -1,5 +1,3 @@
-
-using System;
 using UnityEngine;
 
 public class ProgressionController : MonoBehaviour
@@ -24,7 +22,7 @@ public class ProgressionController : MonoBehaviour
     {
         Instantiate(m_leveLUpPopup, m_levelUpContent);
     }
-    
+
     public void OpenProgressionMenu()
     {
         PlayerUI.gameObject.SetActive(!PlayerUI.gameObject.activeInHierarchy);

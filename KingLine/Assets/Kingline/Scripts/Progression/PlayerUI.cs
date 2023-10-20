@@ -16,15 +16,9 @@ public class PlayerUI : MonoBehaviour
     [SerializeField]
     private TMP_Text m_skillPointText;
 
-    private Dictionary<string, SkillItemView> m_createdSkillItemViews = new();
+    private readonly Dictionary<string, SkillItemView> m_createdSkillItemViews = new();
 
     private ProgressionNetworkController m_progressionNetworkController;
-
- 
-    private void OnSkillChanged(string skill, byte value)
-    {
-        m_createdSkillItemViews[skill].ValueText.text = value + "";
-    }
 
     private void OnEnable()
     {
@@ -35,6 +29,12 @@ public class PlayerUI : MonoBehaviour
         CreateViews();
     }
 
+
+    private void OnSkillChanged(string skill, byte value)
+    {
+        m_createdSkillItemViews[skill].ValueText.text = value + "";
+    }
+
     private void OnLevelChange(int level)
     {
     }
@@ -42,10 +42,7 @@ public class PlayerUI : MonoBehaviour
     private void CreateViews()
     {
         var playerSkill = m_progressionNetworkController.Skills;
-        foreach (var skill in playerSkill)
-        {
-            CreateSkillView(skill);
-        }
+        foreach (var skill in playerSkill) CreateSkillView(skill);
 
         var xp = m_progressionNetworkController.CurrentExp;
         var level = m_progressionNetworkController.Level;
@@ -58,9 +55,7 @@ public class PlayerUI : MonoBehaviour
     {
         m_skillPointText.text = $"You have {m_progressionNetworkController.SkillPoint} Points";
         foreach (var m in m_createdSkillItemViews.Values)
-        {
             m.IncrementButton.gameObject.SetActive(m_progressionNetworkController.SkillPoint > 0);
-        }
     }
 
     public void CreateSkillView(Skill skill)

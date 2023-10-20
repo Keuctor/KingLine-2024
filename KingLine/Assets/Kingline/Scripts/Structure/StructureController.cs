@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,22 +11,20 @@ public class StructureController : MonoBehaviour
     [SerializeField]
     private StructureListSO m_structureList;
 
-    private readonly List<StructureBehaviour> m_structureInstances = new();
-    
     [SerializeField]
     private StructureUI m_structureUITemplate;
 
-    private StructureUI m_structureUIInstance;
+    private readonly List<StructureBehaviour> m_structureInstances = new();
 
     private StructureNetworkController m_structureNetworkController;
+
+    private StructureUI m_structureUIInstance;
 
     private void Start()
     {
         m_structureNetworkController = NetworkManager.Instance.GetController<StructureNetworkController>();
         if (m_structureNetworkController.Structures.Length > 0 || SceneManager.GetActiveScene().name == "World")
-        {
             CreateStructures();
-        }
         m_structureNetworkController.OnStructureResponse.AddListener(CreateStructures);
         NetworkManager.Instance.OnDisconnectedFromServer += OnDisconnected;
     }
@@ -57,7 +53,7 @@ public class StructureController : MonoBehaviour
         LoadingHandler.Instance.ShowLoading("Completed...");
         LoadingHandler.Instance.HideAfterSeconds(0.1f);
     }
-    
+
     public void ShowStructureUI(int structureId)
     {
         var structureInfo = m_structureList.GetStructureInfo(structureId);
@@ -71,7 +67,7 @@ public class StructureController : MonoBehaviour
         m_structureUIInstance = Instantiate(m_structureUITemplate);
         m_structureUIInstance.OnResult.RemoveAllListeners();
         m_structureUIInstance.SetContext(structureInfo);
-        m_structureUIInstance.OnResult.AddListener((index) =>
+        m_structureUIInstance.OnResult.AddListener(index =>
         {
             if (index == structureInfo.Options.Length - 1)
             {
@@ -96,7 +92,7 @@ public class StructureController : MonoBehaviour
 
         m_structureInstances.Add(structureBehaviour);
     }
-    
+
     private void ClearStructureObjects()
     {
         foreach (var v in m_structureInstances)

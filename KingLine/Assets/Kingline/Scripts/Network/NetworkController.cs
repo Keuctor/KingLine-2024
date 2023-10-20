@@ -1,9 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public abstract class NetworkController<T> : MonoBehaviour 
-where T : NetworkController<T>
+public abstract class NetworkController<T> : MonoBehaviour
+    where T : NetworkController<T>
 {
     public static T Instance;
 
@@ -14,6 +13,7 @@ where T : NetworkController<T>
             Destroy(gameObject);
             return;
         }
+
         Instance = (T)this;
         DontDestroyOnLoad(gameObject);
     }
@@ -28,11 +28,6 @@ where T : NetworkController<T>
         OnStart();
         NetworkManager.Instance.OnConnectedToServer += OnConnectedToServer;
         NetworkManager.Instance.OnDisconnectedFromServer += OnDisconnectedFromServer;
-    }
-
-    private void OnActiveSceneChanged(Scene arg0, Scene arg1)
-    {
-        OnStart();
     }
 
     public void OnDestroy()
@@ -50,6 +45,11 @@ where T : NetworkController<T>
         if (Instance != this)
             return;
         HandleRequest();
+    }
+
+    private void OnActiveSceneChanged(Scene arg0, Scene arg1)
+    {
+        OnStart();
     }
 
     public virtual void OnStart()
