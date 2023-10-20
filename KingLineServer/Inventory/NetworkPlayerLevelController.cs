@@ -155,4 +155,8 @@ public class NetworkPlayerLevelController : INetworkController
         }
         PackageSender.SendPacket(peer, response);
     }
+
+    public void OnUpdate(float deltaTime)
+    {
+    }
 }

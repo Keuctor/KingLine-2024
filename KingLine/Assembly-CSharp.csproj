@@ -82,7 +82,6 @@
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\SoloState.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\NetworkController.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\Serializer.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Player\PlayerMovementController.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\Enums\HoldType.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Character.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\AnimationEvents.cs" />
@@ -109,6 +108,7 @@
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\DontDestroyOnLoad.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\Elements\InventoryItem.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemStackContentView.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\ItemTag.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\SoloState.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\SelectionItemStackView.cs" />

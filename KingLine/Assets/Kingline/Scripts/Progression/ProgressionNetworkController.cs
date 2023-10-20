@@ -51,6 +51,11 @@ public class ProgressionNetworkController : INetworkController
     {
     }
 
+    public void OnUpdate(float deltaTime)
+    {
+        
+    }
+
 
     private void OnSkillIncrement(ResSkillValueChange obj)
     {

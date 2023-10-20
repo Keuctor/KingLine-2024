@@ -97,4 +97,8 @@ public class NetworkPlayerProgressionController : INetworkController
             Value = value
         };
     }
+
+    public void OnUpdate(float deltaTime)
+    {
+    }
 }

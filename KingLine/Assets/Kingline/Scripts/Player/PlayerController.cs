@@ -14,7 +14,7 @@ public class GamePlayer
     public Transform Transform;
 }
 
-public class PlayerMovementController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public static GamePlayer m_localPlayer;
 
@@ -26,7 +26,6 @@ public class PlayerMovementController : MonoBehaviour
 
     [SerializeField]
     private float m_moveTreshold = 0.16f;
-
 
     [SerializeField]
     private Camera m_mainCamera;
@@ -70,8 +69,10 @@ public class PlayerMovementController : MonoBehaviour
         {
             var gamePlayer = p.Value;
             var player = p.Value.Player;
-            if (Vector2.Distance(gamePlayer.Transform.position, new Vector2(player.targetX, player.targetY)) >
-                float.Epsilon)
+            gamePlayer.Transform.position = new Vector2(player.x, player.y);
+          
+            if (Mathf.Abs(player.x - player.targetX) > float.Epsilon ||
+                Mathf.Abs(player.y - player.targetY) > float.Epsilon)
             {
                 gamePlayer.Animator.SetPlay(true);
                 var angle = Vector2.SignedAngle(Vector2.up,
@@ -91,23 +92,10 @@ public class PlayerMovementController : MonoBehaviour
                         if (m_targetStructure != null)
                             m_structureController
                                 .ShowStructureUI(m_targetStructure.Id);
-
                         m_isLocalPlayerMoving = false;
                     }
 
                 gamePlayer.Animator.SetPlay(false);
-            }
-
-            gamePlayer.Transform.position = Vector2.MoveTowards(gamePlayer.Transform.position,
-                new Vector2(player.targetX, player.targetY),
-                player.speed * Time.deltaTime);
-
-            if (Mathf.Abs(gamePlayer.Transform.position.x - player.x) > 6f ||
-                Mathf.Abs(gamePlayer.Transform.position.y - player.y) > 6f)
-            {
-                player.targetX = player.x;
-                player.targetY = player.y;
-                gamePlayer.Transform.position = new Vector2(player.x, player.y);
             }
         }
 
@@ -146,12 +134,9 @@ public class PlayerMovementController : MonoBehaviour
                     Destroy(m_structureInfoUI.gameObject);
                     m_structureInfoUI = null;
                 }
-
                 ClientSendTargetPosition(mousePosition);
             }
         }
-
-        if (IsLocalPlayerMoved()) ClientSendPositionUpdate();
     }
 
     private void OnDestroy()
@@ -159,15 +144,6 @@ public class PlayerMovementController : MonoBehaviour
         NetworkManager.Instance.OnDisconnectedFromServer -= OnDisconnectedFromServer;
     }
 
-    private void ClientSendPositionUpdate()
-    {
-        var positionUpdate = new ResPlayerPosition
-        {
-            x = m_localPlayer.Transform.position.x,
-            y = m_localPlayer.Transform.position.y
-        };
-        NetworkManager.Instance.Send(positionUpdate);
-    }
 
     private void ClientSendTargetPosition(Vector2 mousePosition)
     {

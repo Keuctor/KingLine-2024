@@ -176,4 +176,8 @@ public class NetworkInventoryController : INetworkController
     public void OnStart()
     {
     }
+
+    public void OnUpdate(float deltaTime)
+    {
+    }
 }

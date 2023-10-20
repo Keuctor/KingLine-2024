@@ -35,6 +35,11 @@ public class StructureNetworkController : INetworkController
     {
     }
 
+    public void OnUpdate(float deltaTime)
+    {
+        
+    }
+
     private void OnStructuresResponse(ResStructures obj)
     {
         Structures = obj.Structures;

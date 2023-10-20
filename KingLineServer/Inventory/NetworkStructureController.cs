@@ -50,4 +50,8 @@ public class NetworkStructureController
             y = 0,
         });
     }
+
+    public void OnUpdate(float deltaTime)
+    {
+    }
 }

@@ -80,6 +80,7 @@ namespace KingLineServer
         private void OnUpdate()
         {
             server.PollEvents();
+            INetworkControllers.ForEach(c => c.OnUpdate(1f/Time.TARGET_FPS));
         }
 
         public void OnConnectionRequest(ConnectionRequest request)

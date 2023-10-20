@@ -10,4 +10,5 @@ public interface INetworkController
     public void Subscribe(NetPacketProcessor processor);
     void OnExit();
     void OnStart();
+    void OnUpdate(float deltaTime);
 }

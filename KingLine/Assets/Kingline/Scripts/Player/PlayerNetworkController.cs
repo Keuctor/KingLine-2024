@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using LiteNetLib;
 using LiteNetLib.Utils;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerNetworkController : INetworkController
@@ -48,6 +49,18 @@ public class PlayerNetworkController : INetworkController
 
     public void OnStart()
     {
+    }
+
+    public void OnUpdate(float deltaTime)
+    {
+        foreach (var p in Players)
+        {
+            var player = p.Value;
+            var newPos = Vector2.MoveTowards(new Vector2(player.x, player.y),
+                new Vector2(player.targetX, player.targetY), deltaTime * player.speed);
+            player.x = newPos.x;
+            player.y = newPos.y;
+        }
     }
 
     public Player GetPlayer(int i)

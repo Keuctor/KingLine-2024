@@ -45,6 +45,11 @@ public class InventoryNetworkController : INetworkController
     {
     }
 
+    public void OnUpdate(float deltaTime)
+    {
+        
+    }
+
 
     public static async Task<NetworkInventory> GetInventoryAsync()
     {

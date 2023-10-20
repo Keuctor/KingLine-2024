@@ -81,6 +81,13 @@ public class NetworkManager : MonoBehaviour, INetEventListener
         }
     }
 
+    private void Update()
+    {
+        foreach (var controller in m_networkControllers)
+        {
+            controller.OnUpdate(Time.deltaTime);
+        }
+    }
 
     private void OnDisable()
     {

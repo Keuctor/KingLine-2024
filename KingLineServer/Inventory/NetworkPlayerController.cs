@@ -2,6 +2,8 @@
 using KingLineServer.Utils;
 using LiteNetLib;
 using LiteNetLib.Utils;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 
 public class NetworkPlayerController : INetworkController
 {
@@ -28,7 +30,13 @@ public class NetworkPlayerController : INetworkController
             x = request.x,
             y = request.y,
         };
-        BroadcastPackage(packet);
+
+        foreach (var p in Players)
+        {
+            if (p.Key.Id == peer.Id)
+                continue;
+            PackageSender.SendPacket(p.Key, packet);
+        }
     }
     public void BroadcastPackage<T>(T packet) where T : class, new()
     {
@@ -117,4 +125,40 @@ public class NetworkPlayerController : INetworkController
     public void OnStart()
     {
     }
+
+    public void OnUpdate(float deltaTime)
+    {
+        foreach (var keyValue in Players)
+        {
+            var player = keyValue.Value;
+            var peer = keyValue.Key;
+
+            if(Math.Abs(player.x-player.targetX)<=float.Epsilon || 
+                Math.Abs(player.y - player.targetY) <= float.Epsilon)
+            {
+                continue;
+            }
+            var newPos = MoveTowards(new Vector2(player.x, player.y),
+                new Vector2(player.targetX, player.targetY), deltaTime * player.speed);
+            player.x = newPos.X;
+            player.y = newPos.Y;
+        }
+    }
+
+    public static Vector2 MoveTowards(Vector2 current, Vector2 target, float maxDistanceDelta)
+    {
+        float toVector_x = target.X - current.X;
+        float toVector_y = target.Y - current.Y;
+
+        float sqDist = toVector_x * toVector_x + toVector_y * toVector_y;
+
+        if (sqDist == 0 || (maxDistanceDelta >= 0 && sqDist <= maxDistanceDelta * maxDistanceDelta))
+            return target;
+
+        float dist = (float)Math.Sqrt(sqDist);
+
+        return new Vector2(current.X + toVector_x / dist * maxDistanceDelta,
+            current.Y + toVector_y / dist * maxDistanceDelta);
+    }
+
 }
