@@ -29,6 +29,7 @@ public class NodeBehaviour : MonoBehaviour
 
     [NonSerialized]
     public UnityEvent OnComplete = new();
+    
 
     [NonSerialized]
     public UnityEvent OnDestroy = new();
@@ -77,6 +78,7 @@ public class NodeBehaviour : MonoBehaviour
             OnComplete?.Invoke();
             m_mineIndex++;
             m_particleSystem.Play();
+            
             if (m_mineIndex >= m_sprites.Length)
             {
                 m_spriteRenderer.DOColor(Color.clear, 0.1f);

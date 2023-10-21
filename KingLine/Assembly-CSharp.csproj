@@ -47,6 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemInfoView\ItemInfoView.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\ElementId.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Menu\MenuController.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\ItemClass.cs" />
      <Compile Include="Assets\Kingline\Scripts\Progression\PlayerUI.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\Tweens\TweenBase.cs" />
@@ -63,11 +64,10 @@
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\Extensions.cs" />
      <Compile Include="Assets\Kingline\Scripts\Structure\StructureController.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemStackView.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Menu\GameCanvas.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\InventoryBase.cs" />
      <Compile Include="Assets\Kingline\Scripts\Progression\ProgressionNetworkController.cs" />
-     <Compile Include="Assets\Kingline\Scripts\NavigationUI.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\ScreenshotTransparent.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Inventory\InventoryUI.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\LayerManager.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\CharacterReferencesResolver.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />

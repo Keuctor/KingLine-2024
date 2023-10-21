@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class ProgressionController : MonoBehaviour
 {
-    public PlayerUI PlayerUI;
-
     [SerializeField]
     private LevelUpPopup m_leveLUpPopup;
 
@@ -21,10 +19,5 @@ public class ProgressionController : MonoBehaviour
     private void OnLevelChange(int arg0)
     {
         Instantiate(m_leveLUpPopup, m_levelUpContent);
-    }
-
-    public void OpenProgressionMenu()
-    {
-        PlayerUI.gameObject.SetActive(!PlayerUI.gameObject.activeInHierarchy);
     }
 }

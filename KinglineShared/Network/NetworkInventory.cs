@@ -1,5 +1,7 @@
 ﻿
 
+using System.Drawing;
+
 public class NetworkInventory
 {
     private ItemStack[] items;
@@ -83,6 +85,19 @@ public class NetworkInventory
         }
         return false;
     }
+    public int GetItemCount(int id) {
+        var total = 0;
+        for (var i = 0; i < items.Length; i++)
+        {
+            var item = items[i];
+            if (item.Id == id)
+            {
+                total += item.Count;
+            }
+        }
+        return total;
+    }
+
     public bool MoveItem(short fromIndex, short toIndex)
     {
         var item = items[fromIndex];

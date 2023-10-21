@@ -25,9 +25,6 @@ public class PlayerController : MonoBehaviour
     private GameObject m_playerPrefab;
 
     [SerializeField]
-    private float m_moveTreshold = 0.16f;
-
-    [SerializeField]
     private Camera m_mainCamera;
 
     [SerializeField]
@@ -58,6 +55,14 @@ public class PlayerController : MonoBehaviour
         }
 
         m_playerNetworkController.OnPlayerListRefresh.AddListener(CreatePlayers);
+        
+        MenuController.Instance.OnOpenMenu.AddListener(OnAnyMenuOpen);
+    }
+
+    private void OnAnyMenuOpen()
+    {
+        m_targetStructure = null;
+        ClientSendTargetPosition(new Vector2(m_localPlayer.Player.x, m_localPlayer.Player.y));
     }
 
     private void Update()
@@ -212,12 +217,5 @@ public class PlayerController : MonoBehaviour
             camera.Follow = m_localPlayer.Transform;
             camera.LookAt = m_localPlayer.Transform;
         }
-    }
-
-    private bool IsLocalPlayerMoved()
-    {
-        var position = m_localPlayer.Transform.position;
-        return Mathf.Abs(m_localPlayer.Player.x - position.x) >= m_moveTreshold
-               || Mathf.Abs(m_localPlayer.Player.y - position.y) >= m_moveTreshold;
     }
 }

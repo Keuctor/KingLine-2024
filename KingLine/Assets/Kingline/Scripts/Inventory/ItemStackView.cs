@@ -50,7 +50,7 @@ public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         if (_selectedItemView != null)
             _selectedItemView.m_background.color = _selectedItemView.NOT_SELECTED_BACKGROUND_COLOR;
 
-        InventoryController.OnItemClick?.Invoke(Id);
+        InventoryUI.OnItemClick?.Invoke(Id);
         _selectedItemView = this;
         _selectedItemView.m_background.color = SELECTED_BACKGROUND_COLOR;
     }

@@ -9,7 +9,9 @@ public class InventoryNetworkController : INetworkController
     public static NetworkInventory LocalInventory;
 
     public static Dictionary<int, ItemStack[]> RemoteInventories = new();
-    public readonly UnityEvent<int, int> OnAddItem = new();
+
+    //id , added, total 
+    public readonly UnityEvent<int, int, int> OnAddItem = new();
 
     public readonly UnityEvent<int> OnGearChange = new();
     public readonly UnityEvent OnInventory = new();
@@ -47,7 +49,6 @@ public class InventoryNetworkController : INetworkController
 
     public void OnUpdate(float deltaTime)
     {
-        
     }
 
 
@@ -83,7 +84,8 @@ public class InventoryNetworkController : INetworkController
     private void OnInventoryAdd(ResInventoryAdd response)
     {
         LocalInventory.AddItem(response.Id, response.Count);
-        OnAddItem?.Invoke(response.Id, response.Count);
+
+        OnAddItem?.Invoke(response.Id, response.Count, LocalInventory.GetItemCount(response.Id));
     }
 
     private void OnRemoteInventory(ResRemoteInventory remoteInventory)

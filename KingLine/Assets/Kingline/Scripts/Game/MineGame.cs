@@ -154,12 +154,14 @@ public class MineGame : MonoBehaviour
 
     private void OnNodeDestroyed()
     {
-        AudioManager.Instance.PlayOnce(SoundType.BREAKING_2, true, 0.5f);
         if (m_loop)
             StartCoroutine(SpawnAfterSeconds(Random.Range(2, 4f)));
+        
         if (m_mineType == MineType.STONE)
             NetworkManager.Instance.Send(new ReqMineStone());
         else if (m_mineType == MineType.BONE) NetworkManager.Instance.Send(new ReqMineBone());
+        
+        AudioManager.Instance.PlayOnce(SoundType.BREAKING_2, true, 0.5f);
     }
 
     public IEnumerator SpawnAfterSeconds(float seconds)
