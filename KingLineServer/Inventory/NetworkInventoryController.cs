@@ -132,6 +132,7 @@ public class NetworkInventoryController : INetworkController
             inventory.AddItem(MaterialType.STONE_PICKAXE.ID());
             inventory.AddItem(MaterialType.IRON_PICKAXE.ID());
             inventory.AddItem(MaterialType.STEEL_PICKAXE.ID());
+            inventory.AddItem(MaterialType.STEEL_PICKAXE.ID());
             Inventories.Add(token, inventory);
             return inventory;
         }

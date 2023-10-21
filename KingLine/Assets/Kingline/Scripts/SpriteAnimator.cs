@@ -19,21 +19,19 @@ public class SpriteAnimator : MonoBehaviour
     {
         m_inventoryNetworkController = NetworkManager.Instance.GetController<InventoryNetworkController>();
         m_inventoryNetworkController.OnGearChange.AddListener(DisplayGear);
-        m_character.ResetEquipment();
     }
 
     private void DisplayGear(int id)
     {
         if (id != PeerId)
             return;
-
+        
         var inventory = InventoryNetworkController.GetPlayerGear(id);
 
         var helmet = inventory[0].Id;
         var armor = inventory[1].Id;
         var hand = inventory[2].Id;
 
-        Debug.Log($"PeerId: {PeerId} -> [{helmet}][{armor}][{hand}]");
         if (helmet != -1)
         {
             var helmets = m_character.SpriteCollection.Helmet;

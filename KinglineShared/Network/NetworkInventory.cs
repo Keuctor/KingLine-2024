@@ -55,13 +55,15 @@ public class NetworkInventory
 
     public bool AddItem(int id, short count = 1)
     {
+        var itemInfo = ItemRegistry.GetItem(id);
+        
         for (var i = 0; i < items.Length; i++)
         {
             if (i == HELMET_SLOT_INDEX || i == HAND_SLOT_INDEX || i == ARMOR_SLOT_INDEX)
                 continue;
 
             var item = items[i];
-            if (item.Id == id)
+            if (item.Id == id && itemInfo.Stackable)
             {
                 item.Count += count;
                 return true;

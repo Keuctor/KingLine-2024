@@ -20,7 +20,7 @@ public class PlayerUI : MonoBehaviour
 
     private ProgressionNetworkController m_progressionNetworkController;
 
-    private void OnEnable()
+    private void Start()
     {
         m_progressionNetworkController = NetworkManager.Instance.GetController<ProgressionNetworkController>();
         m_progressionNetworkController.OnLevelChange.AddListener(OnLevelChange);
@@ -28,7 +28,6 @@ public class PlayerUI : MonoBehaviour
         ClearViews();
         CreateViews();
     }
-
 
     private void OnSkillChanged(string skill, byte value)
     {

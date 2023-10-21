@@ -67,7 +67,6 @@ public class ProgressionNetworkController : INetworkController
                     skill.Value = obj.Value;
                     OnSkillValueChanged?.Invoke(skill.Name, skill.Value);
                 }
-
                 break;
             }
     }
