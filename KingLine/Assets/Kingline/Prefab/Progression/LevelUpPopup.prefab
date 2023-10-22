@@ -316,6 +316,7 @@ MonoBehaviour:
   m_levelText: {fileID: 5971490047605848729}
   m_unspentSkillPointText: {fileID: 4253211668399853588}
   m_rectTransform: {fileID: 1275002724971573240}
+  m_audioManager: {fileID: 11400000, guid: d0428d0c6d77dec4688db3cd81b64ee5, type: 2}
 --- !u!114 &8022203081627031948
 MonoBehaviour:
   m_ObjectHideFlags: 0

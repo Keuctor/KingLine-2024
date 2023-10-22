@@ -225,7 +225,6 @@
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\Shield" />
      <Folder Include="Assets\HeroEditor\Common\Fonts" />
      <Folder Include="Assets\HeroEditor\Extensions\VillageInventory\Icons\WithoutBackground\Equipment\MeleeWeapon1H\Basic" />
-     <Folder Include="Assets\Kingline\Sprites\Game\Around" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\BodyParts" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Sprites\Equipment\MeleeWeapon1H\Basic\Dagger" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\Helmet" />
@@ -385,6 +384,7 @@
      <Folder Include="Assets\HeroEditor\Common\Sprites\BodyParts\Body" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\Equipment\Boots" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\Cape\Basic" />
+     <Folder Include="Assets\Decor" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\Pauldrons\Thrones" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon2H\Vikings\Sword" />
      <Folder Include="Assets\HeroEditor\Common\Icons\WithoutBackground\BodyParts\Eyebrows\Expressions" />
@@ -419,7 +419,6 @@
      <Folder Include="Assets\HeroEditor\Extensions\Style\Sprites\BodyParts" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\BodyParts\Body\Demon" />
      <None Include="Assets\HeroEditor\FantasyHeroes\TestRoom\BackgroundLicense.txt" />
-     <Folder Include="Assets\Kingline\Sprites\Game\Around\Sprites" />
      <Folder Include="Assets\HeroEditor\Extensions\EpicHeroes\Icons\WithoutBackground\Equipment\Cape" />
      <Folder Include="Assets\HeroEditor\Extensions\VillageInventory\Icons\WithoutBackground\Equipment\MeleeWeapon1H\Basic\Sword" />
      <Folder Include="Assets\HeroEditor\Common\Sprites\BodyParts\Eyebrows\Expressions" />
@@ -966,7 +965,6 @@
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Sprites\Equipment\Glasses" />
      <Folder Include="Assets\HeroEditor\Common\RangedWeapons\Sounds" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Sprites\Equipment\MeleeWeapon1H\Christmas\Wand" />
-     <Folder Include="Assets\Kingline\Sprites\Game\Around\Material" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\Boots" />
      <Folder Include="Assets\HeroEditor\Extensions\AbandonedWorkshop\Sprites\Equipment\Helmet\AbandonedWorkshop" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\Equipment\Mask" />

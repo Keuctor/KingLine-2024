@@ -64,6 +64,9 @@ public class MineGame : MonoBehaviour
 
     private readonly int m_currentCount = 0;
 
+    [SerializeField]
+    private AudioManager m_audioManager;
+
 
     private void Start()
     {
@@ -143,13 +146,13 @@ public class MineGame : MonoBehaviour
         var skill = controller.GetSkill("Strength");
 
         node.Damage(10 * (Mathf.Max(1, skill / 2f) * ToolModifier));
-        AudioManager.Instance.PlayOnce(SoundType.BREAKING_1, true, 0.3f);
+        m_audioManager.PlayOnce(SoundType.BREAKING_1, true, 0.3f);
     }
 
 
     private void OnNodeCompletePart()
     {
-        AudioManager.Instance.PlayOnce(SoundType.BREAKING_2, true, 0.5f);
+        m_audioManager.PlayOnce(SoundType.BREAKING_2, true, 0.5f);
     }
 
     private void OnNodeDestroyed()
@@ -161,7 +164,7 @@ public class MineGame : MonoBehaviour
             NetworkManager.Instance.Send(new ReqMineStone());
         else if (m_mineType == MineType.BONE) NetworkManager.Instance.Send(new ReqMineBone());
         
-        AudioManager.Instance.PlayOnce(SoundType.BREAKING_2, true, 0.5f);
+        m_audioManager.PlayOnce(SoundType.BREAKING_2, true, 0.5f);
     }
 
     public IEnumerator SpawnAfterSeconds(float seconds)

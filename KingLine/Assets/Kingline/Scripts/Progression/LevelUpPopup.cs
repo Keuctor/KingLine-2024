@@ -17,10 +17,13 @@ public class LevelUpPopup : MonoBehaviour
     [SerializeField]
     private RectTransform m_rectTransform;
 
+    [SerializeField]
+    private AudioManager m_audioManager;
+
     private void Start()
     {
         var m_progressionNetworkController = NetworkManager.Instance.GetController<ProgressionNetworkController>();
-        AudioManager.Instance.PlayOnce(SoundType.LEVEL_UP, true, 0.4f);
+        m_audioManager.PlayOnce(SoundType.LEVEL_UP, true, 0.4f);
         m_levelText.text = $"LEVEL {m_progressionNetworkController.Level}";
         m_unspentSkillPointText.text =
             $"You have {m_progressionNetworkController.SkillPoint} unspent skill points";

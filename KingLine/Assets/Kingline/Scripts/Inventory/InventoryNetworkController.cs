@@ -107,7 +107,6 @@ public class InventoryNetworkController : INetworkController
                 LocalInventory.GetArmor(),
                 LocalInventory.GetHand()
             };
-
         return RemoteInventories[peerId];
     }
 }

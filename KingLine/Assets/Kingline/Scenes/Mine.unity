@@ -1226,6 +1226,7 @@ MonoBehaviour:
   m_selectedToolImage: {fileID: 247086}
   m_selectedToolNameText: {fileID: 109423342}
   ToolModifier: 0
+  m_audioManager: {fileID: 11400000, guid: d0428d0c6d77dec4688db3cd81b64ee5, type: 2}
 --- !u!4 &1062376633
 Transform:
   m_ObjectHideFlags: 0
