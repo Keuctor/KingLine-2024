@@ -24,7 +24,8 @@ public class MenuController : Singleton<MenuController>
 
     private bool m_isAnyOpen => m_menuNavigation.Any(t => t.UI.activeSelf);
 
-    public UnityEvent OnOpenMenu = new();
+    [NonSerialized]
+    public readonly UnityEvent OnOpenMenu = new();
 
 
     private void Start()
