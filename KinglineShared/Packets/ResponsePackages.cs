@@ -90,3 +90,13 @@ public class ResPlayerLeave
 {
     public Player Player { get; set; }
 }
+
+public class ResPlayerTeam
+{
+    public Team[] Teams { get; set; }
+}
+
+public class ResUpdatePlayerTeam
+{
+    public Team Team { get; set; }
+}

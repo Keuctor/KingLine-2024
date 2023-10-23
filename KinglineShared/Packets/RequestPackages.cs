@@ -7,6 +7,7 @@ public class ReqMineStone { }
 public class ReqMineBone { }
 public class ReqPlayerXp { }
 public class ReqPlayers { }
+public class ReqPlayerTeam { }
 public class ReqPlayerMove
 {
     public float x { get; set; }

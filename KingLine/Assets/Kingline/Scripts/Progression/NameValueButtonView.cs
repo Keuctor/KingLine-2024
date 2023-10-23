@@ -1,10 +1,11 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class SkillItemView : MonoBehaviour
+public class NameValueButtonView : MonoBehaviour
 {
     public TMP_Text NameText;
     public TMP_Text ValueText;
-    public Button IncrementButton;
+    public Button Button;
 }

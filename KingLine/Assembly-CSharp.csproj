@@ -112,6 +112,7 @@
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\ItemTag.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\SoloState.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\SelectionItemStackView.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Team\PlayerTeamController.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\AttackingExample.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\Springs\ScaleSpring.cs" />
      <Compile Include="Assets\Kingline\Scripts\Utils\SpriteLoader.cs" />
@@ -131,7 +132,6 @@
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\Enums\FirearmLoadType.cs" />
      <Compile Include="Assets\Kingline\Scripts\Structure\StructureNetworkController.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\MonsterVariation.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Progression\SkillItemView.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\Springs\SpringBase.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\StandaloneFilePicker.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\SortingOrderExample.cs" />
@@ -175,6 +175,7 @@
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemPopupUI.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\Firearm.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Progression\NameValueButtonView.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\Elements\ItemInfo.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\CharacterBodySculptor.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\Shell.cs" />
@@ -384,7 +385,7 @@
      <Folder Include="Assets\HeroEditor\Common\Sprites\BodyParts\Body" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\Equipment\Boots" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\Cape\Basic" />
-     <Folder Include="Assets\Decor" />
+     <Folder Include="Assets\Kingline\Sprites\Places\Decor" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\Pauldrons\Thrones" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon2H\Vikings\Sword" />
      <Folder Include="Assets\HeroEditor\Common\Icons\WithoutBackground\BodyParts\Eyebrows\Expressions" />
@@ -553,6 +554,7 @@
      <Folder Include="Assets\HeroEditor\Extensions\AbandonedWorkshop\Sprites\Equipment\Glasses\AbandonedWorkshop" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon1H\Basic\Dagger" />
      <Folder Include="Assets\HeroEditor\Extensions\EpicHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon2H\Legendary\Sword" />
+     <Folder Include="Assets\Kingline\Scripts\Team" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon2H\Thrones\Sword" />
      <Folder Include="Assets\Kingline\Prefab\Inventory" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scarecrow" />

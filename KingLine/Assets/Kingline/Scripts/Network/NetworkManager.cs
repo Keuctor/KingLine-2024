@@ -75,6 +75,7 @@ public class NetworkManager : MonoBehaviour, INetEventListener
             m_networkControllers.Add(new StructureNetworkController());
             m_networkControllers.Add(new ProgressionNetworkController());
             m_networkControllers.Add(new InventoryNetworkController());
+            m_networkControllers.Add(new PlayerTeamController());
             DontDestroyOnLoad(gameObject);
             InitializeNetPacketProcessor();
             CreateConnectionUI();
@@ -207,6 +208,8 @@ public class NetworkManager : MonoBehaviour, INetEventListener
         NetPacketProcessor.RegisterNestedType(() => new Structure());
         NetPacketProcessor.RegisterNestedType(() => new ItemStack());
         NetPacketProcessor.RegisterNestedType(() => new Skill());
+        NetPacketProcessor.RegisterNestedType(() => new TeamMember());
+        NetPacketProcessor.RegisterNestedType(() => new Team());
 
         m_networkControllers.ForEach(t => t.Subscribe(NetPacketProcessor));
         NetPacketProcessor.SubscribeReusable<ResPeerId>(OnPeerIdReceived);

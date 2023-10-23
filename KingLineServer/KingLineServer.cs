@@ -33,7 +33,8 @@ namespace KingLineServer
                 new NetworkStructureController(),
                 new NetworkInventoryController(),
                 new NetworkPlayerProgressionController(),
-                new NetworkPlayerLevelController()
+                new NetworkPlayerLevelController(),
+                new NetworkPlayerTeamController()
             };
             INetworkControllers.ForEach(c => c.Subscribe(_netPacketProcessor));
             PackageSender.PacketProcessor = _netPacketProcessor;
