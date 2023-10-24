@@ -25,7 +25,7 @@ public class ItemInfoView : MonoBehaviour
 
     public void ShowItemInfo(IItemMaterial itemMaterial)
     {
-        m_itemIcon.sprite = SpriteLoader.LoadSprite(itemMaterial.Name);
+        m_itemIcon.sprite = MenuController.Instance.SpriteLoader.LoadSprite(itemMaterial.Id);
         m_itemName.text = itemMaterial.Name;
         m_priceMetaView.MetaValue.text = "" + itemMaterial.Value;
 

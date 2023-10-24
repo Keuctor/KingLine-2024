@@ -12,6 +12,7 @@ public class InventoryController : MonoBehaviour
     [SerializeField]
     private Transform m_itemPopupContent;
 
+
     private void Start()
     {
         var controller = NetworkManager.Instance.GetController<InventoryNetworkController>();
@@ -23,7 +24,7 @@ public class InventoryController : MonoBehaviour
         var itemInfo = ItemRegistry.GetItem(id);
         
         var popup = Instantiate(m_itemPopup, m_itemPopupContent);
-        popup.Icon.sprite = SpriteLoader.LoadSprite(itemInfo.Name);
+        popup.Icon.sprite = MenuController.Instance.SpriteLoader.LoadSprite(itemInfo.Id);
         popup.CountText.text = $"<size=60> +</size>{count} <color=\"white\"><size=70>({total})</size></color>";
         
         

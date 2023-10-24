@@ -16,6 +16,8 @@ public class MenuNavigation
 
 public class MenuController : Singleton<MenuController>
 {
+    public SpriteLoader SpriteLoader;
+    
     [SerializeField]
     private List<MenuNavigation> m_menuNavigation = new();
 

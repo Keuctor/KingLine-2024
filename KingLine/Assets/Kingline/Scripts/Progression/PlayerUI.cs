@@ -26,7 +26,8 @@ public class PlayerUI : MonoBehaviour
     private readonly Dictionary<string, NameValueButtonView> m_createdSkillItemViews = new();
 
     private ProgressionNetworkController m_progressionNetworkController;
-
+    [SerializeField]
+    private PrefabsSO m_prefabs;
     private void Start()
     {
         m_progressionNetworkController = NetworkManager.Instance.GetController<ProgressionNetworkController>();
@@ -77,7 +78,8 @@ public class PlayerUI : MonoBehaviour
     private void ShowTroop(int id)
     {
         var troopData = TroopRegistry.Troops[id];
-        //show it 
+        var chView = Instantiate(m_prefabs.CharacterView);
+        chView.Show(troopData.Name,troopData.Gear);
     }
 
     public void SetSkillViews()

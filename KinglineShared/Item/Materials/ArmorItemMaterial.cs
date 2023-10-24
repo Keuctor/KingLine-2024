@@ -8,7 +8,7 @@ public class ArmorItemMaterial : IArmorItemMaterial
         this.Name = name;
         this.Stackable = false;
         this.Armor = armorValue;
-        this.Type = slot==EquipmentSlot.CHEST ? IType.ARMOR : IType.HELMET;
+        this.Type = slot==EquipmentSlot.ARMOR ? IType.ARMOR : IType.HELMET;
         this.Value = Armor * 20;
     }
     public EquipmentSlot EquipmentSlot { get; set; }

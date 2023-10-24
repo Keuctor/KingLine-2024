@@ -428,7 +428,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 85}
+  m_SizeDelta: {x: 0, y: 90}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &107938626
 MonoBehaviour:
@@ -837,7 +837,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 922.296, y: -0}
+  m_AnchoredPosition: {x: 914.44635, y: -0}
   m_SizeDelta: {x: 902, y: 1720}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &269301233
@@ -922,6 +922,7 @@ MonoBehaviour:
   m_troopItemViewContent: {fileID: 107938625}
   m_xpText: {fileID: 1256276336}
   m_skillPointText: {fileID: 143389232}
+  m_prefabs: {fileID: 11400000, guid: 008d7ecfd74196840b5b524e9850fdef, type: 2}
 --- !u!1 &392737928
 GameObject:
   m_ObjectHideFlags: 0
@@ -4835,7 +4836,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1532820010}
   m_HandleRect: {fileID: 1532820009}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4916,7 +4917,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 742.1183, y: -0.00012207031}
+  m_AnchoredPosition: {x: 1073.0404, y: -0.00012207031}
   m_SizeDelta: {x: 900, y: 1720}
   m_Pivot: {x: 0.5, y: 0.99999994}
 --- !u!114 &1461874801
@@ -5645,7 +5646,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 119
 --- !u!114 &1725047874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5727,6 +5728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 503e6e5e01632fe42b4716aa695b6862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpriteLoader: {fileID: 11400000, guid: 9bc28bb01a8c5374099cbdf3550b4c47, type: 2}
   m_menuNavigation:
   - Button: {fileID: 1849398022}
     UI: {fileID: 269301231}

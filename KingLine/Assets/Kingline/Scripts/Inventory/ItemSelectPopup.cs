@@ -30,7 +30,7 @@ public class ItemSelectPopup : MonoBehaviour
             {
                 var item = ItemRegistry.GetItem(m.Id);
                 var contentView = Instantiate(m_itemSelectionViewContent, view.Content);
-                contentView.SetContext(SpriteLoader.LoadSprite(item.Name), m.Count, item.Stackable);
+                contentView.SetContext(MenuController.Instance.SpriteLoader.LoadSprite(item.Id), m.Count, item.Stackable);
             }
         }
     }

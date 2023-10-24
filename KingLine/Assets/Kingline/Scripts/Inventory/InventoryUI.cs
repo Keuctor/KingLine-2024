@@ -83,9 +83,8 @@ public class InventoryUI : MonoBehaviour
                 {
                     var gearItem = ItemRegistry.GetItem(m.Id);
                     var contentView = Instantiate(m_itemViewContentTemplate, gearView.Content);
-                    contentView.SetContext(SpriteLoader.LoadSprite(gearItem.Name), m.Count, gearItem.Stackable);
+                    contentView.SetContext(MenuController.Instance.SpriteLoader.LoadSprite(m.Id), m.Count, gearItem.Stackable);
                 }
-
                 continue;
             }
 
@@ -95,7 +94,7 @@ public class InventoryUI : MonoBehaviour
             {
                 var item = ItemRegistry.GetItem(m.Id);
                 var contentView = Instantiate(m_itemViewContentTemplate, view.Content);
-                contentView.SetContext(SpriteLoader.LoadSprite(item.Name), m.Count, item.Stackable);
+                contentView.SetContext(MenuController.Instance.SpriteLoader.LoadSprite(m.Id), m.Count, item.Stackable);
             }
         }
         DisplayGear();

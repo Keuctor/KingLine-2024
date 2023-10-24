@@ -1,6 +1,6 @@
 ﻿public enum EquipmentSlot
 {
     HELMET,
-    CHEST,
+    ARMOR,
     HAND
 }

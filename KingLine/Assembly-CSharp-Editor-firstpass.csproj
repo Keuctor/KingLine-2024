@@ -43,6 +43,9 @@
   <ItemGroup>
      <Folder Include="Assets\Plugins\Demigiant\DOTween\Editor\Imgs" />
      <Folder Include="Assets\Plugins\Demigiant\DOTween\Editor" />
+     <Folder Include="Assets\Plugins\Sirenix\Odin Inspector\Assets\Editor" />
+     <Folder Include="Assets\Plugins\Sirenix\Odin Inspector\Config\Editor" />
+     <None Include="Assets\Plugins\Sirenix\Odin Inspector\Assets\Editor\Bootstrap License.txt" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.10f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

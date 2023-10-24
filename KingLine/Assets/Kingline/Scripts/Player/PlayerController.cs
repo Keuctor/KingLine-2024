@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Cinemachine;
-using Kingline.Scripts.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;

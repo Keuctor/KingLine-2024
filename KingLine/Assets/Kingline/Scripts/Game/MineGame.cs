@@ -1,6 +1,5 @@
 using System.Collections;
 using DG.Tweening;
-using Kingline.Scripts.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -108,7 +107,7 @@ public class MineGame : MonoBehaviour
         var toolItemMaterial = (ToolItemMaterial)material;
         m_selectedToolIndex = index;
         m_selectedToolPropertiesText.text = "Modifier: x" + toolItemMaterial.ToolValue;
-        m_selectedToolImage.sprite = SpriteLoader.LoadSprite(toolItemMaterial.Name);
+        m_selectedToolImage.sprite = MenuController.Instance.SpriteLoader.LoadSprite(toolItemMaterial.Id);
         m_selectedToolImage.enabled = true;
         m_selectedToolNameText.text = toolItemMaterial.Name;
         ToolModifier = toolItemMaterial.ToolValue;
