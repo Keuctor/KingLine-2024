@@ -50,7 +50,8 @@ public class NetworkPlayerTeamController : INetworkController
         {
             return new TeamMember();
         });
-        processor.RegisterNestedType(() => {
+        processor.RegisterNestedType(() =>
+        {
             return new Team();
         });
         processor.SubscribeReusable<ReqPlayerTeam, NetPeer>(OnRequestPlayerTeam);
@@ -93,9 +94,41 @@ public class NetworkPlayerTeamController : INetworkController
         };
     }
 
+    public void AddMember(string token, int id,short count) {
+        var team = this.PlayerTeams[token];
+        bool hasAny = false;
+        for (int i = 0; i < team.Length; i++)
+        {
+            if (team[i].Id == id) {
+                team[i].Count += count;
+                hasAny = true;
+            }
+        }
+        if (!hasAny)
+        {
+            var members = this.PlayerTeams[token].ToList();
+            members.Add(new TeamMember()
+            {
+                Count = count,
+                Id = id,
+                Xp = 0,
+            });
+            this.PlayerTeams[token] = members.ToArray();
+        }
+    }
+
+    public void GiveXpToTeam(string token, int xp)
+    {
+        var team = this.PlayerTeams[token];
+        for (int i = 0; i < team.Length; i++)
+        {
+            team[i].Xp += xp;
+        }
+    }
+
     public TeamMember[] DefaultMembers = new TeamMember[4] {
-        new TeamMember() { Id = 0, Count = 3 }, 
-        new TeamMember() { Id = 1, Count = 6 }, 
+        new TeamMember() { Id = 0, Count = 3 },
+        new TeamMember() { Id = 1, Count = 6 },
         new TeamMember() { Id = 2, Count = 8 },
         new TeamMember() { Id = 3, Count = 9 }
     };

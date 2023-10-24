@@ -32,16 +32,19 @@ public class TeamMember : INetSerializable
 {
     public int Id { get; set; }
     public short Count { get; set; }
+    public int Xp { get; set; }
 
     public void Deserialize(NetDataReader reader)
     {
         this.Id = reader.GetInt();
         this.Count = reader.GetShort();
+        this.Xp = reader.GetInt();
     }
 
     public void Serialize(NetDataWriter writer)
     {
         writer.Put(this.Id);
         writer.Put(this.Count);
+        writer.Put(this.Xp);
     }
 }

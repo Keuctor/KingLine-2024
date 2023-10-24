@@ -323,11 +323,23 @@
      <Reference Include="Unity.VisualScripting.YamlDotNet">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.visualscripting@1.9.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll</HintPath>
      </Reference>
+     <Reference Include="Sirenix.Reflection.Editor">
+     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Sirenix\Assemblies\Sirenix.Reflection.Editor.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.Collections.LowLevel.ILSupport">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.collections@1.2.4\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
      </Reference>
+     <Reference Include="Sirenix.Serialization">
+     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.Plastic.Antlr3.Runtime">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.collab-proxy@2.0.7\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="Sirenix.Serialization.Config">
+     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.Config.dll</HintPath>
+     </Reference>
+     <Reference Include="Sirenix.OdinInspector.Editor">
+     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor.dll</HintPath>
      </Reference>
      <Reference Include="KinglineShared">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Kingline\Shared\KinglineShared.dll</HintPath>
@@ -350,11 +362,20 @@
      <Reference Include="HeroEditor.Common">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\HeroEditor\Common\HeroEditor.Common.dll</HintPath>
      </Reference>
+     <Reference Include="Sirenix.OdinInspector.Attributes">
+     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes.dll</HintPath>
+     </Reference>
+     <Reference Include="Sirenix.Utilities">
+     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.dll</HintPath>
+     </Reference>
      <Reference Include="DOTween">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.visualscripting@1.9.0\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="Sirenix.Utilities.Editor">
+     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualScripting.TextureAssets">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.visualscripting@1.9.0\Editor\VisualScripting.Core\EditorAssetResources\Unity.VisualScripting.TextureAssets.dll</HintPath>
@@ -364,27 +385,6 @@
      </Reference>
      <Reference Include="unityplastic">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.collab-proxy@2.0.7\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
-     </Reference>
-     <Reference Include="Sirenix.Reflection.Editor">
-     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Sirenix\Assemblies\Sirenix.Reflection.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Sirenix.OdinInspector.Attributes">
-     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes.dll</HintPath>
-     </Reference>
-     <Reference Include="Sirenix.Serialization.Config">
-     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.Config.dll</HintPath>
-     </Reference>
-     <Reference Include="Sirenix.Utilities.Editor">
-     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Sirenix.Utilities">
-     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.dll</HintPath>
-     </Reference>
-     <Reference Include="Sirenix.OdinInspector.Editor">
-     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Sirenix.Serialization">
-     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.dll</HintPath>
      </Reference>
      <Reference Include="nunit.framework">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>

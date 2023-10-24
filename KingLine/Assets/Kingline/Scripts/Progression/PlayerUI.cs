@@ -71,15 +71,20 @@ public class PlayerUI : MonoBehaviour
         troopView.ValueText.text = "";
         troopView.Button.onClick.AddListener(() =>
         {
-            ShowTroop(troop.Id);
+            ShowTroop(troop);
         });
     }
 
-    private void ShowTroop(int id)
+    private void ShowTroop(TeamMember member)
     {
-        var troopData = TroopRegistry.Troops[id];
+        var troopData = TroopRegistry.Troops[member.Id];
         var chView = Instantiate(m_prefabs.CharacterView);
+
         chView.Show(troopData.Name,troopData.Gear);
+        chView.SetXp(member.Xp);
+        
+        
+        
     }
 
     public void SetSkillViews()
