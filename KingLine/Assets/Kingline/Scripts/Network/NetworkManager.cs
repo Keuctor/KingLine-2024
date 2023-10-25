@@ -75,7 +75,7 @@ public class NetworkManager : MonoBehaviour, INetEventListener
             m_networkControllers.Add(new StructureNetworkController());
             m_networkControllers.Add(new ProgressionNetworkController());
             m_networkControllers.Add(new InventoryNetworkController());
-            m_networkControllers.Add(new PlayerTeamController());
+            m_networkControllers.Add(new TeamNetworkController());
             DontDestroyOnLoad(gameObject);
             InitializeNetPacketProcessor();
             CreateConnectionUI();

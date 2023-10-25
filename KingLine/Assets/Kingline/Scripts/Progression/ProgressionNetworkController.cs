@@ -83,7 +83,7 @@ public class ProgressionNetworkController : INetworkController
             Level = XPManager.GetLevel(CurrentExp);
             OnLevelChange?.Invoke(Level);
         }
-        PlayerTeamController.GiveXp(obj.Xp);
+        TeamNetworkController.GiveXp(obj.Xp);
     }
 
     private void OnXpResponse(ResPlayerXp obj)

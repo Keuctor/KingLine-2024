@@ -65,7 +65,7 @@ public class PlayerUI : MonoBehaviour
 
     private void CreateViews()
     {
-        NetworkManager.Instance.GetController<PlayerTeamController>().OnUpgradeTeam.AddListener(OnUpgradeTeam);
+        NetworkManager.Instance.GetController<TeamNetworkController>().OnUpgradeTeam.AddListener(OnUpgradeTeam);
         m_progressionNetworkController.OnLevelChange.AddListener(OnLevelChange);
         m_progressionNetworkController.OnSkillValueChanged.AddListener(OnSkillChanged);
 
@@ -85,7 +85,7 @@ public class PlayerUI : MonoBehaviour
 
     private void CreateTroops()
     {
-        foreach (var troop in PlayerTeamController.LocalPlayerTeam)
+        foreach (var troop in TeamNetworkController.LocalPlayerTeam)
             CreateTroopView(troop);
     }
 
@@ -111,7 +111,7 @@ public class PlayerUI : MonoBehaviour
             chView.SetUpgrade(troopData.UpgradePrice);
             chView.OnUpgradeClicked.AddListener(() =>
             {
-                var teamController = NetworkManager.Instance.GetController<PlayerTeamController>();
+                var teamController = NetworkManager.Instance.GetController<TeamNetworkController>();
                 teamController.UpgradeTeam(member.Id);
                 Destroy(chView.gameObject);
             });
@@ -145,7 +145,7 @@ public class PlayerUI : MonoBehaviour
 
     private void ClearViews()
     {
-        NetworkManager.Instance.GetController<PlayerTeamController>().OnUpgradeTeam.RemoveListener(OnUpgradeTeam);
+        NetworkManager.Instance.GetController<TeamNetworkController>().OnUpgradeTeam.RemoveListener(OnUpgradeTeam);
         m_progressionNetworkController.OnLevelChange.RemoveListener(OnLevelChange);
         m_progressionNetworkController.OnSkillValueChanged.RemoveListener(OnSkillChanged);
 

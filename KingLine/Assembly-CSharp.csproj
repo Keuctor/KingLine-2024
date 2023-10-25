@@ -113,7 +113,7 @@
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\ItemTag.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\SoloState.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\SelectionItemStackView.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Team\PlayerTeamController.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Team\TeamNetworkController.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\AttackingExample.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\Springs\ScaleSpring.cs" />
      <Compile Include="Assets\Kingline\Scripts\Utils\SpriteLoader.cs" />

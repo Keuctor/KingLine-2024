@@ -3,7 +3,7 @@ using LiteNetLib;
 using LiteNetLib.Utils;
 using UnityEngine.Events;
 
-public class PlayerTeamController : INetworkController
+public class TeamNetworkController : INetworkController
 {
     public static Dictionary<int, TeamMember[]> PlayerTeams = new();
 
