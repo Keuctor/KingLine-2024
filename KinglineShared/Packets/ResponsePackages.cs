@@ -7,8 +7,6 @@ public class ResPeerId
 public class ResPlayerXp
 {
     public int Xp { get; set; }
-    public int Level { get; set; }
-    public int NeededXpForNextLevel { get; set; }
 }
 
 public class ResRemoteInventory
@@ -28,6 +26,11 @@ public class ResPlayerAddXp
 public class ResPlayerProgression
 {
     public Skill[] Skills { get; set; }
+}
+
+public class ResUpgradeTeam
+{
+    public bool Success { get; set; }
 }
 
 

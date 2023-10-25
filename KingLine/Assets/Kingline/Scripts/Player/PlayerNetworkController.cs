@@ -13,12 +13,12 @@ public class PlayerNetworkController : INetworkController
     [NonSerialized]
     public readonly UnityEvent<int> OnPlayerLeave = new();
 
-    public readonly Dictionary<int, Player> Players = new();
+    public static readonly Dictionary<int, Player> Players = new();
 
     [NonSerialized]
     public UnityEvent OnPlayerListRefresh = new();
 
-    public Player LocalPlayer => Players[NetworkManager.LocalPlayerPeerId];
+    public static Player LocalPlayer => Players[NetworkManager.LocalPlayerPeerId];
 
     public void OnPeerDisconnected(NetPeer peer)
     {

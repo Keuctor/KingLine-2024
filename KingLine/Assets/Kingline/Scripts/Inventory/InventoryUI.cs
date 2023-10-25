@@ -146,6 +146,6 @@ public class InventoryUI : MonoBehaviour
 
         TotalArmorText.text = baseDefence + "";
         TotalStrengthText.text = baseStrength + "";
-        CoinText.text = NetworkManager.Instance.GetController<PlayerNetworkController>().LocalPlayer.Currency + "";
+        CoinText.text = PlayerNetworkController.LocalPlayer.Currency + "";
     }
 }

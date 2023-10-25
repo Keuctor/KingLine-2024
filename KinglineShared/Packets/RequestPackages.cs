@@ -20,6 +20,9 @@ public class ReqStructures
 public class ReqPlayerProgression
 {
 }
+public class ReqUpgradeTeam { 
+    public int MemberId { get; set; }
+}
 
 public class ReqSkillIncrement
 {

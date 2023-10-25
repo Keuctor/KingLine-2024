@@ -7,8 +7,9 @@ public interface ITroop
 {
     public string Name { get; set; }
     public ItemStack[] Gear { get; set; }
-    public float UpgradePrice { get; set; }
+    public int UpgradePrice { get; set; }
     public int NextTroopId { get; set; }
+    public int UpgradeXp { get; set; }
 }
 
 public static class TroopRegistry
@@ -16,32 +17,65 @@ public static class TroopRegistry
     public static Dictionary<int, ITroop> Troops = new Dictionary<int, ITroop>();
     static TroopRegistry()
     {
-        Troops.Add(0, new Troop("Peasant", 500, 1, ItemFactory.CreateItems(MaterialType.PEASANT_HELMET,
-            MaterialType.PEASANT_CLOTHING_ARMOR, MaterialType.BONE_CLUP_WEAPON)));
-
-        Troops.Add(1, new Troop("Swordsman", 1250, 2,
-            ItemFactory.CreateItems(MaterialType.LEATHER_HELMET,
-            MaterialType.LEATHER_JACKET_ARMOR, MaterialType.WOODEN_CLUP_WEAPON)));
-        Troops.Add(2, new Troop("Defender", 2650, 3, ItemFactory.CreateItems(MaterialType.ELITE_KNIGHT_HELMET,
-            MaterialType.ELITE_GUARD_ARMOR, MaterialType.GUARD_SWORD_WEAPON)));
-
-        Troops.Add(3, new Troop("Elite Swordsman", 7500, 4, ItemFactory.CreateItems(MaterialType.CATAPHRACT_HELMET,
-            MaterialType.CATAPHRACT_ARMOR, MaterialType.KNIGHT_SWORD_WEAPON)));
-        Troops.Add(4, new Troop("Archer", -1, -1));
+        Troops.Add(0, new Troop()
+        {
+            Gear = ItemFactory.CreateItems(MaterialType.PEASANT_HELMET,
+            MaterialType.PEASANT_CLOTHING_ARMOR, MaterialType.BONE_CLUP_WEAPON),
+            Name = "Peasant",
+            NextTroopId = 1,
+            UpgradePrice = 500,
+            UpgradeXp = XPManager.TeamLevels[0],
+        });
+        Troops.Add(1, new Troop()
+        {
+            Gear = ItemFactory.CreateItems(MaterialType.LEATHER_HELMET,
+            MaterialType.LEATHER_JACKET_ARMOR, MaterialType.WOODEN_CLUP_WEAPON),
+            Name = "Swordsman",
+            NextTroopId = 2,
+            UpgradePrice = 1250,
+            UpgradeXp = XPManager.TeamLevels[1],
+        });
+        Troops.Add(2, new Troop()
+        {
+            Gear = ItemFactory.CreateItems(MaterialType.ELITE_KNIGHT_HELMET,
+            MaterialType.ELITE_GUARD_ARMOR, MaterialType.GUARD_SWORD_WEAPON),
+            Name = "Defender",
+            NextTroopId = 3,
+            UpgradePrice = 2650,
+            UpgradeXp = XPManager.TeamLevels[2],
+        });
+        Troops.Add(3, new Troop()
+        {
+            Gear = ItemFactory.CreateItems(MaterialType.CATAPHRACT_HELMET,
+            MaterialType.CATAPHRACT_ARMOR, MaterialType.KNIGHT_SWORD_WEAPON),
+            Name = "Elite Swordsman",
+            NextTroopId = -1,
+            UpgradePrice = 7500,
+            UpgradeXp = XPManager.TeamLevels[3],
+        });
     }
-
+    public static ITroop GetTroop(int id)
+    {
+        return Troops[id];
+    }
 }
 class Troop : ITroop
 {
     public string Name { get; set; }
     public ItemStack[] Gear { get; set; }
-    public float UpgradePrice { get; set; }
+    public int UpgradePrice { get; set; }
+    public int UpgradeXp { get; set; }
     public int NextTroopId { get; set; }
+    public Troop()
+    {
 
-    public Troop(string name, float upgradePrice, int nextTroopId, params ItemStack[] gear)
+    }
+
+    public Troop(string name, int upgradePrice, int upgradeXp, int nextTroopId, params ItemStack[] gear)
     {
         this.Name = name;
         this.Gear = gear;
+        this.UpgradeXp = upgradeXp;
         this.UpgradePrice = upgradePrice;
         this.NextTroopId = nextTroopId;
     }

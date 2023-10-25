@@ -3,6 +3,7 @@ using HeroEditor.Common.Enums;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -46,20 +47,19 @@ public class CharacterView : MonoBehaviour
     private TMP_Text m_weaponText;
     
     private GameObject m_charCamera;
+    
+    public UnityEvent OnUpgradeClicked = new();
 
     public void SetUpgrade(float upgradePrice)
     {
         this.m_upgradePanel.gameObject.SetActive(true);
         this.m_priceLabel.text = upgradePrice+"";
-        this.m_upgradeButton.onClick.AddListener(OnUpgradeClicked);
+        this.m_upgradeButton.onClick.AddListener(OnUpgradeClick);
     }
 
-    public void SetXp(int xp)
+    public void SetXp(int xp,int maxXp)
     {
         this.m_xpSliderPanel.gameObject.SetActive(true);
-
-        var xpManager = new XPManager();
-        var maxXp = xpManager.GetNeededXpForNextLevel(xp);
 
         m_xpSlider.interactable = false;
         this.m_xpSlider.maxValue = maxXp;
@@ -69,9 +69,9 @@ public class CharacterView : MonoBehaviour
         this.m_xpSliderText.text = $"{xp}/{maxXp}";
     }
 
-    private void OnUpgradeClicked()
+    private void OnUpgradeClick()
     {
-        
+        OnUpgradeClicked?.Invoke();
     }
 
     public void Show(string name,ItemStack[] items)

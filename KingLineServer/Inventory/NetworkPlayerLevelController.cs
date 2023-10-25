@@ -1,12 +1,12 @@
-﻿using KingLineServer.Utils;
-using LiteNetLib;
+﻿using LiteNetLib;
 using LiteNetLib.Utils;
+using System.Numerics;
 
 
 public class NetworkPlayerLevelController : INetworkController
 {
     public static Dictionary<string, int> PlayerExperiences = new Dictionary<string, int>();
-    static XPManager xPManager = new XPManager();
+
 
     public void OnExit()
     {
@@ -14,7 +14,7 @@ public class NetworkPlayerLevelController : INetworkController
 
     public static int GetPlayerLevel(string idendifier)
     {
-        return xPManager.GetLevel(PlayerExperiences[idendifier]);
+        return XPManager.GetLevel(PlayerExperiences[idendifier]);
     }
 
     public void OnPeerConnected(NetPeer peer)
@@ -36,28 +36,14 @@ public class NetworkPlayerLevelController : INetworkController
 
     public static void AddXp(NetPeer peer, int xp)
     {
+        xp *= KingLineServer.Multiplier;
         var player = NetworkPlayerController.Players[peer];
-        var currentLevel = xPManager.GetLevel(PlayerExperiences[player.Token]);
         PlayerExperiences[player.Token] += xp;
-
-        var afterXp = PlayerExperiences[player.Token];
-        var afterLevel = xPManager.GetLevel(afterXp);
-        if (currentLevel != afterLevel)
+        NetworkPlayerTeamController.GiveXpToTeam(player.Token, xp);
+        PackageSender.SendPacket(peer, new ResPlayerAddXp()
         {
-            PackageSender.SendPacket(peer, new ResPlayerXp()
-            {
-                Level = afterLevel,
-                NeededXpForNextLevel = xPManager.GetNeededXpForNextLevel(afterXp),
-                Xp = afterXp
-            });
-        }
-        else
-        {
-            PackageSender.SendPacket(peer, new ResPlayerAddXp()
-            {
-                Xp = xp
-            });
-        }
+            Xp = xp,
+        });
     }
 
     public void Subscribe(NetPacketProcessor processor)
@@ -75,15 +61,11 @@ public class NetworkPlayerLevelController : INetworkController
         if (PlayerExperiences.TryGetValue(player.Token, out var xp))
         {
             response.Xp = xp;
-            response.Level = xPManager.GetLevel(xp);
-            response.NeededXpForNextLevel = xPManager.GetNeededXpForNextLevel(xp);
         }
         else
         {
             PlayerExperiences.Add(idendifier, 0);
             response.Xp = 0;
-            response.Level = 1;
-            response.NeededXpForNextLevel = xPManager.GetNeededXpForNextLevel(0);
         }
         PackageSender.SendPacket(peer, response);
     }

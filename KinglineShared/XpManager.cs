@@ -5,10 +5,11 @@ using System.Text;
 
 public class XPManager
 {
-    private readonly int[] XpLevels;
-    public XPManager()
+    private static readonly int[] playerXpLevels;
+    public static int[] TeamLevels;
+    static XPManager()
     {
-        XpLevels = new int[]
+        playerXpLevels = new int[]
         {
             20,
             50,
@@ -46,13 +47,20 @@ public class XPManager
             617025,
             834525,
         };
-    }
-    public int GetLevel(int xp)
-    {
-        int level = 1;
-        for (int i = 0; i < XpLevels.Length; i++)
+        TeamLevels = new int[]
         {
-            if (xp >= XpLevels[i])
+            500,
+            1500,
+            3500,
+            6000,
+            12000
+        };
+    }
+    public static int GetTeamLevel(int xp) {
+        int level = 1;
+        for (int i = 0; i < TeamLevels.Length; i++)
+        {
+            if (xp >= TeamLevels[i])
             {
                 level++;
             }
@@ -64,9 +72,31 @@ public class XPManager
         return level;
     }
 
-    public int GetNeededXpForNextLevel(int xp)
+    public static int GetNeededXpForNextTeamLevel(int xp)
     {
-        return XpLevels[GetLevel(xp) - 1];
+        return TeamLevels[GetTeamLevel(xp) - 1];
+    }
+
+    public static int GetLevel(int xp)
+    {
+        int level = 1;
+        for (int i = 0; i < playerXpLevels.Length; i++)
+        {
+            if (xp >= playerXpLevels[i])
+            {
+                level++;
+            }
+            else
+            {
+                break;
+            }
+        }
+        return level;
+    }
+
+    public static int GetNeededXpForNextLevel(int xp)
+    {
+        return playerXpLevels[GetLevel(xp) - 1];
     }
 }
 

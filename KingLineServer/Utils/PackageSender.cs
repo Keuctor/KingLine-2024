@@ -1,9 +1,6 @@
 ﻿using LiteNetLib;
 using LiteNetLib.Utils;
-using static KingLineServer.Utils.PackageSender;
 
-namespace KingLineServer.Utils
-{
     public class PackageSender
     {
         public static NetDataWriter _writer = new();
@@ -25,4 +22,3 @@ namespace KingLineServer.Utils
             peer.Send(WritePacket(packet), DeliveryMethod.ReliableOrdered);
         }
     }
-}

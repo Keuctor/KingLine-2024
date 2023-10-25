@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
         m_playerNetworkController.OnPlayerJoin.AddListener(OnPlayerJoin);
         m_playerNetworkController.OnPlayerLeave.AddListener(OnPlayerLeave);
         NetworkManager.Instance.OnDisconnectedFromServer += OnDisconnectedFromServer;
-        if (m_playerNetworkController.Players.Count > 0)
+        if (PlayerNetworkController.Players.Count > 0)
         {
             CreatePlayers();
             return;
@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour
 
     private void CreatePlayers()
     {
-        foreach (var v in m_playerNetworkController.Players) CreatePlayer(v.Value);
+        foreach (var v in PlayerNetworkController.Players) CreatePlayer(v.Value);
 
         m_createdPlayers = true;
     }

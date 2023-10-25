@@ -39,7 +39,7 @@ public static class ItemRegistry
         Materials.Add((int)MaterialType.BONE, new ResourceItemMaterial("Bone"));
         Materials.Add((int)MaterialType.TOOL_STONE_PICKAXE, new ToolItemMaterial("StonePickaxe", 1.25f));
         Materials.Add((int)MaterialType.TOOL_IRON_PICKAXE, new ToolItemMaterial("IronPickaxe", 2f));
-        Materials.Add((int)MaterialType.TOOL_STEEL_PICKAXE, new ToolItemMaterial("SteelPickaxe", 1.25f));
+        Materials.Add((int)MaterialType.TOOL_STEEL_PICKAXE, new ToolItemMaterial("SteelPickaxe", 5.25f));
         Materials.Add((int)MaterialType.PEASANT_HELMET, new ArmorItemMaterial("PeasantCap", 3, EquipmentSlot.HELMET));
         Materials.Add((int)MaterialType.PEASANT_CLOTHING_ARMOR, new ArmorItemMaterial("PeasantClothing", 6, EquipmentSlot.ARMOR));
         Materials.Add((int)MaterialType.LEATHER_HELMET, new ArmorItemMaterial("LeatherHelm", 7, EquipmentSlot.HELMET));

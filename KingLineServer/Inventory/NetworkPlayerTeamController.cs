@@ -1,7 +1,9 @@
-﻿using KingLineServer.Utils;
-using LiteNetLib;
+﻿using LiteNetLib;
 using LiteNetLib.Utils;
+using System.Diagnostics;
+using System.Numerics;
 using System.Reflection.Metadata.Ecma335;
+using System.Text.RegularExpressions;
 
 //Refugee
 //Peasant Villager
@@ -19,7 +21,7 @@ using System.Reflection.Metadata.Ecma335;
 
 public class NetworkPlayerTeamController : INetworkController
 {
-    public Dictionary<string, TeamMember[]> PlayerTeams = new Dictionary<string, TeamMember[]>();
+    public static Dictionary<string, TeamMember[]> PlayerTeams = new Dictionary<string, TeamMember[]>();
 
     public void OnPeerConnected(NetPeer peer)
     {
@@ -55,6 +57,66 @@ public class NetworkPlayerTeamController : INetworkController
             return new Team();
         });
         processor.SubscribeReusable<ReqPlayerTeam, NetPeer>(OnRequestPlayerTeam);
+        processor.SubscribeReusable<ReqUpgradeTeam, NetPeer>(OnRequestUpgradeTeam);
+    }
+
+    private void OnRequestUpgradeTeam(ReqUpgradeTeam request, NetPeer peer)
+    {
+        var player = NetworkPlayerController.Players[peer];
+        var troop = TroopRegistry.Troops[request.MemberId];
+
+        var team = PlayerTeams[player.Token];
+        var success = false;
+        for (int i = 0; i < team.Length; i++)
+        {
+            if (team[i].Id == request.MemberId)
+            {
+                if (troop.NextTroopId != -1)
+                {
+                    if (team[i].Xp >= troop.UpgradeXp)
+                    {
+                        team[i].Xp -= troop.UpgradeXp;
+
+                        RemoveMember(player.Token, team[i].Id);
+                        AddMember(player.Token, troop.NextTroopId, 1);
+
+                        success = true;
+                        PackageSender.SendPacket(peer, new ResUpdatePlayerTeam()
+                        {
+                            Team = new Team()
+                            {
+                                Id = player.Id,
+                                Members = PlayerTeams[player.Token]
+                            }
+                        });
+                    }
+                }
+                break;
+            }
+        }
+        PackageSender.SendPacket(peer, new ResUpgradeTeam()
+        {
+            Success = success
+        });
+    }
+    public static void RemoveMember(string user, int id)
+    {
+        var team = PlayerTeams[user];
+        for (int i = 0; i < team.Length; i++)
+        {
+            if (team[i].Id == id)
+            {
+                team[i].Count--;
+                Console.WriteLine(team[i].Count);
+                if (team[i].Count <= 0)
+                {
+                    var list = team.ToList();
+                    list.Remove(team[i]);
+                    PlayerTeams[user] = list.ToArray();
+                }
+                break;
+            }
+        }
     }
 
     private void OnRequestPlayerTeam(ReqPlayerTeam request, NetPeer peer)
@@ -74,7 +136,7 @@ public class NetworkPlayerTeamController : INetworkController
         PackageSender.SendPacket(peer, response);
     }
 
-    private Team GetPlayerTeam(int id, string token)
+    private static Team GetPlayerTeam(int id, string token)
     {
         if (PlayerTeams.TryGetValue(token, out var members))
         {
@@ -94,42 +156,48 @@ public class NetworkPlayerTeamController : INetworkController
         };
     }
 
-    public void AddMember(string token, int id,short count) {
-        var team = this.PlayerTeams[token];
+    public static void AddMember(string token, int id, short count)
+    {
+        var team = PlayerTeams[token];
         bool hasAny = false;
         for (int i = 0; i < team.Length; i++)
         {
-            if (team[i].Id == id) {
+            if (team[i].Id == id)
+            {
                 team[i].Count += count;
                 hasAny = true;
             }
         }
         if (!hasAny)
         {
-            var members = this.PlayerTeams[token].ToList();
+            var members = PlayerTeams[token].ToList();
             members.Add(new TeamMember()
             {
                 Count = count,
                 Id = id,
                 Xp = 0,
             });
-            this.PlayerTeams[token] = members.ToArray();
+            PlayerTeams[token] = members.ToArray();
         }
     }
 
-    public void GiveXpToTeam(string token, int xp)
+    public static void GiveXpToTeam(string token, int xp)
     {
-        var team = this.PlayerTeams[token];
+        var team = PlayerTeams[token];
         for (int i = 0; i < team.Length; i++)
         {
             team[i].Xp += xp;
         }
     }
 
-    public TeamMember[] DefaultMembers = new TeamMember[4] {
-        new TeamMember() { Id = 0, Count = 3 },
-        new TeamMember() { Id = 1, Count = 6 },
-        new TeamMember() { Id = 2, Count = 8 },
-        new TeamMember() { Id = 3, Count = 9 }
-    };
+    public static TeamMember[] DefaultMembers
+    {
+        get
+        {
+            return new TeamMember[1]
+            {
+                new TeamMember() { Id = 0, Count = 5 }
+            };
+         }
+    }
 }

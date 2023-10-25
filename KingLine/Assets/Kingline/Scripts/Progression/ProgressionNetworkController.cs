@@ -1,6 +1,7 @@
 using System;
 using LiteNetLib;
 using LiteNetLib.Utils;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class ProgressionNetworkController : INetworkController
@@ -53,7 +54,6 @@ public class ProgressionNetworkController : INetworkController
 
     public void OnUpdate(float deltaTime)
     {
-        
     }
 
 
@@ -67,6 +67,7 @@ public class ProgressionNetworkController : INetworkController
                     skill.Value = obj.Value;
                     OnSkillValueChanged?.Invoke(skill.Name, skill.Value);
                 }
+
                 break;
             }
     }
@@ -75,17 +76,22 @@ public class ProgressionNetworkController : INetworkController
     private void OnXpAdd(ResPlayerAddXp obj)
     {
         CurrentExp += obj.Xp;
+        var newLevel = XPManager.GetLevel(CurrentExp);
+        if (Level != newLevel)
+        {
+            SkillPoint += newLevel-Level;
+            Level = XPManager.GetLevel(CurrentExp);
+            OnLevelChange?.Invoke(Level);
+        }
+        PlayerTeamController.GiveXp(obj.Xp);
     }
 
     private void OnXpResponse(ResPlayerXp obj)
     {
         CurrentExp = obj.Xp;
-        MaxExp = obj.NeededXpForNextLevel;
-        if (Level != -1)
-            if (Level != obj.Level)
-                OnLevelChange?.Invoke(obj.Level);
+        MaxExp = XPManager.GetNeededXpForNextLevel(CurrentExp);
 
-        Level = obj.Level;
+        Level = XPManager.GetLevel(obj.Xp);
         SkillPoint = Level;
         foreach (var n in Skills)
             SkillPoint -= n.Value - 1;

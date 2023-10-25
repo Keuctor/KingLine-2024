@@ -7,7 +7,8 @@ public enum SoundType
 {
     BREAKING_1,
     BREAKING_2,
-    LEVEL_UP
+    LEVEL_UP,
+    UPGRADE_TEAM
 }
 
 
