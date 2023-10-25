@@ -93,6 +93,7 @@
      <Compile Include="Assets\Kingline\Scripts\SpriteAnimator.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\Enums\MagazineType.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\CharacterSetup.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Team\TeamNetworkController.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\FirearmCollection.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\Monster.cs" />
      <Compile Include="Assets\Kingline\Scripts\Utils\Singleton.cs" />
@@ -113,7 +114,6 @@
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\ItemTag.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\SoloState.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\SelectionItemStackView.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Team\TeamNetworkController.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\AttackingExample.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\Springs\ScaleSpring.cs" />
      <Compile Include="Assets\Kingline\Scripts\Utils\SpriteLoader.cs" />

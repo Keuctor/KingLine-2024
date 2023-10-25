@@ -103,3 +103,8 @@ public class ResUpdatePlayerTeam
 {
     public Team Team { get; set; }
 }
+
+public class ResPlayerCurrency { 
+
+    public int NewCurrency { get; set; }
+}

@@ -75,20 +75,29 @@ public class NetworkPlayerTeamController : INetworkController
                 {
                     if (team[i].Xp >= troop.UpgradeXp)
                     {
-                        team[i].Xp -= troop.UpgradeXp;
-
-                        RemoveMember(player.Token, team[i].Id);
-                        AddMember(player.Token, troop.NextTroopId, 1);
-
-                        success = true;
-                        PackageSender.SendPacket(peer, new ResUpdatePlayerTeam()
+                        if (player.Currency >= troop.UpgradePrice)
                         {
-                            Team = new Team()
+                            team[i].Xp -= troop.UpgradeXp;
+
+                            RemoveMember(player.Token, team[i].Id);
+                            AddMember(player.Token, troop.NextTroopId, 1);
+
+                            success = true;
+                            PackageSender.SendPacket(peer, new ResUpdatePlayerTeam()
                             {
-                                Id = player.Id,
-                                Members = PlayerTeams[player.Token]
-                            }
-                        });
+                                Team = new Team()
+                                {
+                                    Id = player.Id,
+                                    Members = PlayerTeams[player.Token]
+                                }
+                            });
+
+                            player.Currency -= troop.UpgradePrice;
+                            PackageSender.SendPacket(peer, new ResPlayerCurrency()
+                            {
+                                NewCurrency = player.Currency,
+                            });
+                        }
                     }
                 }
                 break;
@@ -198,6 +207,6 @@ public class NetworkPlayerTeamController : INetworkController
             {
                 new TeamMember() { Id = 0, Count = 5 }
             };
-         }
+        }
     }
 }

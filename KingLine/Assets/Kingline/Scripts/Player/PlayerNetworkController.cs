@@ -12,6 +12,9 @@ public class PlayerNetworkController : INetworkController
 
     [NonSerialized]
     public readonly UnityEvent<int> OnPlayerLeave = new();
+    
+    [NonSerialized]
+    public readonly UnityEvent<int> OnPlayerCurrencyChanged = new();
 
     public static readonly Dictionary<int, Player> Players = new();
 
@@ -41,6 +44,13 @@ public class PlayerNetworkController : INetworkController
         processor.SubscribeReusable<ResPlayerMove>(OnPlayerTargetChangeResponse);
         processor.SubscribeReusable<ResPlayerJoin>(OnPlayerJoinedResponse);
         processor.SubscribeReusable<ResPlayerLeave>(OnPlayerLeaveResponse);
+        processor.SubscribeReusable<ResPlayerCurrency>(OnPlayerCurrencyResponse);
+    }
+
+    private void OnPlayerCurrencyResponse(ResPlayerCurrency res)
+    {
+        LocalPlayer.Currency = res.NewCurrency;
+        OnPlayerCurrencyChanged?.Invoke(LocalPlayer.Currency);
     }
 
     public void OnExit()

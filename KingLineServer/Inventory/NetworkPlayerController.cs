@@ -113,7 +113,7 @@ public class NetworkPlayerController : INetworkController
             targetX = 0,
             targetY = 0,
             Token = idendifier,
-            Currency = 35,
+            Currency = 15000,
         });
     }
 
