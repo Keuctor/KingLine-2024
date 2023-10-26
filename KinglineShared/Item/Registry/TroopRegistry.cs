@@ -12,12 +12,20 @@ public interface ITroop
     public int UpgradeXp { get; set; }
 }
 
+
+public enum TroopType : int
+{
+    PEASANT = 0,
+    SWORDSMAN = 1,
+    DEFENDER = 2,
+    ELITE_SWORDSMAN = 3
+}
 public static class TroopRegistry
 {
     public static Dictionary<int, ITroop> Troops = new Dictionary<int, ITroop>();
     static TroopRegistry()
     {
-        Troops.Add(0, new Troop()
+        Troops.Add((int)TroopType.PEASANT, new Troop()
         {
             Gear = ItemFactory.CreateItems(MaterialType.PEASANT_HELMET,
             MaterialType.PEASANT_CLOTHING_ARMOR, MaterialType.BONE_CLUP_WEAPON),
@@ -26,7 +34,7 @@ public static class TroopRegistry
             UpgradePrice = 500,
             UpgradeXp = XPManager.TeamLevels[0],
         });
-        Troops.Add(1, new Troop()
+        Troops.Add((int)TroopType.SWORDSMAN, new Troop()
         {
             Gear = ItemFactory.CreateItems(MaterialType.LEATHER_HELMET,
             MaterialType.LEATHER_JACKET_ARMOR, MaterialType.WOODEN_CLUP_WEAPON),
@@ -35,7 +43,7 @@ public static class TroopRegistry
             UpgradePrice = 1250,
             UpgradeXp = XPManager.TeamLevels[1],
         });
-        Troops.Add(2, new Troop()
+        Troops.Add((int)TroopType.DEFENDER, new Troop()
         {
             Gear = ItemFactory.CreateItems(MaterialType.ELITE_KNIGHT_HELMET,
             MaterialType.ELITE_GUARD_ARMOR, MaterialType.GUARD_SWORD_WEAPON),
@@ -44,7 +52,7 @@ public static class TroopRegistry
             UpgradePrice = 2650,
             UpgradeXp = XPManager.TeamLevels[2],
         });
-        Troops.Add(3, new Troop()
+        Troops.Add((int)TroopType.ELITE_SWORDSMAN, new Troop()
         {
             Gear = ItemFactory.CreateItems(MaterialType.CATAPHRACT_HELMET,
             MaterialType.CATAPHRACT_ARMOR, MaterialType.KNIGHT_SWORD_WEAPON),

@@ -125,9 +125,9 @@ public class NetworkInventoryController : INetworkController
         else
         {
             var inventory = new NetworkInventory();
-            inventory.SetItem(NetworkInventory.HELMET_SLOT_INDEX, MaterialType.PEASANT_HELMET.ID());
-            inventory.SetItem(NetworkInventory.ARMOR_SLOT_INDEX, MaterialType.PEASANT_CLOTHING_ARMOR.ID());
-            inventory.SetItem(NetworkInventory.HAND_SLOT_INDEX, MaterialType.BONE_CLUP_WEAPON.ID());
+            inventory.SetItem(NetworkInventory.HELMET_SLOT_INDEX, MaterialType.CATAPHRACT_HELMET.ID());
+            inventory.SetItem(NetworkInventory.ARMOR_SLOT_INDEX, MaterialType.LEATHER_JACKET_ARMOR.ID());
+            inventory.SetItem(NetworkInventory.HAND_SLOT_INDEX, MaterialType.KNIGHT_SWORD_WEAPON.ID());
             inventory.AddItem(MaterialType.TOOL_STONE_PICKAXE.ID());
             inventory.AddItem(MaterialType.TOOL_IRON_PICKAXE.ID());
             inventory.AddItem(MaterialType.TOOL_STEEL_PICKAXE.ID());

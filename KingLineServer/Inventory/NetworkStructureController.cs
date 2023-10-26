@@ -4,6 +4,8 @@ using LiteNetLib.Utils;
 public class NetworkStructureController
     : INetworkController
 {
+    static Random random = new Random();
+
     public static List<Structure> Structures = new List<Structure>();
     private void OnRequestStructures(ReqStructures request, NetPeer peer)
     {
@@ -19,6 +21,22 @@ public class NetworkStructureController
             return new Structure();
         });
         processor.SubscribeReusable<ReqStructures, NetPeer>(OnRequestStructures);
+        processor.SubscribeReusable<ReqVolunteers, NetPeer>(OnRequestVolunteers);
+    }
+
+    private void OnRequestVolunteers(ReqVolunteers request, NetPeer peer)
+    {
+        for (int i = 0; i < Structures.Count; i++) {
+            var structure = Structures[i];
+            if (structure.Id == request.StructureId) {
+                var rand = random.Next(2,6);
+                var response = new ResVolunteers() {
+                    Count = 0,
+                    TroopId = (int)TroopType.PEASANT
+                };
+                PackageSender.SendPacket(peer, response);
+            }
+        }
     }
 
     public void OnPeerDisconnected(NetPeer peer)

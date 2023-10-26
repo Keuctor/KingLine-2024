@@ -58,6 +58,7 @@ public class NetworkPlayerTeamController : INetworkController
         });
         processor.SubscribeReusable<ReqPlayerTeam, NetPeer>(OnRequestPlayerTeam);
         processor.SubscribeReusable<ReqUpgradeTeam, NetPeer>(OnRequestUpgradeTeam);
+        
     }
 
     private void OnRequestUpgradeTeam(ReqUpgradeTeam request, NetPeer peer)

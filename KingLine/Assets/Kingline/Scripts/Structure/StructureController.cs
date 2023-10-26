@@ -64,22 +64,35 @@ public class StructureController : MonoBehaviour
                     SceneManager.LoadScene("Mine");
                     break;
                 }
+                case 1:
+                {
+                    var newPopup = PopupManager.Instance.CreateNew();
+                    newPopup.CreateText("The town is in a poor state; nobody wants to live here. You see some people lying on the ground, hungry.");
+                    newPopup.CreateButton("Gather Volunteers");
+                    newPopup.CreateButton("Ask for job");
+                    newPopup.OnClick.AddListener(ni =>
+                    {
+                        if (ni == 0)
+                        {
+                            var team = NetworkManager.Instance.GetController<TeamNetworkController>();
+                            team.RequestVolunteers(structureId);
+                        }
+                    });
+                    break;
+                }
                 case 2:
                 {
                     var newPopup = PopupManager.Instance.CreateNew();
                     newPopup.CreateText("What do you want to do here?");
                     newPopup.CreateButton("Sell Items");
                     newPopup.CreateButton("Buy Items");
+                    newPopup.CreateButton("Leave");
                     newPopup.OnClick.AddListener((nI) =>
                     {
                         if (nI == 0)
                         {
                             var showItemSelectPopup = PopupManager.Instance.ShowItemSelectPopup();
                             showItemSelectPopup.SelectMode = false;
-                        }
-                        else
-                        {
-                            
                         }
                         newPopup.Destroy();
                     });

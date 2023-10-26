@@ -1662,7 +1662,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 31
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 26
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!114 &4761211996679575839
 MonoBehaviour:
@@ -1726,6 +1726,9 @@ MonoBehaviour:
   m_xpSliderText: {fileID: 5239604345850903641}
   m_armorText: {fileID: 6971935623199063252}
   m_weaponText: {fileID: 134976201365954345}
+  OnUpgradeClicked:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8841421085212224504
 GameObject:
   m_ObjectHideFlags: 0

@@ -41,3 +41,8 @@ public class ReqSellItem
     public int Index { get; set; }
     public short Count { get; set; }
 }
+
+public class ReqVolunteers
+{
+    public int StructureId { get; set; }
+}

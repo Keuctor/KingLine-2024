@@ -2,7 +2,6 @@
 using LiteNetLib;
 using LiteNetLib.Utils;
 using System.Numerics;
-using System.Runtime.CompilerServices;
 
 public class NetworkPlayerController : INetworkController
 {

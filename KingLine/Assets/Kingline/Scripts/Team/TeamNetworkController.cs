@@ -20,6 +20,7 @@ public class TeamNetworkController : INetworkController
         => PlayerTeams[NetworkManager.LocalPlayerPeerId];
 
     public readonly UnityEvent<bool> OnUpgradeTeam = new();
+    public readonly UnityEvent<int,short> OnVolunteersResponse = new();
 
     public void OnPeerConnected(NetPeer peer)
     {
@@ -37,6 +38,12 @@ public class TeamNetworkController : INetworkController
         processor.SubscribeReusable<ResPlayerTeam>(OnPlayerTeamResponse);
         processor.SubscribeReusable<ResUpdatePlayerTeam>(OnUpdatePlayerTeamResponse);
         processor.SubscribeReusable<ResUpgradeTeam>(OnUpgradeTeamResponse);
+        processor.SubscribeReusable<ResVolunteers>(OnResponseVolunteers);
+    }
+
+    private void OnResponseVolunteers(ResVolunteers obj)
+    {
+        OnVolunteersResponse?.Invoke(obj.TroopId,obj.Count);
     }
 
     private void OnUpgradeTeamResponse(ResUpgradeTeam response)
@@ -64,6 +71,14 @@ public class TeamNetworkController : INetworkController
         });
     }
     
+    public void RequestVolunteers(int structureId)
+    {
+        NetworkManager.Instance.Send(new ReqVolunteers()
+        {
+            StructureId = structureId
+        });
+    }
+    
     public void OnExit()
     {
     }
@@ -76,5 +91,6 @@ public class TeamNetworkController : INetworkController
     {
     }
 
-  
+
+   
 }

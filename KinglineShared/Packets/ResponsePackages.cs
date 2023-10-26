@@ -110,7 +110,18 @@ public class ResUpdatePlayerTeam
     public Team Team { get; set; }
 }
 
-public class ResPlayerCurrency { 
+public class ResPlayerCurrency
+{
 
     public int NewCurrency { get; set; }
+}
+
+public class ResVolunteers
+{
+    /// <summary>
+    /// Place ID
+    /// </summary>
+    public int TroopId { get; set; }
+    public short Count { get; set; }
+    public int Price { get; set; }
 }
