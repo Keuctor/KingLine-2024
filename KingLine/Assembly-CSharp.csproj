@@ -96,6 +96,7 @@
      <Compile Include="Assets\Kingline\Scripts\Team\TeamNetworkController.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\FirearmCollection.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\Monster.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Popup\SelectAmountPopup.cs" />
      <Compile Include="Assets\Kingline\Scripts\Utils\Singleton.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\SpriteSheetCapture.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\Enums\FirearmType.cs" />
@@ -167,6 +168,7 @@
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Data\Modifier.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\PropertyId.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\NavigateButton.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Inventory\InventoryComponent.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\FingerTrigger.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\SpriteSequenceCapture.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\ConnectionDataSO.cs" />
@@ -487,6 +489,7 @@
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Sprites\Equipment\MeleeWeapon2H\Basic\Hammer" />
      <Folder Include="Assets\HeroEditor\Extensions\EpicHeroes\Sprites\Equipment\Cape\Epic" />
      <Folder Include="Assets\HeroEditor\Extensions\AbandonedWorkshop\Icons\WithoutBackground\Equipment\Glasses\AbandonedWorkshop" />
+     <Folder Include="Assets\Kingline\Prefab\UI_Elements\Popup" />
      <Folder Include="Assets\HeroEditor\Common\CharacterScripts\Firearms" />
      <Folder Include="Assets\HeroEditor\Extensions\AbandonedWorkshop\Icons\WithoutBackground\Equipment\Helmet" />
      <Folder Include="Assets\HeroEditor\Common\Icons\WithoutBackground\BodyParts\Eyebrows" />
@@ -894,8 +897,10 @@
      <Folder Include="Assets\HeroEditor\StandaloneFileBrowser\Plugins\Linux\x86_64" />
      <Folder Include="Assets\HeroEditor\Extensions\Style\Icons\WithoutBackground\Equipment\Helmet\Style" />
      <Folder Include="Assets\HeroEditor\Common\Icons" />
+     <Folder Include="Assets\Kingline\Scripts\Popup" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\Equipment\Gloves\Zombies" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Sprites\Equipment\MeleeWeapon1H\Knights" />
+     <Folder Include="Assets\Kingline\Sprites\UI\Frame" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\Equipment\Vest" />
      <Folder Include="Assets\HeroEditor\Extensions\VillageInventory\Icons\WithoutBackground\Equipment\MeleeWeapon1H\Basic\Hammer" />
      <Folder Include="Assets\Kingline\Sound" />

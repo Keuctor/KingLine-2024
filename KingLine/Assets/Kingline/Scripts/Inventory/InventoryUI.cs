@@ -20,8 +20,6 @@ public class InventoryUI : MonoBehaviour
     [SerializeField]
     private Transform m_itemViewContent;
 
-  
-
     public TMP_Text TotalStrengthText;
     public TMP_Text TotalArmorText;
     public TMP_Text CoinText;

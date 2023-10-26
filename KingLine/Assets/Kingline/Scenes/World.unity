@@ -3747,7 +3747,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 119
 --- !u!114 &1070939678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4918,7 +4918,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1073.0404, y: -0.00012207031}
+  m_AnchoredPosition: {x: 452.3343, y: -0.00012207031}
   m_SizeDelta: {x: 900, y: 1720}
   m_Pivot: {x: 0.5, y: 0.99999994}
 --- !u!114 &1461874801
@@ -5091,6 +5091,11 @@ MonoBehaviour:
   m_priceMetaView: {fileID: 54514989}
   m_itemName: {fileID: 569251994}
   m_itemIcon: {fileID: 1611008449}
+  CanvasGroup: {fileID: 0}
+  m_sellButton: {fileID: 0}
+  OnSellButtonClicked:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1532820008
 GameObject:
   m_ObjectHideFlags: 0

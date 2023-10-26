@@ -17,9 +17,11 @@ public class MenuNavigation
 public class MenuController : Singleton<MenuController>
 {
     public SpriteLoader SpriteLoader;
-    
+
     [SerializeField]
     private List<MenuNavigation> m_menuNavigation = new();
+
+    public Queue<GameObject> Menu = new Queue<GameObject>();
 
     [SerializeField]
     private GameObject m_blocker;
@@ -34,10 +36,7 @@ public class MenuController : Singleton<MenuController>
     {
         foreach (var m in m_menuNavigation)
         {
-            m.Button.onClick.AddListener(() =>
-            {
-                OpenUI(m);
-            });
+            m.Button.onClick.AddListener(() => { OpenUI(m); });
         }
     }
 
@@ -60,6 +59,13 @@ public class MenuController : Singleton<MenuController>
                 CloseAll();
             else
             {
+                if (Menu.Count > 0)
+                {
+                    var menu = Menu.Dequeue();
+                    Destroy(menu);
+                    return;
+                }
+
                 if (!SceneManager.GetActiveScene().name.Equals("World"))
                 {
                     SceneManager.LoadScene("World");
@@ -75,7 +81,7 @@ public class MenuController : Singleton<MenuController>
             CloseAll();
             return;
         }
-        
+
         CloseAll();
         navigation.UI.gameObject.SetActive(true);
         navigation.Button.DOKill();

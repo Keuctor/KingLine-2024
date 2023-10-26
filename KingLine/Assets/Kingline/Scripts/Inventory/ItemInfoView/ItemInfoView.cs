@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class ItemInfoView : MonoBehaviour
@@ -20,8 +22,16 @@ public class ItemInfoView : MonoBehaviour
 
     [SerializeField]
     private Image m_itemIcon;
+    [FormerlySerializedAs("m_canvasGroup")]
+    [SerializeField]
+    public CanvasGroup CanvasGroup;
 
     private readonly List<ItemInfoMetaView> _metaViews = new(4);
+
+    [SerializeField]
+    private Button m_sellButton;
+
+    public UnityEvent OnSellButtonClicked = new();
 
     public void ShowItemInfo(IItemMaterial itemMaterial)
     {
@@ -29,6 +39,14 @@ public class ItemInfoView : MonoBehaviour
         m_itemName.text = itemMaterial.Name;
         m_priceMetaView.MetaValue.text = "" + itemMaterial.Value;
 
+        if(m_sellButton){
+            m_sellButton.onClick.RemoveAllListeners();
+            m_sellButton.onClick.AddListener(() =>
+            {
+                OnSellButtonClicked?.Invoke();
+                
+            });
+        }
 
         for (var i = 0; i < _metaViews.Count; i++)
             Destroy(_metaViews[i].gameObject);
@@ -71,5 +89,9 @@ public class ItemInfoView : MonoBehaviour
         }
 
         m_priceMetaView.transform.SetAsLastSibling();
+        if (m_sellButton)
+        {
+            m_sellButton.transform.SetAsLastSibling();
+        }
     }
 }

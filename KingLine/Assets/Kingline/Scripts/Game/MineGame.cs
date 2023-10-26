@@ -75,15 +75,11 @@ public class MineGame : MonoBehaviour
         DisplayTool(m_selectedToolIndex);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape)) SceneManager.LoadScene("World");
-    }
-
 
     public void SelectTool()
     {
         var popup = Instantiate(m_prefabs.ItemSelectPopup);
+        popup.SelectMode = true;
         popup.OnSelect.AddListener(DisplayTool);
     }
 

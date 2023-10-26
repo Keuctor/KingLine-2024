@@ -1,5 +1,7 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class ItemSelectPopup : MonoBehaviour
 {
@@ -14,10 +16,18 @@ public class ItemSelectPopup : MonoBehaviour
 
     public UnityEvent<int> OnSelect = new();
 
+    public bool SelectMode = true;
+
+    [SerializeField]
+    private ItemInfoView m_itemInfoView;
+
+    private NetworkInventory m_inventory;
+    
     private async void Start()
     {
-        var inventory = await InventoryNetworkController.GetInventoryAsync();
-        var items = inventory.Items;
+        MenuController.Instance.Menu.Enqueue(this.gameObject);
+        m_inventory = await InventoryNetworkController.GetInventoryAsync();
+        var items = m_inventory.Items;
         for (var i = 0; i < 25; i++)
         {
             var m = items[i];
@@ -35,9 +45,39 @@ public class ItemSelectPopup : MonoBehaviour
         }
     }
 
+
     private void OnClick(int id)
     {
-        OnSelect?.Invoke(id);
-        Destroy(gameObject);
+        if (SelectMode)
+        {
+            OnSelect?.Invoke(id);
+            Destroy(gameObject);
+        }
+        else
+        {
+            var item = m_inventory.Items[id];
+            if (item.Id != -1)
+            {
+                var n = ItemRegistry.GetItem(item.Id);
+                m_itemInfoView.ShowItemInfo(n);
+                m_itemInfoView.OnSellButtonClicked.RemoveAllListeners();
+                m_itemInfoView.OnSellButtonClicked.AddListener(() =>
+                {
+                    Debug.Log("sell :" + item.Id);
+                });
+                if (m_itemInfoView.CanvasGroup.alpha == 0)
+                {
+                    m_itemInfoView.transform.localScale = Vector3.one * 1.1f;
+                }
+                m_itemInfoView.transform.DOScale(Vector3.one, 0.2f);
+                m_itemInfoView.CanvasGroup.DOFade(1, 0.2f);
+                m_itemInfoView.CanvasGroup.blocksRaycasts = true;
+            }
+            else
+            {
+                m_itemInfoView.CanvasGroup.DOFade(0, 0.2f);
+                m_itemInfoView.CanvasGroup.blocksRaycasts = false;
+            }
+        }
     }
 }
