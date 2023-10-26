@@ -115,7 +115,7 @@ MonoBehaviour:
   m_priceMetaView: {fileID: 8445172163444826453}
   m_itemName: {fileID: 260376857085714293}
   m_itemIcon: {fileID: 396664373676877723}
-  m_canvasGroup: {fileID: 3856966873009140619}
+  CanvasGroup: {fileID: 3856966873009140619}
   m_sellButton: {fileID: 8683912229034531840}
   OnSellButtonClicked:
     m_PersistentCalls:
@@ -267,7 +267,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 60
   m_TargetDisplay: 0
 --- !u!114 &2276984383162416442
 MonoBehaviour:

@@ -73,7 +73,6 @@
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\AnimationManager.cs" />
      <Compile Include="Assets\Kingline\Scripts\Player\PlayerNetworkController.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Structure\StructureUI.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\FirearmFire.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\ItemIcon.cs" />
      <Compile Include="Assets\Kingline\Scripts\Player\CharacterView.cs" />
@@ -184,6 +183,7 @@
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\Shell.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\CaptureOptions.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\Tweens\ScaleSpring.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Popup\PopupManager.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Data\LocalizedValue.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\ElementComponents.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\ItemCollection.cs" />
@@ -387,6 +387,7 @@
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\BodyParts\Eyes\Demon" />
      <Folder Include="Assets\HeroEditor\Common\Sprites\BodyParts\Body" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\Equipment\Boots" />
+     <Folder Include="Assets\Kingline\Prefab\Popup" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\Cape\Basic" />
      <Folder Include="Assets\Kingline\Sprites\Places\Decor" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\Pauldrons\Thrones" />
@@ -770,6 +771,7 @@
      <Folder Include="Assets\HeroEditor\Extensions\AbandonedWorkshop\Icons\WithoutBackground\Equipment\Glasses" />
      <Folder Include="Assets\HeroEditor\Extensions\EpicHeroes\Atlases" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Prefabs" />
+     <Folder Include="Assets\Kingline\Resources\Manager" />
      <Folder Include="Assets\HeroEditor\Extensions\EpicHeroes\Icons\WithoutBackground\Equipment\Vest\Legendary" />
      <Folder Include="Assets\HeroEditor\Common\RangedWeapons\Sounds\Firearms\rpg" />
      <Folder Include="Assets\HeroEditor\Extensions\EpicHeroes\Icons\WithoutBackground\Equipment\Pauldrons\Legendary" />

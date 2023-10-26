@@ -13,6 +13,9 @@ public class InventoryNetworkController : INetworkController
     public static bool IsLoaded;
     //id , added, total 
     public readonly UnityEvent<int, int, int> OnAddItem = new();
+    
+    //index,total
+    public readonly UnityEvent<int, int> OnRemoveItem = new();
 
     public readonly UnityEvent<int> OnGearChange = new();
     public readonly UnityEvent OnInventory = new();
@@ -36,9 +39,11 @@ public class InventoryNetworkController : INetworkController
         processor.SubscribeReusable<ResInventory>(OnInventoryResponse);
         processor.SubscribeReusable<ResInventoryMove>(OnInventoryMove);
         processor.SubscribeReusable<ResInventoryAdd>(OnInventoryAdd);
+        processor.SubscribeReusable<ResInventoryRemove>(OnInventoryRemove);
         processor.SubscribeReusable<ResRemoteInventory>(OnRemoteInventory);
     }
 
+  
 
     public void OnExit()
     {
@@ -88,6 +93,13 @@ public class InventoryNetworkController : INetworkController
 
         OnAddItem?.Invoke(response.Id, response.Count, LocalInventory.GetItemCount(response.Id));
     }
+    
+    private void OnInventoryRemove(ResInventoryRemove obj)
+    {
+        LocalInventory.RemoveItem(obj.Index, obj.Count);
+        OnRemoveItem?.Invoke(obj.Index,LocalInventory.Items[obj.Index].Count);
+    }
+
 
     private void OnRemoteInventory(ResRemoteInventory remoteInventory)
     {
@@ -109,5 +121,14 @@ public class InventoryNetworkController : INetworkController
                 LocalInventory.GetHand()
             };
         return RemoteInventories[peerId];
+    }
+
+    public static void Sell(int index,short count)
+    {
+       NetworkManager.Instance.Send(new ReqSellItem()
+       {
+          Index = index,
+           Count = count,
+       });
     }
 }

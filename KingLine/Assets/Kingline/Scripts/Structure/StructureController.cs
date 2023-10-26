@@ -11,14 +11,10 @@ public class StructureController : MonoBehaviour
     [SerializeField]
     private StructureListSO m_structureList;
 
-    [SerializeField]
-    private StructureUI m_structureUITemplate;
-
     private readonly List<StructureBehaviour> m_structureInstances = new();
 
     private StructureNetworkController m_structureNetworkController;
 
-    private StructureUI m_structureUIInstance;
 
     private void Start()
     {
@@ -58,21 +54,37 @@ public class StructureController : MonoBehaviour
     {
         var structureInfo = m_structureList.GetStructureInfo(structureId);
 
-        if (m_structureUIInstance != null)
+        var popup  = PopupManager.Instance.ShowStructureInfo(structureInfo);
+        popup.OnClick.AddListener((i) =>
         {
-            Destroy(m_structureUIInstance.gameObject);
-            m_structureUIInstance = null;
-        }
-
-        m_structureUIInstance = Instantiate(m_structureUITemplate);
-        m_structureUIInstance.OnResult.RemoveAllListeners();
-        m_structureUIInstance.SetContext(structureInfo);
-        m_structureUIInstance.OnResult.AddListener(index =>
-        {
-            if (index == structureInfo.Options.Length - 1)
+            switch (i)
             {
-                Destroy(m_structureUIInstance.gameObject);
-                m_structureUIInstance = null;
+                case 0:
+                {
+                    SceneManager.LoadScene("Mine");
+                    break;
+                }
+                case 2:
+                {
+                    var newPopup = PopupManager.Instance.CreateNew();
+                    newPopup.CreateText("What do you want to do here?");
+                    newPopup.CreateButton("Sell Items");
+                    newPopup.CreateButton("Buy Items");
+                    newPopup.OnClick.AddListener((nI) =>
+                    {
+                        if (nI == 0)
+                        {
+                            var showItemSelectPopup = PopupManager.Instance.ShowItemSelectPopup();
+                            showItemSelectPopup.SelectMode = false;
+                        }
+                        else
+                        {
+                            
+                        }
+                        newPopup.Destroy();
+                    });
+                    break;
+                }
             }
         });
     }

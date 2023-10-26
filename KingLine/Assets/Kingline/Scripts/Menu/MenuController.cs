@@ -21,7 +21,7 @@ public class MenuController : Singleton<MenuController>
     [SerializeField]
     private List<MenuNavigation> m_menuNavigation = new();
 
-    public Queue<GameObject> Menu = new Queue<GameObject>();
+    public Stack<GameObject> Menu = new Stack<GameObject>();
 
     [SerializeField]
     private GameObject m_blocker;
@@ -61,7 +61,7 @@ public class MenuController : Singleton<MenuController>
             {
                 if (Menu.Count > 0)
                 {
-                    var menu = Menu.Dequeue();
+                    var menu = Menu.Pop();
                     if (menu)
                     {
                         Destroy(menu);

@@ -33,7 +33,6 @@ public class ResUpgradeTeam
     public bool Success { get; set; }
 }
 
-
 public class ResSkillValueChange
 {
     public string SkillName { get; set; }
@@ -61,6 +60,13 @@ public class ResInventoryAdd
     public int Id { get; set; }
     public short Count { get; set; }
 }
+public class ResInventoryRemove
+{
+    public int Index { get; set; }
+    public short Count { get; set; }
+}
+
+
 
 public class ResInventory
 {

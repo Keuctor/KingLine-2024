@@ -55,6 +55,24 @@ public class NetworkInventory
         };
     }
 
+    public bool RemoveItem(int index, short count = 1)
+    {
+        var item = items[index];
+        if (item.Id != -1) {
+            item.Count -= count;
+            if (item.Count <= 0)
+            {
+                items[index] = new ItemStack()
+                {
+                    Count = 0,
+                    Id = -1
+                };
+            }
+            return true;
+        }
+        return false;
+    }
+
     public bool AddItem(int id, short count = 1)
     {
         var itemInfo = ItemRegistry.GetItem(id);

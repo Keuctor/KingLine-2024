@@ -1,7 +1,7 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 public class ItemSelectPopup : MonoBehaviour
 {
@@ -22,27 +22,59 @@ public class ItemSelectPopup : MonoBehaviour
     private ItemInfoView m_itemInfoView;
 
     private NetworkInventory m_inventory;
-    
+
+    private void OnEnable()
+    {
+        NetworkManager.Instance.GetController<InventoryNetworkController>().OnRemoveItem.AddListener(OnItemRemoved);
+    }
+
+    private void OnDisable()
+    {
+        NetworkManager.Instance.GetController<InventoryNetworkController>().OnRemoveItem.RemoveListener(OnItemRemoved);
+    }
+
+    private SelectionItemStackView[] views;
+
     private async void Start()
     {
-        MenuController.Instance.Menu.Enqueue(this.gameObject);
+        MenuController.Instance.Menu.Push(this.gameObject);
         m_inventory = await InventoryNetworkController.GetInventoryAsync();
+
         var items = m_inventory.Items;
+        views = new SelectionItemStackView[25];
         for (var i = 0; i < 25; i++)
         {
             var m = items[i];
 
-            var view = Instantiate(m_itemSelectionViewTemplate, m_parent);
-            view.OnClick.AddListener(OnClick);
-            view.Id = i;
+            views[i] = Instantiate(m_itemSelectionViewTemplate, m_parent);
+            views[i].OnClick.AddListener(OnClick);
+            views[i].Id = i;
 
             if (m.Id != -1)
             {
                 var item = ItemRegistry.GetItem(m.Id);
-                var contentView = Instantiate(m_itemSelectionViewContent, view.Content);
-                contentView.SetContext(MenuController.Instance.SpriteLoader.LoadSprite(item.Id), m.Count, item.Stackable);
+                var contentView = Instantiate(m_itemSelectionViewContent, views[i].Content);
+                contentView.SetContext(MenuController.Instance.SpriteLoader.LoadSprite(item.Id), m.Count,
+                    item.Stackable);
             }
         }
+    }
+
+    private void OnItemRemoved(int index, int newCount)
+    {
+        var selectionItemStackViewContent =
+            views[index].Content.GetComponentInChildren<SelectionItemStackViewContent>();
+        if (newCount <= 0)
+        {
+            Destroy(selectionItemStackViewContent.gameObject);
+            m_itemInfoView.CanvasGroup.DOFade(0, 0.2f);
+            m_itemInfoView.CanvasGroup.blocksRaycasts = false;
+            return;
+        }
+        var items = InventoryNetworkController.LocalInventory.Items;
+        var info = ItemRegistry.GetItem(items[index].Id);
+        selectionItemStackViewContent.SetContext(
+            MenuController.Instance.SpriteLoader.LoadSprite(info.Id), newCount, info.Stackable);
     }
 
 
@@ -61,14 +93,13 @@ public class ItemSelectPopup : MonoBehaviour
                 var n = ItemRegistry.GetItem(item.Id);
                 m_itemInfoView.ShowItemInfo(n);
                 m_itemInfoView.OnSellButtonClicked.RemoveAllListeners();
-                m_itemInfoView.OnSellButtonClicked.AddListener(() =>
-                {
-                    Debug.Log("sell :" + item.Id);
-                });
+                var index = id;
+                m_itemInfoView.OnSellButtonClicked.AddListener(() => { InventoryNetworkController.Sell(index, 1); });
                 if (m_itemInfoView.CanvasGroup.alpha == 0)
                 {
                     m_itemInfoView.transform.localScale = Vector3.one * 1.1f;
                 }
+
                 m_itemInfoView.transform.DOScale(Vector3.one, 0.2f);
                 m_itemInfoView.CanvasGroup.DOFade(1, 0.2f);
                 m_itemInfoView.CanvasGroup.blocksRaycasts = true;

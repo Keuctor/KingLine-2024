@@ -16,6 +16,30 @@ public class NetworkPlayerController : INetworkController
         processor.SubscribeReusable<ReqPlayers, NetPeer>(OnRequestPlayers);
         processor.SubscribeReusable<ResPlayerPosition, NetPeer>(OnRequestPositionUpdate);
         processor.SubscribeReusable<ReqPlayerMove, NetPeer>(OnRequestPlayerMove);
+        processor.SubscribeReusable<ReqSellItem, NetPeer>(OnSellItem);
+    }
+
+    private void OnSellItem(ReqSellItem request, NetPeer peer)
+    {
+
+        var player = Players[peer];
+        var inventory = NetworkInventoryController.Inventories[player.Token];
+        var targetItemStack = inventory.Items[request.Index];
+        if (targetItemStack.Id != -1 && targetItemStack.Count >= request.Count) {
+            var itemInfo = ItemRegistry.GetItem(targetItemStack.Id);
+            player.Currency += (itemInfo.Value * request.Count);
+            inventory.RemoveItem(request.Index, request.Count);
+
+            PackageSender.SendPacket(peer, new ResPlayerCurrency() { 
+                NewCurrency = player.Currency,
+            },DeliveryMethod.ReliableUnordered);
+
+            PackageSender.SendPacket(peer, new ResInventoryRemove()
+            {
+                Count = request.Count,
+                Index = request.Index
+            }, DeliveryMethod.ReliableUnordered);
+        }
     }
 
     private void OnRequestPlayerMove(ReqPlayerMove request, NetPeer peer)

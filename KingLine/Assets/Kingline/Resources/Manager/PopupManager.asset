@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d451b6288a0ffb47b36d79e3c4cde89, type: 3}
+  m_Name: PopupManager
+  m_EditorClassIdentifier: 
+  Canvas: {fileID: 7545627359281244820, guid: 56cc0c6835987d74895b2a37d282be8e, type: 3}
+  PopupContainer: {fileID: 3334892011772493212, guid: b8c1fe68ff516604a99f661588da2161, type: 3}
+  PopupButton: {fileID: 7591365132433475329, guid: ebaef87ca6e1a954eafd7a3dca20acd0, type: 3}
+  PopupText: {fileID: 8048218039311874483, guid: c7c6fc09d4c0d24459fdc15e00469d44, type: 3}
+  PopupImage: {fileID: 3795838853936696679, guid: 1e60aa889a468e44597df9b86e36bc1a, type: 3}
+  Prefabs: {fileID: 11400000, guid: 008d7ecfd74196840b5b524e9850fdef, type: 2}

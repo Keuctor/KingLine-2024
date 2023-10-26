@@ -5697,7 +5697,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 25
+  m_SortingOrder: 70
   m_TargetDisplay: 0
 --- !u!224 &1725047876
 RectTransform:
@@ -6358,7 +6358,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_structureBehaviour: {fileID: 2664565456676373643, guid: 4d04f40df9c1f19468eeee4502d70d1b, type: 3}
   m_structureList: {fileID: 11400000, guid: b8aa0b4bb223cf0489d8fdbe158a9db8, type: 2}
-  m_structureUITemplate: {fileID: 2407484901096101469, guid: 6a13f5ef1f2c7b049a28a6cca3c8d182, type: 3}
 --- !u!1 &2046753390
 GameObject:
   m_ObjectHideFlags: 0

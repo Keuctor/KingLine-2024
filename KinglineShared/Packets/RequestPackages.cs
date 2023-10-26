@@ -20,7 +20,8 @@ public class ReqStructures
 public class ReqPlayerProgression
 {
 }
-public class ReqUpgradeTeam { 
+public class ReqUpgradeTeam
+{
     public int MemberId { get; set; }
 }
 
@@ -33,4 +34,10 @@ public class ReqInventoryMove
 {
     public short FromIndex { get; set; }
     public short ToIndex { get; set; }
+}
+
+public class ReqSellItem
+{
+    public int Index { get; set; }
+    public short Count { get; set; }
 }
