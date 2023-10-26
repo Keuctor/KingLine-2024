@@ -203,7 +203,7 @@ public class PlayerController : MonoBehaviour
         player.Animator.PeerId = player.Player.Id;
         player.Transform = p.transform;
         player.NameText = player.Transform.GetChild(0).GetComponent<TMP_Text>();
-
+        
         player.NameText.text = player.Player.Name;
         player.Transform.position =
             new Vector2(player.Player.x, player.Player.y);
@@ -215,6 +215,18 @@ public class PlayerController : MonoBehaviour
             var camera = FindObjectOfType<CinemachineVirtualCamera>();
             camera.Follow = m_localPlayer.Transform;
             camera.LookAt = m_localPlayer.Transform;
+
+            if (InventoryNetworkController.LocalInventory != null)
+            {
+                player.Animator.DisplayGear(player.Player.Id);
+            }
+        }
+        else
+        {
+            if (InventoryNetworkController.RemoteInventories.ContainsKey(player.Player.Id))
+            {
+                player.Animator.DisplayGear(player.Player.Id);
+            }
         }
     }
 }

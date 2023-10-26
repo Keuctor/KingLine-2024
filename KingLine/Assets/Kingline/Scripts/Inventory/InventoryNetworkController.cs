@@ -10,6 +10,7 @@ public class InventoryNetworkController : INetworkController
 
     public static Dictionary<int, ItemStack[]> RemoteInventories = new();
 
+    public static bool IsLoaded;
     //id , added, total 
     public readonly UnityEvent<int, int, int> OnAddItem = new();
 

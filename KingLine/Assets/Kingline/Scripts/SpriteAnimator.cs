@@ -14,17 +14,19 @@ public class SpriteAnimator : MonoBehaviour
     public int PeerId;
 
     private InventoryNetworkController m_inventoryNetworkController;
-
+    
     private void Awake()
     {
         m_inventoryNetworkController = NetworkManager.Instance.GetController<InventoryNetworkController>();
         m_inventoryNetworkController.OnGearChange.AddListener(DisplayGear);
     }
 
-    private void DisplayGear(int id)
+    public void DisplayGear(int id)
     {
         if (id != PeerId)
             return;
+        
+        Debug.Log("worked?");
         
         var inventory = InventoryNetworkController.GetPlayerGear(id);
 

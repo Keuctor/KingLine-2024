@@ -62,8 +62,15 @@ public class MenuController : Singleton<MenuController>
                 if (Menu.Count > 0)
                 {
                     var menu = Menu.Dequeue();
-                    Destroy(menu);
-                    return;
+                    if (menu)
+                    {
+                        Destroy(menu);
+                        return;
+                    }
+                    if (Menu.Count > 0)
+                    {
+                        return;
+                    }
                 }
 
                 if (!SceneManager.GetActiveScene().name.Equals("World"))
