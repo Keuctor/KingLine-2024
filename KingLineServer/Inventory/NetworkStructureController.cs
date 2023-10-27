@@ -85,6 +85,8 @@ public class NetworkStructureController
                     }
                     else
                     {
+
+                        //This may trigger 
                         Console.WriteLine(">>Not enough troops in place to buy");
                     }
                 }
@@ -112,6 +114,7 @@ public class NetworkStructureController
                 PackageSender.SendPacket(peer, response);
             }
         }
+        timer = 0;
     }
 
     public void OnPeerDisconnected(NetPeer peer)
@@ -148,8 +151,9 @@ public class NetworkStructureController
         });
     }
 
-    int troopSpawnTimer = 30 * 60;
+    int troopSpawnTimer = 30 * 180;
     int timer = 0;
+
     public void OnUpdate(float deltaTime)
     {
         timer++;
@@ -158,7 +162,7 @@ public class NetworkStructureController
         foreach (var structure in Structures)
         {
             var mapStructure = structure.Value;
-            if (random.NextDouble() >= 0.35)
+            if (random.NextDouble() >= 0.45)
             {
                 if (mapStructure.TroopCount < mapStructure.MaxTroopCount)
                 {

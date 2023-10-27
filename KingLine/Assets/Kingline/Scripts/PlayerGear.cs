@@ -4,7 +4,7 @@ using HeroEditor.Common.Enums;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SpriteAnimator : MonoBehaviour
+public class PlayerGear : MonoBehaviour
 {
     [SerializeField]
     private Character m_character;

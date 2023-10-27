@@ -89,7 +89,6 @@
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\StateHandler.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Data\ItemParams.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Extensions.cs" />
-     <Compile Include="Assets\Kingline\Scripts\SpriteAnimator.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\Enums\MagazineType.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\CharacterSetup.cs" />
      <Compile Include="Assets\Kingline\Scripts\Team\TeamNetworkController.cs" />
@@ -169,6 +168,7 @@
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\NavigateButton.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\InventoryComponent.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\FingerTrigger.cs" />
+     <Compile Include="Assets\Kingline\Scripts\PlayerGear.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\SpriteSequenceCapture.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\ConnectionDataSO.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\RuntimeSetup.cs" />

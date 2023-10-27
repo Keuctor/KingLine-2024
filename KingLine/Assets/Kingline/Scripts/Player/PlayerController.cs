@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class GamePlayer
 {
-    public SpriteAnimator Animator;
+    public PlayerGear Animator;
     public bool IsLocalPlayer;
     public TMP_Text NameText;
     public Player Player;
@@ -199,7 +199,7 @@ public class PlayerController : MonoBehaviour
             Player = pl
         };
         player.IsLocalPlayer = NetworkManager.LocalPlayerPeerId == player.Player.Id;
-        player.Animator = p.GetComponent<SpriteAnimator>();
+        player.Animator = p.GetComponent<PlayerGear>();
         player.Animator.PeerId = player.Player.Id;
         player.Transform = p.transform;
         player.NameText = player.Transform.GetChild(0).GetComponent<TMP_Text>();
