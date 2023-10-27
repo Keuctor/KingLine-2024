@@ -155,7 +155,6 @@ public class NetworkStructureController
         timer++;
         if (timer < troopSpawnTimer) return;
         timer = 0;
-        Console.WriteLine("Troops updated");
         foreach (var structure in Structures)
         {
             var mapStructure = structure.Value;

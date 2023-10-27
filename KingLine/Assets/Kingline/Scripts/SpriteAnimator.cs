@@ -1,3 +1,4 @@
+using System;
 using Assets.HeroEditor.Common.CharacterScripts;
 using HeroEditor.Common.Enums;
 using UnityEngine;
@@ -11,12 +12,14 @@ public class SpriteAnimator : MonoBehaviour
     [SerializeField]
     private Vector3 m_scale = new(0.25f, 0.25f, 0.25f);
 
+    [NonSerialized]
     public int PeerId;
 
     private InventoryNetworkController m_inventoryNetworkController;
     
     private void Awake()
     {
+        m_character.transform.localScale = new Vector3(m_scale.x, m_scale.y, m_scale.z);
         m_inventoryNetworkController = NetworkManager.Instance.GetController<InventoryNetworkController>();
         m_inventoryNetworkController.OnGearChange.AddListener(DisplayGear);
     }
@@ -26,7 +29,6 @@ public class SpriteAnimator : MonoBehaviour
         if (id != PeerId)
             return;
         
-        Debug.Log("worked?");
         
         var inventory = InventoryNetworkController.GetPlayerGear(id);
 
