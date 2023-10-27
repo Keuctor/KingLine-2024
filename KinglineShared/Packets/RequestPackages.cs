@@ -46,3 +46,9 @@ public class ReqVolunteers
 {
     public int StructureId { get; set; }
 }
+public class ReqBuyVolunteers
+{
+    public int StructureId { get; set; }
+    public int Id { get; set;    }
+    public short Count { get; set; }
+}

@@ -22,11 +22,49 @@ public class StructureController : MonoBehaviour
         if (m_structureNetworkController.Structures.Length > 0 || SceneManager.GetActiveScene().name == "World")
             CreateStructures();
         m_structureNetworkController.OnStructureResponse.AddListener(CreateStructures);
+
         NetworkManager.Instance.OnDisconnectedFromServer += OnDisconnected;
+
+        NetworkManager.Instance.GetController<TeamNetworkController>().OnVolunteersResponse
+            .AddListener(OnVolunteersResponse);
+    }
+
+    private void OnVolunteersResponse(int structureId, int troopId, short count)
+    {
+        var popup = PopupManager.Instance.CreateNew();
+        if (count <= 0)
+        {
+            popup.CreateText("No one wants to join you.");
+            popup.CreateText("<size=32>(Tip: Improve your Leadership skill)</size>");
+            popup.CreateButton("Leave...");
+            popup.OnClick.AddListener((x) => { popup.Destroy();});
+            return;
+        }
+        var troop = TroopRegistry.GetTroop(troopId);
+        popup.CreateText(
+            $"<b>{count}</b> <b>{troop.Name}</b> wants to join your team but they want <b>{troop.Price * count}</b> gold for it");
+        popup.CreateButton($"Take them all");
+        popup.CreateButton($"Leave...");
+        popup.OnClick.AddListener((i) =>
+        {
+            if (i == 0)
+            {
+                NetworkManager.Instance.Send(new ReqBuyVolunteers()
+                {
+                    StructureId = structureId,
+                    Count = count,
+                    Id = troopId
+                });
+            }
+
+            popup.Destroy();
+        });
     }
 
     private void OnDestroy()
     {
+        NetworkManager.Instance.GetController<TeamNetworkController>().OnVolunteersResponse
+            .RemoveListener(OnVolunteersResponse);
         NetworkManager.Instance.OnDisconnectedFromServer -= OnDisconnected;
     }
 
@@ -54,7 +92,7 @@ public class StructureController : MonoBehaviour
     {
         var structureInfo = m_structureList.GetStructureInfo(structureId);
 
-        var popup  = PopupManager.Instance.ShowStructureInfo(structureInfo);
+        var popup = PopupManager.Instance.ShowStructureInfo(structureInfo);
         popup.OnClick.AddListener((i) =>
         {
             switch (i)
@@ -67,9 +105,11 @@ public class StructureController : MonoBehaviour
                 case 1:
                 {
                     var newPopup = PopupManager.Instance.CreateNew();
-                    newPopup.CreateText("The town is in a poor state; nobody wants to live here. You see some people lying on the ground, hungry.");
+                    newPopup.CreateText(
+                        "The town is in a poor state; nobody wants to live here. You see some people lying on the ground, hungry.");
                     newPopup.CreateButton("Gather Volunteers");
                     newPopup.CreateButton("Ask for job");
+                    newPopup.CreateButton("Leave");
                     newPopup.OnClick.AddListener(ni =>
                     {
                         if (ni == 0)
@@ -77,6 +117,12 @@ public class StructureController : MonoBehaviour
                             var team = NetworkManager.Instance.GetController<TeamNetworkController>();
                             team.RequestVolunteers(structureId);
                         }
+
+                        if (ni == 1)
+                        {
+                        }
+
+                        newPopup.Destroy();
                     });
                     break;
                 }
@@ -94,10 +140,14 @@ public class StructureController : MonoBehaviour
                             var showItemSelectPopup = PopupManager.Instance.ShowItemSelectPopup();
                             showItemSelectPopup.SelectMode = false;
                         }
+
                         newPopup.Destroy();
                     });
                     break;
                 }
+                default:
+                    popup.Destroy();
+                    break;
             }
         });
     }

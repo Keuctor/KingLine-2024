@@ -6,7 +6,6 @@ public partial class Structure : INetSerializable
     public float x { get; set; }
     public float y { get; set; }
 
-    
     public void Serialize(NetDataWriter writer)
     {
         writer.Put(Id);

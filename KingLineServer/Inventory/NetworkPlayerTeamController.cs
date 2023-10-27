@@ -1,5 +1,6 @@
 ﻿using LiteNetLib;
 using LiteNetLib.Utils;
+using System;
 using System.Diagnostics;
 using System.Numerics;
 using System.Reflection.Metadata.Ecma335;
@@ -58,8 +59,9 @@ public class NetworkPlayerTeamController : INetworkController
         });
         processor.SubscribeReusable<ReqPlayerTeam, NetPeer>(OnRequestPlayerTeam);
         processor.SubscribeReusable<ReqUpgradeTeam, NetPeer>(OnRequestUpgradeTeam);
-        
     }
+
+
 
     private void OnRequestUpgradeTeam(ReqUpgradeTeam request, NetPeer peer)
     {
@@ -204,10 +206,7 @@ public class NetworkPlayerTeamController : INetworkController
     {
         get
         {
-            return new TeamMember[1]
-            {
-                new TeamMember() { Id = 0, Count = 5 }
-            };
+            return new TeamMember[0];
         }
     }
 }

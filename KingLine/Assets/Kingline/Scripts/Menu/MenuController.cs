@@ -62,15 +62,18 @@ public class MenuController : Singleton<MenuController>
                 if (Menu.Count > 0)
                 {
                     var menu = Menu.Pop();
+                    while (!menu)
+                    {
+                        if (Menu.Count == 0)
+                        {
+                            break;
+                        }
+
+                        menu = Menu.Pop();
+                    }
+
                     if (menu)
-                    {
                         Destroy(menu);
-                        return;
-                    }
-                    if (Menu.Count > 0)
-                    {
-                        return;
-                    }
                 }
 
                 if (!SceneManager.GetActiveScene().name.Equals("World"))

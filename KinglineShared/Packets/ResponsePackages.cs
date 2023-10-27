@@ -123,5 +123,5 @@ public class ResVolunteers
     /// </summary>
     public int TroopId { get; set; }
     public short Count { get; set; }
-    public int Price { get; set; }
+    public int StructureId { get; set; }
 }

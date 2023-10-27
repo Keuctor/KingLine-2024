@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using LiteNetLib;
 using LiteNetLib.Utils;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class TeamNetworkController : INetworkController
@@ -20,7 +21,7 @@ public class TeamNetworkController : INetworkController
         => PlayerTeams[NetworkManager.LocalPlayerPeerId];
 
     public readonly UnityEvent<bool> OnUpgradeTeam = new();
-    public readonly UnityEvent<int,short> OnVolunteersResponse = new();
+    public readonly UnityEvent<int,int,short> OnVolunteersResponse = new();
 
     public void OnPeerConnected(NetPeer peer)
     {
@@ -43,7 +44,7 @@ public class TeamNetworkController : INetworkController
 
     private void OnResponseVolunteers(ResVolunteers obj)
     {
-        OnVolunteersResponse?.Invoke(obj.TroopId,obj.Count);
+        OnVolunteersResponse?.Invoke(obj.StructureId,obj.TroopId,obj.Count);
     }
 
     private void OnUpgradeTeamResponse(ResUpgradeTeam response)
@@ -54,6 +55,7 @@ public class TeamNetworkController : INetworkController
     private void OnUpdatePlayerTeamResponse(ResUpdatePlayerTeam response)
     {
         PlayerTeams[response.Team.Id] = response.Team.Members;
+        Debug.Log("Güncellendi");
     }
 
     private void OnPlayerTeamResponse(ResPlayerTeam teams)

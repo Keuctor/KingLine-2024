@@ -10,6 +10,7 @@ public interface ITroop
     public int UpgradePrice { get; set; }
     public int NextTroopId { get; set; }
     public int UpgradeXp { get; set; }
+    public int Price { get; set; }
 }
 
 
@@ -31,8 +32,9 @@ public static class TroopRegistry
             MaterialType.PEASANT_CLOTHING_ARMOR, MaterialType.BONE_CLUP_WEAPON),
             Name = "Peasant",
             NextTroopId = 1,
-            UpgradePrice = 500,
+            UpgradePrice = 60,
             UpgradeXp = XPManager.TeamLevels[0],
+            Price = 20,
         });
         Troops.Add((int)TroopType.SWORDSMAN, new Troop()
         {
@@ -40,8 +42,9 @@ public static class TroopRegistry
             MaterialType.LEATHER_JACKET_ARMOR, MaterialType.WOODEN_CLUP_WEAPON),
             Name = "Swordsman",
             NextTroopId = 2,
-            UpgradePrice = 1250,
+            UpgradePrice = 210,
             UpgradeXp = XPManager.TeamLevels[1],
+            Price = 90,
         });
         Troops.Add((int)TroopType.DEFENDER, new Troop()
         {
@@ -49,8 +52,9 @@ public static class TroopRegistry
             MaterialType.ELITE_GUARD_ARMOR, MaterialType.GUARD_SWORD_WEAPON),
             Name = "Defender",
             NextTroopId = 3,
-            UpgradePrice = 2650,
+            UpgradePrice = 420,
             UpgradeXp = XPManager.TeamLevels[2],
+            Price = 580,
         });
         Troops.Add((int)TroopType.ELITE_SWORDSMAN, new Troop()
         {
@@ -58,10 +62,12 @@ public static class TroopRegistry
             MaterialType.CATAPHRACT_ARMOR, MaterialType.KNIGHT_SWORD_WEAPON),
             Name = "Elite Swordsman",
             NextTroopId = -1,
-            UpgradePrice = 7500,
+            UpgradePrice = 920,
             UpgradeXp = XPManager.TeamLevels[3],
+            Price = 850
         });
     }
+
     public static ITroop GetTroop(int id)
     {
         return Troops[id];
@@ -74,17 +80,5 @@ class Troop : ITroop
     public int UpgradePrice { get; set; }
     public int UpgradeXp { get; set; }
     public int NextTroopId { get; set; }
-    public Troop()
-    {
-
-    }
-
-    public Troop(string name, int upgradePrice, int upgradeXp, int nextTroopId, params ItemStack[] gear)
-    {
-        this.Name = name;
-        this.Gear = gear;
-        this.UpgradeXp = upgradeXp;
-        this.UpgradePrice = upgradePrice;
-        this.NextTroopId = nextTroopId;
-    }
+    public int Price{ get; set; }
 }
