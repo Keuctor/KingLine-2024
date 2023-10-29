@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class SelectAmountPopup : MonoBehaviour
@@ -31,6 +32,10 @@ public class SelectAmountPopup : MonoBehaviour
     private int max;
     private int min;
 
+    public UnityEvent OnDone = new();
+
+    public short Value => (short)value;
+
 
     private void Start()
     {
@@ -38,6 +43,8 @@ public class SelectAmountPopup : MonoBehaviour
         m_icon.gameObject.SetActive(false);
         m_amountSlider.onValueChanged.AddListener(OnSliderValueChanged);
         m_amountInputField.onValueChanged.AddListener(OnAmountInputValueChanged);
+        m_doneButton.onClick.AddListener(() => { OnDone?.Invoke();});
+        m_exitButton.onClick.AddListener(() => { Destroy(gameObject);});
     }
 
     private void OnAmountInputValueChanged(string inputStr)
@@ -82,5 +89,6 @@ public class SelectAmountPopup : MonoBehaviour
         m_amountSlider.minValue = min;
         m_amountSlider.maxValue = max;
         m_amountSlider.value = this.value;
+        OnSliderValueChanged(this.value);
     }
 }

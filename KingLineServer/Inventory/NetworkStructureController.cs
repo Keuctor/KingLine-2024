@@ -162,7 +162,7 @@ public class NetworkStructureController
         foreach (var structure in Structures)
         {
             var mapStructure = structure.Value;
-            if (random.NextDouble() >= 0.45)
+            if (random.NextDouble() >= 0.40)
             {
                 if (mapStructure.TroopCount < mapStructure.MaxTroopCount)
                 {

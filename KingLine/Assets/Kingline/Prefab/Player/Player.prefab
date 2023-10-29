@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_character: {fileID: 8221073188971126586}
-  m_scale: {x: 0.3, y: 0.3, z: 0.3}
+  m_scale: {x: 0.26, y: 0.26, z: 0.26}
   m_inventoryNetworkController: {fileID: 11400000, guid: 8ff74ab722a5ee0448995c4eece678fd, type: 2}
 --- !u!1 &8972550565726596369
 GameObject:

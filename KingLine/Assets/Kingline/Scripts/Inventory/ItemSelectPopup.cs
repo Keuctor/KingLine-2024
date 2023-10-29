@@ -25,6 +25,9 @@ public class ItemSelectPopup : MonoBehaviour
 
     [SerializeField]
     private InventoryNetworkController m_inventoryNetworkController;
+
+    [SerializeField]
+    public SelectAmountPopup m_selectAmountPopupTemplate;
     
     private void OnEnable()
     {
@@ -97,7 +100,17 @@ public class ItemSelectPopup : MonoBehaviour
                 m_itemInfoView.ShowItemInfo(n);
                 m_itemInfoView.OnSellButtonClicked.RemoveAllListeners();
                 var index = id;
-                m_itemInfoView.OnSellButtonClicked.AddListener(() => { InventoryNetworkController.Sell(index, 1); });
+                m_itemInfoView.OnSellButtonClicked.AddListener(() =>
+                {
+                    var selectPopup = Instantiate(m_selectAmountPopupTemplate);
+                    selectPopup.SetIcon(MenuController.Instance.SpriteLoader.LoadSprite(n.Id));
+                    selectPopup.SetValue(1, 1, item.Count);
+                    selectPopup.OnDone.AddListener(() =>
+                    {
+                        InventoryNetworkController.Sell(index, selectPopup.Value);
+                        Destroy(selectPopup.gameObject);
+                    });
+                });
                 if (m_itemInfoView.CanvasGroup.alpha == 0)
                 {
                     m_itemInfoView.transform.localScale = Vector3.one * 1.1f;
