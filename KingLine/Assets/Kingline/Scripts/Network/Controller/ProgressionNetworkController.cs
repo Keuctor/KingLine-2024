@@ -4,7 +4,8 @@ using LiteNetLib.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ProgressionNetworkController : INetworkController
+[CreateAssetMenu]
+public class ProgressionNetworkController : NetworkController
 {
     [NonSerialized]
     public readonly UnityEvent<int> OnLevelChange = new();
@@ -12,31 +13,37 @@ public class ProgressionNetworkController : INetworkController
     [NonSerialized]
     public readonly UnityEvent<string, byte> OnSkillValueChanged = new();
 
+    [NonSerialized]
     public int CurrentExp;
+
+    [NonSerialized]
     public int Level = -1;
+
+    [NonSerialized]
     public int MaxExp;
 
     [NonSerialized]
     public int SkillPoint;
 
+    [NonSerialized]
     public Skill[] Skills;
 
 
-    public void OnPeerDisconnected(NetPeer peer)
+    public override void OnPeerDisconnected(NetPeer peer)
     {
     }
 
-    public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
+    public override void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
     {
     }
 
-    public void OnPeerConnected(NetPeer peer)
+    public override void OnPeerConnected(NetPeer peer)
     {
         NetworkManager.Instance.Send(new ReqPlayerProgression());
         NetworkManager.Instance.Send(new ReqPlayerXp());
     }
 
-    public void Subscribe(NetPacketProcessor processor)
+    public override void Subscribe(NetPacketProcessor processor)
     {
         processor.SubscribeReusable<ResPlayerProgression>(OnPlayerProgressionResponse);
         processor.SubscribeReusable<ResPlayerXp>(OnXpResponse);
@@ -44,15 +51,15 @@ public class ProgressionNetworkController : INetworkController
         processor.SubscribeReusable<ResSkillValueChange>(OnSkillIncrement);
     }
 
-    public void OnExit()
+    public override void OnExit()
     {
     }
 
-    public void OnStart()
+    public override void OnStart()
     {
     }
 
-    public void OnUpdate(float deltaTime)
+    public override void OnUpdate(float deltaTime)
     {
     }
 
@@ -79,10 +86,11 @@ public class ProgressionNetworkController : INetworkController
         var newLevel = XPManager.GetLevel(CurrentExp);
         if (Level != newLevel)
         {
-            SkillPoint += newLevel-Level;
+            SkillPoint += newLevel - Level;
             Level = XPManager.GetLevel(CurrentExp);
             OnLevelChange?.Invoke(Level);
         }
+
         TeamNetworkController.GiveXp(obj.Xp);
     }
 

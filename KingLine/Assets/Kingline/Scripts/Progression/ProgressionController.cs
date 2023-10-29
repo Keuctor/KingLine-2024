@@ -8,11 +8,11 @@ public class ProgressionController : MonoBehaviour
     [SerializeField]
     private Transform m_levelUpContent;
 
+    [SerializeField]
     private ProgressionNetworkController m_progressionNetworkController;
-
+    
     private void Start()
     {
-        m_progressionNetworkController = NetworkManager.Instance.GetController<ProgressionNetworkController>();
         m_progressionNetworkController.OnLevelChange.AddListener(OnLevelChange);
     }
 

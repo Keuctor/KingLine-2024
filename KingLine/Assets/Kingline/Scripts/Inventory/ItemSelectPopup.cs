@@ -23,14 +23,17 @@ public class ItemSelectPopup : MonoBehaviour
 
     private NetworkInventory m_inventory;
 
+    [SerializeField]
+    private InventoryNetworkController m_inventoryNetworkController;
+    
     private void OnEnable()
     {
-        NetworkManager.Instance.GetController<InventoryNetworkController>().OnRemoveItem.AddListener(OnItemRemoved);
+        m_inventoryNetworkController.OnRemoveItem.AddListener(OnItemRemoved);
     }
 
     private void OnDisable()
     {
-        NetworkManager.Instance.GetController<InventoryNetworkController>().OnRemoveItem.RemoveListener(OnItemRemoved);
+        m_inventoryNetworkController.OnRemoveItem.RemoveListener(OnItemRemoved);
     }
 
     private SelectionItemStackView[] views;

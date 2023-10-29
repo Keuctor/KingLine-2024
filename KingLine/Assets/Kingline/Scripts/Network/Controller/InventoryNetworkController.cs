@@ -2,9 +2,11 @@
 using System.Threading.Tasks;
 using LiteNetLib;
 using LiteNetLib.Utils;
+using UnityEngine;
 using UnityEngine.Events;
 
-public class InventoryNetworkController : INetworkController
+[CreateAssetMenu]
+public class InventoryNetworkController : NetworkController
 {
     public static NetworkInventory LocalInventory;
 
@@ -20,21 +22,21 @@ public class InventoryNetworkController : INetworkController
     public readonly UnityEvent<int> OnGearChange = new();
     public readonly UnityEvent OnInventory = new();
 
-    public void OnPeerDisconnected(NetPeer peer)
+    public override void OnPeerDisconnected(NetPeer peer)
     {
         RemoteInventories.Remove(peer.Id);
     }
 
-    public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
+    public override void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
     {
     }
 
-    public void OnPeerConnected(NetPeer peer)
+    public override void OnPeerConnected(NetPeer peer)
     {
         NetworkManager.Instance.Send(new ReqInventory());
     }
 
-    public void Subscribe(NetPacketProcessor processor)
+    public override void Subscribe(NetPacketProcessor processor)
     {
         processor.SubscribeReusable<ResInventory>(OnInventoryResponse);
         processor.SubscribeReusable<ResInventoryMove>(OnInventoryMove);
@@ -45,15 +47,15 @@ public class InventoryNetworkController : INetworkController
 
   
 
-    public void OnExit()
+    public override void OnExit()
     {
     }
 
-    public void OnStart()
+    public override void OnStart()
     {
     }
 
-    public void OnUpdate(float deltaTime)
+    public override void OnUpdate(float deltaTime)
     {
     }
 

@@ -33,17 +33,19 @@ public class PlayerController : MonoBehaviour
 
     private bool m_isLocalPlayerMoving;
 
-    public PlayerNetworkController m_playerNetworkController;
+    [SerializeField]
+    private PlayerNetworkController m_playerNetworkController;
 
     private StructureInfoUI m_structureInfoUI;
 
     private StructureBehaviour m_targetStructure;
 
     public Dictionary<int, GamePlayer> playerInstances = new();
+    
+    
 
     private void Start()
     {
-        m_playerNetworkController = NetworkManager.Instance.GetController<PlayerNetworkController>();
         m_playerNetworkController.OnPlayerJoin.AddListener(OnPlayerJoin);
         m_playerNetworkController.OnPlayerLeave.AddListener(OnPlayerLeave);
         NetworkManager.Instance.OnDisconnectedFromServer += OnDisconnectedFromServer;

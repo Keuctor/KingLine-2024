@@ -12,11 +12,13 @@ public class InventoryController : MonoBehaviour
     [SerializeField]
     private Transform m_itemPopupContent;
 
+    [SerializeField]
+    public InventoryNetworkController m_inventoryNetworkController;
+
 
     private void Start()
     {
-        var controller = NetworkManager.Instance.GetController<InventoryNetworkController>();
-        controller.OnAddItem.AddListener(ShowItemAddPopup);
+        m_inventoryNetworkController.OnAddItem.AddListener(ShowItemAddPopup);
     }
     
     public void ShowItemAddPopup(int id, int count,int total)

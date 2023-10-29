@@ -26,7 +26,6 @@ public class PlayerUI : MonoBehaviour
 
     private readonly Dictionary<string, NameValueButtonView> m_createdSkillItemViews = new();
 
-    private ProgressionNetworkController m_progressionNetworkController;
 
     [SerializeField]
     private PrefabsSO m_prefabs;
@@ -34,12 +33,12 @@ public class PlayerUI : MonoBehaviour
     [SerializeField]
     private AudioManager m_audioManager;
 
+    public ProgressionNetworkController ProgressionNetworkController;
+    public TeamNetworkController TeamNetworkController;
+
 
     private void OnEnable()
     {
-        if (m_progressionNetworkController == null)
-            m_progressionNetworkController = NetworkManager.Instance.GetController<ProgressionNetworkController>();
-
         ClearViews();
         CreateViews();
     }
@@ -65,17 +64,17 @@ public class PlayerUI : MonoBehaviour
 
     private void CreateViews()
     {
-        NetworkManager.Instance.GetController<TeamNetworkController>().OnUpgradeTeam.AddListener(OnUpgradeTeam);
-        m_progressionNetworkController.OnLevelChange.AddListener(OnLevelChange);
-        m_progressionNetworkController.OnSkillValueChanged.AddListener(OnSkillChanged);
+        TeamNetworkController.OnUpgradeTeam.AddListener(OnUpgradeTeam);
+        ProgressionNetworkController.OnLevelChange.AddListener(OnLevelChange);
+        ProgressionNetworkController.OnSkillValueChanged.AddListener(OnSkillChanged);
 
 
-        var xp = m_progressionNetworkController.CurrentExp;
-        var level = m_progressionNetworkController.Level;
-        var neededXp = m_progressionNetworkController.MaxExp;
+        var xp = ProgressionNetworkController.CurrentExp;
+        var level = ProgressionNetworkController.Level;
+        var neededXp = ProgressionNetworkController.MaxExp;
         m_xpText.text = $"Level {level}  ({xp}/{neededXp})";
 
-        var playerSkill = m_progressionNetworkController.Skills;
+        var playerSkill = ProgressionNetworkController.Skills;
         foreach (var skill in playerSkill) CreateSkillView(skill);
 
         SetSkillViews();
@@ -111,8 +110,7 @@ public class PlayerUI : MonoBehaviour
             chView.SetUpgrade(troopData.UpgradePrice);
             chView.OnUpgradeClicked.AddListener(() =>
             {
-                var teamController = NetworkManager.Instance.GetController<TeamNetworkController>();
-                teamController.UpgradeTeam(member.Id);
+                TeamNetworkController.UpgradeTeam(member.Id);
                 Destroy(chView.gameObject);
             });
         }
@@ -120,9 +118,9 @@ public class PlayerUI : MonoBehaviour
 
     public void SetSkillViews()
     {
-        m_skillPointText.text = $"You have {m_progressionNetworkController.SkillPoint} Points";
+        m_skillPointText.text = $"You have {ProgressionNetworkController.SkillPoint} Points";
         foreach (var m in m_createdSkillItemViews.Values)
-            m.Button.gameObject.SetActive(m_progressionNetworkController.SkillPoint > 0);
+            m.Button.gameObject.SetActive(ProgressionNetworkController.SkillPoint > 0);
     }
 
     public void CreateSkillView(Skill skill)
@@ -136,18 +134,18 @@ public class PlayerUI : MonoBehaviour
 
     private void OnIncrementSkillPointClicked(Skill skill)
     {
-        if (m_progressionNetworkController.SkillPoint <= 0)
+        if (ProgressionNetworkController.SkillPoint <= 0)
             return;
-        m_progressionNetworkController.SkillPoint--;
-        m_progressionNetworkController.SendSkillIncrement(skill.Name);
+        ProgressionNetworkController.SkillPoint--;
+        ProgressionNetworkController.SendSkillIncrement(skill.Name);
         SetSkillViews();
     }
 
     private void ClearViews()
     {
-        NetworkManager.Instance.GetController<TeamNetworkController>().OnUpgradeTeam.RemoveListener(OnUpgradeTeam);
-        m_progressionNetworkController.OnLevelChange.RemoveListener(OnLevelChange);
-        m_progressionNetworkController.OnSkillValueChanged.RemoveListener(OnSkillChanged);
+        TeamNetworkController.OnUpgradeTeam.RemoveListener(OnUpgradeTeam);
+        ProgressionNetworkController.OnLevelChange.RemoveListener(OnLevelChange);
+        ProgressionNetworkController.OnSkillValueChanged.RemoveListener(OnSkillChanged);
 
 
         ClearTroops();

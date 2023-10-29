@@ -31,7 +31,7 @@ public class NetworkManager : MonoBehaviour, INetEventListener
 
     private bool m_isServerStarted;
 
-    private readonly List<INetworkController> m_networkControllers = new();
+    public List<NetworkController> NetworkControllers = new List<NetworkController>();
 
     public Action OnConnectedToServer;
     public Action OnDisconnectedFromServer;
@@ -71,11 +71,6 @@ public class NetworkManager : MonoBehaviour, INetEventListener
         if (Instance == null)
         {
             Instance = this;
-            m_networkControllers.Add(new PlayerNetworkController());
-            m_networkControllers.Add(new StructureNetworkController());
-            m_networkControllers.Add(new ProgressionNetworkController());
-            m_networkControllers.Add(new InventoryNetworkController());
-            m_networkControllers.Add(new TeamNetworkController());
             DontDestroyOnLoad(gameObject);
             InitializeNetPacketProcessor();
             CreateConnectionUI();
@@ -84,7 +79,7 @@ public class NetworkManager : MonoBehaviour, INetEventListener
 
     private void Update()
     {
-        foreach (var controller in m_networkControllers)
+        foreach (var controller in NetworkControllers)
         {
             controller.OnUpdate(Time.deltaTime);
         }
@@ -104,13 +99,13 @@ public class NetworkManager : MonoBehaviour, INetEventListener
         LoadingHandler.Instance.ShowLoading("Connected to server");
         LoadingHandler.Instance.HideAfterSeconds(0.5f);
         OnConnectedToServer?.Invoke();
-        m_networkControllers.ForEach(t => t.OnPeerConnected(peer));
+        NetworkControllers.ForEach(t => t.OnPeerConnected(peer));
     }
 
     public void OnPeerDisconnected(NetPeer peer, DisconnectInfo disconnectInfo)
     {
         GlobalCanvas.Instance.SetLatency(-1);
-        m_networkControllers.ForEach(t => t.OnPeerDisconnected(peer));
+        NetworkControllers.ForEach(t => t.OnPeerDisconnected(peer));
         if (Connected)
             LoadingHandler.Instance.ShowLoading("Disconnected from server " + disconnectInfo.Reason);
         else
@@ -155,11 +150,6 @@ public class NetworkManager : MonoBehaviour, INetEventListener
     {
         LoadingHandler.Instance.ShowLoading("Connection Request");
         LoadingHandler.Instance.HideAfterSeconds(1f);
-    }
-
-    public T GetController<T>() where T : INetworkController
-    {
-        return (T)m_networkControllers.FirstOrDefault(t => t.GetType() == typeof(T));
     }
 
     public void DestroyConnectionUI()
@@ -211,7 +201,7 @@ public class NetworkManager : MonoBehaviour, INetEventListener
         NetPacketProcessor.RegisterNestedType(() => new TeamMember());
         NetPacketProcessor.RegisterNestedType(() => new Team());
 
-        m_networkControllers.ForEach(t => t.Subscribe(NetPacketProcessor));
+        NetworkControllers.ForEach(t => t.Subscribe(NetPacketProcessor));
         NetPacketProcessor.SubscribeReusable<ResPeerId>(OnPeerIdReceived);
     }
 
@@ -236,5 +226,10 @@ public class NetworkManager : MonoBehaviour, INetEventListener
         writer.Reset();
         NetPacketProcessor.Write(writer, packet);
         return writer;
+    }
+
+    public T GetController<T>()
+    {
+        throw new NotImplementedException();
     }
 }

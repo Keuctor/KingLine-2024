@@ -13,19 +13,20 @@ public class StructureController : MonoBehaviour
 
     private readonly List<StructureBehaviour> m_structureInstances = new();
 
+    [SerializeField]
     private StructureNetworkController m_structureNetworkController;
-
+    [SerializeField]
+    private TeamNetworkController m_teamNetworkController;
 
     private void Start()
     {
-        m_structureNetworkController = NetworkManager.Instance.GetController<StructureNetworkController>();
         if (m_structureNetworkController.Structures.Length > 0 || SceneManager.GetActiveScene().name == "World")
             CreateStructures();
         m_structureNetworkController.OnStructureResponse.AddListener(CreateStructures);
 
         NetworkManager.Instance.OnDisconnectedFromServer += OnDisconnected;
 
-        NetworkManager.Instance.GetController<TeamNetworkController>().OnVolunteersResponse
+        m_teamNetworkController.OnVolunteersResponse
             .AddListener(OnVolunteersResponse);
     }
 
@@ -63,7 +64,7 @@ public class StructureController : MonoBehaviour
 
     private void OnDestroy()
     {
-        NetworkManager.Instance.GetController<TeamNetworkController>().OnVolunteersResponse
+        m_teamNetworkController.OnVolunteersResponse
             .RemoveListener(OnVolunteersResponse);
         NetworkManager.Instance.OnDisconnectedFromServer -= OnDisconnected;
     }
@@ -114,8 +115,7 @@ public class StructureController : MonoBehaviour
                     {
                         if (ni == 0)
                         {
-                            var team = NetworkManager.Instance.GetController<TeamNetworkController>();
-                            team.RequestVolunteers(structureId);
+                            m_teamNetworkController.RequestVolunteers(structureId);
                         }
 
                         if (ni == 1)

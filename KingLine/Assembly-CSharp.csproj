@@ -52,6 +52,7 @@
      <Compile Include="Assets\Kingline\Scripts\Progression\PlayerUI.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\Tweens\TweenBase.cs" />
      <Compile Include="Assets\Kingline\Scripts\Utils\LoadingHandler.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Network\Controller\NetworkController.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Data\Item.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\CharacterEditor.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\StateHandler.cs" />
@@ -65,22 +66,20 @@
      <Compile Include="Assets\Kingline\Scripts\Structure\StructureController.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemStackView.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\InventoryBase.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Progression\ProgressionNetworkController.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\ScreenshotTransparent.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\InventoryUI.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\LayerManager.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\CharacterReferencesResolver.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\AnimationManager.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Player\PlayerNetworkController.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\FirearmFire.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\ItemIcon.cs" />
      <Compile Include="Assets\Kingline\Scripts\Player\CharacterView.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\Screenshot.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Network\Controller\InventoryNetworkController.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\MovementExample.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\FilteredItemStackView.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\SoloState.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Network\NetworkController.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\Serializer.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\Enums\HoldType.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Character.cs" />
@@ -91,10 +90,10 @@
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Extensions.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\Enums\MagazineType.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\CharacterSetup.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Team\TeamNetworkController.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\FirearmCollection.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\Monster.cs" />
      <Compile Include="Assets\Kingline\Scripts\Popup\SelectAmountPopup.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Network\Controller\ProgressionNetworkController.cs" />
      <Compile Include="Assets\Kingline\Scripts\Utils\Singleton.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\SpriteSheetCapture.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\Enums\FirearmType.cs" />
@@ -143,6 +142,7 @@
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\IconCollection.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\Elements\ItemWorkspace.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Network\Controller\TeamNetworkController.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\StandaloneFileBrowser.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\Projectile.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\ItemRarity.cs" />
@@ -159,6 +159,7 @@
      <Compile Include="Assets\Kingline\Scripts\Audio\AudioManager.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\CharacterExtensions.cs" />
      <Compile Include="Assets\Kingline\Scripts\Game\MineGame.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Network\Controller\PlayerNetworkController.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\CharacterInventorySetup.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\SaveLoadExample.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\CharacterAppearance.cs" />
@@ -166,7 +167,6 @@
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Data\Modifier.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\PropertyId.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\NavigateButton.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Inventory\InventoryComponent.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\FingerTrigger.cs" />
      <Compile Include="Assets\Kingline\Scripts\PlayerGear.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\SpriteSequenceCapture.cs" />
@@ -189,7 +189,6 @@
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\ItemCollection.cs" />
      <Compile Include="Assets\HeroEditor\Common\Data\FirearmParams.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\SelectionItemStackViewContent.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Inventory\InventoryNetworkController.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\Scarecrow.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Kingline\Scenes" />
@@ -559,7 +558,6 @@
      <Folder Include="Assets\HeroEditor\Extensions\AbandonedWorkshop\Sprites\Equipment\Glasses\AbandonedWorkshop" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon1H\Basic\Dagger" />
      <Folder Include="Assets\HeroEditor\Extensions\EpicHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon2H\Legendary\Sword" />
-     <Folder Include="Assets\Kingline\Scripts\Team" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon2H\Thrones\Sword" />
      <Folder Include="Assets\Kingline\Prefab\Inventory" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scarecrow" />
@@ -640,6 +638,7 @@
      <Folder Include="Assets\HeroEditor\Extensions\EpicHeroes\Sprites\Equipment\Armor\Epic" />
      <Folder Include="Assets\HeroEditor\Common\RangedWeapons\Sounds\Firearms\deagle" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\Gloves\Basic" />
+     <Folder Include="Assets\Kingline\Resources\Networking\Controller" />
      <Folder Include="Assets\HeroEditor\Common\RangedWeapons\Sounds\Firearms\mp5" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\BodyParts\Eyes\Mummies" />
      <Folder Include="Assets\HeroEditor\Extensions\EpicHeroes\Sprites\Equipment\Shield\Epic" />
@@ -963,6 +962,7 @@
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\Equipment\Helmet\Christmas" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\Helmet\Christmas" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Sprites\Equipment\MeleeWeapon2H\Basic" />
+     <Folder Include="Assets\Kingline\Scripts\Network\Controller" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\Equipment\Supplies" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Sprites\Equipment\Armor\Samurai" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\Firearms1H" />

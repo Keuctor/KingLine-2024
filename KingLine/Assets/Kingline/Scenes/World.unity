@@ -800,6 +800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_leveLUpPopup: {fileID: 5000090433581517898, guid: c8ede7721000a8748bb53db2113f8ca8, type: 3}
   m_levelUpContent: {fileID: 1725047876}
+  m_progressionNetworkController: {fileID: 11400000, guid: bde06e13eb7f7624295f72de7eb240e9, type: 2}
 --- !u!1 &269301231
 GameObject:
   m_ObjectHideFlags: 0
@@ -837,7 +838,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1062.1652, y: -0.00012207031}
+  m_AnchoredPosition: {x: 1059.2593, y: -0}
   m_SizeDelta: {x: 902, y: 1720}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &269301233
@@ -924,6 +925,8 @@ MonoBehaviour:
   m_skillPointText: {fileID: 143389232}
   m_prefabs: {fileID: 11400000, guid: 008d7ecfd74196840b5b524e9850fdef, type: 2}
   m_audioManager: {fileID: 11400000, guid: d0428d0c6d77dec4688db3cd81b64ee5, type: 2}
+  ProgressionNetworkController: {fileID: 11400000, guid: bde06e13eb7f7624295f72de7eb240e9, type: 2}
+  TeamNetworkController: {fileID: 11400000, guid: 4c88202cd0f3c804eb9a077614540680, type: 2}
 --- !u!1 &392737928
 GameObject:
   m_ObjectHideFlags: 0
@@ -2605,6 +2608,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_itemPopup: {fileID: 2813665920314612623, guid: 07d8ce6b330680f4fb5eb3815bdea086, type: 3}
   m_itemPopupContent: {fileID: 1725047876}
+  m_inventoryNetworkController: {fileID: 11400000, guid: 8ff74ab722a5ee0448995c4eece678fd, type: 2}
 --- !u!1 &760328629
 GameObject:
   m_ObjectHideFlags: 0
@@ -2887,6 +2891,7 @@ MonoBehaviour:
   m_playerPrefab: {fileID: 7380198763716508173, guid: 1556aa2e490ab9c4f88ed2721c5aed8b, type: 3}
   m_mainCamera: {fileID: 519420031}
   m_structureController: {fileID: 1993487012}
+  m_playerNetworkController: {fileID: 11400000, guid: 9fe388737a46dca45b72a289d4b7ef88, type: 2}
 --- !u!1 &902317433
 GameObject:
   m_ObjectHideFlags: 0
@@ -4978,6 +4983,8 @@ MonoBehaviour:
   TotalArmorText: {fileID: 2115071777}
   CoinText: {fileID: 1019339333}
   m_itemInfoView: {fileID: 1477969236}
+  m_progressionNetworkController: {fileID: 11400000, guid: bde06e13eb7f7624295f72de7eb240e9, type: 2}
+  m_inventoryNetworkController: {fileID: 11400000, guid: 8ff74ab722a5ee0448995c4eece678fd, type: 2}
 --- !u!1 &1477969230
 GameObject:
   m_ObjectHideFlags: 0
@@ -6358,6 +6365,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_structureBehaviour: {fileID: 2664565456676373643, guid: 4d04f40df9c1f19468eeee4502d70d1b, type: 3}
   m_structureList: {fileID: 11400000, guid: b8aa0b4bb223cf0489d8fdbe158a9db8, type: 2}
+  m_structureNetworkController: {fileID: 11400000, guid: c39fdabd095f9ef4ca7f8516038f58f2, type: 2}
+  m_teamNetworkController: {fileID: 11400000, guid: 4c88202cd0f3c804eb9a077614540680, type: 2}
 --- !u!1 &2046753390
 GameObject:
   m_ObjectHideFlags: 0
@@ -6406,6 +6415,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_connectionData: {fileID: 11400000, guid: 6891de7b9dbfb794e99bf70665a9db15, type: 2}
   m_connectionHandlerUI: {fileID: 2502857462775998521, guid: 85391cfb0652b4640a6ef76d4ec83242, type: 3}
+  NetworkControllers:
+  - {fileID: 11400000, guid: c39fdabd095f9ef4ca7f8516038f58f2, type: 2}
+  - {fileID: 11400000, guid: 9fe388737a46dca45b72a289d4b7ef88, type: 2}
+  - {fileID: 11400000, guid: 8ff74ab722a5ee0448995c4eece678fd, type: 2}
+  - {fileID: 11400000, guid: bde06e13eb7f7624295f72de7eb240e9, type: 2}
+  - {fileID: 11400000, guid: 4c88202cd0f3c804eb9a077614540680, type: 2}
 --- !u!1 &2074243893
 GameObject:
   m_ObjectHideFlags: 0

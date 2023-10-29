@@ -317,6 +317,7 @@ MonoBehaviour:
   m_unspentSkillPointText: {fileID: 4253211668399853588}
   m_rectTransform: {fileID: 1275002724971573240}
   m_audioManager: {fileID: 11400000, guid: d0428d0c6d77dec4688db3cd81b64ee5, type: 2}
+  m_progressionNetworkController: {fileID: 11400000, guid: bde06e13eb7f7624295f72de7eb240e9, type: 2}
 --- !u!114 &8022203081627031948
 MonoBehaviour:
   m_ObjectHideFlags: 0

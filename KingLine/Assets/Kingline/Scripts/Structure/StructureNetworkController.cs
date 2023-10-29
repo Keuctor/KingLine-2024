@@ -1,41 +1,46 @@
 ﻿using System;
 using LiteNetLib;
 using LiteNetLib.Utils;
+using UnityEngine;
 using UnityEngine.Events;
 
-public class StructureNetworkController : INetworkController
+[CreateAssetMenu]
+public class StructureNetworkController : NetworkController
 {
+    [NonSerialized]
     public UnityEvent OnStructureResponse = new();
+
+    [NonSerialized]
     public Structure[] Structures = Array.Empty<Structure>();
 
-    public void OnPeerDisconnected(NetPeer peer)
+    public override void OnPeerDisconnected(NetPeer peer)
     {
     }
 
-    public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
+    public override void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
     {
     }
 
-    public void Subscribe(NetPacketProcessor processor)
+    public override void Subscribe(NetPacketProcessor processor)
     {
         processor.SubscribeReusable<ResStructures>(OnStructuresResponse);
     }
 
-    public void OnPeerConnected(NetPeer peer)
+    public override void OnPeerConnected(NetPeer peer)
     {
         NetworkManager.Instance.Send(new ReqStructures());
     }
 
 
-    public void OnExit()
+    public override void OnExit()
     {
     }
 
-    public void OnStart()
+    public override void OnStart()
     {
     }
 
-    public void OnUpdate(float deltaTime)
+    public override void OnUpdate(float deltaTime)
     {
         
     }

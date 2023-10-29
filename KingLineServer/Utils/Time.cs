@@ -8,11 +8,8 @@ public class Time
     private readonly Stopwatch stopwatch = new();
     private ulong nextTickId = 0;
 
-    // The stopwatch time right now
     public double Now => stopwatch.Elapsed.TotalSeconds;
-    // The stopwatch time at the beginning of this tick
     public double TickTime { get; private set; }
-    // The ID of the current tick
     public ulong TickId { get; private set; }
 
     public void Start()

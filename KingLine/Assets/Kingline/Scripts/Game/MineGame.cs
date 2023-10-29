@@ -59,8 +59,12 @@ public class MineGame : MonoBehaviour
 
     public float ToolModifier;
 
-    private InventoryNetworkController m_controller;
+    [SerializeField]
+    private InventoryNetworkController m_inventoryNetworkController;
 
+    [SerializeField]
+    private ProgressionNetworkController m_progressionNetworkController;
+    
     private readonly int m_currentCount = 0;
 
     [SerializeField]
@@ -69,8 +73,6 @@ public class MineGame : MonoBehaviour
 
     private void Start()
     {
-        m_controller = NetworkManager.Instance.GetController<InventoryNetworkController>();
-
         for (var i = 0; i < m_maxMineCount; i++) Spawn(true);
         DisplayTool(m_selectedToolIndex);
     }
@@ -137,8 +139,7 @@ public class MineGame : MonoBehaviour
     private void OnDamage(NodeBehaviour node)
     {
         if (node.IsDead) return;
-        var controller = NetworkManager.Instance.GetController<ProgressionNetworkController>();
-        var skill = controller.GetSkill("Strength");
+        var skill = m_progressionNetworkController.GetSkill("Strength");
 
         node.Damage(10 * (Mathf.Max(1, skill / 2f) * ToolModifier));
         m_audioManager.PlayOnce(SoundType.BREAKING_1, true, 0.3f);

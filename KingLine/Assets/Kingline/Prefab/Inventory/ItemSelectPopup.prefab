@@ -329,6 +329,7 @@ MonoBehaviour:
       m_Calls: []
   SelectMode: 0
   m_itemInfoView: {fileID: 744266639654377423}
+  m_inventoryNetworkController: {fileID: 11400000, guid: 8ff74ab722a5ee0448995c4eece678fd, type: 2}
 --- !u!1 &1120752929675961420
 GameObject:
   m_ObjectHideFlags: 0

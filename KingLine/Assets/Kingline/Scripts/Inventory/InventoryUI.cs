@@ -27,10 +27,15 @@ public class InventoryUI : MonoBehaviour
     [SerializeField]
     private ItemInfoView m_itemInfoView;
 
+    [SerializeField]
+    private ProgressionNetworkController m_progressionNetworkController;
+
+    [SerializeField]
+    private InventoryNetworkController m_inventoryNetworkController;
+
     private void Start()
     {
-        var controller = NetworkManager.Instance.GetController<InventoryNetworkController>();
-        controller.OnGearChange.AddListener(OnGearsetChanged);
+        m_inventoryNetworkController.OnGearChange.AddListener(OnGearsetChanged);
         OnItemClick.AddListener(OnItemClicked);
     }
 
@@ -116,7 +121,6 @@ public class InventoryUI : MonoBehaviour
         var armor = inventory.GetArmor();
         var hand = inventory.GetHand();
 
-        var m_progressionNetworkController = NetworkManager.Instance.GetController<ProgressionNetworkController>();
 
         var baseStrength = m_progressionNetworkController.GetSkill("Strength");
         var baseDefence = m_progressionNetworkController.GetSkill("Defence");

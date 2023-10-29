@@ -15,12 +15,12 @@ public class PlayerGear : MonoBehaviour
     [NonSerialized]
     public int PeerId;
 
+    [SerializeField]
     private InventoryNetworkController m_inventoryNetworkController;
     
     private void Awake()
     {
         m_character.transform.localScale = new Vector3(m_scale.x, m_scale.y, m_scale.z);
-        m_inventoryNetworkController = NetworkManager.Instance.GetController<InventoryNetworkController>();
         m_inventoryNetworkController.OnGearChange.AddListener(DisplayGear);
     }
 

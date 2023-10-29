@@ -4,16 +4,17 @@ using LiteNetLib.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TeamNetworkController : INetworkController
+[CreateAssetMenu]
+public class TeamNetworkController : NetworkController
 {
     public static Dictionary<int, TeamMember[]> PlayerTeams = new();
 
-    public void OnPeerDisconnected(NetPeer peer)
+    public override void OnPeerDisconnected(NetPeer peer)
     {
         //on disconnected from server
     }
 
-    public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
+    public override void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
     {
     }
 
@@ -23,7 +24,7 @@ public class TeamNetworkController : INetworkController
     public readonly UnityEvent<bool> OnUpgradeTeam = new();
     public readonly UnityEvent<int,int,short> OnVolunteersResponse = new();
 
-    public void OnPeerConnected(NetPeer peer)
+    public override void OnPeerConnected(NetPeer peer)
     {
         NetworkManager.Instance.Send(new ReqPlayerTeam());
     }
@@ -34,7 +35,7 @@ public class TeamNetworkController : INetworkController
             member.Xp += xp;
     }
 
-    public void Subscribe(NetPacketProcessor processor)
+    public override void Subscribe(NetPacketProcessor processor)
     {
         processor.SubscribeReusable<ResPlayerTeam>(OnPlayerTeamResponse);
         processor.SubscribeReusable<ResUpdatePlayerTeam>(OnUpdatePlayerTeamResponse);
@@ -81,15 +82,15 @@ public class TeamNetworkController : INetworkController
         });
     }
     
-    public void OnExit()
+    public override void OnExit()
     {
     }
 
-    public void OnStart()
+    public override void OnStart()
     {
     }
 
-    public void OnUpdate(float deltaTime)
+    public override void OnUpdate(float deltaTime)
     {
     }
 

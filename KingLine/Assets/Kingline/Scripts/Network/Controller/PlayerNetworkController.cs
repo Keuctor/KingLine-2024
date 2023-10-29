@@ -5,7 +5,8 @@ using LiteNetLib.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerNetworkController : INetworkController
+[CreateAssetMenu]
+public class PlayerNetworkController : NetworkController
 {
     [NonSerialized]
     public readonly UnityEvent<int> OnPlayerJoin = new();
@@ -23,21 +24,21 @@ public class PlayerNetworkController : INetworkController
 
     public static Player LocalPlayer => Players[NetworkManager.LocalPlayerPeerId];
 
-    public void OnPeerDisconnected(NetPeer peer)
+    public override void OnPeerDisconnected(NetPeer peer)
     {
         Players.Clear();
     }
 
-    public void OnPeerConnected(NetPeer peer)
+    public override void OnPeerConnected(NetPeer peer)
     {
         NetworkManager.Instance.Send(new ReqPlayers());
     }
 
-    public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
+    public override void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
     {
     }
 
-    public void Subscribe(NetPacketProcessor processor)
+    public override void Subscribe(NetPacketProcessor processor)
     {
         processor.SubscribeReusable<ResPlayers>(OnPlayersResponse);
         processor.SubscribeReusable<ResPlayerPosition>(OnUpdatePlayerPositionResponse);
@@ -53,15 +54,15 @@ public class PlayerNetworkController : INetworkController
         OnPlayerCurrencyChanged?.Invoke(LocalPlayer.Currency);
     }
 
-    public void OnExit()
+    public override void OnExit()
     {
     }
 
-    public void OnStart()
+    public override void OnStart()
     {
     }
 
-    public void OnUpdate(float deltaTime)
+    public override void OnUpdate(float deltaTime)
     {
         foreach (var p in Players)
         {

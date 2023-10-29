@@ -1226,6 +1226,8 @@ MonoBehaviour:
   m_selectedToolImage: {fileID: 247086}
   m_selectedToolNameText: {fileID: 109423342}
   ToolModifier: 0
+  m_inventoryNetworkController: {fileID: 11400000, guid: 8ff74ab722a5ee0448995c4eece678fd, type: 2}
+  m_progressionNetworkController: {fileID: 11400000, guid: bde06e13eb7f7624295f72de7eb240e9, type: 2}
   m_audioManager: {fileID: 11400000, guid: d0428d0c6d77dec4688db3cd81b64ee5, type: 2}
 --- !u!4 &1062376633
 Transform:
@@ -1865,7 +1867,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 119
 --- !u!114 &1862248967
 MonoBehaviour:
   m_ObjectHideFlags: 0
