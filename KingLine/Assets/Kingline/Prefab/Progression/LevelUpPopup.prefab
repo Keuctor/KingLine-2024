@@ -59,14 +59,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.9185602, b: 0.7783019, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 0.9490196}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4db272322e052bf4b88498d8d2e41d2c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3855b80050299704580e58ed60ce7b7b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -156,13 +156,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f445a9a1f296ea94ea79f1df033db625, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 79e52f821be5e6b49b69470ddc48dff3, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -431,20 +431,44 @@ PrefabInstance:
       value: LEVEL UP
       objectReference: {fileID: 0}
     - target: {fileID: 7858481473119545951, guid: 6a083edcd91fce64b966f68592031b56, type: 3}
+      propertyPath: m_fontSize
+      value: 110.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 7858481473119545951, guid: 6a083edcd91fce64b966f68592031b56, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 391296b8b72e74b48be83817f6d07919, type: 2}
+    - target: {fileID: 7858481473119545951, guid: 6a083edcd91fce64b966f68592031b56, type: 3}
       propertyPath: m_fontColor.b
-      value: 0.18867922
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7858481473119545951, guid: 6a083edcd91fce64b966f68592031b56, type: 3}
       propertyPath: m_fontColor.g
-      value: 0.18867922
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7858481473119545951, guid: 6a083edcd91fce64b966f68592031b56, type: 3}
       propertyPath: m_fontColor.r
-      value: 0.18867922
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7858481473119545951, guid: 6a083edcd91fce64b966f68592031b56, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 110.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 7858481473119545951, guid: 6a083edcd91fce64b966f68592031b56, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7858481473119545951, guid: 6a083edcd91fce64b966f68592031b56, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -6751712205801459398, guid: 391296b8b72e74b48be83817f6d07919, type: 2}
+    - target: {fileID: 7858481473119545951, guid: 6a083edcd91fce64b966f68592031b56, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4281348144
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7858481473119545951, guid: 6a083edcd91fce64b966f68592031b56, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8804644948123605583, guid: 6a083edcd91fce64b966f68592031b56, type: 3}
       propertyPath: m_Name
@@ -565,23 +589,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7030955256061076588, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
       propertyPath: m_text
-      value: LEVEL 5
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7030955256061076588, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
       propertyPath: m_fontColor.b
-      value: 0.18867922
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7030955256061076588, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
       propertyPath: m_fontColor.g
-      value: 0.18867922
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7030955256061076588, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
       propertyPath: m_fontColor.r
-      value: 0.18867922
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7030955256061076588, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7030955256061076588, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4281348144
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -698,23 +726,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7030955256061076588, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
       propertyPath: m_text
-      value: You have 1 unspent skill points
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7030955256061076588, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
       propertyPath: m_fontColor.b
-      value: 0.18867922
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7030955256061076588, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
       propertyPath: m_fontColor.g
-      value: 0.18867922
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7030955256061076588, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
       propertyPath: m_fontColor.r
-      value: 0.18867922
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7030955256061076588, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7030955256061076588, guid: a1fdeb1efbc310b4f8f46d3ccdeba83e, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4281348144
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
