@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.80784315}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.02745098}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1107,6 +1107,9 @@ MonoBehaviour:
   m_exitButton: {fileID: 4366939403179897420}
   m_amountInputField: {fileID: 8569649267005484675}
   m_content: {fileID: 853316873674582278}
+  OnDone:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7161982448545673669
 GameObject:
   m_ObjectHideFlags: 0
