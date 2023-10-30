@@ -16,12 +16,11 @@ public class MenuNavigation
 
 public class MenuController : Singleton<MenuController>
 {
-    public SpriteLoader SpriteLoader;
 
     [SerializeField]
     private List<MenuNavigation> m_menuNavigation = new();
 
-    public Stack<GameObject> Menu = new Stack<GameObject>();
+    public readonly Stack<GameObject> Menus = new();
 
     [SerializeField]
     private GameObject m_blocker;
@@ -30,7 +29,6 @@ public class MenuController : Singleton<MenuController>
 
     [NonSerialized]
     public readonly UnityEvent OnOpenMenu = new();
-
 
     private void Start()
     {
@@ -59,17 +57,17 @@ public class MenuController : Singleton<MenuController>
                 CloseAll();
             else
             {
-                if (Menu.Count > 0)
+                if (Menus.Count > 0)
                 {
-                    var menu = Menu.Pop();
+                    var menu = Menus.Pop();
                     while (!menu)
                     {
-                        if (Menu.Count == 0)
+                        if (Menus.Count == 0)
                         {
                             break;
                         }
 
-                        menu = Menu.Pop();
+                        menu = Menus.Pop();
                     }
 
                     if (menu)

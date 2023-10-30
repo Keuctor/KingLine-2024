@@ -39,7 +39,7 @@ public class SelectAmountPopup : MonoBehaviour
 
     private void Start()
     {
-        MenuController.Instance.Menu.Push(this.gameObject);
+        MenuController.Instance.Menus.Push(this.gameObject);
         m_icon.gameObject.SetActive(false);
         m_amountSlider.onValueChanged.AddListener(OnSliderValueChanged);
         m_amountInputField.onValueChanged.AddListener(OnAmountInputValueChanged);

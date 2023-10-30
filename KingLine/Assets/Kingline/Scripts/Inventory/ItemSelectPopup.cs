@@ -28,6 +28,9 @@ public class ItemSelectPopup : MonoBehaviour
 
     [SerializeField]
     public SelectAmountPopup m_selectAmountPopupTemplate;
+
+    [SerializeField]
+    private SpriteLoader m_spriteLoader;
     
     private void OnEnable()
     {
@@ -41,10 +44,10 @@ public class ItemSelectPopup : MonoBehaviour
 
     private SelectionItemStackView[] views;
 
-    private async void Start()
+    private  void Start()
     {
-        MenuController.Instance.Menu.Push(this.gameObject);
-        m_inventory = await InventoryNetworkController.GetInventoryAsync();
+        MenuController.Instance.Menus.Push(this.gameObject);
+        m_inventory = InventoryNetworkController.LocalInventory;
 
         var items = m_inventory.Items;
         views = new SelectionItemStackView[25];
@@ -60,7 +63,7 @@ public class ItemSelectPopup : MonoBehaviour
             {
                 var item = ItemRegistry.GetItem(m.Id);
                 var contentView = Instantiate(m_itemSelectionViewContent, views[i].Content);
-                contentView.SetContext(MenuController.Instance.SpriteLoader.LoadSprite(item.Id), m.Count,
+                contentView.SetContext(m_spriteLoader.LoadSprite(item.Id), m.Count,
                     item.Stackable);
             }
         }
@@ -80,7 +83,7 @@ public class ItemSelectPopup : MonoBehaviour
         var items = InventoryNetworkController.LocalInventory.Items;
         var info = ItemRegistry.GetItem(items[index].Id);
         selectionItemStackViewContent.SetContext(
-            MenuController.Instance.SpriteLoader.LoadSprite(info.Id), newCount, info.Stackable);
+            m_spriteLoader.LoadSprite(info.Id), newCount, info.Stackable);
     }
 
 
@@ -103,7 +106,7 @@ public class ItemSelectPopup : MonoBehaviour
                 m_itemInfoView.OnSellButtonClicked.AddListener(() =>
                 {
                     var selectPopup = Instantiate(m_selectAmountPopupTemplate);
-                    selectPopup.SetIcon(MenuController.Instance.SpriteLoader.LoadSprite(n.Id));
+                    selectPopup.SetIcon(m_spriteLoader.LoadSprite(n.Id));
                     selectPopup.SetValue(1, 1, item.Count);
                     selectPopup.OnDone.AddListener(() =>
                     {

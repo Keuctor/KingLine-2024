@@ -68,6 +68,9 @@ public class MineGame : MonoBehaviour
     private readonly int m_currentCount = 0;
 
     [SerializeField]
+    private SpriteLoader m_spriteLoader;
+
+    [SerializeField]
     private AudioManager m_audioManager;
 
 
@@ -105,7 +108,7 @@ public class MineGame : MonoBehaviour
         var toolItemMaterial = (ToolItemMaterial)material;
         m_selectedToolIndex = index;
         m_selectedToolPropertiesText.text = "Modifier: x" + toolItemMaterial.ToolValue;
-        m_selectedToolImage.sprite = MenuController.Instance.SpriteLoader.LoadSprite(toolItemMaterial.Id);
+        m_selectedToolImage.sprite = m_spriteLoader.LoadSprite(toolItemMaterial.Id);
         m_selectedToolImage.enabled = true;
         m_selectedToolNameText.text = toolItemMaterial.Name;
         ToolModifier = toolItemMaterial.ToolValue;

@@ -120,6 +120,7 @@ MonoBehaviour:
   OnSellButtonClicked:
     m_PersistentCalls:
       m_Calls: []
+  m_spriteLoader: {fileID: 0}
 --- !u!225 &3856966873009140619
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -331,6 +332,7 @@ MonoBehaviour:
   m_itemInfoView: {fileID: 744266639654377423}
   m_inventoryNetworkController: {fileID: 11400000, guid: 8ff74ab722a5ee0448995c4eece678fd, type: 2}
   m_selectAmountPopupTemplate: {fileID: 3144715397692086816, guid: 4ad3d84a28b63a7498c770eceb87af4a, type: 3}
+  m_spriteLoader: {fileID: 11400000, guid: 9bc28bb01a8c5374099cbdf3550b4c47, type: 2}
 --- !u!1 &1120752929675961420
 GameObject:
   m_ObjectHideFlags: 0

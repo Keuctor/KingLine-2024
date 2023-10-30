@@ -2,12 +2,20 @@
 using System.Threading.Tasks;
 using LiteNetLib;
 using LiteNetLib.Utils;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
 [CreateAssetMenu]
 public class InventoryNetworkController : NetworkController
 {
+    [Button]
+    public void Button()
+    {
+        foreach(var n in LocalInventory.Items)
+            Debug.Log(n.Id);
+    }
+
     public static NetworkInventory LocalInventory;
 
     public static Dictionary<int, ItemStack[]> RemoteInventories = new();
@@ -53,18 +61,11 @@ public class InventoryNetworkController : NetworkController
 
     public override void OnStart()
     {
+        
     }
 
     public override void OnUpdate(float deltaTime)
     {
-    }
-
-
-    public static async Task<NetworkInventory> GetInventoryAsync()
-    {
-        while (LocalInventory == null) await Task.Yield();
-
-        return LocalInventory;
     }
 
     private bool IsGearIndex(int index)

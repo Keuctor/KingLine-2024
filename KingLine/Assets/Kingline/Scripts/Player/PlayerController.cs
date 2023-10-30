@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using Cinemachine;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class GamePlayer
 {
-    public PlayerGear Animator;
+    public PlayerGear Gear;
     public bool IsLocalPlayer;
     public TMP_Text NameText;
     public Player Player;
@@ -19,9 +20,6 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private PrefabsSO m_prefabs;
-
-    [SerializeField]
-    private GameObject m_playerPrefab;
 
     [SerializeField]
     private Camera m_mainCamera;
@@ -80,15 +78,15 @@ public class PlayerController : MonoBehaviour
             if (Mathf.Abs(player.x - player.targetX) > float.Epsilon ||
                 Mathf.Abs(player.y - player.targetY) > float.Epsilon)
             {
-                gamePlayer.Animator.SetPlay(true);
+                gamePlayer.Gear.SetPlay(true);
                 var angle = Vector2.SignedAngle(Vector2.up,
                     new Vector3(player.targetX, player.targetY) - gamePlayer.Transform.position);
 
                 var dirr = new Vector2(player.targetX - player.x, player.targetY - player.y).normalized;
                 if (dirr.x > 0)
-                    gamePlayer.Animator.SetDirection(MoveDirection.Right);
+                    gamePlayer.Gear.SetDirection(MoveDirection.Right);
                 else
-                    gamePlayer.Animator.SetDirection(MoveDirection.Left);
+                    gamePlayer.Gear.SetDirection(MoveDirection.Left);
             }
             else
             {
@@ -101,7 +99,7 @@ public class PlayerController : MonoBehaviour
                         m_isLocalPlayerMoving = false;
                     }
 
-                gamePlayer.Animator.SetPlay(false);
+                gamePlayer.Gear.SetPlay(false);
             }
         }
 
@@ -194,15 +192,15 @@ public class PlayerController : MonoBehaviour
 
     private void CreatePlayer(Player pl)
     {
-        var p = Instantiate(m_playerPrefab);
+        var p = Instantiate(m_playerNetworkController.HumanPrefab);
 
         var player = new GamePlayer
         {
             Player = pl
         };
         player.IsLocalPlayer = NetworkManager.LocalPlayerPeerId == player.Player.Id;
-        player.Animator = p.GetComponent<PlayerGear>();
-        player.Animator.PeerId = player.Player.Id;
+        player.Gear = p.GetComponent<PlayerGear>();
+        player.Gear.PeerId = player.Player.Id;
         player.Transform = p.transform;
         player.NameText = player.Transform.GetChild(0).GetComponent<TMP_Text>();
         
@@ -220,14 +218,14 @@ public class PlayerController : MonoBehaviour
 
             if (InventoryNetworkController.LocalInventory != null)
             {
-                player.Animator.DisplayGear(player.Player.Id);
+                player.Gear.DisplayGear(player.Player.Id);
             }
         }
         else
         {
             if (InventoryNetworkController.RemoteInventories.ContainsKey(player.Player.Id))
             {
-                player.Animator.DisplayGear(player.Player.Id);
+                player.Gear.DisplayGear(player.Player.Id);
             }
         }
     }

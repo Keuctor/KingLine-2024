@@ -1228,6 +1228,7 @@ MonoBehaviour:
   ToolModifier: 0
   m_inventoryNetworkController: {fileID: 11400000, guid: 8ff74ab722a5ee0448995c4eece678fd, type: 2}
   m_progressionNetworkController: {fileID: 11400000, guid: bde06e13eb7f7624295f72de7eb240e9, type: 2}
+  m_spriteLoader: {fileID: 11400000, guid: 9bc28bb01a8c5374099cbdf3550b4c47, type: 2}
   m_audioManager: {fileID: 11400000, guid: d0428d0c6d77dec4688db3cd81b64ee5, type: 2}
 --- !u!4 &1062376633
 Transform:

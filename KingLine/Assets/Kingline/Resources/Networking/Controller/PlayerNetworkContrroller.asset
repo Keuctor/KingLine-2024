@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afdd88c7a21feae4ca602406ac784a68, type: 3}
   m_Name: PlayerNetworkContrroller
   m_EditorClassIdentifier: 
+  HumanPrefab: {fileID: 7380198763716508173, guid: 1556aa2e490ab9c4f88ed2721c5aed8b, type: 3}
+  CharacterPrefab: {fileID: 4387846812006946794, guid: 9087756a07751624ea77f8e1a0cb66ad, type: 3}

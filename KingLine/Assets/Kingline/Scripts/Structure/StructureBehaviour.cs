@@ -7,11 +7,20 @@ public class StructureBehaviour : MonoBehaviour
     public string Description;
     public SpriteRenderer Selection;
 
+    public StructureInfoUI StructureInfoUI;
+    
     private Sprite icon;
 
     public Sprite Icon
     {
-        get => icon;
+        get
+        {
+            if (icon == null)
+            {
+                icon = GetComponent<SpriteRenderer>().sprite;
+            }
+            return icon;
+        }
         set
         {
             icon = value;

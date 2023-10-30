@@ -838,7 +838,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1059.2593, y: -0}
+  m_AnchoredPosition: {x: 766.9122, y: -0}
   m_SizeDelta: {x: 902, y: 1720}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &269301233
@@ -2608,6 +2608,7 @@ MonoBehaviour:
   m_itemPopup: {fileID: 2813665920314612623, guid: 07d8ce6b330680f4fb5eb3815bdea086, type: 3}
   m_itemPopupContent: {fileID: 1725047876}
   m_inventoryNetworkController: {fileID: 11400000, guid: 8ff74ab722a5ee0448995c4eece678fd, type: 2}
+  m_spriteLoader: {fileID: 0}
 --- !u!1 &760328629
 GameObject:
   m_ObjectHideFlags: 0
@@ -2746,7 +2747,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 502.01385, y: 340.0833}
+  m_Size: {x: 400, y: 400}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -2761,8 +2762,8 @@ Transform:
   m_GameObject: {fileID: 818561856}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.9294, z: 0}
+  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2887,7 +2888,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_prefabs: {fileID: 11400000, guid: 008d7ecfd74196840b5b524e9850fdef, type: 2}
-  m_playerPrefab: {fileID: 7380198763716508173, guid: 1556aa2e490ab9c4f88ed2721c5aed8b, type: 3}
   m_mainCamera: {fileID: 519420031}
   m_structureController: {fileID: 1993487012}
   m_playerNetworkController: {fileID: 11400000, guid: 9fe388737a46dca45b72a289d4b7ef88, type: 2}
@@ -4862,7 +4862,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1532820010}
   m_HandleRect: {fileID: 1532820009}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4943,7 +4943,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 766.9122, y: -0.00010251999}
+  m_AnchoredPosition: {x: 766.9122, y: -0.00012207031}
   m_SizeDelta: {x: 900, y: 1720}
   m_Pivot: {x: 0.5, y: 0.99999994}
 --- !u!114 &1461874801
@@ -5003,8 +5003,10 @@ MonoBehaviour:
   TotalArmorText: {fileID: 2115071777}
   CoinText: {fileID: 1019339333}
   m_itemInfoView: {fileID: 1477969236}
+  m_progressionNetworkController: {fileID: 11400000, guid: bde06e13eb7f7624295f72de7eb240e9, type: 2}
   m_inventoryNetworkController: {fileID: 11400000, guid: 8ff74ab722a5ee0448995c4eece678fd, type: 2}
   m_characterTextureView: {fileID: 1023439030}
+  m_spriteLoader: {fileID: 11400000, guid: 9bc28bb01a8c5374099cbdf3550b4c47, type: 2}
 --- !u!1 &1477969230
 GameObject:
   m_ObjectHideFlags: 0
@@ -5123,6 +5125,7 @@ MonoBehaviour:
   OnSellButtonClicked:
     m_PersistentCalls:
       m_Calls: []
+  m_spriteLoader: {fileID: 0}
 --- !u!1 &1532820008
 GameObject:
   m_ObjectHideFlags: 0
@@ -5574,7 +5577,7 @@ GameObject:
   - component: {fileID: 1725047877}
   - component: {fileID: 1725047878}
   m_Layer: 5
-  m_Name: MenuController
+  m_Name: MenuCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5678,7 +5681,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 503e6e5e01632fe42b4716aa695b6862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpriteLoader: {fileID: 11400000, guid: 9bc28bb01a8c5374099cbdf3550b4c47, type: 2}
   m_menuNavigation:
   - Button: {fileID: 1849398022}
     UI: {fileID: 269301231}

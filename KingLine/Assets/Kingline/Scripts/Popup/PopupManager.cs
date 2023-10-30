@@ -87,7 +87,7 @@ public class PopupManager : ScriptableObject
         var canvas = Instantiate(Canvas);
         var container = Instantiate(PopupContainer, canvas.transform);
 
-        MenuController.Instance.Menu.Push(canvas);
+        MenuController.Instance.Menus.Push(canvas);
         Popup popup = new Popup(canvas,container.transform);
         return popup;
     }
@@ -97,7 +97,7 @@ public class PopupManager : ScriptableObject
         var canvas = Instantiate(Canvas);
         var container = Instantiate(PopupContainer, canvas.transform);
 
-        MenuController.Instance.Menu.Push(canvas);
+        MenuController.Instance.Menus.Push(canvas);
         Popup popup = new Popup(canvas,container.transform);
         popup.CreateImage(info.Icon)
             .CreateText(info.EnterDescription);

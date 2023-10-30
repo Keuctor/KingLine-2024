@@ -1,13 +1,19 @@
 using System;
 using System.Collections.Generic;
+using Assets.HeroEditor.Common.CharacterScripts;
 using LiteNetLib;
 using LiteNetLib.Utils;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu]
 public class PlayerNetworkController : NetworkController
 {
+    public GameObject HumanPrefab;
+    
+    public Character CharacterPrefab;
+    
     [NonSerialized]
     public readonly UnityEvent<int> OnPlayerJoin = new();
 
@@ -37,6 +43,7 @@ public class PlayerNetworkController : NetworkController
     public override void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
     {
     }
+    
 
     public override void Subscribe(NetPacketProcessor processor)
     {

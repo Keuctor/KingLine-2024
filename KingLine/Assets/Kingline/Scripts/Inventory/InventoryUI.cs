@@ -27,11 +27,15 @@ public class InventoryUI : MonoBehaviour
     [SerializeField]
     private ItemInfoView m_itemInfoView;
 
+    [SerializeField]
     private ProgressionNetworkController m_progressionNetworkController;
 
     public InventoryNetworkController m_inventoryNetworkController;
 
     public CharacterTextureView m_characterTextureView;
+
+    [SerializeField]
+    private SpriteLoader m_spriteLoader;
 
     private void Start()
     {
@@ -86,7 +90,7 @@ public class InventoryUI : MonoBehaviour
                 {
                     var gearItem = ItemRegistry.GetItem(m.Id);
                     var contentView = Instantiate(m_itemViewContentTemplate, gearView.Content);
-                    contentView.SetContext(MenuController.Instance.SpriteLoader.LoadSprite(m.Id), m.Count, gearItem.Stackable);
+                    contentView.SetContext(m_spriteLoader.LoadSprite(m.Id), m.Count, gearItem.Stackable);
                 }
                 continue;
             }
@@ -97,7 +101,7 @@ public class InventoryUI : MonoBehaviour
             {
                 var item = ItemRegistry.GetItem(m.Id);
                 var contentView = Instantiate(m_itemViewContentTemplate, view.Content);
-                contentView.SetContext(MenuController.Instance.SpriteLoader.LoadSprite(m.Id), m.Count, item.Stackable);
+                contentView.SetContext(m_spriteLoader.LoadSprite(m.Id), m.Count, item.Stackable);
             }
         }
         DisplayGear();
