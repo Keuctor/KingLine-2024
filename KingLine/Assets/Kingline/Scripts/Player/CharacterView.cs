@@ -1,10 +1,8 @@
 ﻿using Assets.HeroEditor.Common.CharacterScripts;
 using HeroEditor.Common.Enums;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class CharacterView : MonoBehaviour
@@ -16,8 +14,6 @@ public class CharacterView : MonoBehaviour
 
     [SerializeField]
     private TMP_Text m_nameLabel;
-    
-  
 
     [Header("Upgrade")]
     [SerializeField]
