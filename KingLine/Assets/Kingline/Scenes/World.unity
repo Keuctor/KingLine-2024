@@ -2608,7 +2608,7 @@ MonoBehaviour:
   m_itemPopup: {fileID: 2813665920314612623, guid: 07d8ce6b330680f4fb5eb3815bdea086, type: 3}
   m_itemPopupContent: {fileID: 1725047876}
   m_inventoryNetworkController: {fileID: 11400000, guid: 8ff74ab722a5ee0448995c4eece678fd, type: 2}
-  m_spriteLoader: {fileID: 0}
+  m_spriteLoader: {fileID: 11400000, guid: 9bc28bb01a8c5374099cbdf3550b4c47, type: 2}
 --- !u!1 &760328629
 GameObject:
   m_ObjectHideFlags: 0
@@ -3272,19 +3272,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 935229906}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1725047877}
-        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
-        m_MethodName: OpenInventoryMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &979252255
 GameObject:
   m_ObjectHideFlags: 0
@@ -6135,19 +6123,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1849398020}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1725047877}
-        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
-        m_MethodName: OpenPlayerUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1001 &1951669875
 PrefabInstance:
   m_ObjectHideFlags: 0

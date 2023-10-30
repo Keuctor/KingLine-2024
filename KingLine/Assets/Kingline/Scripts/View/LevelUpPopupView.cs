@@ -3,7 +3,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class LevelUpPopup : MonoBehaviour
+public class LevelUpPopupView : MonoBehaviour
 {
     [SerializeField]
     private TMP_Text m_titleText;

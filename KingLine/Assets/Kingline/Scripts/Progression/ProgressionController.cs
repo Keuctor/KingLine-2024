@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ProgressionController : MonoBehaviour
 {
+    [FormerlySerializedAs("m_leveLUpPopup")]
     [SerializeField]
-    private LevelUpPopup m_leveLUpPopup;
+    private LevelUpPopupView MLeveLUpPopupView;
 
     [SerializeField]
     private Transform m_levelUpContent;
@@ -18,6 +20,6 @@ public class ProgressionController : MonoBehaviour
 
     private void OnLevelChange(int arg0)
     {
-        Instantiate(m_leveLUpPopup, m_levelUpContent);
+        Instantiate(MLeveLUpPopupView, m_levelUpContent);
     }
 }

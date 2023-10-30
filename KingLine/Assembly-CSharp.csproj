@@ -49,7 +49,6 @@
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\ElementId.cs" />
      <Compile Include="Assets\Kingline\Scripts\Menu\MenuController.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\ItemClass.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Progression\PlayerUI.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\Tweens\TweenBase.cs" />
      <Compile Include="Assets\Kingline\Scripts\Utils\LoadingHandler.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\Controller\NetworkController.cs" />
@@ -106,6 +105,8 @@
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\ShopBase.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Data\Property.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\DontDestroyOnLoad.cs" />
+     <Compile Include="Assets\Kingline\Scripts\View\PlayerUIView.cs" />
+     <Compile Include="Assets\Kingline\Scripts\View\NameValueButtonView.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\Elements\InventoryItem.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemStackContentView.cs" />
      <Compile Include="Assets\Kingline\Scripts\Player\PlayerController.cs" />
@@ -121,7 +122,6 @@
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemSelectPopup.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\StandaloneFileBrowserEditor.cs" />
      <Compile Include="Assets\Kingline\Scripts\Menu\StructureInfoUI.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Progression\LevelUpPopup.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\StandaloneFileBrowserMac.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\NetworkManager.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\CharacterState.cs" />
@@ -178,8 +178,8 @@
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemPopupUI.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\Firearm.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Progression\NameValueButtonView.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\Elements\ItemInfo.cs" />
+     <Compile Include="Assets\Kingline\Scripts\View\LevelUpPopupView.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\CharacterBodySculptor.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\Shell.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\CaptureOptions.cs" />
@@ -625,6 +625,7 @@
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Atlases" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon2H\Knights\Sword" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\BodyParts\Head\Zombies" />
+     <Folder Include="Assets\Kingline\Scripts\View" />
      <Folder Include="Assets\HeroEditor\Extensions\AbandonedWorkshop\Icons\WithoutBackground\Equipment\MeleeWeapon1H\AbandonedWorkshop\Dagger" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\Equipment\Bow\Undead" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\Equipment\MeleeWeapon2H\Undead" />

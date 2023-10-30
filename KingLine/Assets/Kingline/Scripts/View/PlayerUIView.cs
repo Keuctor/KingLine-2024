@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class PlayerUI : MonoBehaviour
+public class PlayerUIView : MonoBehaviour
 {
     [SerializeField]
     private Transform m_skillItemViewContent;
