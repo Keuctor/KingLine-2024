@@ -16,3 +16,4 @@ MonoBehaviour:
   m_serverAdress: 34.150.227.31
   m_port: 9050
   m_isLocal: 1
+  Debug: 0

@@ -227,9 +227,4 @@ public class NetworkManager : MonoBehaviour, INetEventListener
         NetPacketProcessor.Write(writer, packet);
         return writer;
     }
-
-    public T GetController<T>()
-    {
-        throw new NotImplementedException();
-    }
 }

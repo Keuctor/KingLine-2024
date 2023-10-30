@@ -877,8 +877,9 @@ GameObject:
   - component: {fileID: 1292911482815306554}
   - component: {fileID: 8927694458919947627}
   - component: {fileID: 3174690099447213667}
+  - component: {fileID: 6316309049911894513}
   m_Layer: 5
-  m_Name: CharacterDisplayer
+  m_Name: CharacterTextureView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -961,6 +962,25 @@ MonoBehaviour:
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &6316309049911894513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3558954518205165648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49a353d1acf8c4846a2de92a984f79e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_characterTemplate: {fileID: 4387846812006946794, guid: 9087756a07751624ea77f8e1a0cb66ad, type: 3}
+  m_rawImage: {fileID: 8927694458919947627}
+  Width: 256
+  Height: 256
+  Depth: 1
+  Armor: 0
+  Strength: 0
 --- !u!1 &4466416232301129433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1729,6 +1749,7 @@ MonoBehaviour:
   OnUpgradeClicked:
     m_PersistentCalls:
       m_Calls: []
+  m_characterTextureView: {fileID: 6316309049911894513}
 --- !u!1 &8841421085212224504
 GameObject:
   m_ObjectHideFlags: 0

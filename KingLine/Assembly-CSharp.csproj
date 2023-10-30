@@ -170,6 +170,7 @@
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\FingerTrigger.cs" />
      <Compile Include="Assets\Kingline\Scripts\PlayerGear.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\SpriteSequenceCapture.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Component\CharacterTextureView.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\ConnectionDataSO.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\RuntimeSetup.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\AnchorManager.cs" />
@@ -202,7 +203,6 @@
      <Folder Include="Assets\HeroEditor\Extensions\EpicHeroes\Icons\WithoutBackground\Equipment\Helmet\Legendary" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon1H\SandLords" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes" />
-     <Folder Include="Assets\Kingline\Resources\Event" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\Equipment\Pauldrons\Furry" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Sprites\Equipment\Helmet\Vikings" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\Equipment\Gloves\Christmas" />
@@ -497,7 +497,6 @@
      <Folder Include="Assets\Kingline\Sprites" />
      <Folder Include="Assets\HeroEditor\Common\Sprites\BodyParts\Hair\Basic" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Sprites\Equipment\MeleeWeapon2H\Thrones" />
-     <Folder Include="Assets\Kingline\Scripts\Event" />
      <Folder Include="Assets\HeroEditor\Extensions\AbandonedWorkshop\Icons\WithoutBackground\Equipment\Cape" />
      <Folder Include="Assets\HeroEditor\Extensions\VillageInventory\Sprites\Equipment\MeleeWeapon1H" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon1H" />
@@ -517,7 +516,6 @@
      <Folder Include="Assets\HeroEditor\Common\Sprites\BodyParts\Other" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\Equipment\Helmet\Christmas" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\Equipment\MeleeWeapon1H\Undead\Wand" />
-     <Folder Include="Assets\Kingline\Sprites\ArtworkCharacters" />
      <Folder Include="Assets\HeroEditor\Extensions\EpicHeroes\Icons\WithoutBackground\Equipment\Helmet\Epic" />
      <Folder Include="Assets\HeroEditor\Extensions\EpicHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon1H" />
      <Folder Include="Assets\HeroEditor\Common\SimpleColorPicker\Icons" />
@@ -864,6 +862,7 @@
      <Folder Include="Assets\HeroEditor\Extensions\VillageInventory\Icons\WithoutBackground\Equipment\MeleeWeapon1H" />
      <Folder Include="Assets\HeroEditor\Common\RangedWeapons\Prefabs" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\Equipment\Belt\Furry" />
+     <Folder Include="Assets\Kingline\Scripts\Component" />
      <Folder Include="Assets\HeroEditor\StandaloneFileBrowser" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\Equipment\Armor" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon1H\Samurai" />

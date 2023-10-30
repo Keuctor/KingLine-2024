@@ -27,11 +27,11 @@ public class InventoryUI : MonoBehaviour
     [SerializeField]
     private ItemInfoView m_itemInfoView;
 
-    [SerializeField]
     private ProgressionNetworkController m_progressionNetworkController;
 
-    [SerializeField]
-    private InventoryNetworkController m_inventoryNetworkController;
+    public InventoryNetworkController m_inventoryNetworkController;
+
+    public CharacterTextureView m_characterTextureView;
 
     private void Start()
     {
@@ -106,6 +106,7 @@ public class InventoryUI : MonoBehaviour
   
     private void ClearInventoryUI()
     {
+        
         for (var i = 0; i < m_itemViewContent.transform.childCount; i++)
             Destroy(m_itemViewContent.transform.GetChild(i).gameObject);
 
@@ -114,40 +115,17 @@ public class InventoryUI : MonoBehaviour
                 Destroy(m_gearSets[i].transform.GetChild(0).gameObject);
     }
 
-    private async void DisplayGear()
+    private void DisplayGear()
     {
-        var inventory = await InventoryNetworkController.GetInventoryAsync();
-        var helmet = inventory.GetHelmet();
-        var armor = inventory.GetArmor();
-        var hand = inventory.GetHand();
-
-
+        var inventory = InventoryNetworkController.LocalInventory.GetGear();
+        
+        m_characterTextureView.Show(inventory);
+        
         var baseStrength = m_progressionNetworkController.GetSkill("Strength");
         var baseDefence = m_progressionNetworkController.GetSkill("Defence");
-
-        if (helmet.Id != -1)
-        {
-            var item = ItemRegistry.GetItem(helmet.Id);
-            var armorMaterial = (ArmorItemMaterial)item;
-            baseDefence += (byte)armorMaterial.Armor;
-        }
-
-        if (armor.Id != -1)
-        {
-            var item = ItemRegistry.GetItem(armor.Id);
-            var armorMaterial = (ArmorItemMaterial)item;
-            baseDefence += (byte)armorMaterial.Armor;
-        }
-
-        if (hand.Id != -1)
-        {
-            var item = ItemRegistry.GetItem(hand.Id);
-            var armorMaterial = (WeaponItemMaterial)item;
-            baseStrength += (byte)armorMaterial.Attack;
-        }
-
-        TotalArmorText.text = baseDefence + "";
-        TotalStrengthText.text = baseStrength + "";
+        
+        TotalArmorText.text = m_characterTextureView.Armor+ baseDefence + "";
+        TotalStrengthText.text = m_characterTextureView.Strength + baseStrength + "";
         CoinText.text = PlayerNetworkController.LocalPlayer.Currency + "";
     }
 }

@@ -45,6 +45,12 @@ public class NetworkInventory
         return this.items[HAND_SLOT_INDEX];
     }
 
+    public ItemStack[] GetGear() {
+        return new ItemStack[3] {
+            GetHelmet(),GetArmor(),GetHand()
+        };
+    }
+
     
     public void SetItem(int index, int id, short count = 1)
     {
