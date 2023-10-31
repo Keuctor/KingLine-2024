@@ -17,6 +17,9 @@ public class ProgressionNetworkController : NetworkController
 
     [NonSerialized]
     public int CurrentExp;
+    
+    [NonSerialized]
+    public readonly UnityEvent<int> OnSkillPointChanged = new();
 
     [NonSerialized]
     public int Level = -1;
@@ -24,8 +27,20 @@ public class ProgressionNetworkController : NetworkController
     [NonSerialized]
     public int MaxExp;
 
-    [NonSerialized]
-    public int SkillPoint;
+    private int m_skillPoint;
+
+    public int SkillPoint
+    {
+        get => m_skillPoint;
+        set
+        {
+            if (m_skillPoint == value) return;
+            m_skillPoint = value;
+            OnSkillPointChanged?.Invoke(value);
+        }
+    }
+
+   
 
     [NonSerialized]
     public Skill[] Skills;

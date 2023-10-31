@@ -117,7 +117,6 @@ public class PlayerController : MonoBehaviour
                         m_structureInfoUI = Instantiate(m_prefabs.StructureInfoUI);
                         m_structureInfoUI.OnClicked.AddListener(x =>
                         {
-                            Debug.Log(structureBehaviour.transform.position);
                             if (x == 0) ClientSendTargetPosition(structureBehaviour.transform.position);
                             m_targetStructure = structureBehaviour;
                             Destroy(m_structureInfoUI.gameObject);

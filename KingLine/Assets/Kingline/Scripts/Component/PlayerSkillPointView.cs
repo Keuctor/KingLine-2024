@@ -19,7 +19,7 @@ public class PlayerSkillPointView : MonoBehaviour
     
     private void OnEnable()
     {
-        m_progressionController.OnLevelChange.AddListener(OnLevelChanged);
+        m_progressionController.OnSkillPointChanged.AddListener(OnSkillPointChanged);
         Display();
     }
 
@@ -28,13 +28,13 @@ public class PlayerSkillPointView : MonoBehaviour
         m_skillPointText.text = string.Format(m_formatting, m_progressionController.SkillPoint);
     }
 
-    private void OnLevelChanged(int arg0)
+    private void OnSkillPointChanged(int arg0)
     {
         Display();
     }
 
     private void OnDisable()
     {
-        m_progressionController.OnLevelChange.RemoveListener(OnLevelChanged);
+        m_progressionController.OnSkillPointChanged.RemoveListener(OnSkillPointChanged);
     }
 }

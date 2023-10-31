@@ -3227,7 +3227,7 @@ GameObject:
   - component: {fileID: 1172259532}
   - component: {fileID: 1172259534}
   m_Layer: 5
-  m_Name: ProgressionList
+  m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3312,10 +3312,10 @@ MonoBehaviour:
   m_Padding:
     m_Left: 50
     m_Right: 50
-    m_Top: 50
+    m_Top: 75
     m_Bottom: 50
   m_ChildAlignment: 0
-  m_Spacing: 25
+  m_Spacing: 30
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -5509,9 +5509,17 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 1594189329353069792, guid: f7e6f4cadbc25234c8e644ddc677cbb0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000022888184
+      objectReference: {fileID: 0}
     - target: {fileID: 2206617112714735020, guid: f7e6f4cadbc25234c8e644ddc677cbb0, type: 3}
       propertyPath: m_Name
       value: PlayerTeamView
+      objectReference: {fileID: 0}
+    - target: {fileID: 2206617112714735020, guid: f7e6f4cadbc25234c8e644ddc677cbb0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2436151204600296242, guid: f7e6f4cadbc25234c8e644ddc677cbb0, type: 3}
       propertyPath: m_Pivot.x
@@ -5600,6 +5608,10 @@ PrefabInstance:
     - target: {fileID: 3894710894287813895, guid: f7e6f4cadbc25234c8e644ddc677cbb0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3894710894287813895, guid: f7e6f4cadbc25234c8e644ddc677cbb0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5077622705403576732, guid: f7e6f4cadbc25234c8e644ddc677cbb0, type: 3}
       propertyPath: m_AnchorMax.x
@@ -5746,6 +5758,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1156783387784620313, guid: 549bc08b13b87ee4e889939bb5c3771d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000028461058
+      objectReference: {fileID: 0}
     - target: {fileID: 1411658430626910428, guid: 549bc08b13b87ee4e889939bb5c3771d, type: 3}
       propertyPath: m_Value
       value: 0
@@ -5848,6 +5864,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5914003409227871647, guid: 549bc08b13b87ee4e889939bb5c3771d, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914003409227871647, guid: 549bc08b13b87ee4e889939bb5c3771d, type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7148707430962004840, guid: 549bc08b13b87ee4e889939bb5c3771d, type: 3}
