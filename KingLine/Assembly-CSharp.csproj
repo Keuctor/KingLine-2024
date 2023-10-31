@@ -105,7 +105,6 @@
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\ShopBase.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Data\Property.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\DontDestroyOnLoad.cs" />
-     <Compile Include="Assets\Kingline\Scripts\View\PlayerUIView.cs" />
      <Compile Include="Assets\Kingline\Scripts\View\NameValueButtonView.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\Elements\InventoryItem.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemStackContentView.cs" />
@@ -122,9 +121,11 @@
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemSelectPopup.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\StandaloneFileBrowserEditor.cs" />
      <Compile Include="Assets\Kingline\Scripts\Menu\StructureInfoUI.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Component\PlayerTeamView.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\StandaloneFileBrowserMac.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\NetworkManager.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\CharacterState.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Component\PlayerSkillPointView.cs" />
      <Compile Include="Assets\HeroEditor\Common\SimpleColorPicker\Scripts\ColorMode.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\MonsterState.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\EquipmentExample.cs" />
@@ -135,6 +136,7 @@
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\StandaloneFilePicker.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\SortingOrderExample.cs" />
      <Compile Include="Assets\Kingline\Scripts\ScriptableObjects\SpriteResource.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Component\PlayerLevelView.cs" />
      <Compile Include="Assets\Kingline\Scripts\Structure\StructureListSO.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\Elements\ItemContainer.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\TestRoom.cs" />
@@ -150,6 +152,7 @@
      <Compile Include="Assets\Kingline\Scripts\Utils\PrefabsSO.cs" />
      <Compile Include="Assets\HeroEditor\Common\SimpleColorPicker\Scripts\ColorJoystick.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\QuickStart.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Component\PlayerNameView.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemInfoView\ItemInfoMetaView.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\MeleeWeapon.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\ModificatorType.cs" />
@@ -159,6 +162,7 @@
      <Compile Include="Assets\Kingline\Scripts\Audio\AudioManager.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\CharacterExtensions.cs" />
      <Compile Include="Assets\Kingline\Scripts\Game\MineGame.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Component\PlayerSkillView.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\Controller\PlayerNetworkController.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\CharacterInventorySetup.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\SaveLoadExample.cs" />
@@ -625,6 +629,7 @@
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Atlases" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon2H\Knights\Sword" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\BodyParts\Head\Zombies" />
+     <Folder Include="Assets\Kingline\Prefab\Components" />
      <Folder Include="Assets\Kingline\Scripts\View" />
      <Folder Include="Assets\HeroEditor\Extensions\AbandonedWorkshop\Icons\WithoutBackground\Equipment\MeleeWeapon1H\AbandonedWorkshop\Dagger" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\Equipment\Bow\Undead" />

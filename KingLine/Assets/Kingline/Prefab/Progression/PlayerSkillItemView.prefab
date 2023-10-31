@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3766139884713340507}
   - component: {fileID: 7163883472196607990}
   m_Layer: 5
-  m_Name: SkillItemView
+  m_Name: PlayerSkillItemView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

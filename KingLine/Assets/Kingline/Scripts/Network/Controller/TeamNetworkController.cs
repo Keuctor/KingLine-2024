@@ -12,13 +12,14 @@ public class TeamNetworkController : NetworkController
     public override void OnPeerDisconnected(NetPeer peer)
     {
         //on disconnected from server
+        PlayerTeams.Clear();
     }
 
     public override void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
     {
     }
 
-    public static TeamMember[] LocalPlayerTeam
+    public TeamMember[] LocalPlayerTeam
         => PlayerTeams[NetworkManager.LocalPlayerPeerId];
 
     public readonly UnityEvent<bool> OnUpgradeTeam = new();
@@ -29,7 +30,7 @@ public class TeamNetworkController : NetworkController
         NetworkManager.Instance.Send(new ReqPlayerTeam());
     }
 
-    public static void GiveXp(int xp)
+    public void GiveXp(int xp)
     {
         foreach (var member in LocalPlayerTeam)
             member.Xp += xp;
@@ -56,7 +57,6 @@ public class TeamNetworkController : NetworkController
     private void OnUpdatePlayerTeamResponse(ResUpdatePlayerTeam response)
     {
         PlayerTeams[response.Team.Id] = response.Team.Members;
-        Debug.Log("Güncellendi");
     }
 
     private void OnPlayerTeamResponse(ResPlayerTeam teams)

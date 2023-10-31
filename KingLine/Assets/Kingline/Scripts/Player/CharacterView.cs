@@ -1,17 +1,10 @@
-﻿using Assets.HeroEditor.Common.CharacterScripts;
-using HeroEditor.Common.Enums;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class CharacterView : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject m_characterCamera;
-
-    private Character m_character;
-
     [SerializeField]
     private TMP_Text m_nameLabel;
 
@@ -41,8 +34,6 @@ public class CharacterView : MonoBehaviour
 
     [SerializeField]
     private TMP_Text m_weaponText;
-
-    private GameObject m_charCamera;
 
     public UnityEvent OnUpgradeClicked = new();
 
@@ -80,11 +71,6 @@ public class CharacterView : MonoBehaviour
         m_characterTextureView.Show(items);
         this.m_armorText.text = m_characterTextureView.Armor + "";
         this.m_weaponText.text = m_characterTextureView.Strength + "";
-    }
-
-    private void OnDestroy()
-    {
-        Destroy(m_charCamera.gameObject);
     }
 
     public void Close()

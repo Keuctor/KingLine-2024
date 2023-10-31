@@ -7,6 +7,8 @@ using UnityEngine.Events;
 [CreateAssetMenu]
 public class ProgressionNetworkController : NetworkController
 {
+    private ProgressionNetworkController m_progressionController;
+
     [NonSerialized]
     public readonly UnityEvent<int> OnLevelChange = new();
 
@@ -27,6 +29,10 @@ public class ProgressionNetworkController : NetworkController
 
     [NonSerialized]
     public Skill[] Skills;
+
+    public TeamNetworkController TeamNetworkController;
+    
+    
 
 
     public override void OnPeerDisconnected(NetPeer peer)

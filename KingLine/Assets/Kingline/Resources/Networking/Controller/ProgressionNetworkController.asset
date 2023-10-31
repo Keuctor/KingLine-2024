@@ -12,7 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31614b6acc6096e4d959af82cdc41a0d, type: 3}
   m_Name: ProgressionNetworkController
   m_EditorClassIdentifier: 
-  CurrentExp: 0
-  Level: -1
-  MaxExp: 0
-  Skills: []
+  TeamNetworkController: {fileID: 11400000, guid: 4c88202cd0f3c804eb9a077614540680, type: 2}

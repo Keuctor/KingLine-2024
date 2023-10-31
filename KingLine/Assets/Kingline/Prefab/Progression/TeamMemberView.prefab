@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6161328303745004126}
   - component: {fileID: 3608881813729727682}
   m_Layer: 5
-  m_Name: TroopItemView
+  m_Name: TeamMemberView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
