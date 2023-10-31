@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 
 [CreateAssetMenu]
 public class PrefabsSO : ScriptableObject
 {
-    public StructureInfoUI StructureInfoUI;
+    [FormerlySerializedAs("StructureInfoUI")]
+    public TargetStructureView TargetStructureView;
 
     public ItemSelectPopup ItemSelectPopup;
     

@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private PlayerNetworkController m_playerNetworkController;
 
-    private StructureInfoUI m_structureInfoUI;
+    private TargetStructureView _mTargetStructureView;
 
     private StructureBehaviour m_targetStructure;
 
@@ -112,28 +112,28 @@ public class PlayerController : MonoBehaviour
                 if (hit.transform.CompareTag("Structure"))
                 {
                     var structureBehaviour = hit.collider.GetComponent<StructureBehaviour>();
-                    if (m_structureInfoUI == null)
+                    if (_mTargetStructureView == null)
                     {
-                        m_structureInfoUI = Instantiate(m_prefabs.StructureInfoUI);
-                        m_structureInfoUI.OnClicked.AddListener(x =>
+                        _mTargetStructureView = Instantiate(m_prefabs.TargetStructureView);
+                        _mTargetStructureView.OnClicked.AddListener(x =>
                         {
                             if (x == 0) ClientSendTargetPosition(structureBehaviour.transform.position);
                             m_targetStructure = structureBehaviour;
-                            Destroy(m_structureInfoUI.gameObject);
-                            m_structureInfoUI = null;
+                            Destroy(_mTargetStructureView.gameObject);
+                            _mTargetStructureView = null;
                         });
                     }
 
-                    m_structureInfoUI.SetView(structureBehaviour);
+                    _mTargetStructureView.SetView(structureBehaviour);
                     break;
                 }
 
             if (hits.Length == 0)
             {
-                if (m_structureInfoUI != null)
+                if (_mTargetStructureView != null)
                 {
-                    Destroy(m_structureInfoUI.gameObject);
-                    m_structureInfoUI = null;
+                    Destroy(_mTargetStructureView.gameObject);
+                    _mTargetStructureView = null;
                 }
 
                 ClientSendTargetPosition(mousePosition);

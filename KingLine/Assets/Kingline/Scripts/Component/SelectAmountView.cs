@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class SelectAmountPopup : MonoBehaviour
+public class SelectAmountView : MonoBehaviour
 {
     [SerializeField]
     private Image m_icon;

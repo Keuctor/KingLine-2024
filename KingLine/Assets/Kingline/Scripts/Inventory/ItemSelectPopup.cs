@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class ItemSelectPopup : MonoBehaviour
 {
@@ -26,8 +27,9 @@ public class ItemSelectPopup : MonoBehaviour
     [SerializeField]
     private InventoryNetworkController m_inventoryNetworkController;
 
+    [FormerlySerializedAs("m_selectAmountPopupTemplate")]
     [SerializeField]
-    public SelectAmountPopup m_selectAmountPopupTemplate;
+    public SelectAmountView MSelectAmountViewTemplate;
 
     [SerializeField]
     private SpriteLoader m_spriteLoader;
@@ -105,7 +107,7 @@ public class ItemSelectPopup : MonoBehaviour
                 var index = id;
                 m_itemInfoView.OnSellButtonClicked.AddListener(() =>
                 {
-                    var selectPopup = Instantiate(m_selectAmountPopupTemplate);
+                    var selectPopup = Instantiate(MSelectAmountViewTemplate);
                     selectPopup.SetIcon(m_spriteLoader.LoadSprite(n.Id));
                     selectPopup.SetValue(1, 1, item.Count);
                     selectPopup.OnDone.AddListener(() =>

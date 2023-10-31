@@ -28,7 +28,6 @@ public class CharacterView : MonoBehaviour
     [SerializeField]
     private TMP_Text m_xpSliderText;
 
-
     [SerializeField]
     private TMP_Text m_armorText;
 

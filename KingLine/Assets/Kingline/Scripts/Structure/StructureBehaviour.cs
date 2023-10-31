@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class StructureBehaviour : MonoBehaviour
 {
@@ -7,7 +8,8 @@ public class StructureBehaviour : MonoBehaviour
     public string Description;
     public SpriteRenderer Selection;
 
-    public StructureInfoUI StructureInfoUI;
+    [FormerlySerializedAs("StructureInfoUI")]
+    public TargetStructureView TargetStructureView;
     
     private Sprite icon;
 

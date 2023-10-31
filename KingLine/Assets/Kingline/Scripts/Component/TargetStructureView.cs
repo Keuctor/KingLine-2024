@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class StructureInfoUI : MonoBehaviour
+public class TargetStructureView : MonoBehaviour
 {
     [SerializeField]
     private RectTransform m_content;
