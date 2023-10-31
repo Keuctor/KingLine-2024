@@ -39,8 +39,7 @@ public class PlayerController : MonoBehaviour
     private StructureBehaviour m_targetStructure;
 
     public Dictionary<int, GamePlayer> playerInstances = new();
-    
-    
+
 
     private void Start()
     {
@@ -54,7 +53,7 @@ public class PlayerController : MonoBehaviour
         }
 
         m_playerNetworkController.OnPlayerListRefresh.AddListener(CreatePlayers);
-        
+
         MenuController.Instance.OnOpenMenu.AddListener(OnAnyMenuOpen);
     }
 
@@ -74,7 +73,7 @@ public class PlayerController : MonoBehaviour
             var gamePlayer = p.Value;
             var player = p.Value.Player;
             gamePlayer.Transform.position = new Vector2(player.x, player.y);
-          
+
             if (Mathf.Abs(player.x - player.targetX) > float.Epsilon ||
                 Mathf.Abs(player.y - player.targetY) > float.Epsilon)
             {
@@ -103,11 +102,9 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (EventSystem.current.IsPointerOverGameObject())
-                return;
 
+        if (HasPlayerInput())
+        {
             Vector2 mousePosition = m_mainCamera.ScreenToWorldPoint(Input.mousePosition);
             var hits = Physics2D.RaycastAll(mousePosition, Vector2.zero);
             m_targetStructure = null;
@@ -120,6 +117,7 @@ public class PlayerController : MonoBehaviour
                         m_structureInfoUI = Instantiate(m_prefabs.StructureInfoUI);
                         m_structureInfoUI.OnClicked.AddListener(x =>
                         {
+                            Debug.Log(structureBehaviour.transform.position);
                             if (x == 0) ClientSendTargetPosition(structureBehaviour.transform.position);
                             m_targetStructure = structureBehaviour;
                             Destroy(m_structureInfoUI.gameObject);
@@ -138,9 +136,39 @@ public class PlayerController : MonoBehaviour
                     Destroy(m_structureInfoUI.gameObject);
                     m_structureInfoUI = null;
                 }
+
                 ClientSendTargetPosition(mousePosition);
             }
         }
+    }
+
+    public bool HasPlayerInput()
+    {
+#if !UNITY_EDITOR
+        if (!Application.isMobilePlatform)
+        {
+            return Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject();
+        }
+#endif
+
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            if (IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    bool IsPointerOverGameObject(int fingerId)
+    {
+        EventSystem eventSystem = EventSystem.current;
+        return (eventSystem.IsPointerOverGameObject(fingerId)
+                && eventSystem.currentSelectedGameObject != null);
     }
 
     private void OnDestroy()
@@ -203,7 +231,7 @@ public class PlayerController : MonoBehaviour
         player.Gear.PeerId = player.Player.Id;
         player.Transform = p.transform;
         player.NameText = player.Transform.GetChild(0).GetComponent<TMP_Text>();
-        
+
         player.NameText.text = player.Player.Name;
         player.Transform.position =
             new Vector2(player.Player.x, player.Player.y);

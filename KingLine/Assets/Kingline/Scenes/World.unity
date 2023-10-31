@@ -798,7 +798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb928dc4517f09c45920d63821de71de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_leveLUpPopup: {fileID: 5000090433581517898, guid: c8ede7721000a8748bb53db2113f8ca8, type: 3}
+  MLeveLUpPopupView: {fileID: 5000090433581517898, guid: c8ede7721000a8748bb53db2113f8ca8, type: 3}
   m_levelUpContent: {fileID: 1725047876}
   m_progressionNetworkController: {fileID: 11400000, guid: bde06e13eb7f7624295f72de7eb240e9, type: 2}
 --- !u!1 &269301231
@@ -4931,7 +4931,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 766.9122, y: -0.00012207031}
+  m_AnchoredPosition: {x: 766.9121, y: -0.00024414062}
   m_SizeDelta: {x: 900, y: 1720}
   m_Pivot: {x: 0.5, y: 0.99999994}
 --- !u!114 &1461874801
@@ -5113,7 +5113,7 @@ MonoBehaviour:
   OnSellButtonClicked:
     m_PersistentCalls:
       m_Calls: []
-  m_spriteLoader: {fileID: 0}
+  m_spriteLoader: {fileID: 11400000, guid: 9bc28bb01a8c5374099cbdf3550b4c47, type: 2}
 --- !u!1 &1532820008
 GameObject:
   m_ObjectHideFlags: 0
