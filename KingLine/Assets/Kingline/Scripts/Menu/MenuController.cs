@@ -81,11 +81,30 @@ public class MenuController : Singleton<MenuController>
         }
     }
 
+    private Popup _popup=null;
+
     public void OpenUI(MenuNavigation navigation)
     {
         if (navigation.UI.activeSelf)
         {
             CloseAll();
+            return;
+        }
+
+        if (_popup != null)
+        {
+            _popup.Destroy();
+            _popup = null;
+        }
+
+        if (navigation.UI.gameObject.name.Contains("Player"))
+        {
+            _popup = PopupManager.Instance.CreateNew();
+            _popup.Add(PopupManager.Instance.PlayerNameView);
+            _popup.Add(PopupManager.Instance.PlayerLevelView);
+            _popup.Add(PopupManager.Instance.PlayerSkillPointView);
+            _popup.Add(PopupManager.Instance.PlayerSkillView);
+            _popup.Add(PopupManager.Instance.PlayerTeamView);
             return;
         }
 

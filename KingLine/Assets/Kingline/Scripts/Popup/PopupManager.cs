@@ -35,6 +35,12 @@ public class Popup
         return this;
     }
 
+    public T Add<T>(T component) where T : MonoBehaviour
+    {
+        var instantiate = Object.Instantiate(component, Container);
+        return instantiate;
+    }
+
     public Popup CreateImage(Sprite sprite)
     {
         var image = Object.Instantiate(PopupManager.Instance.PopupImage, Container);
@@ -69,13 +75,29 @@ public class PopupManager : ScriptableObject
     }
 
 
+    [Header("Simple")]
     public GameObject Canvas;
     public GameObject PopupContainer;
     public GameObject PopupButton;
     public GameObject PopupText;
     public GameObject PopupImage;
+    public GameObject PopupVerticalLayout;
 
+    [Header("Prefabs")]
     public ItemSelectPopup ItemSelectPopup;
+
+
+    [Header("Component")]
+    public PlayerTeamView PlayerTeamView;
+
+    public PlayerSkillView PlayerSkillView;
+    
+    public PlayerNameView PlayerNameView;
+    
+    public PlayerLevelView PlayerLevelView;
+
+    public PlayerSkillPointView PlayerSkillPointView;
+    
 
     public ItemSelectPopup ShowItemSelectPopup()
     {
