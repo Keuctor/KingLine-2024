@@ -3,6 +3,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 
@@ -46,9 +47,6 @@ public class MineGame : MonoBehaviour
     private bool m_loop;
 
     [SerializeField]
-    private PrefabsSO m_prefabs;
-
-    [SerializeField]
     private TMP_Text m_selectedToolPropertiesText;
 
     [SerializeField]
@@ -67,12 +65,14 @@ public class MineGame : MonoBehaviour
     
     private readonly int m_currentCount = 0;
 
+    [FormerlySerializedAs("m_spriteLoader")]
     [SerializeField]
-    private SpriteLoader m_spriteLoader;
+    private MaterialSpriteDatabase m_materialDatabase;
 
     [SerializeField]
     private AudioManager m_audioManager;
 
+    public ItemSelectPopup m_itemSelectPopup;
 
     private void Start()
     {
@@ -83,7 +83,7 @@ public class MineGame : MonoBehaviour
 
     public void SelectTool()
     {
-        var popup = Instantiate(m_prefabs.ItemSelectPopup);
+        var popup = PopupManager.Instance.ShowItemSelectPopup();
         popup.SelectMode = true;
         popup.OnSelect.AddListener(DisplayTool);
     }
@@ -108,7 +108,7 @@ public class MineGame : MonoBehaviour
         var toolItemMaterial = (ToolItemMaterial)material;
         m_selectedToolIndex = index;
         m_selectedToolPropertiesText.text = "Modifier: x" + toolItemMaterial.ToolValue;
-        m_selectedToolImage.sprite = m_spriteLoader.LoadSprite(toolItemMaterial.Id);
+        m_selectedToolImage.sprite = m_materialDatabase.LoadSprite(toolItemMaterial.Id);
         m_selectedToolImage.enabled = true;
         m_selectedToolNameText.text = toolItemMaterial.Name;
         ToolModifier = toolItemMaterial.ToolValue;

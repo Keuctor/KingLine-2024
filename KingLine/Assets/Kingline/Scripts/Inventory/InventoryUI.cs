@@ -3,6 +3,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -34,8 +35,9 @@ public class InventoryUI : MonoBehaviour
 
     public CharacterTextureView m_characterTextureView;
 
+    [FormerlySerializedAs("m_spriteLoader")]
     [SerializeField]
-    private SpriteLoader m_spriteLoader;
+    private MaterialSpriteDatabase m_materialDatabase;
 
     private void Start()
     {
@@ -90,7 +92,7 @@ public class InventoryUI : MonoBehaviour
                 {
                     var gearItem = ItemRegistry.GetItem(m.Id);
                     var contentView = Instantiate(m_itemViewContentTemplate, gearView.Content);
-                    contentView.SetContext(m_spriteLoader.LoadSprite(m.Id), m.Count, gearItem.Stackable);
+                    contentView.SetContext(m_materialDatabase.LoadSprite(m.Id), m.Count, gearItem.Stackable);
                 }
                 continue;
             }
@@ -101,7 +103,7 @@ public class InventoryUI : MonoBehaviour
             {
                 var item = ItemRegistry.GetItem(m.Id);
                 var contentView = Instantiate(m_itemViewContentTemplate, view.Content);
-                contentView.SetContext(m_spriteLoader.LoadSprite(m.Id), m.Count, item.Stackable);
+                contentView.SetContext(m_materialDatabase.LoadSprite(m.Id), m.Count, item.Stackable);
             }
         }
         DisplayGear();

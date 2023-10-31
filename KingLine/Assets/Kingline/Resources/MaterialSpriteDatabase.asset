@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 384ca55111a24e45a5a5cd722f1993d0, type: 3}
-  m_Name: SpriteLoader
+  m_Name: MaterialSpriteDatabase
   m_EditorClassIdentifier: 
   m_sprites:
   - Type: 0

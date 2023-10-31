@@ -16,7 +16,6 @@ public class MenuNavigation
 
 public class MenuController : Singleton<MenuController>
 {
-
     [SerializeField]
     private List<MenuNavigation> m_menuNavigation = new();
 

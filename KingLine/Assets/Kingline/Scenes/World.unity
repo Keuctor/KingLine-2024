@@ -1936,7 +1936,7 @@ MonoBehaviour:
   m_itemPopup: {fileID: 2813665920314612623, guid: 07d8ce6b330680f4fb5eb3815bdea086, type: 3}
   m_itemPopupContent: {fileID: 1725047876}
   m_inventoryNetworkController: {fileID: 11400000, guid: 8ff74ab722a5ee0448995c4eece678fd, type: 2}
-  m_spriteLoader: {fileID: 11400000, guid: 9bc28bb01a8c5374099cbdf3550b4c47, type: 2}
+  m_materialDatabase: {fileID: 11400000, guid: 9bc28bb01a8c5374099cbdf3550b4c47, type: 2}
 --- !u!1 &760328629
 GameObject:
   m_ObjectHideFlags: 0
@@ -2250,7 +2250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beb33b03908d700409fbd699a91223c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_prefabs: {fileID: 11400000, guid: 008d7ecfd74196840b5b524e9850fdef, type: 2}
   m_mainCamera: {fileID: 519420031}
   m_structureController: {fileID: 1993487012}
   m_playerNetworkController: {fileID: 11400000, guid: 9fe388737a46dca45b72a289d4b7ef88, type: 2}
@@ -3847,7 +3846,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 443.7149, y: -0.00012207031}
+  m_AnchoredPosition: {x: 443.71484, y: 0}
   m_SizeDelta: {x: 900, y: 1720}
   m_Pivot: {x: 0.5, y: 0.99999994}
 --- !u!114 &1461874801
@@ -3910,7 +3909,7 @@ MonoBehaviour:
   m_progressionNetworkController: {fileID: 11400000, guid: bde06e13eb7f7624295f72de7eb240e9, type: 2}
   m_inventoryNetworkController: {fileID: 11400000, guid: 8ff74ab722a5ee0448995c4eece678fd, type: 2}
   m_characterTextureView: {fileID: 1023439030}
-  m_spriteLoader: {fileID: 11400000, guid: 9bc28bb01a8c5374099cbdf3550b4c47, type: 2}
+  m_materialDatabase: {fileID: 11400000, guid: 9bc28bb01a8c5374099cbdf3550b4c47, type: 2}
 --- !u!1 &1477969230
 GameObject:
   m_ObjectHideFlags: 0
@@ -4029,7 +4028,7 @@ MonoBehaviour:
   OnSellButtonClicked:
     m_PersistentCalls:
       m_Calls: []
-  m_spriteLoader: {fileID: 11400000, guid: 9bc28bb01a8c5374099cbdf3550b4c47, type: 2}
+  m_materialDatabase: {fileID: 11400000, guid: 9bc28bb01a8c5374099cbdf3550b4c47, type: 2}
 --- !u!1 &1589623573
 GameObject:
   m_ObjectHideFlags: 0

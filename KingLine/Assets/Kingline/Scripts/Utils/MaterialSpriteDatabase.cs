@@ -12,7 +12,7 @@ public class SpriteItem
 }
 
 [CreateAssetMenu]
-public class SpriteLoader : ScriptableObject
+public class MaterialSpriteDatabase : ScriptableObject
 {
     [SerializeField]
     private SpriteItem[] m_sprites;

@@ -75,11 +75,11 @@ public class PopupManager : ScriptableObject
     public GameObject PopupText;
     public GameObject PopupImage;
 
-    public PrefabsSO Prefabs;
+    public ItemSelectPopup ItemSelectPopup;
 
     public ItemSelectPopup ShowItemSelectPopup()
     {
-        return Instantiate(Prefabs.ItemSelectPopup);
+        return Instantiate(ItemSelectPopup);
     }
 
     public Popup CreateNew()

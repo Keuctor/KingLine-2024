@@ -31,8 +31,9 @@ public class ItemSelectPopup : MonoBehaviour
     [SerializeField]
     public SelectAmountView MSelectAmountViewTemplate;
 
+    [FormerlySerializedAs("m_spriteLoader")]
     [SerializeField]
-    private SpriteLoader m_spriteLoader;
+    private MaterialSpriteDatabase m_materialDatabase;
     
     private void OnEnable()
     {
@@ -65,7 +66,7 @@ public class ItemSelectPopup : MonoBehaviour
             {
                 var item = ItemRegistry.GetItem(m.Id);
                 var contentView = Instantiate(m_itemSelectionViewContent, views[i].Content);
-                contentView.SetContext(m_spriteLoader.LoadSprite(item.Id), m.Count,
+                contentView.SetContext(m_materialDatabase.LoadSprite(item.Id), m.Count,
                     item.Stackable);
             }
         }
@@ -85,7 +86,7 @@ public class ItemSelectPopup : MonoBehaviour
         var items = InventoryNetworkController.LocalInventory.Items;
         var info = ItemRegistry.GetItem(items[index].Id);
         selectionItemStackViewContent.SetContext(
-            m_spriteLoader.LoadSprite(info.Id), newCount, info.Stackable);
+            m_materialDatabase.LoadSprite(info.Id), newCount, info.Stackable);
     }
 
 
@@ -108,7 +109,7 @@ public class ItemSelectPopup : MonoBehaviour
                 m_itemInfoView.OnSellButtonClicked.AddListener(() =>
                 {
                     var selectPopup = Instantiate(MSelectAmountViewTemplate);
-                    selectPopup.SetIcon(m_spriteLoader.LoadSprite(n.Id));
+                    selectPopup.SetIcon(m_materialDatabase.LoadSprite(n.Id));
                     selectPopup.SetValue(1, 1, item.Count);
                     selectPopup.OnDone.AddListener(() =>
                     {

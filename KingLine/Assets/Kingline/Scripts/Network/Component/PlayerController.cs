@@ -19,9 +19,6 @@ public class PlayerController : MonoBehaviour
     public static GamePlayer m_localPlayer;
 
     [SerializeField]
-    private PrefabsSO m_prefabs;
-
-    [SerializeField]
     private Camera m_mainCamera;
 
     [SerializeField]
@@ -33,8 +30,6 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private PlayerNetworkController m_playerNetworkController;
-
-    private TargetStructureView _mTargetStructureView;
 
     private StructureBehaviour m_targetStructure;
 
@@ -112,30 +107,29 @@ public class PlayerController : MonoBehaviour
                 if (hit.transform.CompareTag("Structure"))
                 {
                     var structureBehaviour = hit.collider.GetComponent<StructureBehaviour>();
-                    if (_mTargetStructureView == null)
+                    var popup = PopupManager.Instance.CreateNew()
+                        .CreateImage(structureBehaviour.Icon)
+                        .CreateText(structureBehaviour.Name)
+                        .CreateText(structureBehaviour.Description)
+                        .CreateButton("Go")
+                        .CreateButton("Info")
+                        .CreateButton("Exit");
+                        
+                    popup.OnClick.AddListener((x) =>
                     {
-                        _mTargetStructureView = Instantiate(m_prefabs.TargetStructureView);
-                        _mTargetStructureView.OnClicked.AddListener(x =>
+                        m_targetStructure = null;
+                        if (x == 0)
                         {
-                            if (x == 0) ClientSendTargetPosition(structureBehaviour.transform.position);
+                            ClientSendTargetPosition(structureBehaviour.transform.position);
                             m_targetStructure = structureBehaviour;
-                            Destroy(_mTargetStructureView.gameObject);
-                            _mTargetStructureView = null;
-                        });
-                    }
-
-                    _mTargetStructureView.SetView(structureBehaviour);
+                        }
+                        popup.Destroy();
+                    });
                     break;
                 }
 
             if (hits.Length == 0)
             {
-                if (_mTargetStructureView != null)
-                {
-                    Destroy(_mTargetStructureView.gameObject);
-                    _mTargetStructureView = null;
-                }
-
                 ClientSendTargetPosition(mousePosition);
             }
         }
@@ -143,12 +137,12 @@ public class PlayerController : MonoBehaviour
 
     public bool HasPlayerInput()
     {
-#if !UNITY_EDITOR
+
         if (!Application.isMobilePlatform)
         {
             return Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject();
         }
-#endif
+
 
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {

@@ -33,13 +33,14 @@ public class ItemInfoView : MonoBehaviour
 
     public UnityEvent OnSellButtonClicked = new();
 
+    [FormerlySerializedAs("m_spriteLoader")]
     [SerializeField]
-    private SpriteLoader m_spriteLoader;
+    private MaterialSpriteDatabase m_materialDatabase;
     
 
     public void ShowItemInfo(IItemMaterial itemMaterial)
     {
-        m_itemIcon.sprite = m_spriteLoader.LoadSprite(itemMaterial.Id);
+        m_itemIcon.sprite = m_materialDatabase.LoadSprite(itemMaterial.Id);
         m_itemName.text = itemMaterial.Name;
         m_priceMetaView.MetaValue.text = "" + itemMaterial.Value;
 

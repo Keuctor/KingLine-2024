@@ -101,7 +101,6 @@
      <Compile Include="Assets\Kingline\Scripts\Game\NodeBehaviour.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\Elements\ScrollInventoryFilter.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\Elements\Equipment.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Network\Controller\StructureController.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\ShopBase.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Data\Property.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\DontDestroyOnLoad.cs" />
@@ -114,7 +113,6 @@
      <Compile Include="Assets\Kingline\Scripts\Inventory\SelectionItemStackView.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\AttackingExample.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\Springs\ScaleSpring.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Utils\SpriteLoader.cs" />
      <Compile Include="Assets\Kingline\Scripts\Utils\GlobalCanvas.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\Elements\ItemSlot.cs" />
      <Compile Include="Assets\Kingline\Scripts\Menu\ConnectionHandlerUI.cs" />
@@ -142,13 +140,13 @@
      <Compile Include="Assets\Kingline\Scripts\Component\NameValueButtonView.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\Elements\ItemWorkspace.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Network\Component\StructureController.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\Controller\TeamNetworkController.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\StandaloneFileBrowser.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\Projectile.cs" />
      <Compile Include="Assets\Kingline\Scripts\Component\LevelUpPopupView.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Enums\ItemRarity.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\FirearmReload.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Utils\PrefabsSO.cs" />
      <Compile Include="Assets\HeroEditor\Common\SimpleColorPicker\Scripts\ColorJoystick.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\QuickStart.cs" />
      <Compile Include="Assets\Kingline\Scripts\Component\PlayerNameView.cs" />
@@ -176,6 +174,7 @@
      <Compile Include="Assets\Kingline\Scripts\Component\CharacterTextureView.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\ConnectionDataSO.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\RuntimeSetup.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Utils\MaterialSpriteDatabase.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\AnchorManager.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemPopupUI.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
@@ -308,7 +307,6 @@
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\BodyParts\Ears\Demon" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\BodyParts\Ears\Mummies" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Sprites\Equipment\Armor\Thrones" />
-     <Folder Include="Assets\Kingline\Prefab\Progression" />
      <Folder Include="Assets\HeroEditor\StandaloneFileBrowser\Plugins\Linux" />
      <Folder Include="Assets\HeroEditor\Extensions\Style\Sprites\BodyParts\Hair\SkyStyle [NoPaint]" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\Equipment\Vest\Zombies" />
@@ -457,7 +455,7 @@
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Sprites\Equipment\MeleeWeapon1H\Vikings" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Icons\WithoutBackground\Equipment\Bow\Undead" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Sprites\Equipment\Earrings\Basic" />
-     <Folder Include="Assets\Kingline\Prefab\UI_Elements" />
+     <Folder Include="Assets\Kingline\Prefab\_UI" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\Belt\Knights" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Sprites\Equipment\Shield" />
      <Folder Include="Assets\HeroEditor\Common\Icons\WithoutBackground\BodyParts\Head" />
@@ -628,7 +626,7 @@
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Atlases" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon2H\Knights\Sword" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\BodyParts\Head\Zombies" />
-     <Folder Include="Assets\Kingline\Prefab\ComponentPrefabs" />
+     <Folder Include="Assets\Kingline\Prefab\Component" />
      <Folder Include="Assets\HeroEditor\Extensions\AbandonedWorkshop\Icons\WithoutBackground\Equipment\MeleeWeapon1H\AbandonedWorkshop\Dagger" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\Equipment\Bow\Undead" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\Equipment\MeleeWeapon2H\Undead" />
@@ -838,7 +836,6 @@
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\Bow\SwampLords" />
      <Folder Include="Assets\HeroEditor\Common\Sprites\BodyParts" />
      <Folder Include="Assets\HeroEditor\Extensions\EpicHeroes\Icons\WithoutBackground\Equipment\MeleeWeapon1H\Legendary\Sword" />
-     <Folder Include="Assets\Kingline\Prefab\UI_Elements\UIParts" />
      <Folder Include="Assets\HeroEditor\UndeadHeroes\Sprites\Equipment\MeleeWeapon1H\Undead\Mace" />
      <Folder Include="Assets\HeroEditor\Extensions\Style\Icons\WithoutBackground\BodyParts\Hair\SunStyle [NoPaint]" />
      <Folder Include="Assets\HeroEditor\FantasyHeroes\Icons\WithoutBackground\Equipment\Vest\Thrones" />

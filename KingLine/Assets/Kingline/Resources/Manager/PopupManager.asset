@@ -17,4 +17,4 @@ MonoBehaviour:
   PopupButton: {fileID: 7591365132433475329, guid: ebaef87ca6e1a954eafd7a3dca20acd0, type: 3}
   PopupText: {fileID: 8048218039311874483, guid: c7c6fc09d4c0d24459fdc15e00469d44, type: 3}
   PopupImage: {fileID: 3795838853936696679, guid: 1e60aa889a468e44597df9b86e36bc1a, type: 3}
-  Prefabs: {fileID: 11400000, guid: 008d7ecfd74196840b5b524e9850fdef, type: 2}
+  ItemSelectPopup: {fileID: 3705014527671699567, guid: 269c09d05e32a6f4aa7fa1fe83ec7adc, type: 3}

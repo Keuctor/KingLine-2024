@@ -2,6 +2,7 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class InventoryController : MonoBehaviour
 {
@@ -15,8 +16,9 @@ public class InventoryController : MonoBehaviour
     [SerializeField]
     public InventoryNetworkController m_inventoryNetworkController;
 
+    [FormerlySerializedAs("m_spriteLoader")]
     [SerializeField]
-    private SpriteLoader m_spriteLoader;
+    private MaterialSpriteDatabase m_materialDatabase;
 
     private void Start()
     {
@@ -28,7 +30,7 @@ public class InventoryController : MonoBehaviour
         var itemInfo = ItemRegistry.GetItem(id);
         
         var popup = Instantiate(m_itemPopup, m_itemPopupContent);
-        popup.Icon.sprite = m_spriteLoader.LoadSprite(itemInfo.Id);
+        popup.Icon.sprite = m_materialDatabase.LoadSprite(itemInfo.Id);
         popup.CountText.text = $"<size=60> +</size>{count} <color=\"white\"><size=70>({total})</size></color>";
         
         
