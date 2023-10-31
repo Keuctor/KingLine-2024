@@ -8,9 +8,11 @@ public class Popup
 {
     public Transform Container;
     public GameObject Parent;
+    public string Name;
 
-    public Popup(GameObject obj, Transform container)
+    public Popup(string name,GameObject obj, Transform container)
     {
+        Name = name;
         this.Parent = obj;
         this.Container = container;
     }
@@ -104,33 +106,14 @@ public class PopupManager : ScriptableObject
         return Instantiate(ItemSelectPopup);
     }
 
-    public Popup CreateNew()
+    public Popup CreateNew(string name="Popup(Default)")
     {
         var canvas = Instantiate(Canvas);
+        canvas.name = name;
         var container = Instantiate(PopupContainer, canvas.transform);
 
         MenuController.Instance.Menus.Push(canvas);
-        Popup popup = new Popup(canvas,container.transform);
-        return popup;
-    }
-
-    public Popup ShowStructureInfo(StructureInfo info)
-    {
-        var canvas = Instantiate(Canvas);
-        var container = Instantiate(PopupContainer, canvas.transform);
-
-        MenuController.Instance.Menus.Push(canvas);
-        Popup popup = new Popup(canvas,container.transform);
-        popup.CreateImage(info.Icon)
-            .CreateText(info.EnterDescription);
-
-        var options = info.Options;
-        for (var i = 0; i < options.Length; i++)
-        {
-            var option = options[i];
-            var x = i;
-            popup.CreateButton(option);
-        }
+        Popup popup = new Popup(name,canvas,container.transform);
         return popup;
     }
 }

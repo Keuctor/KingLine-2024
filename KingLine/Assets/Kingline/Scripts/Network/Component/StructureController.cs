@@ -93,7 +93,17 @@ public class StructureController : MonoBehaviour
     {
         var structureInfo = m_structureList.GetStructureInfo(structureId);
 
-        var popup = PopupManager.Instance.ShowStructureInfo(structureInfo);
+        var popup = PopupManager.Instance.CreateNew();
+        popup.CreateImage(structureInfo.Icon)
+            .CreateText(structureInfo.EnterDescription);
+
+        var options = structureInfo.Options;
+        for (var i = 0; i < options.Length; i++)
+        {
+            var option = options[i];
+            var x = i;
+            popup.CreateButton(option);
+        }
         popup.OnClick.AddListener((i) =>
         {
             switch (i)
