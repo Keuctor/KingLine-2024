@@ -17,10 +17,12 @@ MonoBehaviour:
   PopupButton: {fileID: 7591365132433475329, guid: ebaef87ca6e1a954eafd7a3dca20acd0, type: 3}
   PopupText: {fileID: 8048218039311874483, guid: c7c6fc09d4c0d24459fdc15e00469d44, type: 3}
   PopupImage: {fileID: 3795838853936696679, guid: 1e60aa889a468e44597df9b86e36bc1a, type: 3}
-  PopupVerticalLayout: {fileID: 0}
   ItemSelectPopup: {fileID: 3705014527671699567, guid: 269c09d05e32a6f4aa7fa1fe83ec7adc, type: 3}
   PlayerTeamView: {fileID: 5514962513695276220, guid: f7e6f4cadbc25234c8e644ddc677cbb0, type: 3}
   PlayerSkillView: {fileID: 3756209903553369776, guid: 549bc08b13b87ee4e889939bb5c3771d, type: 3}
   PlayerNameView: {fileID: 6474141283759388663, guid: 9e959b955672e4241becfd9a7355ce08, type: 3}
   PlayerLevelView: {fileID: 5308049825897198032, guid: 25efcc8657c3ead4a9e4147f0c5ea3a8, type: 3}
   PlayerSkillPointView: {fileID: 3716227185607746348, guid: e682634e710ead94eb7220122e66cbf2, type: 3}
+  InventoryView: {fileID: 5913200733525715324, guid: 47e219a0b7e62c24d83ee8c7cc122129, type: 3}
+  CharacterTextureView: {fileID: 6053305302201772576, guid: 075264651a4cdc34b850fb3b69918d71, type: 3}
+  PlayerGearInventoryView: {fileID: 2060060823217596602, guid: 6bcaa6017c76e8241a18d7abf9173060, type: 3}

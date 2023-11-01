@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
@@ -83,7 +84,6 @@ public class PopupManager : ScriptableObject
     public GameObject PopupButton;
     public GameObject PopupText;
     public GameObject PopupImage;
-    public GameObject PopupVerticalLayout;
 
     [Header("Prefabs")]
     public ItemSelectPopup ItemSelectPopup;
@@ -99,6 +99,13 @@ public class PopupManager : ScriptableObject
     public PlayerLevelView PlayerLevelView;
 
     public PlayerSkillPointView PlayerSkillPointView;
+
+    public InventoryView InventoryView;
+
+    public CharacterTextureView CharacterTextureView;
+
+    [FormerlySerializedAs("PlayerGearView")]
+    public PlayerGearInventoryView PlayerGearInventoryView;
     
 
     public ItemSelectPopup ShowItemSelectPopup()

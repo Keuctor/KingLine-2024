@@ -33,7 +33,6 @@ public class ItemInfoView : MonoBehaviour
 
     public UnityEvent OnSellButtonClicked = new();
 
-    [FormerlySerializedAs("m_spriteLoader")]
     [SerializeField]
     private MaterialSpriteDatabase m_materialDatabase;
     

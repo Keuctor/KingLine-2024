@@ -21,6 +21,8 @@ public class ItemStackContentView : MonoBehaviour, IBeginDragHandler, IEndDragHa
     [NonSerialized]
     public Transform ParentAfterDrag;
 
+    public int ItemId;
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         ItemStackView.From = transform.parent.GetComponent<ItemStackView>().Id;

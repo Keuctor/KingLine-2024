@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -16,6 +17,7 @@ public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     private Image m_background;
 
     public int Id;
+
 
     public Color SELECTED_BACKGROUND_COLOR = new(0.5f, 0.6f, 0.7f, 0.5f);
     public Color NOT_SELECTED_BACKGROUND_COLOR = new(0.4f, 0.4f, 0.4f, 1f);
@@ -50,7 +52,17 @@ public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         if (_selectedItemView != null)
             _selectedItemView.m_background.color = _selectedItemView.NOT_SELECTED_BACKGROUND_COLOR;
 
-        InventoryUI.OnItemClick?.Invoke(Id);
+        var view = Content.GetComponentInChildren<ItemStackContentView>();
+        if (view != null)
+        {
+            InventoryView.OnItemClick?.Invoke(view.ItemId);
+        }
+        else
+        {
+            InventoryView.OnItemClick?.Invoke(-1);
+        }
+
+
         _selectedItemView = this;
         _selectedItemView.m_background.color = SELECTED_BACKGROUND_COLOR;
     }

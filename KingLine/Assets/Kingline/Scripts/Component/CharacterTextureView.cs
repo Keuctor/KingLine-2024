@@ -3,20 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.HeroEditor.Common.CharacterScripts;
 using HeroEditor.Common.Enums;
+using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class CharacterTextureView : MonoBehaviour
 {
+    [Header("Dependency")]
+    [SerializeField]
+    private InventoryNetworkController m_inventoryController;
+
+    [SerializeField]
+    private ProgressionNetworkController m_progressionController;
+
+    
     
     [SerializeField]
     private Character m_characterTemplate;
-    
+
     [SerializeField]
     private RawImage m_rawImage;
-    
+
     private Character m_character;
-    
+
     private RenderTexture m_texture;
 
 
@@ -25,9 +36,9 @@ public class CharacterTextureView : MonoBehaviour
     public int Height = 256;
 
     public int Depth = 1;
-    
+
     public int Armor;
-    
+
     public int Strength;
 
     private Camera m_camera;
@@ -35,6 +46,15 @@ public class CharacterTextureView : MonoBehaviour
     public float OrthographicSize = 1.9f;
 
     private bool m_initialized;
+
+    public bool ShowStrengthAndArmor;
+
+    [ShowIf("ShowStrengthAndArmor"), SerializeField]
+    private TMP_Text m_armorText;
+
+    [ShowIf("ShowStrengthAndArmor"), SerializeField]
+    private TMP_Text m_strengthText;
+
 
     private void Initialize()
     {
@@ -67,7 +87,7 @@ public class CharacterTextureView : MonoBehaviour
             Destroy(m_camera.gameObject);
             m_camera = null;
         }
-        
+
         if (m_character)
         {
             Destroy(m_character.gameObject);
@@ -83,10 +103,29 @@ public class CharacterTextureView : MonoBehaviour
         m_initialized = false;
     }
 
+    public void ShowLocalPlayerGear()
+    {
+        Strength = m_progressionController.GetSkill("Strength");
+        Armor = m_progressionController.GetSkill("Defence");
+        
+        Show(InventoryNetworkController.GetPlayerGear(NetworkManager.LocalPlayerPeerId));
+        m_inventoryController.OnGearChange.RemoveListener(OnGearChanged);
+        m_inventoryController.OnGearChange.AddListener(OnGearChanged);
+    }
+
+    public void OnGearChanged(int id)
+    {
+        if (id == NetworkManager.LocalPlayerPeerId)
+        {
+            ShowLocalPlayerGear();
+        }
+    }
+
+
     public void Show(ItemStack[] items)
     {
         Initialize();
-        
+
         m_character.ResetEquipment();
         var helmet = items[0].Id;
         var armor = items[1].Id;
@@ -102,7 +141,7 @@ public class CharacterTextureView : MonoBehaviour
                     m_character.Equip(helmets[i], EquipmentPart.Helmet);
                     break;
                 }
-            
+
             var armorMaterial = (ArmorItemMaterial)itemInfo;
             Armor += (byte)armorMaterial.Armor;
         }
@@ -121,7 +160,7 @@ public class CharacterTextureView : MonoBehaviour
                     m_character.Equip(armors[i], EquipmentPart.Armor);
                     break;
                 }
-            
+
             var armorMaterial = (ArmorItemMaterial)itemInfo;
             Armor += (byte)armorMaterial.Armor;
         }
@@ -140,13 +179,19 @@ public class CharacterTextureView : MonoBehaviour
                     m_character.Equip(weapons[i], EquipmentPart.MeleeWeapon1H);
                     break;
                 }
-            
+
             var armorMaterial = (WeaponItemMaterial)itemInfo;
             Strength += (byte)armorMaterial.Attack;
         }
         else
         {
             m_character.UnEquip(EquipmentPart.MeleeWeapon1H);
+        }
+
+        if (ShowStrengthAndArmor)
+        {
+            m_armorText.text = Armor + "";
+            m_strengthText.text = Strength + "";
         }
     }
 }

@@ -20,7 +20,7 @@ public class FilteredItemStackView : ItemStackView
         var inv = InventoryNetworkController.LocalInventory;
         var item = inv.Items[From];
         var itemInfo = ItemRegistry.GetItem(item.Id);
-
+        
         if (Id == NetworkInventory.HAND_SLOT_INDEX)
             if (itemInfo.Type == IType.WEAPON)
                 DragItem(view, eventData);

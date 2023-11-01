@@ -7,11 +7,8 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
-
 public class MenuController : Singleton<MenuController>
 {
- 
     public readonly Stack<GameObject> Menus = new();
 
     [SerializeField]
@@ -20,6 +17,8 @@ public class MenuController : Singleton<MenuController>
     public readonly UnityEvent OnOpenMenu = new();
 
     public List<Popup> Popups = new List<Popup>();
+    
+    private CharacterTextureView m_characterTextureView;
 
     private void Update()
     {
@@ -33,6 +32,24 @@ public class MenuController : Singleton<MenuController>
                 p= null;
             }
         }
+    }
+    
+    public void OpenPlayerInventory()
+    {
+        var activePopup = Popups.FirstOrDefault(t => t.Name == "InventoryUI");
+        if (activePopup != null)
+        {
+            activePopup.Destroy();
+            Popups.Remove(activePopup);
+            return;
+        }
+        var popup = PopupManager.Instance.CreateNew("InventoryUI");
+        var characterTextureView = popup.Add(PopupManager.Instance.CharacterTextureView);
+        characterTextureView.ShowLocalPlayerGear();
+        popup.Add(PopupManager.Instance.PlayerGearInventoryView);
+        var invView = popup.Add(PopupManager.Instance.InventoryView);
+        invView.ShowLocalPlayerInventory();
+        Popups.Add(popup);
     }
 
     public void OpenPlayerUI()

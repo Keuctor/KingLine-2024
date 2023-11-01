@@ -65,7 +65,6 @@
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemStackView.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\InventoryBase.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\ScreenshotTransparent.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Inventory\InventoryUI.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\LayerManager.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\CharacterReferencesResolver.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
@@ -129,6 +128,7 @@
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\Enums\FirearmLoadType.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\MonsterVariation.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\Springs\SpringBase.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Component\PlayerGearInventoryView.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\StandaloneFilePicker.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\SortingOrderExample.cs" />
      <Compile Include="Assets\Kingline\Scripts\Component\PlayerLevelView.cs" />
@@ -183,6 +183,7 @@
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\Elements\ItemInfo.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\CharacterBodySculptor.cs" />
      <Compile Include="Assets\HeroEditor\Common\CharacterScripts\Firearms\Shell.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Component\InventoryView.cs" />
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\CaptureOptions.cs" />
      <Compile Include="Assets\HeroEditor\FantasyHeroes\TestRoom\Scripts\Tweens\ScaleSpring.cs" />
      <Compile Include="Assets\Kingline\Scripts\Popup\PopupManager.cs" />
