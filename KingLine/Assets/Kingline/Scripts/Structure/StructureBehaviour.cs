@@ -8,7 +8,6 @@ public class StructureBehaviour : MonoBehaviour
     public string Description;
     public SpriteRenderer Selection;
 
-    [FormerlySerializedAs("StructureInfoUI")]
     public TargetStructureView TargetStructureView;
     
     private Sprite icon;

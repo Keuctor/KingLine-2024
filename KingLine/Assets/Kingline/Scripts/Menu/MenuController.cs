@@ -51,6 +51,7 @@ public class MenuController : Singleton<MenuController>
         invView.ShowLocalPlayerInventory();
         Popups.Add(popup);
     }
+    
 
     public void OpenPlayerUI()
     {
