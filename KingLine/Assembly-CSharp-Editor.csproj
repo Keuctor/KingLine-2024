@@ -46,10 +46,12 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\HeroEditor\Common\Editor\SpriteCollectionEditor.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Utils\Editor\WhatUsesThis.cs" />
      <Compile Include="Assets\HeroEditor\Common\Editor\LayerManagerEditor.cs" />
      <Compile Include="Assets\HeroEditor\Common\Editor\FirearmCollectionEditor.cs" />
      <Compile Include="Assets\HeroEditor\Common\Editor\IconCollectionEditor.cs" />
      <Folder Include="Assets\HeroEditor\Common\Editor" />
+     <Folder Include="Assets\Kingline\Scripts\Utils\Editor" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.10f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
