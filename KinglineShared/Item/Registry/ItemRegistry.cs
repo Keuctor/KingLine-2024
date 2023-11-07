@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 public enum IType : int{ 
+    NONE,
     RESOURCE,
     TOOL,
     HELMET,

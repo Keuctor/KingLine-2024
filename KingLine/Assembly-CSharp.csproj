@@ -74,7 +74,6 @@
      <Compile Include="Assets\HeroEditor\Common\EditorScripts\Screenshot.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\Controller\InventoryNetworkController.cs" />
      <Compile Include="Assets\HeroEditor\Common\ExampleScripts\MovementExample.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Inventory\FilteredItemStackView.cs" />
      <Compile Include="Assets\Kingline\Scripts\Network\Controller\StructureNetworkController.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\SoloState.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\Serializer.cs" />

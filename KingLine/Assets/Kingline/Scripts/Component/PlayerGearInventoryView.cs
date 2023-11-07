@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerGearInventoryView : MonoBehaviour
 {
-    public FilteredItemStackView[] Items;
+    public ItemStackView[] Items;
 
     [Header("Dependency"), SerializeField]
     private MaterialSpriteDatabase m_spriteDatabase;
