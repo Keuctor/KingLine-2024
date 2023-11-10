@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -25,6 +26,8 @@ public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     public Color NOT_SELECTED_BACKGROUND_COLOR = new(0.4f, 0.4f, 0.4f, 1f);
     public Color POINTER_OVER_BACKGROUND_COLOR = new(0.5f, 0.5f, 0.5f, 1f);
 
+
+    public UnityEvent<int, int> OnDropItem = new();
 
     private void Start()
     {
@@ -65,6 +68,8 @@ public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             FromIndex = (short)From,
             ToIndex = (short)To
         });
+
+        OnDropItem?.Invoke(From, To);
     }
 
     public void OnPointerDown(PointerEventData eventData)

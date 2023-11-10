@@ -108,6 +108,7 @@ public class PopupManager : ScriptableObject
     public PlayerSkillPointView PlayerSkillPointView;
 
     public InventoryView InventoryView;
+    public InventoryView ScrollableInventoryView;
 
     public ItemInfoView ItemInfoView;
 

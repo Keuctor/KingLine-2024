@@ -24,7 +24,7 @@ public class StructureController : MonoBehaviour
     
     [SerializeField]
     private StructureBehaviour m_structureBehaviour;
-
+    
   
 
     private readonly List<StructureBehaviour> m_structureInstances = new();
@@ -162,39 +162,50 @@ public class StructureController : MonoBehaviour
                         if (nI == 0)
                         {
                             var showItemSelectPopup = PopupManager.Instance.CreateNew("ItemSellPopup");
+                            showItemSelectPopup.CreateText("Madaca's City");
 
-                            var invView = showItemSelectPopup.Add(PopupManager.Instance.InventoryView);
-                            invView.ShowLocalPlayerInventory();
+                            InventoryView invView = showItemSelectPopup.Add(PopupManager.Instance.ScrollableInventoryView);
+                            invView.Show(new ItemStack[64]);
                             invView.ShowInfo = false;
-                            var container = showItemSelectPopup.Add(PopupManager.Instance.PopupContainer);
-                            var layoutGroup = container.GetComponent<VerticalLayoutGroup>();
-                            layoutGroup.padding = new RectOffset(50, 50, 120, 90);
-                            invView.OnItemSelect.AddListener((id) =>
-                            {
-                                for (int i = 0; i < container.childCount; i++)
-                                    Destroy(container.GetChild(i).gameObject);
 
-                                if (id != -1)
-                                {
-                                    var item = ItemRegistry.GetItem(id);
-                                    var btn = Instantiate(PopupManager.Instance.PopupButton, container.transform);
-                                    var infoView  = Instantiate(PopupManager.Instance.ItemInfoView, container.transform);
-                                    infoView.ShowItemInfo(item);
-                                    var btnComp = btn.GetComponent<Button>();
-                                    btnComp.transform.GetChild(1).GetComponent<TMP_Text>().text =
-                                        $"Sell ({item.Value} g)";
+                            showItemSelectPopup.CreateText("Heuctor");
+                            showItemSelectPopup.CreateText($"You will get {324}g");
+                            
+                             var inv2 =  showItemSelectPopup.Add(PopupManager.Instance.InventoryView);
+                             inv2.ShowLocalPlayerInventory();
 
-                                    infoView.GetComponent<LayoutElement>().ignoreLayout = false;
-
-                                    // var text = Instantiate(PopupManager.Instance.PopupText, container);
-                                    // text.GetComponent<TMP_Text>().text = item.Name;
-                                    //
-                                    // var img = Instantiate(PopupManager.Instance.PopupImage,container);
-                                    // img.GetComponent<Image>().sprite = m_materialSpriteDatabase.LoadSprite(item.Id);
-                                    //
-                                    //
-                                }
-                            });
+                            
+                            
+                            
+                            // var container = showItemSelectPopup.Add(PopupManager.Instance.PopupContainer);
+                            // var layoutGroup = container.GetComponent<VerticalLayoutGroup>();
+                            // layoutGroup.padding = new RectOffset(50, 50, 120, 90);
+                            // invView.OnItemSelect.AddListener((id) =>
+                            // {
+                            //     for (int i = 0; i < container.childCount; i++)
+                            //         Destroy(container.GetChild(i).gameObject);
+                            //
+                            //     if (id != -1)
+                            //     {
+                            //         var item = ItemRegistry.GetItem(id);
+                            //         var btn = Instantiate(PopupManager.Instance.PopupButton, container.transform);
+                            //         var infoView  = Instantiate(PopupManager.Instance.ItemInfoView, container.transform);
+                            //         infoView.ShowItemInfo(item);
+                            //         var btnComp = btn.GetComponent<Button>();
+                            //         btnComp.transform.GetChild(1).GetComponent<TMP_Text>().text =
+                            //             $"Sell ({item.Value} g)";
+                            //
+                            //         infoView.GetComponent<LayoutElement>().ignoreLayout = false;
+                            //
+                            //         // var text = Instantiate(PopupManager.Instance.PopupText, container);
+                            //         // text.GetComponent<TMP_Text>().text = item.Name;
+                            //         //
+                            //         // var img = Instantiate(PopupManager.Instance.PopupImage,container);
+                            //         // img.GetComponent<Image>().sprite = m_materialSpriteDatabase.LoadSprite(item.Id);
+                            //         //
+                            //         //
+                            //     }
+                            // });
                         }
 
                         newPopup.Destroy();

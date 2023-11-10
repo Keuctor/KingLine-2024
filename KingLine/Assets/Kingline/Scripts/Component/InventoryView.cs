@@ -33,6 +33,8 @@ public class InventoryView : MonoBehaviour
 
     public bool ShowGear;
 
+    public UnityEvent<int,int> OnItemDropped;
+
 
     private ItemInfoView m_infoView;
 
@@ -89,10 +91,10 @@ public class InventoryView : MonoBehaviour
                 continue;
 
             var item = items[i];
-            var stackView = Instantiate(m_itemStackTemplate, m_itemStackViewParent);
+            ItemStackView stackView = Instantiate(m_itemStackTemplate, m_itemStackViewParent);
             stackView.Id = i;
 
-            if (item.Id == -1)
+            if (item==null || item.Id == -1)
             {
                 continue;
             }
