@@ -2276,10 +2276,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aef28be4b3a3c449b44eb6e27575ce5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_structureBehaviour: {fileID: 2664565456676373643, guid: 4d04f40df9c1f19468eeee4502d70d1b, type: 3}
-  m_structureList: {fileID: 11400000, guid: b8aa0b4bb223cf0489d8fdbe158a9db8, type: 2}
+  m_materialSpriteDatabase: {fileID: 11400000, guid: 9bc28bb01a8c5374099cbdf3550b4c47, type: 2}
   m_structureNetworkController: {fileID: 11400000, guid: c39fdabd095f9ef4ca7f8516038f58f2, type: 2}
   m_teamNetworkController: {fileID: 11400000, guid: 4c88202cd0f3c804eb9a077614540680, type: 2}
+  m_structureList: {fileID: 11400000, guid: b8aa0b4bb223cf0489d8fdbe158a9db8, type: 2}
+  m_structureBehaviour: {fileID: 2664565456676373643, guid: 4d04f40df9c1f19468eeee4502d70d1b, type: 3}
 --- !u!1 &2046753390
 GameObject:
   m_ObjectHideFlags: 0

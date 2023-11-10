@@ -11,6 +11,7 @@ public class InventoryView : MonoBehaviour
     public bool Modifiable = true;
 
     public static UnityEvent<int> OnItemClick = new();
+    public  UnityEvent<int> OnItemSelect = new();
 
     [Header("Dependency")]
     [SerializeField]
@@ -40,8 +41,14 @@ public class InventoryView : MonoBehaviour
         OnItemClick.AddListener(OnItemClicked);
     }
 
+    public bool ShowInfo = true;
+
     private void OnItemClicked(int itemId)
     {
+        OnItemSelect?.Invoke(itemId);
+        if (!ShowInfo)
+            return;
+        
         if (itemId != -1)
         {
             if (m_infoView == null)

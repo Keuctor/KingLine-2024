@@ -9,8 +9,6 @@ using UnityEngine.UI;
 
 public class MenuController : Singleton<MenuController>
 {
-    public readonly Stack<GameObject> Menus = new();
-
     [SerializeField]
     private GameObject m_blocker;
     [NonSerialized]
@@ -62,7 +60,7 @@ public class MenuController : Singleton<MenuController>
             Popups.Remove(activePopup);
             return;
         }
-
+        
         var popup = PopupManager.Instance.CreateNew("PlayerUI");
         popup.Add(PopupManager.Instance.PlayerNameView);
         popup.Add(PopupManager.Instance.PlayerLevelView);

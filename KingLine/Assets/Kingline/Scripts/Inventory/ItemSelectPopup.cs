@@ -49,7 +49,6 @@ public class ItemSelectPopup : MonoBehaviour
 
     private  void Start()
     {
-        MenuController.Instance.Menus.Push(this.gameObject);
         m_inventory = InventoryNetworkController.LocalInventory;
 
         var items = m_inventory.Items;

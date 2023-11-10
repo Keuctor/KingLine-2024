@@ -1,22 +1,34 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StructureController : MonoBehaviour
 {
+    
+    [Header("Dependency")]
+    
     [SerializeField]
-    private StructureBehaviour m_structureBehaviour;
+    private MaterialSpriteDatabase m_materialSpriteDatabase;
+    
+    [SerializeField]
+    private StructureNetworkController m_structureNetworkController;
+
+    [SerializeField]
+    private TeamNetworkController m_teamNetworkController;
 
     [SerializeField]
     private StructureListSO m_structureList;
+    
+    [SerializeField]
+    private StructureBehaviour m_structureBehaviour;
+
+  
 
     private readonly List<StructureBehaviour> m_structureInstances = new();
-
-    [SerializeField]
-    private StructureNetworkController m_structureNetworkController;
-    [SerializeField]
-    private TeamNetworkController m_teamNetworkController;
+    
 
     private void Start()
     {
@@ -38,9 +50,10 @@ public class StructureController : MonoBehaviour
             popup.CreateText("No one wants to join you.");
             popup.CreateText("<size=32>(Tip: Improve your Leadership skill)</size>");
             popup.CreateButton("Leave...");
-            popup.OnClick.AddListener((x) => { popup.Destroy();});
+            popup.OnClick.AddListener((x) => { popup.Destroy(); });
             return;
         }
+
         var troop = TroopRegistry.GetTroop(troopId);
         popup.CreateText(
             $"<b>{count}</b> <b>{troop.Name}</b> wants to join your team but they want <b>{troop.Price * count}</b> gold for it");
@@ -104,6 +117,7 @@ public class StructureController : MonoBehaviour
             var x = i;
             popup.CreateButton(option);
         }
+
         popup.OnClick.AddListener((i) =>
         {
             switch (i)
@@ -147,8 +161,40 @@ public class StructureController : MonoBehaviour
                     {
                         if (nI == 0)
                         {
-                            var showItemSelectPopup = PopupManager.Instance.ShowItemSelectPopup();
-                            showItemSelectPopup.SelectMode = false;
+                            var showItemSelectPopup = PopupManager.Instance.CreateNew("ItemSellPopup");
+
+                            var invView = showItemSelectPopup.Add(PopupManager.Instance.InventoryView);
+                            invView.ShowLocalPlayerInventory();
+                            invView.ShowInfo = false;
+                            var container = showItemSelectPopup.Add(PopupManager.Instance.PopupContainer);
+                            var layoutGroup = container.GetComponent<VerticalLayoutGroup>();
+                            layoutGroup.padding = new RectOffset(50, 50, 120, 90);
+                            invView.OnItemSelect.AddListener((id) =>
+                            {
+                                for (int i = 0; i < container.childCount; i++)
+                                    Destroy(container.GetChild(i).gameObject);
+
+                                if (id != -1)
+                                {
+                                    var item = ItemRegistry.GetItem(id);
+                                    var btn = Instantiate(PopupManager.Instance.PopupButton, container.transform);
+                                    var infoView  = Instantiate(PopupManager.Instance.ItemInfoView, container.transform);
+                                    infoView.ShowItemInfo(item);
+                                    var btnComp = btn.GetComponent<Button>();
+                                    btnComp.transform.GetChild(1).GetComponent<TMP_Text>().text =
+                                        $"Sell ({item.Value} g)";
+
+                                    infoView.GetComponent<LayoutElement>().ignoreLayout = false;
+
+                                    // var text = Instantiate(PopupManager.Instance.PopupText, container);
+                                    // text.GetComponent<TMP_Text>().text = item.Name;
+                                    //
+                                    // var img = Instantiate(PopupManager.Instance.PopupImage,container);
+                                    // img.GetComponent<Image>().sprite = m_materialSpriteDatabase.LoadSprite(item.Id);
+                                    //
+                                    //
+                                }
+                            });
                         }
 
                         newPopup.Destroy();

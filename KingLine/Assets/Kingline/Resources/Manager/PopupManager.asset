@@ -24,5 +24,6 @@ MonoBehaviour:
   PlayerLevelView: {fileID: 5308049825897198032, guid: 25efcc8657c3ead4a9e4147f0c5ea3a8, type: 3}
   PlayerSkillPointView: {fileID: 3716227185607746348, guid: e682634e710ead94eb7220122e66cbf2, type: 3}
   InventoryView: {fileID: 5913200733525715324, guid: 47e219a0b7e62c24d83ee8c7cc122129, type: 3}
+  ItemInfoView: {fileID: 3828401065346335361, guid: 3565ca805f0ae87439994fed0f25b06c, type: 3}
   CharacterTextureView: {fileID: 6053305302201772576, guid: 075264651a4cdc34b850fb3b69918d71, type: 3}
   PlayerGearInventoryView: {fileID: 2060060823217596602, guid: 6bcaa6017c76e8241a18d7abf9173060, type: 3}

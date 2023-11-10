@@ -16,9 +16,11 @@ public class Popup
         Name = name;
         this.Parent = obj;
         this.Container = container;
+        MenuController.Instance.Popups.Add(this);
     }
     public void Destroy()
     {
+        MenuController.Instance.Popups.Remove(this);
         Object.Destroy(Parent);
     }
 
@@ -42,6 +44,11 @@ public class Popup
     {
         var instantiate = Object.Instantiate(component, Container);
         return instantiate;
+    }
+
+    public Transform Add(GameObject transform)
+    {
+        return Object.Instantiate(transform,Container).transform;
     }
 
     public Popup CreateImage(Sprite sprite)
@@ -102,6 +109,8 @@ public class PopupManager : ScriptableObject
 
     public InventoryView InventoryView;
 
+    public ItemInfoView ItemInfoView;
+
     public CharacterTextureView CharacterTextureView;
 
     [FormerlySerializedAs("PlayerGearView")]
@@ -119,7 +128,6 @@ public class PopupManager : ScriptableObject
         canvas.name = name;
         var container = Instantiate(PopupContainer, canvas.transform);
 
-        MenuController.Instance.Menus.Push(canvas);
         Popup popup = new Popup(name,canvas,container.transform);
         return popup;
     }
