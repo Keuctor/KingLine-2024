@@ -71,7 +71,8 @@ public class NetworkStructureController
                         }, DeliveryMethod.ReliableUnordered);
 
 
-                        NetworkPlayerTeamController.AddMember(player.Token, request.Id,
+                        var token = KingLine.GetPlayerToken(peer.Id);
+                        NetworkPlayerTeamController.AddMember(token, request.Id,
                             request.Count);
 
                         PackageSender.SendPacket(peer, new ResUpdatePlayerTeam()
@@ -79,7 +80,7 @@ public class NetworkStructureController
                             Team = new Team()
                             {
                                 Id = player.Id,
-                                Members = NetworkPlayerTeamController.PlayerTeams[player.Token]
+                                Members = NetworkPlayerTeamController.PlayerTeams[token]
                             }
                         });
                     }

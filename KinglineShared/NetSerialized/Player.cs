@@ -3,7 +3,6 @@
 public partial class Player : INetSerializable
 {
     public int Id { get; set; }
-    public string Token { get; set; }
     public string Name { get; set; }
     public float x { get; set; }
     public float y { get; set; }

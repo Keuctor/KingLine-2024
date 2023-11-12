@@ -37,17 +37,18 @@ public class NetworkPlayerProgressionController : INetworkController
 
     private void OnSkillIncrement(ReqSkillIncrement request, NetPeer peer)
     {
-        var player = NetworkPlayerController.Players[peer];
-        var playerLevel = NetworkPlayerLevelController.GetPlayerLevel(player.Token);
+        var token = KingLine.GetPlayerToken(peer.Id);
 
-        var progression = Progressions[player.Token];
+        var playerLevel = NetworkPlayerLevelController.GetPlayerLevel(token);
+
+        var progression = Progressions[token];
         var lvl = playerLevel;
         foreach (var p in progression)
             lvl -= (p.Value - 1);
 
         if (lvl > 0)
         {
-            foreach (var s in Progressions[player.Token])
+            foreach (var s in Progressions[token])
             {
                 if (s.Name.Equals(request.SkillName))
                 {
@@ -65,10 +66,10 @@ public class NetworkPlayerProgressionController : INetworkController
 
     private void OnPlayerProgressionRequest(ReqPlayerProgression request, NetPeer peer)
     {
-        var player = NetworkPlayerController.Players[peer];
+        var token = KingLine.GetPlayerToken(peer.Id);
 
         ResPlayerProgression response = new ResPlayerProgression();
-        if (Progressions.TryGetValue(player.Token, out var progression))
+        if (Progressions.TryGetValue(token, out var progression))
         {
             response.Skills = progression;
         }
@@ -83,7 +84,7 @@ public class NetworkPlayerProgressionController : INetworkController
                 CreateSkill("Charisma",1),
                 CreateSkill("Leadership",1),
             };
-            Progressions.Add(player.Token, response.Skills);
+            Progressions.Add(token, response.Skills);
         }
         PackageSender.SendPacket(peer, response);
     }

@@ -67,8 +67,10 @@ public class NetworkPlayerTeamController : INetworkController
     {
         var player = NetworkPlayerController.Players[peer];
         var troop = TroopRegistry.Troops[request.MemberId];
+            
+        var token = KingLine.GetPlayerToken(peer.Id);
 
-        var team = PlayerTeams[player.Token];
+        var team = PlayerTeams[token];
         var success = false;
         for (int i = 0; i < team.Length; i++)
         {
@@ -82,8 +84,8 @@ public class NetworkPlayerTeamController : INetworkController
                         {
                             team[i].Xp -= troop.UpgradeXp;
 
-                            RemoveMember(player.Token, team[i].Id);
-                            AddMember(player.Token, troop.NextTroopId, 1);
+                            RemoveMember(token, team[i].Id);
+                            AddMember(token, troop.NextTroopId, 1);
 
                             success = true;
                             PackageSender.SendPacket(peer, new ResUpdatePlayerTeam()
@@ -91,7 +93,7 @@ public class NetworkPlayerTeamController : INetworkController
                                 Team = new Team()
                                 {
                                     Id = player.Id,
-                                    Members = PlayerTeams[player.Token]
+                                    Members = PlayerTeams[token]
                                 }
                             });
 
@@ -135,13 +137,14 @@ public class NetworkPlayerTeamController : INetworkController
     {
         var response = new ResPlayerTeam();
         var players = NetworkPlayerController.Players;
-
+        
         response.Teams = new Team[players.Count];
 
         int i = 0;
         foreach (var player in players)
         {
-            var team = GetPlayerTeam(player.Key.Id, player.Value.Token);
+            var token = KingLine.GetPlayerToken(player.Key.Id);
+            var team = GetPlayerTeam(player.Key.Id, token);
             response.Teams[i] = team;
             i++;
         }

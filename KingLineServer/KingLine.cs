@@ -5,20 +5,57 @@ using System.Net.Sockets;
 using System.Text;
 
 
-public class KingLineServer : INetEventListener
+public class ConnectedPeer
 {
+    public int Id { get; }
+    public string Token { get; }
+    public NetPeer Peer { get; }
+    public ConnectedPeer(NetPeer peer, string token)
+    {
+        this.Id = peer.Id;
+        this.Peer = peer;
+        this.Token = token;
+    }
+}
+
+public class KingLine : INetEventListener
+{
+
+    private static Dictionary<int, ConnectedPeer> _connectedPeers = new Dictionary<int, ConnectedPeer>();
+
     public static int Multiplier = 100;
-    static ConnectionData connectionData = new ConnectionData();
+
+    private static ConnectionData connectionData = new ConnectionData();
+
     private readonly NetPacketProcessor _netPacketProcessor = new NetPacketProcessor();
+
+    private static KingLine _instance;
+    public static KingLine Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new KingLine();
+                Console.WriteLine("Initialize Kingline Class");
+            }
+            return _instance;
+        }
+
+    }
 
     private List<INetworkController> INetworkControllers;
     NetManager server;
     static void Main(string[] args)
     {
-        new KingLineServer().Run();
+        Instance.Run();
+    }
+    public static string GetPlayerToken(int Id)
+    {
+        return _connectedPeers[Id].Token;
     }
 
-    public KingLineServer()
+    public KingLine()
     {
         server = new NetManager(this);
         server.DisconnectTimeout = 10000;
@@ -80,12 +117,13 @@ public class KingLineServer : INetEventListener
         INetworkControllers.ForEach(c => c.OnUpdate(1f / Time.TARGET_FPS));
     }
 
+
     public void OnConnectionRequest(ConnectionRequest request)
     {
         var data = request.Data;
         var version = data.GetString();
         var userName = data.GetString(16);
-        var idendifier = data.GetString(32);
+        var token = data.GetString(32);
         try
         {
             if (server.ConnectedPeersCount < 1000)
@@ -93,7 +131,9 @@ public class KingLineServer : INetEventListener
                 if (version == connectionData.Version)
                 {
                     var peer = request.Accept();
-                    INetworkControllers.ForEach(t => t.OnPeerConnectionRequest(peer, idendifier, userName));
+
+                    _connectedPeers.Add(peer.Id, new ConnectedPeer(peer, token));
+                    INetworkControllers.ForEach(t => t.OnPeerConnectionRequest(peer, token, userName));
                     PackageSender.SendPacket(peer, new ResPeerId { Id = peer.Id });
                     Cw.Log($"\tPeer {peer.Id} Client {userName} connected.", ConsoleColor.Green);
                 }
@@ -150,6 +190,8 @@ public class KingLineServer : INetEventListener
 
     public void OnPeerDisconnected(NetPeer peer, DisconnectInfo disconnectInfo)
     {
+        _connectedPeers.Remove(peer.Id);
+
         INetworkControllers.ForEach(t => t.OnPeerDisconnected(peer));
     }
 

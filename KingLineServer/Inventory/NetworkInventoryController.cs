@@ -30,8 +30,8 @@ public class NetworkInventoryController : INetworkController
 
     public void InventoryAdd(NetPeer peer, int id, short count)
     {
-        var player = NetworkPlayerController.Players[peer];
-        NetworkInventory inventory = Inventories[player.Token];
+        var token = KingLine.GetPlayerToken(peer.Id);
+        NetworkInventory inventory = Inventories[token];
         if (inventory.AddItem(id, count))
         {
             PackageSender.SendPacket(peer, new ResInventoryAdd()
@@ -50,8 +50,9 @@ public class NetworkInventoryController : INetworkController
 
     private void OnRequestInventoryMove(ReqInventoryMove request, NetPeer peer)
     {
-        var player = NetworkPlayerController.Players[peer];
-        var inventory = Inventories[player.Token];
+        var token = KingLine.GetPlayerToken(peer.Id);
+
+        var inventory = Inventories[token];
 
         if (inventory.MoveItem(request.FromIndex, request.ToIndex))
         {
@@ -62,7 +63,7 @@ public class NetworkInventoryController : INetworkController
             };
 
             PackageSender.SendPacket(peer, response);
-            
+
             //Send my gear changes to other players
             if (IsGearIndex(request.ToIndex) || IsGearIndex(request.FromIndex))
             {
@@ -89,9 +90,10 @@ public class NetworkInventoryController : INetworkController
 
     private void OnRequestInventory(ReqInventory request, NetPeer peer)
     {
-        var player = NetworkPlayerController.Players[peer];
+        var token = KingLine.GetPlayerToken(peer.Id);
+
         var response = new ResInventory();
-        var inventory = GetOrCreateInventory(player.Token);
+        var inventory = GetOrCreateInventory(token);
         response.Items = inventory.Items;
         PackageSender.SendPacket(peer, response);
 
@@ -101,7 +103,8 @@ public class NetworkInventoryController : INetworkController
             var netPeer = p.Key;
             if (netPeer.Id != peer.Id)
             {
-                var targetPlayer = GetOrCreateInventory(p.Value.Token);
+                var tkn = KingLine.GetPlayerToken(p.Key.Id);
+                var targetPlayer = GetOrCreateInventory(tkn);
                 PackageSender.SendPacket(peer, new ResRemoteInventory()
                 {
                     Id = netPeer.Id,
@@ -143,14 +146,11 @@ public class NetworkInventoryController : INetworkController
 
     public void OnPeerConnected(NetPeer peer)
     {
-        //im gonna request all the other players inv but
-        //they don't know about my inventory so i have to send them
-        var me = NetworkPlayerController.Players[peer];
         foreach (var p in NetworkPlayerController.Players)
         {
-            if (me.Id != p.Key.Id)
+            if (peer.Id != p.Key.Id)
             {
-                var myInv = GetOrCreateInventory(me.Token);
+                var myInv = GetOrCreateInventory(KingLine.GetPlayerToken(peer.Id));
                 PackageSender.SendPacket(p.Key, new ResRemoteInventory()
                 {
                     Id = peer.Id,

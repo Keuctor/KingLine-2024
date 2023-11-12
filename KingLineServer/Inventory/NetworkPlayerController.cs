@@ -22,7 +22,8 @@ public class NetworkPlayerController : INetworkController
     {
 
         var player = Players[peer];
-        var inventory = NetworkInventoryController.Inventories[player.Token];
+        var token = KingLine.GetPlayerToken(peer.Id);
+        var inventory = NetworkInventoryController.Inventories[token];
         var targetItemStack = inventory.Items[request.Index];
         if (targetItemStack.Id != -1 && targetItemStack.Count >= request.Count) {
             var itemInfo = ItemRegistry.GetItem(targetItemStack.Id);
@@ -135,7 +136,6 @@ public class NetworkPlayerController : INetworkController
             speed = 1.5f,
             targetX = 0,
             targetY = 0,
-            Token = idendifier,
             Currency = 15000,
         });
     }
