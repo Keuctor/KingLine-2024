@@ -57,18 +57,21 @@ public class SellItemView : MonoBehaviour
             InventoryNetworkController.Sell(selectedIndex, 1);
             return;
         }
-        
+
         var p = PopupManager.Instance.CreateNew("SelectAmount");
         var selectAmountView = p.Add(PopupManager.Instance.SelectAmountView);
-        selectAmountView.SetValue(1,1,invItem.Count);
+        selectAmountView.SetValue(1, 1, invItem.Count);
 
 
-        selectAmountView.OnDone.AddListener(() =>
+        selectAmountView.OnDone.AddListener((bool done) =>
         {
-            InventoryNetworkController.Sell(selectedIndex, selectAmountView.Value);
+            if (done)
+            {
+                InventoryNetworkController.Sell(selectedIndex, selectAmountView.Value);
+            }
+
             p.Destroy();
         });
-        
     }
 
     public void SetItemId(int index)

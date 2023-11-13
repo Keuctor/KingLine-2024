@@ -60,10 +60,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 0
+    m_Left: 30
+    m_Right: 30
     m_Top: 120
-    m_Bottom: 90
+    m_Bottom: 140
   m_ChildAlignment: 7
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4db272322e052bf4b88498d8d2e41d2c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 31ff70437b58b5545b592fd20216914c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

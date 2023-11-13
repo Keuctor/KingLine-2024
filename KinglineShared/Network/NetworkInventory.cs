@@ -85,6 +85,8 @@ public class NetworkInventory
     {
         var itemInfo = ItemRegistry.GetItem(id);
 
+        if (itemInfo == null)
+            return false;
 
         if (itemInfo.Stackable)
         {

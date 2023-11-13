@@ -29,7 +29,7 @@ public class SelectAmountView : MonoBehaviour
     private int max;
     private int min;
 
-    public UnityEvent OnDone = new();
+    public UnityEvent<bool> OnDone = new();
 
     public short Value => (short)value;
 
@@ -39,8 +39,8 @@ public class SelectAmountView : MonoBehaviour
         m_icon.gameObject.SetActive(false);
         m_amountSlider.onValueChanged.AddListener(OnSliderValueChanged);
         m_amountInputField.onValueChanged.AddListener(OnAmountInputValueChanged);
-        m_doneButton.onClick.AddListener(() => { OnDone?.Invoke();});
-        m_exitButton.onClick.AddListener(() => { Destroy(gameObject);});
+        m_doneButton.onClick.AddListener(() => { OnDone?.Invoke(true);});
+        m_exitButton.onClick.AddListener(() => {OnDone?.Invoke(false);});
     }
 
     private void OnAmountInputValueChanged(string inputStr)

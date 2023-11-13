@@ -110,7 +110,7 @@ public class ItemSelectPopup : MonoBehaviour
                     var selectPopup = Instantiate(MSelectAmountViewTemplate);
                     selectPopup.SetIcon(m_materialDatabase.LoadSprite(n.Id));
                     selectPopup.SetValue(1, 1, item.Count);
-                    selectPopup.OnDone.AddListener(() =>
+                    selectPopup.OnDone.AddListener((bool done) =>
                     {
                         InventoryNetworkController.Sell(index, selectPopup.Value);
                         Destroy(selectPopup.gameObject);

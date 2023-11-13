@@ -2502,6 +2502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_blocker: {fileID: 1589623573}
+  NavigationParent: {fileID: 2132535159}
 --- !u!114 &1725047878
 MonoBehaviour:
   m_ObjectHideFlags: 0

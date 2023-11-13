@@ -19,6 +19,7 @@ public class MenuController : Singleton<MenuController>
 
     private CharacterTextureView m_characterTextureView;
 
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -33,10 +34,11 @@ public class MenuController : Singleton<MenuController>
                     p = null;
                 }
             }
-            else
+            if (Popups.Count == 0)
             {
                 if (!SceneManager.GetActiveScene().name.Equals("World"))
                     SceneManager.LoadScene("World");
+                
             }
         }
     }
@@ -50,7 +52,6 @@ public class MenuController : Singleton<MenuController>
             Popups.Remove(activePopup);
             return;
         }
-
         var popup = PopupManager.Instance.CreateNew("InventoryUI");
         var characterTextureView = popup.Add(PopupManager.Instance.CharacterTextureView);
         characterTextureView.ShowLocalPlayerGear();
