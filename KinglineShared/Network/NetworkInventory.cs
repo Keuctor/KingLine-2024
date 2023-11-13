@@ -45,13 +45,14 @@ public class NetworkInventory
         return this.items[HAND_SLOT_INDEX];
     }
 
-    public ItemStack[] GetGear() {
+    public ItemStack[] GetGear()
+    {
         return new ItemStack[3] {
             GetHelmet(),GetArmor(),GetHand()
         };
     }
 
-    
+
     public void SetItem(int index, int id, short count = 1)
     {
         this.items[index] = new ItemStack()
@@ -64,7 +65,8 @@ public class NetworkInventory
     public bool RemoveItem(int index, short count = 1)
     {
         var item = items[index];
-        if (item.Id != -1) {
+        if (item.Id != -1)
+        {
             item.Count -= count;
             if (item.Count <= 0)
             {
@@ -82,19 +84,81 @@ public class NetworkInventory
     public bool AddItem(int id, short count = 1)
     {
         var itemInfo = ItemRegistry.GetItem(id);
-        
+
+
+        if (itemInfo.Stackable)
+        {
+            var found = FindFirstItemMatchIndex(itemInfo.Id);
+            if (found != -1)
+            {
+                items[found].Count += count;
+                return true;
+            }
+            else
+            {
+                var empty = NextEmptyInventorySpaceIndex();
+                if (empty != -1)
+                {
+                    items[empty] = new ItemStack()
+                    {
+                        Count = count,
+                        Id = id
+                    };
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+
+            if (count > GetTotalEmptyInventorySpaces())
+                return false;
+
+            while (count > 0)
+            {
+                var empty = NextEmptyInventorySpaceIndex();
+                if (empty != -1)
+                {
+                    items[empty] = new ItemStack()
+                    {
+                        Count = 1,
+                        Id = itemInfo.Id
+                    };
+                    count--;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return count == 0;
+        }
+    }
+
+    public int FindFirstItemMatchIndex(int itemId)
+    {
         for (var i = 0; i < items.Length; i++)
         {
             if (i == HELMET_SLOT_INDEX || i == HAND_SLOT_INDEX || i == ARMOR_SLOT_INDEX)
                 continue;
 
             var item = items[i];
-            if (item.Id == id && itemInfo.Stackable)
+            if (item.Id == itemId)
             {
-                item.Count += count;
-                return true;
+                return i;
             }
         }
+        return -1;
+    }
+
+    public byte GetTotalEmptyInventorySpaces()
+    {
+        byte count = 0;
+
         for (var i = 0; i < items.Length; i++)
         {
             if (i == HELMET_SLOT_INDEX || i == HAND_SLOT_INDEX || i == ARMOR_SLOT_INDEX)
@@ -102,14 +166,30 @@ public class NetworkInventory
 
             if (items[i].Id == -1)
             {
-                items[i].Id = id;
-                items[i].Count = count;
-                return true;
+                count++;
             }
         }
-        return false;
+        return count;
     }
-    public int GetItemCount(int id) {
+
+    public int NextEmptyInventorySpaceIndex()
+    {
+        for (var i = 0; i < items.Length; i++)
+        {
+            if (i == HELMET_SLOT_INDEX || i == HAND_SLOT_INDEX || i == ARMOR_SLOT_INDEX)
+                continue;
+
+            if (items[i].Id == -1)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+    public int GetItemCount(int id)
+    {
         var total = 0;
         for (var i = 0; i < items.Length; i++)
         {

@@ -1,5 +1,6 @@
 ﻿using LiteNetLib;
 using LiteNetLib.Utils;
+using Mono.CSharp;
 using QFSW.QC;
 using UnityEngine;
 
@@ -29,6 +30,8 @@ public class NetworkAdminController : NetworkController
         QuantumConsole.Instance.LogToConsole(obj.Log);
     }
 
+   
+    
     [Command("admin.give")]
     public static void AddItem(MaterialType id, int count)
     {
@@ -41,11 +44,11 @@ public class NetworkAdminController : NetworkController
     }
 
     [Command("admin.request")]
-    public static void SendAdminRequest(string password)
+    public static void SendAdminRequest(string message)
     {
         NetworkManager.Instance.Send(new ReqAdminPrivileges()
         {
-            Password = password
+            Password = message
         });
     }
 

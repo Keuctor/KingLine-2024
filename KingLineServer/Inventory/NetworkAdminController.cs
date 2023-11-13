@@ -72,12 +72,18 @@ public class NetworkAdminController : INetworkController
 
     private void OnRequestAdminCommand(ReqAdminCommand command, NetPeer peer)
     {
+        var token = KingLine.GetPlayerToken(peer.Id);
+        if (!Admins.ContainsKey(token))
+        {
+            SendLog(peer, "You don't have a permission to use this command.");
+            return;
+        }
+
         switch (command.CommandType)
         {
             case 0:
                 try
                 {
-                    var token = KingLine.GetPlayerToken(peer.Id);
                     var targetInv = NetworkInventoryController.Inventories[token];
                     int itemId = int.Parse(command.CommandValue1);
                     short count = short.Parse(command.CommandValue2);
@@ -94,7 +100,6 @@ public class NetworkAdminController : INetworkController
                 }
                 catch (Exception ex)
                 {
-                    SendLog(peer, "Command arguments wrong!");
                     SendLog(peer, ex.ToString());
                 }
                 break;

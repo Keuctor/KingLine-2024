@@ -163,51 +163,18 @@ public class StructureController : MonoBehaviour
                         {
                             var showItemSelectPopup = PopupManager.Instance.CreateNew("ItemSellPopup");
                             showItemSelectPopup.CreateText("Madaca's City");
-
-                            InventoryView invView = showItemSelectPopup.Add(PopupManager.Instance.ScrollableInventoryView);
-                            invView.Show(new ItemStack[64]);
-                            invView.ShowInfo = false;
-
+                            var sellItemView = showItemSelectPopup.Add(PopupManager.Instance.SellItemView);
                             showItemSelectPopup.CreateText("Heuctor");
-                            showItemSelectPopup.CreateText($"You will get {324}g");
-                            
                              var inv2 =  showItemSelectPopup.Add(PopupManager.Instance.InventoryView);
                              inv2.ShowLocalPlayerInventory();
-
-                            
-                            
-                            
-                            // var container = showItemSelectPopup.Add(PopupManager.Instance.PopupContainer);
-                            // var layoutGroup = container.GetComponent<VerticalLayoutGroup>();
-                            // layoutGroup.padding = new RectOffset(50, 50, 120, 90);
-                            // invView.OnItemSelect.AddListener((id) =>
-                            // {
-                            //     for (int i = 0; i < container.childCount; i++)
-                            //         Destroy(container.GetChild(i).gameObject);
-                            //
-                            //     if (id != -1)
-                            //     {
-                            //         var item = ItemRegistry.GetItem(id);
-                            //         var btn = Instantiate(PopupManager.Instance.PopupButton, container.transform);
-                            //         var infoView  = Instantiate(PopupManager.Instance.ItemInfoView, container.transform);
-                            //         infoView.ShowItemInfo(item);
-                            //         var btnComp = btn.GetComponent<Button>();
-                            //         btnComp.transform.GetChild(1).GetComponent<TMP_Text>().text =
-                            //             $"Sell ({item.Value} g)";
-                            //
-                            //         infoView.GetComponent<LayoutElement>().ignoreLayout = false;
-                            //
-                            //         // var text = Instantiate(PopupManager.Instance.PopupText, container);
-                            //         // text.GetComponent<TMP_Text>().text = item.Name;
-                            //         //
-                            //         // var img = Instantiate(PopupManager.Instance.PopupImage,container);
-                            //         // img.GetComponent<Image>().sprite = m_materialSpriteDatabase.LoadSprite(item.Id);
-                            //         //
-                            //         //
-                            //     }
-                            // });
+                             inv2.ShowInfo = false;
+                             
+                             inv2.OnItemSelect.AddListener((itemId =>
+                             {
+                                 var selectedItem = ItemStackView.SelectedIndex;
+                                 sellItemView.SetItemId(selectedItem);
+                             }));
                         }
-
                         newPopup.Destroy();
                     });
                     break;

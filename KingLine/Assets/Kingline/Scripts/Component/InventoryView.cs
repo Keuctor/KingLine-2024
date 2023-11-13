@@ -11,11 +11,14 @@ public class InventoryView : MonoBehaviour
     public bool Modifiable = true;
 
     public static UnityEvent<int> OnItemClick = new();
-    public  UnityEvent<int> OnItemSelect = new();
+    public UnityEvent<int> OnItemSelect = new();
 
     [Header("Dependency")]
     [SerializeField]
     private MaterialSpriteDatabase m_spriteDatabase;
+
+    [SerializeField]
+    private InventoryNetworkController m_inventoryNetworkController;
 
     [Header("Prefabs")]
     [SerializeField]
@@ -33,14 +36,33 @@ public class InventoryView : MonoBehaviour
 
     public bool ShowGear;
 
-    public UnityEvent<int,int> OnItemDropped;
+    public UnityEvent<int, int> OnItemDropped;
 
 
     private ItemInfoView m_infoView;
 
+    private Dictionary<int, ItemStackContentView> m_createdContentViews = new Dictionary<int, ItemStackContentView>();
+
+
     private void OnEnable()
     {
         OnItemClick.AddListener(OnItemClicked);
+        m_inventoryNetworkController.OnRemoveItem.AddListener(OnRemoveItem);
+    }
+
+    private void OnRemoveItem(int index, int newCount)
+    {
+        if (newCount == 0)
+        {
+            Destroy(m_createdContentViews[index].gameObject);
+            m_createdContentViews.Remove(index);
+        }
+        else
+        {
+            var item = InventoryNetworkController.LocalInventory.Items[index];
+            var itemData = ItemRegistry.GetItem(item.Id);
+            m_createdContentViews[index].SetCount(itemData.Stackable, newCount);
+        }
     }
 
     public bool ShowInfo = true;
@@ -50,7 +72,7 @@ public class InventoryView : MonoBehaviour
         OnItemSelect?.Invoke(itemId);
         if (!ShowInfo)
             return;
-        
+
         if (itemId != -1)
         {
             if (m_infoView == null)
@@ -82,8 +104,11 @@ public class InventoryView : MonoBehaviour
         Show(InventoryNetworkController.LocalInventory);
     }
 
+
     public void Show(ItemStack[] items)
     {
+        m_createdContentViews.Clear();
+
         for (int i = 0; i < items.Length; i++)
         {
             if (i is NetworkInventory.HELMET_SLOT_INDEX
@@ -94,7 +119,7 @@ public class InventoryView : MonoBehaviour
             ItemStackView stackView = Instantiate(m_itemStackTemplate, m_itemStackViewParent);
             stackView.Id = i;
 
-            if (item==null || item.Id == -1)
+            if (item == null || item.Id == -1)
             {
                 continue;
             }
@@ -105,6 +130,7 @@ public class InventoryView : MonoBehaviour
             var contentView = Instantiate(m_itemStackContentView, stackView.Content);
             contentView.SetContext(sprite, item.Count, materialData.Stackable);
             contentView.ItemId = item.Id;
+            m_createdContentViews.Add(i, contentView);
         }
     }
 

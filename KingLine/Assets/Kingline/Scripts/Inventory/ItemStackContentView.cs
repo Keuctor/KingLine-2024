@@ -50,12 +50,17 @@ public class ItemStackContentView : MonoBehaviour, IBeginDragHandler, IEndDragHa
         rect.anchoredPosition = Vector2.zero;
     }
 
-    public void SetContext(Sprite icon, int count, bool isStackable)
+    public void SetCount(bool isStackable, int count)
     {
-        m_image.sprite = icon;
         if (isStackable)
             m_countText.text = "x" + count;
         else
             m_countText.text = "";
+    }
+
+    public void SetContext(Sprite icon, int count, bool isStackable)
+    {
+        m_image.sprite = icon;
+        SetCount(isStackable, count);
     }
 }

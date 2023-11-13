@@ -60,6 +60,7 @@
      <Compile Include="Assets\HeroEditor\Common\SimpleColorPicker\Scripts\ColorSlider.cs" />
      <Compile Include="Assets\Kingline\Scripts\Structure\StructureBehaviour.cs" />
      <Compile Include="Assets\Kingline\Scripts\Menu\LoadingHandlerUI.cs" />
+     <Compile Include="Assets\Kingline\Scripts\Component\SellItemView.cs" />
      <Compile Include="Assets\HeroEditor\Common\SimpleColorPicker\Scripts\RainbowGenerator.cs" />
      <Compile Include="Assets\HeroEditor\Common\CommonScripts\Extensions.cs" />
      <Compile Include="Assets\Kingline\Scripts\Inventory\ItemStackView.cs" />

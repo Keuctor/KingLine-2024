@@ -8,7 +8,7 @@ public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     IPointerExitHandler, IDropHandler
 {
     public static int From;
-
+    public static int SelectedIndex;
     public static int To;
 
     public static ItemStackView _selectedItemView;
@@ -74,6 +74,7 @@ public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        SelectedIndex = this.Id;
         if (_selectedItemView != null)
             _selectedItemView.m_background.color = _selectedItemView.NOT_SELECTED_BACKGROUND_COLOR;
 
@@ -87,7 +88,7 @@ public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             InventoryView.OnItemClick?.Invoke(-1);
         }
 
-
+   
         _selectedItemView = this;
         _selectedItemView.m_background.color = SELECTED_BACKGROUND_COLOR;
     }

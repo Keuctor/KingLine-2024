@@ -84,11 +84,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_spriteDatabase: {fileID: 11400000, guid: 9bc28bb01a8c5374099cbdf3550b4c47, type: 2}
+  m_inventoryNetworkController: {fileID: 11400000, guid: 8ff74ab722a5ee0448995c4eece678fd, type: 2}
   m_itemStackTemplate: {fileID: 7559882923531258253, guid: 716dcff35d0ec7e45bbbc9d61ec27842, type: 3}
   m_itemInfoView: {fileID: 3828401065346335361, guid: 3565ca805f0ae87439994fed0f25b06c, type: 3}
   m_itemStackContentView: {fileID: 3326708398012921060, guid: 15acd7386d636634882d143ce57c3c5e, type: 3}
   m_itemStackViewParent: {fileID: 5922820230424105560}
   ShowGear: 0
+  OnItemDropped:
+    m_PersistentCalls:
+      m_Calls: []
   ShowInfo: 1
 --- !u!1 &7463088676419890847
 GameObject:
