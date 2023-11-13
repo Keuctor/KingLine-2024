@@ -92,10 +92,6 @@ public class PopupManager : ScriptableObject
     public GameObject PopupText;
     public GameObject PopupImage;
 
-    [Header("Prefabs")]
-    public ItemSelectPopup ItemSelectPopup;
-
-
     [Header("Component")]
     public PlayerTeamView PlayerTeamView;
 
@@ -120,11 +116,6 @@ public class PopupManager : ScriptableObject
     [FormerlySerializedAs("PlayerGearView")]
     public PlayerGearInventoryView PlayerGearInventoryView;
     
-
-    public ItemSelectPopup ShowItemSelectPopup()
-    {
-        return Instantiate(ItemSelectPopup);
-    }
 
     public Popup CreateNew(string name="Popup(Default)")
     {

@@ -72,8 +72,6 @@ public class MineGame : MonoBehaviour
     [SerializeField]
     private AudioManager m_audioManager;
 
-    public ItemSelectPopup m_itemSelectPopup;
-
     private void Start()
     {
         for (var i = 0; i < m_maxMineCount; i++) Spawn(true);

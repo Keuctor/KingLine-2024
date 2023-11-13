@@ -115,7 +115,6 @@
      <Compile Include="Assets\Kingline\Scripts\Utils\GlobalCanvas.cs" />
      <Compile Include="Assets\HeroEditor\FantasyInventory\Scripts\Interface\Elements\ItemSlot.cs" />
      <Compile Include="Assets\Kingline\Scripts\Menu\ConnectionHandlerUI.cs" />
-     <Compile Include="Assets\Kingline\Scripts\Inventory\ItemSelectPopup.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\StandaloneFileBrowserEditor.cs" />
      <Compile Include="Assets\Kingline\Scripts\Component\PlayerTeamView.cs" />
      <Compile Include="Assets\HeroEditor\StandaloneFileBrowser\StandaloneFileBrowserMac.cs" />
