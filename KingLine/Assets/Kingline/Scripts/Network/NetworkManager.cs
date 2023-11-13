@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using LiteNetLib;
 using LiteNetLib.Utils;
+using QFSW.QC;
 using UnityEngine;
 
 public class NetworkManager : MonoBehaviour, INetEventListener
@@ -27,6 +28,12 @@ public class NetworkManager : MonoBehaviour, INetEventListener
     private NetManager m_client;
 
     private ConnectionHandlerUI m_connectionHandlerUIInstance;
+
+    [Command("game.version")]
+    public string GetVersion()
+    {
+        return m_connectionData.Version;
+    }
 
 
     private bool m_isServerStarted;

@@ -385,6 +385,9 @@
      <Reference Include="unityplastic">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.collab-proxy@2.1.0\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
      </Reference>
+     <Reference Include="mcs">
+     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\QFSW\Quantum Console\Source\Extras\exec\CSharpCompiler\Plugins\mcs.dll</HintPath>
+     </Reference>
      <Reference Include="nunit.framework">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
      </Reference>

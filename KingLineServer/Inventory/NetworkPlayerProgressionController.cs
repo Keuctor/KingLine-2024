@@ -1,11 +1,14 @@
 ﻿using LiteNetLib;
 using LiteNetLib.Utils;
 
-
 public class NetworkPlayerProgressionController : INetworkController
 {
+
+    public static Dictionary<string, int> PlayerExperiences = new Dictionary<string, int>();
+
     public static Dictionary<string, Skill[]> Progressions
          = new Dictionary<string, Skill[]>();
+
     public void OnStart()
     {
         //Load progressions
@@ -13,6 +16,10 @@ public class NetworkPlayerProgressionController : INetworkController
     public void OnExit()
     {
         //Save progressions
+    }
+    public static int GetPlayerLevel(string token)
+    {
+        return XPManager.GetLevel(PlayerExperiences[token]);
     }
 
     public void OnPeerConnected(NetPeer peer)
@@ -23,6 +30,36 @@ public class NetworkPlayerProgressionController : INetworkController
     }
     public void OnPeerDisconnected(NetPeer peer)
     {
+
+    }
+
+    public static void AddXp(NetPeer peer, int xp)
+    {
+        xp *= KingLine.Multiplier;
+        var token = KingLine.GetPlayerToken(peer.Id);
+        PlayerExperiences[token] += xp;
+        NetworkPlayerTeamController.GiveXpToTeam(token, xp);
+        PackageSender.SendPacket(peer, new ResPlayerAddXp()
+        {
+            Xp = xp,
+        });
+    }
+
+    private void OnPlayerXpRequest(ReqPlayerXp obj, NetPeer peer)
+    {
+        var token = KingLine.GetPlayerToken(peer.Id);
+        var response = new ResPlayerXp();
+
+        if (PlayerExperiences.TryGetValue(token, out var xp))
+        {
+            response.Xp = xp;
+        }
+        else
+        {
+            PlayerExperiences.Add(token, 0);
+            response.Xp = 0;
+        }
+        PackageSender.SendPacket(peer, response);
     }
     public void Subscribe(NetPacketProcessor processor)
     {
@@ -33,13 +70,27 @@ public class NetworkPlayerProgressionController : INetworkController
 
         processor.SubscribeReusable<ReqPlayerProgression, NetPeer>(OnPlayerProgressionRequest);
         processor.SubscribeReusable<ReqSkillIncrement, NetPeer>(OnSkillIncrement);
+        processor.SubscribeReusable<ReqPlayerXp, NetPeer>(OnPlayerXpRequest);
+        processor.SubscribeReusable<ReqMineStone, NetPeer>(OnRequestMineStone);
+        processor.SubscribeReusable<ReqMineBone, NetPeer>(OnRequestMineBone);
+
+    }
+
+    private void OnRequestMineStone(ReqMineStone arg1, NetPeer peer)
+    {
+        AddXp(peer, 2);
+    }
+
+    private void OnRequestMineBone(ReqMineBone arg1, NetPeer peer)
+    {
+        AddXp(peer, 2);
     }
 
     private void OnSkillIncrement(ReqSkillIncrement request, NetPeer peer)
     {
         var token = KingLine.GetPlayerToken(peer.Id);
 
-        var playerLevel = NetworkPlayerLevelController.GetPlayerLevel(token);
+        var playerLevel = GetPlayerLevel(token);
 
         var progression = Progressions[token];
         var lvl = playerLevel;

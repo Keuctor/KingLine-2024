@@ -5,9 +5,33 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{3be692b1-e10a-3716-4fe4-ca0e933ab8e4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC", "QFSW.QC.csproj", "{8e066ecf-2cab-77f6-67bb-b9578b556d75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Grammar", "QFSW.QC.Grammar.csproj", "{e1ec4dc8-bfec-33e3-552a-beba1a26dc82}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteNetLib", "LiteNetLib.csproj", "{1ea8c636-11e4-a21a-4a12-cde2127be78a}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Extras", "QFSW.QC.Extras.csproj", "{66b74cb6-bce3-6636-b1d9-e79b82ca0a6f}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Suggestors", "QFSW.QC.Suggestors.csproj", "{faf8f94f-0604-5b5f-3568-84815931e8d3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Editor", "QFSW.QC.Editor.csproj", "{ef9ba7ef-0d5a-df1c-60f1-75c006840f82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Parsers", "QFSW.QC.Parsers.csproj", "{044cec25-217c-fc47-6556-8d37ebadff88}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{a5dad2a9-688c-ee82-356d-73e9cb77245e}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.QGUI", "QFSW.QC.QGUI.csproj", "{2311a2f3-febd-1525-d48e-f20b7446c38d}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Demo", "QFSW.QC.Demo.csproj", "{a7a5cb70-73bd-659a-5919-3b34336aefba}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Editor.Tools", "QFSW.QC.Editor.Tools.csproj", "{74932758-062a-0901-b1a8-cde7cc751f48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.Serializers", "QFSW.QC.Serializers.csproj", "{78201052-7952-47b0-8e2e-dc4d12ac3c6e}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.UI", "QFSW.QC.UI.csproj", "{0becc11f-9b2c-fc87-fd52-697f4ef79a5e}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFSW.QC.ScanRules", "QFSW.QC.ScanRules.csproj", "{130313fa-802b-c722-ba17-98797822d9ec}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirenix.OdinInspector.Modules.UnityMathematics", "Sirenix.OdinInspector.Modules.UnityMathematics.csproj", "{cd993e9b-98ae-de01-7de9-b636edb6cdc5}"
 EndProject
@@ -22,10 +46,34 @@ Global
 		{df02c05d-f3d8-aa16-d536-33c4a28c4747}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3be692b1-e10a-3716-4fe4-ca0e933ab8e4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3be692b1-e10a-3716-4fe4-ca0e933ab8e4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8e066ecf-2cab-77f6-67bb-b9578b556d75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8e066ecf-2cab-77f6-67bb-b9578b556d75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{e1ec4dc8-bfec-33e3-552a-beba1a26dc82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{e1ec4dc8-bfec-33e3-552a-beba1a26dc82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1ea8c636-11e4-a21a-4a12-cde2127be78a}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1ea8c636-11e4-a21a-4a12-cde2127be78a}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66b74cb6-bce3-6636-b1d9-e79b82ca0a6f}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66b74cb6-bce3-6636-b1d9-e79b82ca0a6f}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{faf8f94f-0604-5b5f-3568-84815931e8d3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{faf8f94f-0604-5b5f-3568-84815931e8d3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ef9ba7ef-0d5a-df1c-60f1-75c006840f82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ef9ba7ef-0d5a-df1c-60f1-75c006840f82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{044cec25-217c-fc47-6556-8d37ebadff88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{044cec25-217c-fc47-6556-8d37ebadff88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{a5dad2a9-688c-ee82-356d-73e9cb77245e}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{a5dad2a9-688c-ee82-356d-73e9cb77245e}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2311a2f3-febd-1525-d48e-f20b7446c38d}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2311a2f3-febd-1525-d48e-f20b7446c38d}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{a7a5cb70-73bd-659a-5919-3b34336aefba}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{a7a5cb70-73bd-659a-5919-3b34336aefba}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74932758-062a-0901-b1a8-cde7cc751f48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74932758-062a-0901-b1a8-cde7cc751f48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78201052-7952-47b0-8e2e-dc4d12ac3c6e}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78201052-7952-47b0-8e2e-dc4d12ac3c6e}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0becc11f-9b2c-fc87-fd52-697f4ef79a5e}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0becc11f-9b2c-fc87-fd52-697f4ef79a5e}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{130313fa-802b-c722-ba17-98797822d9ec}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{130313fa-802b-c722-ba17-98797822d9ec}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{cd993e9b-98ae-de01-7de9-b636edb6cdc5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{cd993e9b-98ae-de01-7de9-b636edb6cdc5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49ebf241-e0ce-3a54-5fd1-b7f3d760f1c2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

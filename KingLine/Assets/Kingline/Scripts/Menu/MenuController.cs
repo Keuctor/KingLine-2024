@@ -11,27 +11,36 @@ public class MenuController : Singleton<MenuController>
 {
     [SerializeField]
     private GameObject m_blocker;
+
     [NonSerialized]
     public readonly UnityEvent OnOpenMenu = new();
 
     public List<Popup> Popups = new List<Popup>();
-    
+
     private CharacterTextureView m_characterTextureView;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            var p = Popups[^1];
-            if (p != null)
+            if (Popups.Count > 0)
             {
-                p.Destroy();
-                Popups.Remove(p);
-                p= null;
+                var p = Popups[^1];
+                if (p != null)
+                {
+                    p.Destroy();
+                    Popups.Remove(p);
+                    p = null;
+                }
+            }
+            else
+            {
+                if (!SceneManager.GetActiveScene().name.Equals("World"))
+                    SceneManager.LoadScene("World");
             }
         }
     }
-    
+
     public void OpenPlayerInventory()
     {
         var activePopup = Popups.FirstOrDefault(t => t.Name == "InventoryUI");
@@ -41,6 +50,7 @@ public class MenuController : Singleton<MenuController>
             Popups.Remove(activePopup);
             return;
         }
+
         var popup = PopupManager.Instance.CreateNew("InventoryUI");
         var characterTextureView = popup.Add(PopupManager.Instance.CharacterTextureView);
         characterTextureView.ShowLocalPlayerGear();
@@ -49,7 +59,7 @@ public class MenuController : Singleton<MenuController>
         invView.ShowLocalPlayerInventory();
         Popups.Add(popup);
     }
-    
+
 
     public void OpenPlayerUI()
     {
@@ -60,7 +70,7 @@ public class MenuController : Singleton<MenuController>
             Popups.Remove(activePopup);
             return;
         }
-        
+
         var popup = PopupManager.Instance.CreateNew("PlayerUI");
         popup.Add(PopupManager.Instance.PlayerNameView);
         popup.Add(PopupManager.Instance.PlayerLevelView);

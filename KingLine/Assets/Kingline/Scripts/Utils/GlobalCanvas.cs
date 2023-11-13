@@ -9,6 +9,8 @@ public class GlobalCanvas : Singleton<GlobalCanvas>
     [SerializeField]
     private TMP_Text M_IdText;
 
+  
+
     public void SetLatency(int latency)
     {
         if (latency == -1)

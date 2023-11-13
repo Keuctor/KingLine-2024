@@ -20,15 +20,13 @@ public class NetworkInventoryController : INetworkController
     private void OnRequestMineBone(ReqMineBone request, NetPeer peer)
     {
         InventoryAdd(peer, MaterialType.BONE.ID(), 1);
-        NetworkPlayerLevelController.AddXp(peer, 1);
     }
     private void OnRequestMineStone(ReqMineStone request, NetPeer peer)
     {
         InventoryAdd(peer, MaterialType.STONE.ID(), 1);
-        NetworkPlayerLevelController.AddXp(peer, 2);
     }
 
-    public void InventoryAdd(NetPeer peer, int id, short count)
+    public static bool InventoryAdd(NetPeer peer, int id, short count)
     {
         var token = KingLine.GetPlayerToken(peer.Id);
         NetworkInventory inventory = Inventories[token];
@@ -39,7 +37,9 @@ public class NetworkInventoryController : INetworkController
                 Count = count,
                 Id = id
             });
+            return true;
         }
+        return false;
     }
 
     private bool IsGearIndex(int index)

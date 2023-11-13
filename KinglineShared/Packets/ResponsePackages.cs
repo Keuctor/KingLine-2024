@@ -1,4 +1,6 @@
 ﻿
+using System.Security.Cryptography.X509Certificates;
+
 public class ResPeerId
 {
     public int Id { get; set; }
@@ -125,3 +127,15 @@ public class ResVolunteers
     public short Count { get; set; }
     public int StructureId { get; set; }
 }
+
+public class ResAdminPrivileges
+{
+    public bool IsAdmin { get; set; }
+}
+
+public class ResConsoleLog
+{ 
+    public string Log { get; set; }
+}
+
+    

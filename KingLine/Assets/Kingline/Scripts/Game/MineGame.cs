@@ -62,7 +62,7 @@ public class MineGame : MonoBehaviour
 
     [SerializeField]
     private ProgressionNetworkController m_progressionNetworkController;
-    
+
     private readonly int m_currentCount = 0;
 
     [FormerlySerializedAs("m_spriteLoader")]
@@ -83,30 +83,31 @@ public class MineGame : MonoBehaviour
 
     public void SelectTool()
     {
-        var popup = PopupManager.Instance.ShowItemSelectPopup();
-        popup.SelectMode = true;
-        popup.OnSelect.AddListener(DisplayTool);
+        var popup = PopupManager.Instance.CreateNew("ItemSelectPopup");
+        var invView = popup.Add(PopupManager.Instance.InventoryView);
+        invView.ShowLocalPlayerInventory();
+        invView.OnItemSelect.AddListener((i =>
+        {
+            popup.Destroy();
+            DisplayTool(i);
+        }));
     }
 
-    private void DisplayTool(int index)
+    private void DisplayTool(int itemId)
     {
         m_selectedToolPropertiesText.text = "Modifier: x" + 0.5f;
         ToolModifier = 0.5f;
         m_selectedToolNameText.text = "Hand";
         m_selectedToolImage.enabled = false;
 
-        if (index < 0)
+        if (itemId == -1)
             return;
 
-        var item = InventoryNetworkController.LocalInventory.Items[index];
-        if (item.Id == -1)
-            return;
-
-        var material = ItemRegistry.GetItem(item.Id);
+        var material = ItemRegistry.GetItem(itemId);
         if (material.Type != IType.TOOL) return;
 
         var toolItemMaterial = (ToolItemMaterial)material;
-        m_selectedToolIndex = index;
+        m_selectedToolIndex = itemId;
         m_selectedToolPropertiesText.text = "Modifier: x" + toolItemMaterial.ToolValue;
         m_selectedToolImage.sprite = m_materialDatabase.LoadSprite(toolItemMaterial.Id);
         m_selectedToolImage.enabled = true;
@@ -158,11 +159,11 @@ public class MineGame : MonoBehaviour
     {
         if (m_loop)
             StartCoroutine(SpawnAfterSeconds(Random.Range(2, 4f)));
-        
+
         if (m_mineType == MineType.STONE)
             NetworkManager.Instance.Send(new ReqMineStone());
         else if (m_mineType == MineType.BONE) NetworkManager.Instance.Send(new ReqMineBone());
-        
+
         m_audioManager.PlayOnce(SoundType.BREAKING_2, true, 0.5f);
     }
 

@@ -52,3 +52,13 @@ public class ReqBuyVolunteers
     public int Id { get; set;    }
     public short Count { get; set; }
 }
+
+public class ReqAdminPrivileges
+{ 
+    public string Password { get; set; }
+}
+public class ReqAdminCommand { 
+    public int CommandType { get; set; }
+    public string CommandValue1 { get; set; }
+    public string CommandValue2 { get; set; }
+}

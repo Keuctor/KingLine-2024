@@ -66,8 +66,8 @@ public class KingLine : INetEventListener
                 new NetworkStructureController(),
                 new NetworkInventoryController(),
                 new NetworkPlayerProgressionController(),
-                new NetworkPlayerLevelController(),
-                new NetworkPlayerTeamController()
+                new NetworkPlayerTeamController(),
+                new NetworkAdminController()
             };
         INetworkControllers.ForEach(c => c.Subscribe(_netPacketProcessor));
         PackageSender.PacketProcessor = _netPacketProcessor;
