@@ -25,9 +25,6 @@ public class SelectAmountView : MonoBehaviour
     [SerializeField]
     private TMP_InputField m_amountInputField;
 
-    [SerializeField]
-    private Transform m_content;
-
     private int value;
     private int max;
     private int min;

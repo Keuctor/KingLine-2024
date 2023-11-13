@@ -22,6 +22,7 @@ MonoBehaviour:
   PlayerSkillView: {fileID: 3756209903553369776, guid: 549bc08b13b87ee4e889939bb5c3771d, type: 3}
   PlayerNameView: {fileID: 6474141283759388663, guid: 9e959b955672e4241becfd9a7355ce08, type: 3}
   PlayerLevelView: {fileID: 5308049825897198032, guid: 25efcc8657c3ead4a9e4147f0c5ea3a8, type: 3}
+  SelectAmountView: {fileID: 3144715397692086816, guid: 4ad3d84a28b63a7498c770eceb87af4a, type: 3}
   PlayerSkillPointView: {fileID: 3716227185607746348, guid: e682634e710ead94eb7220122e66cbf2, type: 3}
   InventoryView: {fileID: 5913200733525715324, guid: 47e219a0b7e62c24d83ee8c7cc122129, type: 3}
   SellItemView: {fileID: 8085626882489401622, guid: 70ce7beb396d24640b413af4c56013c1, type: 3}
