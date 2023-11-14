@@ -363,6 +363,9 @@
      <Reference Include="Unity.Plastic.Antlr3.Runtime">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.collab-proxy@2.1.0\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
      </Reference>
+     <Reference Include="mcs">
+     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\QFSW\Quantum Console\Source\Extras\exec\CSharpCompiler\Plugins\mcs.dll</HintPath>
+     </Reference>
      <Reference Include="Sirenix.Serialization.Config">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.Config.dll</HintPath>
      </Reference>
@@ -413,9 +416,6 @@
      </Reference>
      <Reference Include="unityplastic">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\PackageCache\com.unity.collab-proxy@2.1.0\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
-     </Reference>
-     <Reference Include="mcs">
-     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\QFSW\Quantum Console\Source\Extras\exec\CSharpCompiler\Plugins\mcs.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Android.Types">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.10f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>

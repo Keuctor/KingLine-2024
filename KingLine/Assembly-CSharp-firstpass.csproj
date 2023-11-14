@@ -377,6 +377,9 @@
      <Reference Include="Sirenix.Serialization">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.dll</HintPath>
      </Reference>
+     <Reference Include="mcs">
+     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\QFSW\Quantum Console\Source\Extras\exec\CSharpCompiler\Plugins\mcs.dll</HintPath>
+     </Reference>
      <Reference Include="Sirenix.Serialization.Config">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.Config.dll</HintPath>
      </Reference>
@@ -409,9 +412,6 @@
      </Reference>
      <Reference Include="System.Windows.Forms">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\HeroEditor\StandaloneFileBrowser\Plugins\System.Windows.Forms.dll</HintPath>
-     </Reference>
-     <Reference Include="mcs">
-     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Assets\Plugins\QFSW\Quantum Console\Source\Extras\exec\CSharpCompiler\Plugins\mcs.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Android.Types">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.10f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
@@ -929,11 +929,11 @@
      <Reference Include="Unity.2D.Tilemap.Editor">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.2D.Animation.Editor">
-     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.2D.IK.Editor">
      <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\ScriptAssemblies\Unity.2D.IK.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.Animation.Editor">
+     <HintPath>D:\KingLineServer\KingLine-Libgdx\KingLine\Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -985,13 +985,13 @@
       <Project>{a7a5cb70-73bd-659a-5919-3b34336aefba}</Project>
       <Name>QFSW.QC.Demo</Name>
     </ProjectReference>
-    <ProjectReference Include="QFSW.QC.ScanRules.csproj">
-      <Project>{130313fa-802b-c722-ba17-98797822d9ec}</Project>
-      <Name>QFSW.QC.ScanRules</Name>
-    </ProjectReference>
     <ProjectReference Include="QFSW.QC.Editor.Tools.csproj">
       <Project>{74932758-062a-0901-b1a8-cde7cc751f48}</Project>
       <Name>QFSW.QC.Editor.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="QFSW.QC.ScanRules.csproj">
+      <Project>{130313fa-802b-c722-ba17-98797822d9ec}</Project>
+      <Name>QFSW.QC.ScanRules</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
