@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using HeroEditor.Common;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -76,6 +77,6 @@ public class MaterialSpriteDatabase : ScriptableObject
         }
 
         n = n.Replace("$","");
-        Debug.Log(n);
+        GUIUtility.systemCopyBuffer = n;
     }
 }

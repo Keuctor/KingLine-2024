@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 public class NetworkAdminController : INetworkController
 {
+    public bool RequirePassword = false;
 
     public string Password = "123";
 
@@ -73,10 +74,13 @@ public class NetworkAdminController : INetworkController
     private void OnRequestAdminCommand(ReqAdminCommand command, NetPeer peer)
     {
         var token = KingLine.GetPlayerToken(peer.Id);
-        if (!Admins.ContainsKey(token))
+        if (RequirePassword)
         {
-            SendLog(peer, "You don't have a permission to use this command.");
-            return;
+            if (!Admins.ContainsKey(token))
+            {
+                SendLog(peer, "You don't have a permission to use this command.");
+                return;
+            }
         }
 
         switch (command.CommandType)

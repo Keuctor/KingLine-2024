@@ -53,3 +53,5 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 3d6e288d88204fc19bdf087ff04d4269, type: 3}
   - Type: 204
     Sprite: {fileID: 21300000, guid: 5fcfdc80f04f41a9ae9b981c85a7c8bd, type: 3}
+  - Type: 1001
+    Sprite: {fileID: 21300000, guid: da5f3595ecbf841469e733f4fd0565a2, type: 3}

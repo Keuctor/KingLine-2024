@@ -56,6 +56,9 @@ public static class ItemRegistry
         Materials.Add((int)MaterialType.GUARD_SWORD_WEAPON, new WeaponItemMaterial("GuardSword1 [Paint]", 14));
         Materials.Add((int)MaterialType.SMALLAXE_WEAPON, new WeaponItemMaterial("SmallAxe", 12));
         Materials.Add((int)MaterialType.KNIGHT_SWORD_WEAPON, new WeaponItemMaterial("KnightSword [Paint]", 18));
+        Materials.Add((int)MaterialType.SMALL_HAMMER, new WeaponItemMaterial("SmallHammer", 3));
+
+
     }
 
     public static int GetMaterialId(MaterialType material)

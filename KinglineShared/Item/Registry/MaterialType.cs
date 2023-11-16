@@ -6,6 +6,7 @@ public enum MaterialType : int
 {
     STONE = 0,
     BONE = 1,
+    SMALL_HAMMER = 1001,
     TOOL_STONE_PICKAXE = 51,
     TOOL_IRON_PICKAXE = 50,
     TOOL_STEEL_PICKAXE = 52,
@@ -24,4 +25,5 @@ public enum MaterialType : int
     CATAPHRACT_HELMET = 902,
     ELITE_KNIGHT_HELMET = 903,
     ELITE_GUARD_ARMOR = 904,
+   
 }
