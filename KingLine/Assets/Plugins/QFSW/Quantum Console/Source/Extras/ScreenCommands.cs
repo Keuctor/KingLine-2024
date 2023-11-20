@@ -27,14 +27,7 @@ namespace QFSW.QC.Extras
         [Command("current-resolution", "current resolution of the application or window.")]
         private static Resolution GetCurrentResolution()
         {
-            Resolution resolution = new Resolution
-            {
-                width = Screen.width,
-                height = Screen.height,
-                refreshRate = Screen.currentResolution.refreshRate
-            };
-
-            return resolution;
+            return Screen.currentResolution;
         }
 
         [Command("supported-resolutions", "all resolutions supported by this device in fullscreen mode.")]
