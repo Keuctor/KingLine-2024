@@ -1,34 +1,24 @@
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class StructureController : MonoBehaviour
 {
-    
-    [Header("Dependency")]
-    
-    [SerializeField]
+    [Header("Dependency")] [SerializeField]
     private MaterialSpriteDatabase m_materialSpriteDatabase;
-    
-    [SerializeField]
-    private StructureNetworkController m_structureNetworkController;
 
-    [SerializeField]
-    private TeamNetworkController m_teamNetworkController;
+    [SerializeField] private StructureNetworkController m_structureNetworkController;
 
-    [SerializeField]
-    private StructureListSO m_structureList;
-    
-    [SerializeField]
-    private StructureBehaviour m_structureBehaviour;
-    
-  
+    [SerializeField] private TeamNetworkController m_teamNetworkController;
+
+    [SerializeField] private StructureListSO m_structureList;
+
+    [SerializeField] private StructureBehaviour m_structureBehaviour;
+
 
     private readonly List<StructureBehaviour> m_structureInstances = new();
-    
+
 
     private void Start()
     {
@@ -40,6 +30,7 @@ public class StructureController : MonoBehaviour
 
         m_teamNetworkController.OnVolunteersResponse
             .AddListener(OnVolunteersResponse);
+        m_structureNetworkController.OnStructureInventoryResponse.AddListener(OnStructureInventoryResponse);
     }
 
     private void OnVolunteersResponse(int structureId, int troopId, short count)
@@ -161,20 +152,9 @@ public class StructureController : MonoBehaviour
                     {
                         if (nI == 0)
                         {
-                            var showItemSelectPopup = PopupManager.Instance.CreateNew("ItemSellPopup");
-                            showItemSelectPopup.CreateText("Madaca's City");
-                            var sellItemView = showItemSelectPopup.Add(PopupManager.Instance.SellItemView);
-                            showItemSelectPopup.CreateText("Heuctor");
-                             var inv2 =  showItemSelectPopup.Add(PopupManager.Instance.InventoryView);
-                             inv2.ShowLocalPlayerInventory();
-                             inv2.ShowInfo = false;
-                             
-                             inv2.OnItemSelect.AddListener((itemId =>
-                             {
-                                 var selectedItem = ItemStackView.SelectedIndex;
-                                 sellItemView.SetItemId(selectedItem);
-                             }));
+                            m_structureNetworkController.RequestStructureInventory(structureId);
                         }
+
                         newPopup.Destroy();
                     });
                     break;
@@ -184,6 +164,22 @@ public class StructureController : MonoBehaviour
                     break;
             }
         });
+    }
+
+    private void OnStructureInventoryResponse(ulong inventoryId, int structureId, ItemStack[] items)
+    {
+        var target = m_structureNetworkController.Structures[structureId];
+        var structure = m_structureList.GetStructureInfo(target.Id);
+        var showItemSelectPopup = PopupManager.Instance.CreateNew("ItemSellPopup");
+        showItemSelectPopup.CreateText(structure.Name);
+        var inv = showItemSelectPopup.Add(PopupManager.Instance.ScrollableInventoryView);
+        inv.ShowInfo = true;
+        inv.Show(inventoryId, items);
+
+        showItemSelectPopup.CreateText("Your Inventory");
+        var inv2 = showItemSelectPopup.Add(PopupManager.Instance.InventoryView);
+        inv2.Show(InventoryNetworkController.LocalInventory);
+        inv2.ShowInfo = true;
     }
 
 

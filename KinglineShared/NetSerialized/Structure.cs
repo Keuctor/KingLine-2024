@@ -5,6 +5,7 @@ public partial class Structure : INetSerializable
     public int Id { get; set; }
     public float x { get; set; }
     public float y { get; set; }
+    public ulong InventoryId { get; set; }
 
     public void Serialize(NetDataWriter writer)
     {

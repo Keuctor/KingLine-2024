@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KingLineServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e284201efdbffe53d70e679c5ae3971ad2c7601d")]
 [assembly: System.Reflection.AssemblyProductAttribute("KingLineServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KingLineServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

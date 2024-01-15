@@ -1,10 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "5jGM2kRHQrApUVuj4gyEoXj6xlyEMqkYMrmY/2CUTfYQcOubmq/kUJvIHBHKmx8vA0Ia+vRcTsPJifXoHXLi5Q==",
+  "dgSpecHash": "hR9PC76osfywCP6nkgdYropZCH4QSTE/aCvkIypx3G7imCE7JXFwYlFNalyfwIBXfLUElj3KjU9+s54UwW2DXA==",
   "success": true,
-  "projectFilePath": "D:\\KingLineServer\\KingLine-Libgdx\\KingLineServer\\KingLineServer.csproj",
+  "projectFilePath": "C:\\Users\\Hector\\Documents\\GitHub\\KingLine-Libgdx\\KingLineServer\\KingLineServer.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Hector\\.nuget\\packages\\litenetlib\\1.1.0\\litenetlib.1.1.0.nupkg.sha512"
+    "C:\\Users\\Hector\\.nuget\\packages\\litenetlib\\1.1.0\\litenetlib.1.1.0.nupkg.sha512",
+    "C:\\Users\\Hector\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.25\\microsoft.windowsdesktop.app.ref.6.0.25.nupkg.sha512",
+    "C:\\Users\\Hector\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.25\\microsoft.netcore.app.ref.6.0.25.nupkg.sha512",
+    "C:\\Users\\Hector\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.25\\microsoft.aspnetcore.app.ref.6.0.25.nupkg.sha512",
+    "C:\\Users\\Hector\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.25\\microsoft.netcore.app.host.win-x64.6.0.25.nupkg.sha512"
   ],
   "logs": []
 }

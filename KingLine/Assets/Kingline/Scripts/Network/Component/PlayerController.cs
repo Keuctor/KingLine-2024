@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     private void OnAnyMenuOpen()
     {
         m_targetStructure = null;
-        ClientSendTargetPosition(new Vector2(m_localPlayer.Player.x, m_localPlayer.Player.y));
+        ClientSendTargetPosition(new Vector2(m_localPlayer.Player.X, m_localPlayer.Player.Y));
     }
 
     private void Update()
@@ -67,16 +67,16 @@ public class PlayerController : MonoBehaviour
         {
             var gamePlayer = p.Value;
             var player = p.Value.Player;
-            gamePlayer.Transform.position = new Vector2(player.x, player.y);
+            gamePlayer.Transform.position = new Vector2(player.X, player.Y);
 
-            if (Mathf.Abs(player.x - player.targetX) > float.Epsilon ||
-                Mathf.Abs(player.y - player.targetY) > float.Epsilon)
+            if (Mathf.Abs(player.X - player.TargetX) > float.Epsilon ||
+                Mathf.Abs(player.Y - player.TargetY) > float.Epsilon)
             {
                 gamePlayer.Gear.SetPlay(true);
                 var angle = Vector2.SignedAngle(Vector2.up,
-                    new Vector3(player.targetX, player.targetY) - gamePlayer.Transform.position);
+                    new Vector3(player.TargetX, player.TargetY) - gamePlayer.Transform.position);
 
-                var dirr = new Vector2(player.targetX - player.x, player.targetY - player.y).normalized;
+                var dirr = new Vector2(player.TargetX - player.X, player.TargetY - player.Y).normalized;
                 if (dirr.x > 0)
                     gamePlayer.Gear.SetDirection(MoveDirection.Right);
                 else
@@ -173,12 +173,12 @@ public class PlayerController : MonoBehaviour
     private void ClientSendTargetPosition(Vector2 mousePosition)
     {
         m_isLocalPlayerMoving = true;
-        m_localPlayer.Player.targetX = mousePosition.x;
-        m_localPlayer.Player.targetY = mousePosition.y;
+        m_localPlayer.Player.TargetX = mousePosition.x;
+        m_localPlayer.Player.TargetY = mousePosition.y;
         var moveUpdate = new ReqPlayerMove
         {
-            x = m_localPlayer.Player.targetX,
-            y = m_localPlayer.Player.targetY
+            x = m_localPlayer.Player.TargetX,
+            y = m_localPlayer.Player.TargetY
         };
         NetworkManager.Instance.Send(moveUpdate);
     }
@@ -227,7 +227,7 @@ public class PlayerController : MonoBehaviour
 
         player.NameText.text = player.Player.Name;
         player.Transform.position =
-            new Vector2(player.Player.x, player.Player.y);
+            new Vector2(player.Player.X, player.Player.Y);
 
         playerInstances.Add(player.Player.Id, player);
         if (player.IsLocalPlayer)
@@ -244,10 +244,10 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (InventoryNetworkController.RemoteInventories.ContainsKey(player.Player.Id))
-            {
-                player.Gear.DisplayGear(player.Player.Id);
-            }
+            // if (InventoryNetworkController.RemoteInventories.ContainsKey(player.Player.Id))
+            // {
+            //     player.Gear.DisplayGear(player.Player.Id);
+            // }
         }
     }
 }

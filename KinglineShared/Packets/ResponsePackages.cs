@@ -13,9 +13,8 @@ public class ResPlayerXp
 
 public class ResRemoteInventory
 {
-    public int Id { get; set; }
-
-    public ItemStack[] Items { get; set; }
+    public ulong Id { get; set; }
+    public ItemStack[] Gear { get; set; }
 }
 
 
@@ -51,19 +50,15 @@ public class ResPlayerMove
 }
 
 
-public class ResInventoryMove
-{
-    public short FromIndex { get; set; }
-    public short ToIndex { get; set; }
-}
-
 public class ResInventoryAdd
 {
+    public ulong InventoryId { get; set; }
     public int Id { get; set; }
     public short Count { get; set; }
 }
 public class ResInventoryRemove
 {
+    public ulong InventoryId { get; set; }
     public int Index { get; set; }
     public short Count { get; set; }
 }
@@ -72,6 +67,15 @@ public class ResInventoryRemove
 
 public class ResInventory
 {
+    public ulong Id { get; set; }
+    public ItemStack[] Items { get; set; }
+    public ItemStack[] Gear { get; set; }
+}
+
+public class ResStructureInventory
+{
+    public ulong InventoryId { get; set; }
+    public int StructureId { get; set; }
     public ItemStack[] Items { get; set; }
 }
 
@@ -134,8 +138,8 @@ public class ResAdminPrivileges
 }
 
 public class ResConsoleLog
-{ 
+{
     public string Log { get; set; }
 }
 
-    
+

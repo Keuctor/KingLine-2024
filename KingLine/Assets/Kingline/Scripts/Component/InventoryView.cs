@@ -1,24 +1,16 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 public class InventoryView : MonoBehaviour
 {
-    public bool Modifiable = true;
-
     public static UnityEvent<int> OnItemClick = new();
+    
     public UnityEvent<int> OnItemSelect = new();
 
     [Header("Dependency")]
     [SerializeField]
     private MaterialSpriteDatabase m_spriteDatabase;
-
-    [SerializeField]
-    private InventoryNetworkController m_inventoryNetworkController;
 
     [Header("Prefabs")]
     [SerializeField]
@@ -34,12 +26,8 @@ public class InventoryView : MonoBehaviour
     [SerializeField]
     public Transform m_itemStackViewParent;
 
-    public bool ShowGear;
-
-    public UnityEvent<int, int> OnItemDropped;
-
-
     private ItemInfoView m_infoView;
+    public ulong InventoryId { get; set; }
 
     private Dictionary<int, ItemStackContentView> m_createdContentViews = new Dictionary<int, ItemStackContentView>();
 
@@ -47,26 +35,28 @@ public class InventoryView : MonoBehaviour
     private void OnEnable()
     {
         OnItemClick.AddListener(OnItemClicked);
-        m_inventoryNetworkController.OnRemoveItem.AddListener(OnRemoveItem);
+        //m_inventoryNetworkController.OnRemoveItem.AddListener(OnRemoveItem);
     }
 
     private void OnRemoveItem(int index, int newCount)
     {
-        if (newCount == 0)
-        {
-            Destroy(m_createdContentViews[index].gameObject);
-            m_createdContentViews.Remove(index);
-        }
-        else
-        {
-            var item = InventoryNetworkController.LocalInventory.Items[index];
-            var itemData = ItemRegistry.GetItem(item.Id);
-            m_createdContentViews[index].SetCount(itemData.Stackable, newCount);
-        }
+        // if (newCount == 0)
+        // {
+        //     Destroy(m_createdContentViews[index].gameObject);
+        //     m_createdContentViews.Remove(index);
+        // }
+        // else
+        // {
+        //     var item = InventoryNetworkController.LocalInventory.Items[index];
+        //     var itemData = ItemRegistry.GetItem(item.Id);
+        //     m_createdContentViews[index].SetCount(itemData.Stackable, newCount);
+        // }
     }
 
     public bool ShowInfo = true;
 
+
+    public ItemInfoView InfoView => m_infoView;
     private void OnItemClicked(int itemId)
     {
         OnItemSelect?.Invoke(itemId);
@@ -81,6 +71,7 @@ public class InventoryView : MonoBehaviour
             }
 
             m_infoView.ShowItemInfo(ItemRegistry.GetItem(itemId));
+            
         }
         else
         {
@@ -99,25 +90,18 @@ public class InventoryView : MonoBehaviour
             Destroy(m_itemStackViewParent.GetChild(i).gameObject);
     }
 
-    public void ShowLocalPlayerInventory()
+    public void Show(ulong id,ItemStack[] items)
     {
-        Show(InventoryNetworkController.LocalInventory);
-    }
+        this.InventoryId = id;
 
-
-    public void Show(ItemStack[] items)
-    {
         m_createdContentViews.Clear();
 
         for (int i = 0; i < items.Length; i++)
         {
-            if (i is NetworkInventory.HELMET_SLOT_INDEX
-                or NetworkInventory.ARMOR_SLOT_INDEX or NetworkInventory.HAND_SLOT_INDEX)
-                continue;
-
             var item = items[i];
             ItemStackView stackView = Instantiate(m_itemStackTemplate, m_itemStackViewParent);
-            stackView.Id = i;
+            stackView.Index = (ushort)i;
+            stackView.InventoryId = id;
 
             if (item == null || item.Id == -1)
             {
@@ -136,6 +120,6 @@ public class InventoryView : MonoBehaviour
 
     public void Show(NetworkInventory networkInventory)
     {
-        Show(networkInventory.Items);
+        Show(networkInventory.Id,networkInventory.Items);
     }
 }

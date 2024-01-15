@@ -4,20 +4,17 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler,
-    IPointerExitHandler, IDropHandler
-{
-    public static int From;
-    public static int SelectedIndex;
-    public static int To;
 
+public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler,
+    IPointerExitHandler
+{
     public static ItemStackView _selectedItemView;
     public Transform Content;
 
-    [SerializeField]
-    private Image m_background;
+    [SerializeField] private Image m_background;
 
-    public int Id;
+    public ulong InventoryId;
+    public ushort Index;
 
     public IType Filter;
 
@@ -27,7 +24,7 @@ public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
     public Color POINTER_OVER_BACKGROUND_COLOR = new(0.5f, 0.5f, 0.5f, 1f);
 
 
-    public UnityEvent<int, int> OnDropItem = new();
+    public UnityEvent OnDropItem = new();
 
     private void Start()
     {
@@ -40,41 +37,8 @@ public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         }
     }
 
-    public virtual void OnDrop(PointerEventData eventData)
-    {
-        if (Id == From)
-            return;
-
-        var dropped = eventData.pointerDrag;
-        var view = dropped.GetComponent<ItemStackContentView>();
-        if (view == null) return;
-        if (Content.childCount != 0)
-            return;
-
-        var inv = InventoryNetworkController.LocalInventory;
-        var item = inv.Items[From];
-        var itemInfo = ItemRegistry.GetItem(item.Id);
-        if (Filter != IType.NONE)
-        {
-            if (itemInfo.Type != Filter)
-                return;
-        }
-
-        view.ParentAfterDrag = transform;
-        To = Id;
-        OnPointerDown(eventData);
-        NetworkManager.Instance.Send(new ReqInventoryMove
-        {
-            FromIndex = (short)From,
-            ToIndex = (short)To
-        });
-
-        OnDropItem?.Invoke(From, To);
-    }
-
     public void OnPointerDown(PointerEventData eventData)
     {
-        SelectedIndex = this.Id;
         if (_selectedItemView != null)
             _selectedItemView.m_background.color = _selectedItemView.NOT_SELECTED_BACKGROUND_COLOR;
 
@@ -88,7 +52,7 @@ public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
             InventoryView.OnItemClick?.Invoke(-1);
         }
 
-   
+
         _selectedItemView = this;
         _selectedItemView.m_background.color = SELECTED_BACKGROUND_COLOR;
     }

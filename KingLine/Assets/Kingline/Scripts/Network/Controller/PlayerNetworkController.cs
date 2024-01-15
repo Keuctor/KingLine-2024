@@ -57,8 +57,8 @@ public class PlayerNetworkController : NetworkController
 
     private void OnPlayerCurrencyResponse(ResPlayerCurrency res)
     {
-        LocalPlayer.Currency = res.NewCurrency;
-        OnPlayerCurrencyChanged?.Invoke(LocalPlayer.Currency);
+        LocalPlayer.Gold = res.NewCurrency;
+        OnPlayerCurrencyChanged?.Invoke(LocalPlayer.Gold);
     }
 
     public override void OnExit()
@@ -74,10 +74,10 @@ public class PlayerNetworkController : NetworkController
         foreach (var p in Players)
         {
             var player = p.Value;
-            var newPos = Vector2.MoveTowards(new Vector2(player.x, player.y),
-                new Vector2(player.targetX, player.targetY), deltaTime * player.speed);
-            player.x = newPos.x;
-            player.y = newPos.y;
+            var newPos = Vector2.MoveTowards(new Vector2(player.X, player.Y),
+                new Vector2(player.TargetX, player.TargetY), deltaTime * player.Speed);
+            player.X = newPos.x;
+            player.Y = newPos.y;
         }
     }
 
@@ -96,15 +96,15 @@ public class PlayerNetworkController : NetworkController
     private void OnPlayerTargetChangeResponse(ResPlayerMove target)
     {
         var p = Players[target.Id];
-        p.targetX = target.x;
-        p.targetY = target.y;
+        p.TargetX = target.x;
+        p.TargetY = target.y;
     }
 
     private void OnUpdatePlayerPositionResponse(ResPlayerPosition target)
     {
         var p = Players[target.Id];
-        p.x = target.x;
-        p.y = target.y;
+        p.X = target.x;
+        p.Y = target.y;
     }
 
     private void OnPlayerJoinedResponse(ResPlayerJoin resPlayer)

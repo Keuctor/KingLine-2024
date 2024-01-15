@@ -35,11 +35,13 @@ public class NetworkAdminController : NetworkController
     [Command("admin.give")]
     public static void AddItem(MaterialType id, int count)
     {
-        NetworkManager.Instance.Send(new ReqAdminCommand()
+        NetworkManager.Instance.Send(new ReqRemoteCommand()
         {
-            CommandType = 0,
-            CommandValue1 = ((int)id).ToString(),
-            CommandValue2 = count.ToString()
+            Command = "admin.give",
+            Arguments = new[]{
+                ((int)id).ToString(),
+                count.ToString()
+            }
         });
     }
 

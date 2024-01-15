@@ -21,11 +21,12 @@ public class PlayerGear : MonoBehaviour
     private void Awake()
     {
         m_character.transform.localScale = new Vector3(m_scale.x, m_scale.y, m_scale.z);
-        m_inventoryNetworkController.OnGearChange.AddListener(DisplayGear);
+        //m_inventoryNetworkController.OnGearChange.AddListener(DisplayGear);
     }
 
     public void DisplayGear(int id)
     {
+        /*
         if (id != PeerId)
             return;
         
@@ -83,6 +84,7 @@ public class PlayerGear : MonoBehaviour
         {
             m_character.UnEquip(EquipmentPart.MeleeWeapon1H);
         }
+        */
     }
 
 

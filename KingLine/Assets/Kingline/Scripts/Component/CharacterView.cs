@@ -43,7 +43,7 @@ public class CharacterView : MonoBehaviour
     {
         this.m_upgradePanel.gameObject.SetActive(true);
         this.m_priceLabel.text = upgradePrice + "";
-        this.m_upgradeButton.interactable = PlayerNetworkController.LocalPlayer.Currency >= upgradePrice;
+        this.m_upgradeButton.interactable = PlayerNetworkController.LocalPlayer.Gold >= upgradePrice;
         this.m_upgradeButton.onClick.AddListener(OnUpgradeClick);
     }
 

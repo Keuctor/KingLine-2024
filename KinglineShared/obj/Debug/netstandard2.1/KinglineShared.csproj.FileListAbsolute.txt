@@ -11,3 +11,14 @@ D:\KingLineServer\KingLine-Libgdx\KinglineShared\obj\Debug\netstandard2.1\Kingli
 C:\Users\Hector\Desktop\Debug\netstandard2.1\KinglineShared.deps.json
 C:\Users\Hector\Desktop\Debug\netstandard2.1\KinglineShared.dll
 C:\Users\Hector\Desktop\Debug\netstandard2.1\KinglineShared.pdb
+C:\Users\Hector\Documents\GitHub\KingLine-Libgdx\KinglineShared\obj\Debug\netstandard2.1\KinglineShared.csproj.AssemblyReference.cache
+C:\Users\Hector\Documents\GitHub\KingLine-Libgdx\KinglineShared\obj\Debug\netstandard2.1\KinglineShared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Hector\Documents\GitHub\KingLine-Libgdx\KinglineShared\obj\Debug\netstandard2.1\KinglineShared.AssemblyInfoInputs.cache
+C:\Users\Hector\Documents\GitHub\KingLine-Libgdx\KinglineShared\obj\Debug\netstandard2.1\KinglineShared.AssemblyInfo.cs
+C:\Users\Hector\Documents\GitHub\KingLine-Libgdx\KinglineShared\obj\Debug\netstandard2.1\KinglineShared.csproj.CoreCompileInputs.cache
+C:\Users\Hector\Documents\GitHub\KingLine-Libgdx\KinglineShared\obj\Debug\netstandard2.1\KinglineShared.sourcelink.json
+C:\Users\Hector\Documents\GitHub\KingLine-Libgdx\KinglineShared\obj\Debug\netstandard2.1\KinglineShared.dll
+C:\Users\Hector\Documents\GitHub\KingLine-Libgdx\KinglineShared\obj\Debug\netstandard2.1\KinglineShared.pdb
+C:\Users\Hector\Documents\GitHub\KingLine-Libgdx\KinglineShared\bin\Debug\netstandard2.1\KinglineShared.deps.json
+C:\Users\Hector\Documents\GitHub\KingLine-Libgdx\KinglineShared\bin\Debug\netstandard2.1\KinglineShared.dll
+C:\Users\Hector\Documents\GitHub\KingLine-Libgdx\KinglineShared\bin\Debug\netstandard2.1\KinglineShared.pdb

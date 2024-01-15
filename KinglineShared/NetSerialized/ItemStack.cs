@@ -16,6 +16,10 @@ public class ItemStack : INetSerializable
     {
 
     }
+    public ItemStack(int id) : this(id, 0)
+    {
+
+    }
     public void Deserialize(NetDataReader reader)
     {
         Id = reader.GetInt();

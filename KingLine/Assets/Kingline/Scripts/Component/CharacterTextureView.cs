@@ -108,9 +108,9 @@ public class CharacterTextureView : MonoBehaviour
         Strength = m_progressionController.GetSkill("Strength");
         Armor = m_progressionController.GetSkill("Defence");
         
-        Show(InventoryNetworkController.GetPlayerGear(NetworkManager.LocalPlayerPeerId));
-        m_inventoryController.OnGearChange.RemoveListener(OnGearChanged);
-        m_inventoryController.OnGearChange.AddListener(OnGearChanged);
+        // Show(InventoryNetworkController.GetPlayerGear(NetworkManager.LocalPlayerPeerId));
+        // m_inventoryController.OnGearChange.RemoveListener(OnGearChanged);
+        // m_inventoryController.OnGearChange.AddListener(OnGearChanged);
     }
 
     public void OnGearChanged(int id)

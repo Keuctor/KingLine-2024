@@ -1,38 +1,20 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using LiteNetLib;
 using LiteNetLib.Utils;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
 [CreateAssetMenu]
 public class InventoryNetworkController : NetworkController
 {
-    [Button]
-    public void Button()
-    {
-        foreach(var n in LocalInventory.Items)
-            Debug.Log(n.Id);
-    }
-
+    public Dictionary<ulong, NetworkInventory> Inventories = new Dictionary<ulong, NetworkInventory>();
     public static NetworkInventory LocalInventory;
-
-    public static Dictionary<int, ItemStack[]> RemoteInventories = new();
-
-    public static bool IsLoaded;
-    //id , added, total 
-    public readonly UnityEvent<int, int, int> OnAddItem = new();
     
-    //index,total
-    public readonly UnityEvent<int, int> OnRemoveItem = new();
-
-    public readonly UnityEvent<int> OnGearChange = new();
     public readonly UnityEvent OnInventory = new();
 
     public override void OnPeerDisconnected(NetPeer peer)
     {
-        RemoteInventories.Remove(peer.Id);
+   
     }
 
     public override void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
@@ -47,13 +29,11 @@ public class InventoryNetworkController : NetworkController
     public override void Subscribe(NetPacketProcessor processor)
     {
         processor.SubscribeReusable<ResInventory>(OnInventoryResponse);
-        processor.SubscribeReusable<ResInventoryMove>(OnInventoryMove);
         processor.SubscribeReusable<ResInventoryAdd>(OnInventoryAdd);
         processor.SubscribeReusable<ResInventoryRemove>(OnInventoryRemove);
         processor.SubscribeReusable<ResRemoteInventory>(OnRemoteInventory);
     }
 
-  
 
     public override void OnExit()
     {
@@ -61,77 +41,42 @@ public class InventoryNetworkController : NetworkController
 
     public override void OnStart()
     {
-        
     }
 
     public override void OnUpdate(float deltaTime)
     {
     }
 
-    private bool IsGearIndex(int index)
-    {
-        return index is NetworkInventory.HELMET_SLOT_INDEX or NetworkInventory.ARMOR_SLOT_INDEX
-            or NetworkInventory.HAND_SLOT_INDEX;
-    }
-
-    private void OnInventoryMove(ResInventoryMove inventoryMove)
-    {
-        LocalInventory.MoveItem(inventoryMove.FromIndex, inventoryMove.ToIndex);
-        if (IsGearIndex(inventoryMove.FromIndex) || IsGearIndex(inventoryMove.ToIndex))
-            OnGearChange?.Invoke(NetworkManager.LocalPlayerPeerId);
-    }
-
-
     private void OnInventoryResponse(ResInventory result)
     {
-        LocalInventory = new NetworkInventory(result.Items);
-        OnInventory?.Invoke();
-        OnGearChange?.Invoke(NetworkManager.LocalPlayerPeerId);
+        Inventories.Add(result.Id,new NetworkInventory(result.Id.ToString(), result.Items,result.Gear));
+        
+        LocalInventory = Inventories[result.Id];
     }
-
-
     private void OnInventoryAdd(ResInventoryAdd response)
     {
-        LocalInventory.AddItem(response.Id, response.Count);
-
-        OnAddItem?.Invoke(response.Id, response.Count, LocalInventory.GetItemCount(response.Id));
+        this.Inventories[response.InventoryId].AddItem(response.Id, response.Count);
     }
-    
-    private void OnInventoryRemove(ResInventoryRemove obj)
+
+    private void OnInventoryRemove(ResInventoryRemove response)
     {
-        LocalInventory.RemoveItem(obj.Index, obj.Count);
-        OnRemoveItem?.Invoke(obj.Index,LocalInventory.Items[obj.Index].Count);
+        this.Inventories[response.InventoryId].RemoveItem(response.Index, response.Count);
     }
 
 
     private void OnRemoteInventory(ResRemoteInventory remoteInventory)
     {
-        if (RemoteInventories.TryGetValue(remoteInventory.Id, out var inv))
-            RemoteInventories[remoteInventory.Id] = remoteInventory.Items;
-        else
-            RemoteInventories.Add(remoteInventory.Id, remoteInventory.Items);
-
-        OnGearChange?.Invoke(remoteInventory.Id);
+        var inv = new NetworkInventory(remoteInventory.Id.ToString(),null,remoteInventory.Gear);
+        Inventories.Add(remoteInventory.Id,inv);
     }
 
-    public static ItemStack[] GetPlayerGear(int peerId)
-    {
-        if (peerId == NetworkManager.LocalPlayerPeerId)
-            return new[]
-            {
-                LocalInventory.GetHelmet(),
-                LocalInventory.GetArmor(),
-                LocalInventory.GetHand()
-            };
-        return RemoteInventories[peerId];
-    }
 
-    public static void Sell(int index,short count)
+    public static void Sell(int index, short count)
     {
-       NetworkManager.Instance.Send(new ReqSellItem()
-       {
-          Index = index,
-           Count = count,
-       });
+        NetworkManager.Instance.Send(new ReqSellItem()
+        {
+            Index = index,
+            Count = count,
+        });
     }
 }

@@ -83,7 +83,7 @@ public class MineGame : MonoBehaviour
     {
         var popup = PopupManager.Instance.CreateNew("ItemSelectPopup");
         var invView = popup.Add(PopupManager.Instance.InventoryView);
-        invView.ShowLocalPlayerInventory();
+        invView.Show(InventoryNetworkController.LocalInventory);
         invView.OnItemSelect.AddListener((i =>
         {
             popup.Destroy();

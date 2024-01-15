@@ -9,11 +9,9 @@ using UnityEngine.UI;
 
 public class MenuController : Singleton<MenuController>
 {
-    [SerializeField]
-    private GameObject m_blocker;
+    [SerializeField] private GameObject m_blocker;
 
-    [NonSerialized]
-    public readonly UnityEvent OnOpenMenu = new();
+    [NonSerialized] public readonly UnityEvent OnOpenMenu = new();
 
     public List<Popup> Popups = new List<Popup>();
 
@@ -34,11 +32,11 @@ public class MenuController : Singleton<MenuController>
                     p = null;
                 }
             }
+
             if (Popups.Count == 0)
             {
                 if (!SceneManager.GetActiveScene().name.Equals("World"))
                     SceneManager.LoadScene("World");
-                
             }
         }
     }
@@ -52,12 +50,26 @@ public class MenuController : Singleton<MenuController>
             Popups.Remove(activePopup);
             return;
         }
+
         var popup = PopupManager.Instance.CreateNew("InventoryUI");
         var characterTextureView = popup.Add(PopupManager.Instance.CharacterTextureView);
         characterTextureView.ShowLocalPlayerGear();
-        popup.Add(PopupManager.Instance.PlayerGearInventoryView);
+        var gearView = popup.Add(PopupManager.Instance.PlayerGearInventoryView);
         var invView = popup.Add(PopupManager.Instance.InventoryView);
-        invView.ShowLocalPlayerInventory();
+        invView.OnItemSelect.AddListener((i) =>
+        {
+            if (invView.InfoView == null)
+                return;
+            var dropButtonContainer = invView.InfoView.transform;
+
+            var dropButton = Instantiate(PopupManager.Instance.PopupButton,dropButtonContainer).GetComponent<Button>();
+            dropButton.onClick.AddListener(() => { Debug.Log("DROP ITEM"); });
+
+            var equipButton = Instantiate(PopupManager.Instance.PopupButton,dropButtonContainer).GetComponent<Button>();
+            equipButton.onClick.AddListener(() => { Debug.Log("EQIUP ITEM"); });
+        });
+        invView.Show(InventoryNetworkController.LocalInventory);
+        gearView.DisplayGear(InventoryNetworkController.LocalInventory.Gear);
         Popups.Add(popup);
     }
 

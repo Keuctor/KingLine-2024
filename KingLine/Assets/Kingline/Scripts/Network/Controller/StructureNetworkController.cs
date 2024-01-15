@@ -12,6 +12,9 @@ public class StructureNetworkController : NetworkController
 
     [NonSerialized]
     public Structure[] Structures = Array.Empty<Structure>();
+    
+    public  UnityEvent<ulong,int,ItemStack[]> OnStructureInventoryResponse = new();
+
 
     public override void OnPeerDisconnected(NetPeer peer)
     {
@@ -24,6 +27,20 @@ public class StructureNetworkController : NetworkController
     public override void Subscribe(NetPacketProcessor processor)
     {
         processor.SubscribeReusable<ResStructures>(OnStructuresResponse);
+        processor.SubscribeReusable<ResStructureInventory>(OnStructureInventory);
+    }
+
+    private void OnStructureInventory(ResStructureInventory res)
+    {
+        OnStructureInventoryResponse?.Invoke(res.InventoryId,res.StructureId,res.Items);
+    }
+
+    public void RequestStructureInventory(int structureId)
+    {
+        NetworkManager.Instance.Send(new ReqStructureInventory()
+        {
+            StructureId = structureId
+        });
     }
 
     public override void OnPeerConnected(NetPeer peer)

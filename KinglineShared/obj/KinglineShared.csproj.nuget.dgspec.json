@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\KingLineServer\\KingLine-Libgdx\\KinglineShared\\KinglineShared.csproj": {}
+    "C:\\Users\\Hector\\Documents\\GitHub\\KingLine-Libgdx\\KinglineShared\\KinglineShared.csproj": {}
   },
   "projects": {
-    "D:\\KingLineServer\\KingLine-Libgdx\\KinglineShared\\KinglineShared.csproj": {
+    "C:\\Users\\Hector\\Documents\\GitHub\\KingLine-Libgdx\\KinglineShared\\KinglineShared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\KingLineServer\\KingLine-Libgdx\\KinglineShared\\KinglineShared.csproj",
+        "projectUniqueName": "C:\\Users\\Hector\\Documents\\GitHub\\KingLine-Libgdx\\KinglineShared\\KinglineShared.csproj",
         "projectName": "KinglineShared",
-        "projectPath": "D:\\KingLineServer\\KingLine-Libgdx\\KinglineShared\\KinglineShared.csproj",
+        "projectPath": "C:\\Users\\Hector\\Documents\\GitHub\\KingLine-Libgdx\\KinglineShared\\KinglineShared.csproj",
         "packagesPath": "C:\\Users\\Hector\\.nuget\\packages\\",
-        "outputPath": "D:\\KingLineServer\\KingLine-Libgdx\\KinglineShared\\obj\\",
+        "outputPath": "C:\\Users\\Hector\\Documents\\GitHub\\KingLine-Libgdx\\KinglineShared\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
           "C:\\Users\\Hector\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -61,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

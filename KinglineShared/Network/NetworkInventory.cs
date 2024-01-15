@@ -1,19 +1,38 @@
 ﻿
 
-using System.Drawing;
+using System;
 
 public class NetworkInventory
 {
+    public ulong Id { get; set; }
+    public string Name { get; set; }
+
     private ItemStack[] items;
+    private ItemStack[] gear;
     public ItemStack[] Items => items;
-
-    public const int HELMET_SLOT_INDEX = 25;
-    public const int ARMOR_SLOT_INDEX = 26;
-    public const int HAND_SLOT_INDEX = 27;
-    public const int INVENTORY_SIZE = 28;
-
-    public NetworkInventory()
+    public ItemStack[] Gear
     {
+        get
+        {
+            if (gear == null || gear.Length==0)
+            {
+                gear = new ItemStack[3];
+                gear[0] = new ItemStack();
+                gear[1] = new ItemStack();
+                gear[2] = new ItemStack();
+            }
+            return gear;
+        }
+    }
+
+    public const int INVENTORY_SIZE = 20;
+
+    static Random random = new Random();
+    public NetworkInventory(string name)
+    {
+        byte[] buffer = new byte[8];
+        random.NextBytes(buffer);
+        Id = BitConverter.ToUInt64(buffer, 0);
         this.items = new ItemStack[INVENTORY_SIZE];
         for (int i = 0; i < this.items.Length; i++)
         {
@@ -23,26 +42,38 @@ public class NetworkInventory
                 Count = 0
             };
         }
+        Name = name;
+    }
+    
+    public NetworkInventory(string name, ItemStack[] items)
+    {
+        this.Name = name;
+        this.items = items;
+    }
+    public NetworkInventory(string name, ItemStack[] items, ItemStack[] gear)
+    {
+        this.Name = name;
+        this.items = items;
+        this.gear = gear;
     }
 
-    public NetworkInventory(ItemStack[] items)
-    {
-        this.items = items;
+    public void SetGear(ItemStack[] gear) {
+        this.gear = gear;
     }
 
     public ItemStack GetHelmet()
     {
-        return this.items[HELMET_SLOT_INDEX];
+        return this.Gear[0];
     }
 
     public ItemStack GetArmor()
     {
-        return this.items[ARMOR_SLOT_INDEX];
+        return this.Gear[1];
     }
 
     public ItemStack GetHand()
     {
-        return this.items[HAND_SLOT_INDEX];
+        return this.Gear[2];
     }
 
     public ItemStack[] GetGear()
@@ -145,9 +176,6 @@ public class NetworkInventory
     {
         for (var i = 0; i < items.Length; i++)
         {
-            if (i == HELMET_SLOT_INDEX || i == HAND_SLOT_INDEX || i == ARMOR_SLOT_INDEX)
-                continue;
-
             var item = items[i];
             if (item.Id == itemId)
             {
@@ -163,9 +191,6 @@ public class NetworkInventory
 
         for (var i = 0; i < items.Length; i++)
         {
-            if (i == HELMET_SLOT_INDEX || i == HAND_SLOT_INDEX || i == ARMOR_SLOT_INDEX)
-                continue;
-
             if (items[i].Id == -1)
             {
                 count++;
@@ -178,9 +203,6 @@ public class NetworkInventory
     {
         for (var i = 0; i < items.Length; i++)
         {
-            if (i == HELMET_SLOT_INDEX || i == HAND_SLOT_INDEX || i == ARMOR_SLOT_INDEX)
-                continue;
-
             if (items[i].Id == -1)
             {
                 return i;
@@ -204,7 +226,7 @@ public class NetworkInventory
         return total;
     }
 
-    public bool MoveItem(short fromIndex, short toIndex)
+    public bool MoveItem(ushort fromIndex, ushort toIndex)
     {
         var item = items[fromIndex];
         if (item.Id != -1)

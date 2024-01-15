@@ -22,7 +22,7 @@ public class InventoryController : MonoBehaviour
 
     private void Start()
     {
-        m_inventoryNetworkController.OnAddItem.AddListener(ShowItemAddPopup);
+        //m_inventoryNetworkController.OnAddItem.AddListener(ShowItemAddPopup);
     }
     
     public void ShowItemAddPopup(int id, int count,int total)

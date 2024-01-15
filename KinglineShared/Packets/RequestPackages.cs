@@ -30,12 +30,6 @@ public class ReqSkillIncrement
     public string SkillName { get; set; }
 }
 
-public class ReqInventoryMove
-{
-    public short FromIndex { get; set; }
-    public short ToIndex { get; set; }
-}
-
 public class ReqSellItem
 {
     public int Index { get; set; }
@@ -49,16 +43,22 @@ public class ReqVolunteers
 public class ReqBuyVolunteers
 {
     public int StructureId { get; set; }
-    public int Id { get; set;    }
+    public int Id { get; set; }
     public short Count { get; set; }
 }
 
 public class ReqAdminPrivileges
-{ 
+{
     public string Password { get; set; }
 }
-public class ReqAdminCommand { 
-    public int CommandType { get; set; }
-    public string CommandValue1 { get; set; }
-    public string CommandValue2 { get; set; }
+public class ReqRemoteCommand
+{
+    public string Command { get; set; }
+    public string[] Arguments { get; set; }
+}
+
+
+public class ReqStructureInventory
+{
+    public int StructureId { get; set; }
 }

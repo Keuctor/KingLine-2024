@@ -26,7 +26,6 @@ public class SellItemView : MonoBehaviour
     {
         m_sellButtonText = m_sellButton.transform.GetChild(0).GetComponent<TMP_Text>();
         m_notSelectedAnyItemPanel.gameObject.SetActive(true);
-        m_inventoryNetworkController.OnRemoveItem.AddListener(OnRemoveItem);
         this.m_sellButton.onClick.AddListener(OnSellItemClicked);
     }
 
@@ -44,7 +43,6 @@ public class SellItemView : MonoBehaviour
     private void OnDestroy()
     {
         this.m_sellButton.onClick.RemoveListener(OnSellItemClicked);
-        m_inventoryNetworkController.OnRemoveItem.AddListener(OnRemoveItem);
     }
 
     public int selectedIndex = -1;

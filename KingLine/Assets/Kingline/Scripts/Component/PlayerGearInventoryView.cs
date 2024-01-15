@@ -16,22 +16,15 @@ public class PlayerGearInventoryView : MonoBehaviour
     [Header("Prefab"), SerializeField]
     private ItemStackContentView m_itemStackContentView;
 
-    private void OnEnable()
+    public void DisplayGear(ItemStack[] gearInv)
     {
-        DisplayGear(NetworkManager.LocalPlayerPeerId);
-    }
-
-
-    public void DisplayGear(int id)
-    {
-        var gear = InventoryNetworkController.GetPlayerGear(id);
-        for (int i = 0; i < gear.Length; i++)
+        for (int i = 0; i < gearInv.Length; i++)
         {
-            if (gear[i].Id != -1)
+            if (gearInv[i].Id != -1)
             {
                 var item = Instantiate(m_itemStackContentView, Items[i].Content);
-                item.ItemId = gear[i].Id;
-                item.SetContext(m_spriteDatabase.LoadSprite(gear[i].Id), 0, false);
+                item.ItemId = gearInv[i].Id;
+                item.SetContext(m_spriteDatabase.LoadSprite(gearInv[i].Id), 0, false);
             }
         }
     }

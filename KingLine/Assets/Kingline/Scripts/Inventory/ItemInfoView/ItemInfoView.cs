@@ -28,29 +28,17 @@ public class ItemInfoView : MonoBehaviour
 
     private readonly List<ItemInfoMetaView> _metaViews = new(4);
 
-    [SerializeField]
-    private Button m_sellButton;
-
     public UnityEvent OnSellButtonClicked = new();
 
     [SerializeField]
     private MaterialSpriteDatabase m_materialDatabase;
     
-
-    public void ShowItemInfo(IItemMaterial itemMaterial)
+    public Transform ShowItemInfo(IItemMaterial itemMaterial)
     {
         m_itemIcon.sprite = m_materialDatabase.LoadSprite(itemMaterial.Id);
         m_itemName.text = itemMaterial.Name;
         m_priceMetaView.MetaValue.text = "" + itemMaterial.Value;
 
-        if(m_sellButton){
-            m_sellButton.onClick.RemoveAllListeners();
-            m_sellButton.onClick.AddListener(() =>
-            {
-                OnSellButtonClicked?.Invoke();
-                
-            });
-        }
 
         for (var i = 0; i < _metaViews.Count; i++)
             Destroy(_metaViews[i].gameObject);
@@ -93,9 +81,7 @@ public class ItemInfoView : MonoBehaviour
         }
 
         m_priceMetaView.transform.SetAsLastSibling();
-        if (m_sellButton)
-        {
-            m_sellButton.transform.SetAsLastSibling();
-        }
+
+        return transform;
     }
 }
