@@ -11,12 +11,6 @@ public class ResPlayerXp
     public int Xp { get; set; }
 }
 
-public class ResRemoteInventory
-{
-    public ulong Id { get; set; }
-    public ItemStack[] Gear { get; set; }
-}
-
 
 public class ResPlayerAddXp
 {
@@ -63,13 +57,11 @@ public class ResInventoryRemove
     public short Count { get; set; }
 }
 
-
-
 public class ResInventory
 {
-    public ulong Id { get; set; }
+    public ulong InventoryId { get; set; }
+    public bool LocalInventory { get; set; }
     public ItemStack[] Items { get; set; }
-    public ItemStack[] Gear { get; set; }
 }
 
 public class ResStructureInventory

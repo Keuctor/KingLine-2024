@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public class InventoryView : MonoBehaviour
 {
-    public static UnityEvent<int> OnItemClick = new();
+    public static UnityEvent<int,int> OnItemClick = new();
 
     public UnityEvent<int> OnItemSelect = new();
 
@@ -23,7 +23,6 @@ public class InventoryView : MonoBehaviour
     public ulong InventoryId { get; set; }
 
     private Dictionary<int, ItemStackContentView> m_createdContentViews = new Dictionary<int, ItemStackContentView>();
-
 
     private void OnEnable()
     {
@@ -49,7 +48,7 @@ public class InventoryView : MonoBehaviour
     public bool ShowInfo = true;
 
     public ItemInfoView InfoView => m_infoView;
-    private void OnItemClicked(int itemId)
+    private void OnItemClicked(int index,int itemId)
     {
         if (ShowInfo)
         {
@@ -89,7 +88,7 @@ public class InventoryView : MonoBehaviour
         for (int i = 0; i < items.Length; i++)
         {
             var item = items[i];
-            ItemStackView stackView = Instantiate(m_itemStackTemplate, m_itemStackViewParent);
+            var stackView = Instantiate(m_itemStackTemplate, m_itemStackViewParent);
             stackView.Index = (ushort)i;
 
             if (item == null || item.Id == -1)

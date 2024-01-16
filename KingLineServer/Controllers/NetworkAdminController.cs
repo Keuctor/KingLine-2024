@@ -84,7 +84,7 @@ public class NetworkAdminController : INetworkController
             case "admin.give":
                 try
                 {
-                    var targetInv = NetworkInventoryController.GetInventory(peer);
+                    var targetInv = NetworkInventoryController.GetPlayerInventory(peer);
                     int itemId = int.Parse(command.Arguments[0]);
                     short count = short.Parse(command.Arguments[1]);
 

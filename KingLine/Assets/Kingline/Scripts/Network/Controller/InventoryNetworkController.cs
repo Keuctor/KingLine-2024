@@ -8,13 +8,12 @@ using UnityEngine.Events;
 public class InventoryNetworkController : NetworkController
 {
     public Dictionary<ulong, NetworkInventory> Inventories = new Dictionary<ulong, NetworkInventory>();
-    public static NetworkInventory LocalInventory;
-    
+    public static PlayerNetworkInventory LocalInventory;
+
     public readonly UnityEvent OnInventory = new();
 
     public override void OnPeerDisconnected(NetPeer peer)
     {
-   
     }
 
     public override void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)
@@ -31,7 +30,6 @@ public class InventoryNetworkController : NetworkController
         processor.SubscribeReusable<ResInventory>(OnInventoryResponse);
         processor.SubscribeReusable<ResInventoryAdd>(OnInventoryAdd);
         processor.SubscribeReusable<ResInventoryRemove>(OnInventoryRemove);
-        processor.SubscribeReusable<ResRemoteInventory>(OnRemoteInventory);
     }
 
 
@@ -49,10 +47,16 @@ public class InventoryNetworkController : NetworkController
 
     private void OnInventoryResponse(ResInventory result)
     {
-        Inventories.Add(result.Id,new NetworkInventory(result.Id.ToString(), result.Items,result.Gear));
-        
-        LocalInventory = Inventories[result.Id];
+        if (result.LocalInventory)
+        {
+            LocalInventory = new PlayerNetworkInventory(result.Items.Length);
+        }
+
+        var inventory = new NetworkInventory(result.Items);
+     
+        Inventories.Add(result.Id, inventory);
     }
+
     private void OnInventoryAdd(ResInventoryAdd response)
     {
         this.Inventories[response.InventoryId].AddItem(response.Id, response.Count);
@@ -62,14 +66,6 @@ public class InventoryNetworkController : NetworkController
     {
         this.Inventories[response.InventoryId].RemoveItem(response.Index, response.Count);
     }
-
-
-    private void OnRemoteInventory(ResRemoteInventory remoteInventory)
-    {
-        var inv = new NetworkInventory(remoteInventory.Id.ToString(),null,remoteInventory.Gear);
-        Inventories.Add(remoteInventory.Id,inv);
-    }
-
 
     public static void Sell(int index, short count)
     {

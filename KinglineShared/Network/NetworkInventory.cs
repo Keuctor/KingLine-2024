@@ -1,79 +1,38 @@
 ﻿
 
 using System;
+using System.Linq;
 
-public class NetworkInventory
+public class PlayerNetworkInventory : NetworkInventory
 {
-    public ulong Id { get; set; }
-    public string Name { get; set; }
 
-    private ItemStack[] items;
-    private ItemStack[] gear;
-    public ItemStack[] Items => items;
-    public ItemStack[] Gear
+    public PlayerNetworkInventory(int size) : base(size)
     {
-        get
-        {
-            if (gear == null || gear.Length==0)
-            {
-                gear = new ItemStack[3];
-                gear[0] = new ItemStack();
-                gear[1] = new ItemStack();
-                gear[2] = new ItemStack();
-            }
-            return gear;
-        }
     }
 
-    public const int INVENTORY_SIZE = 20;
-
-    static Random random = new Random();
-    public NetworkInventory(string name)
+    public override ItemStack[] GetInventory()
     {
-        byte[] buffer = new byte[8];
-        random.NextBytes(buffer);
-        Id = BitConverter.ToUInt64(buffer, 0);
-        this.items = new ItemStack[INVENTORY_SIZE];
-        for (int i = 0; i < this.items.Length; i++)
-        {
-            this.items[i] = new ItemStack()
-            {
-                Id = -1,
-                Count = 0
-            };
-        }
-        Name = name;
+        return items.Skip(3).ToArray();
     }
-    
-    public NetworkInventory(string name, ItemStack[] items)
+    public void SetGear(ItemStack[] gear)
     {
-        this.Name = name;
-        this.items = items;
+        this.items[0] = gear[0];
+        this.items[1] = gear[0];
+        this.items[2] = gear[0];
     }
-    public NetworkInventory(string name, ItemStack[] items, ItemStack[] gear)
-    {
-        this.Name = name;
-        this.items = items;
-        this.gear = gear;
-    }
-
-    public void SetGear(ItemStack[] gear) {
-        this.gear = gear;
-    }
-
     public ItemStack GetHelmet()
     {
-        return this.Gear[0];
+        return this.items[0];
     }
 
     public ItemStack GetArmor()
     {
-        return this.Gear[1];
+        return this.items[1];
     }
 
     public ItemStack GetHand()
     {
-        return this.Gear[2];
+        return this.items[2];
     }
 
     public ItemStack[] GetGear()
@@ -83,6 +42,47 @@ public class NetworkInventory
         };
     }
 
+    public override ItemStack[] GetItems()
+    {
+        return this.items;
+    }
+}
+public class ContainerNetworkInventory : NetworkInventory
+{
+    public ContainerNetworkInventory(int size) : base(size)
+    {
+    }
+    public override ItemStack[] GetInventory() {
+        return items;
+    }
+    public override ItemStack[] GetItems()
+    {
+        return GetInventory();
+    }
+}
+public abstract class NetworkInventory
+{
+    protected ItemStack[] items;
+    public uint Id { get; set; }
+    public abstract ItemStack[] GetInventory();
+    public abstract ItemStack[] GetItems();
+
+    static Random random = new Random();
+    public NetworkInventory(int size)
+    {
+        byte[] buffer = new byte[8];
+        random.NextBytes(buffer);
+        Id = BitConverter.ToUInt32(buffer, 0);
+        this.items = new ItemStack[size];
+        for (int i = 0; i < this.items.Length; i++)
+        {
+            this.items[i] = new ItemStack()
+            {
+                Id = -1,
+                Count = 0
+            };
+        }
+    }
 
     public void SetItem(int index, int id, short count = 1)
     {

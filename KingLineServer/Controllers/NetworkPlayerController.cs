@@ -29,8 +29,8 @@ public class NetworkPlayerController : INetworkController
     {
 
         var player = Players[peer];
-        var inventory = NetworkInventoryController.GetInventory(peer);
-        var targetItemStack = inventory.Items[request.Index];
+        var inventory = NetworkInventoryController.GetPlayerInventory(peer);
+        var targetItemStack = inventory.GetItems()[request.Index];
         if (targetItemStack.Id != -1 && targetItemStack.Count >= request.Count)
         {
             var itemInfo = ItemRegistry.GetItem(targetItemStack.Id);
@@ -148,7 +148,7 @@ public class NetworkPlayerController : INetworkController
             Gold = 0,
         };
 
-        NetworkInventory inventory = NetworkInventoryController.CreateInventory(username);
+        var inventory = NetworkInventoryController.CreatePlayerInventory();
 
         inventory.SetGear(new ItemStack[]
         {

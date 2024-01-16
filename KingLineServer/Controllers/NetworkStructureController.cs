@@ -58,7 +58,7 @@ public class NetworkStructureController
         var inv = NetworkInventoryController.Inventories[targetStructure.Structure.InventoryId];
         PackageSender.SendPacket(peer, new ResStructureInventory()
         {
-            Items = inv.Items,
+            Items = inv.GetItems(),
             InventoryId = inv.Id,
             StructureId = request.StructureId,
         }, DeliveryMethod.ReliableUnordered);
@@ -155,7 +155,7 @@ public class NetworkStructureController
     }
     public void OnStart()
     {
-        var goldMine = NetworkInventoryController.CreateInventory("goldMine");
+        var goldMine = NetworkInventoryController.CreateContainerInventory();
         goldMine.AddItem(MaterialType.CATAPHRACT_ARMOR.ID(), 1);
         goldMine.AddItem(MaterialType.BONE.ID(), 65);
         goldMine.AddItem(MaterialType.CHAINMAIL_HELMET.ID(), 1);

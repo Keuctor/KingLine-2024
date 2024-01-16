@@ -47,10 +47,10 @@ public class NetworkInventoryController : INetworkController
         var token = KingLine.GetPlayerToken(peer.Id);
 
         var response = new ResInventory();
-        var inventory = GetInventory(peer);
-        response.Id = inventory.Id;
-        response.Items = inventory.Items;
-        response.Gear = inventory.Gear;
+        var inventory = GetPlayerInventory(peer);
+        response.InventoryId = inventory.Id;
+        response.LocalInventory = true;
+        response.Items = inventory.GetInventory();
         PackageSender.SendPacket(peer, response);
 
         //Send also other players inventories to this player
@@ -59,13 +59,11 @@ public class NetworkInventoryController : INetworkController
             var netPeer = p.Key;
             if (netPeer.Id != peer.Id)
             {
-                var tkn = KingLine.GetPlayerToken(p.Key.Id);
-                var targetInv = GetInventory(p.Key);
-                PackageSender.SendPacket(peer, new ResRemoteInventory()
+                var targetInv = GetPlayerInventory(p.Key);
+                PackageSender.SendPacket(peer, new ResInventory()
                 {
-                    Id = targetInv.Id,
-                    Gear = new ItemStack[3]
-                    {
+                    InventoryId = targetInv.Id,
+                    Items = new ItemStack[3] {
                         targetInv.GetHelmet(),
                         targetInv.GetArmor(),
                         targetInv.GetHand(),
@@ -75,12 +73,18 @@ public class NetworkInventoryController : INetworkController
         }
     }
 
-    public static NetworkInventory CreateInventory(string name)
+    public static PlayerNetworkInventory CreatePlayerInventory()
     {
-        var inventory = new NetworkInventory(name);
+        var inventory = new PlayerNetworkInventory(23);
         Inventories.Add(inventory.Id, inventory);
         return inventory;
     }
+    public static ContainerNetworkInventory CreateContainerInventory() {
+        var inventory = new ContainerNetworkInventory(20);
+        Inventories.Add(inventory.Id, inventory);
+        return inventory;
+    }
+    
 
     public void OnPeerDisconnected(NetPeer peer)
     {
@@ -88,15 +92,15 @@ public class NetworkInventoryController : INetworkController
 
     public void OnPeerConnected(NetPeer peer)
     {
+        var myInv = GetPlayerInventory(peer);
         foreach (var p in NetworkPlayerController.Players)
         {
             if (peer.Id != p.Key.Id)
             {
-                var myInv = GetInventory(peer);
-                PackageSender.SendPacket(p.Key, new ResRemoteInventory()
+                PackageSender.SendPacket(p.Key, new ResInventory()
                 {
-                    Id = myInv.Id,
-                    Gear = new ItemStack[3]
+                    InventoryId = myInv.Id,
+                    Items = new ItemStack[3]
                     {
                         myInv.GetHelmet(),
                         myInv.GetArmor(),
@@ -108,10 +112,10 @@ public class NetworkInventoryController : INetworkController
     }
 
 
-    public static NetworkInventory GetInventory(NetPeer peer)
+    public static PlayerNetworkInventory GetPlayerInventory(NetPeer peer)
     {
         var player = NetworkPlayerController.GetPlayer(peer);
-        return Inventories[player.InventoryId];
+        return Inventories[player.InventoryId] as PlayerNetworkInventory;
     }
 
     public void OnPeerConnectionRequest(NetPeer peer, string idendifier, string username)

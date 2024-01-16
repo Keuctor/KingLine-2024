@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KinglineShared")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e284201efdbffe53d70e679c5ae3971ad2c7601d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bf57f23c11a64d63ab3b1aa4dd12577b635be70f")]
 [assembly: System.Reflection.AssemblyProductAttribute("KinglineShared")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KinglineShared")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
