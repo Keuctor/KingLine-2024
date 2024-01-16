@@ -8,31 +8,39 @@ using UnityEngine.UI;
 
 public class ItemInfoView : MonoBehaviour
 {
-    [SerializeField]
-    private ItemInfoMetaView m_metaViewTemplate;
+    [SerializeField] private ItemInfoMetaView m_metaViewTemplate;
 
-    [SerializeField]
-    private Transform m_metaViewParent;
+    [SerializeField] private Transform m_metaViewParent;
 
-    [SerializeField]
-    private ItemInfoMetaView m_priceMetaView;
+    [SerializeField] private ItemInfoMetaView m_priceMetaView;
 
-    [SerializeField]
-    private TMP_Text m_itemName;
+    [SerializeField] private TMP_Text m_itemName;
 
-    [SerializeField]
-    private Image m_itemIcon;
-    [FormerlySerializedAs("m_canvasGroup")]
-    [SerializeField]
+    [SerializeField] private Image m_itemIcon;
+
+    [FormerlySerializedAs("m_canvasGroup")] [SerializeField]
     public CanvasGroup CanvasGroup;
+
+    [SerializeField] private Transform m_buttonContainer;
+
+    [SerializeField] private Button m_buttonPrefab;
 
     private readonly List<ItemInfoMetaView> _metaViews = new(4);
 
-    public UnityEvent OnSellButtonClicked = new();
+    [SerializeField] private MaterialSpriteDatabase m_materialDatabase;
 
-    [SerializeField]
-    private MaterialSpriteDatabase m_materialDatabase;
-    
+    public void ClearButtons()
+    {
+        for(int i=0;i<m_buttonContainer.childCount;i++)
+            Destroy(m_buttonContainer.GetChild(i).gameObject);
+    }
+    public void AddButton(string text, Action action)
+    {
+        var btn = Instantiate(m_buttonPrefab, m_buttonContainer);
+        btn.transform.GetChild(0).GetComponent<TMP_Text>().text = text;
+        btn.onClick.AddListener(() => { action?.Invoke();});
+    }
+
     public Transform ShowItemInfo(IItemMaterial itemMaterial)
     {
         m_itemIcon.sprite = m_materialDatabase.LoadSprite(itemMaterial.Id);
@@ -81,7 +89,7 @@ public class ItemInfoView : MonoBehaviour
         }
 
         m_priceMetaView.transform.SetAsLastSibling();
-
+        m_buttonContainer.transform.SetAsLastSibling();
         return transform;
     }
 }

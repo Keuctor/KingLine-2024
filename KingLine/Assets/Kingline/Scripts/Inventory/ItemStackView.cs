@@ -13,12 +13,11 @@ public class ItemStackView : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
 
     [SerializeField] private Image m_background;
 
-    public ulong InventoryId;
     public ushort Index;
 
     public IType Filter;
-
-
+        
+    
     public Color SELECTED_BACKGROUND_COLOR = new(0.5f, 0.6f, 0.7f, 0.5f);
     public Color NOT_SELECTED_BACKGROUND_COLOR = new(0.4f, 0.4f, 0.4f, 1f);
     public Color POINTER_OVER_BACKGROUND_COLOR = new(0.5f, 0.5f, 0.5f, 1f);

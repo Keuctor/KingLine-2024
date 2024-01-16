@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class MenuController : Singleton<MenuController>
 {
@@ -56,17 +54,23 @@ public class MenuController : Singleton<MenuController>
         characterTextureView.ShowLocalPlayerGear();
         var gearView = popup.Add(PopupManager.Instance.PlayerGearInventoryView);
         var invView = popup.Add(PopupManager.Instance.InventoryView);
-        invView.OnItemSelect.AddListener((i) =>
+        
+        invView.OnItemSelect.AddListener((id) =>
         {
             if (invView.InfoView == null)
                 return;
-            var dropButtonContainer = invView.InfoView.transform;
+            
+            invView.InfoView.ClearButtons();
 
-            var dropButton = Instantiate(PopupManager.Instance.PopupButton,dropButtonContainer).GetComponent<Button>();
-            dropButton.onClick.AddListener(() => { Debug.Log("DROP ITEM"); });
+            var material = ItemRegistry.GetItem(id);
 
-            var equipButton = Instantiate(PopupManager.Instance.PopupButton,dropButtonContainer).GetComponent<Button>();
-            equipButton.onClick.AddListener(() => { Debug.Log("EQIUP ITEM"); });
+            if (material.Type == IType.ARMOR
+                || material.Type == IType.WEAPON
+                || material.Type == IType.HELMET
+                )
+            {
+                invView.InfoView.AddButton("Equip", () => { });
+            }
         });
         invView.Show(InventoryNetworkController.LocalInventory);
         gearView.DisplayGear(InventoryNetworkController.LocalInventory.Gear);

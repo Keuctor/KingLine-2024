@@ -5,26 +5,19 @@ using UnityEngine.Events;
 public class InventoryView : MonoBehaviour
 {
     public static UnityEvent<int> OnItemClick = new();
-    
+
     public UnityEvent<int> OnItemSelect = new();
 
-    [Header("Dependency")]
-    [SerializeField]
+    [Header("Dependency")] [SerializeField]
     private MaterialSpriteDatabase m_spriteDatabase;
 
-    [Header("Prefabs")]
-    [SerializeField]
-    public ItemStackView m_itemStackTemplate;
+    [Header("Prefabs")] [SerializeField] public ItemStackView m_itemStackTemplate;
 
-    [SerializeField]
-    private ItemInfoView m_itemInfoView;
+    [SerializeField] private ItemInfoView m_itemInfoView;
 
-    [SerializeField]
-    private ItemStackContentView m_itemStackContentView;
+    [SerializeField] private ItemStackContentView m_itemStackContentView;
 
-    [Header("Parents")]
-    [SerializeField]
-    public Transform m_itemStackViewParent;
+    [Header("Parents")] [SerializeField] public Transform m_itemStackViewParent;
 
     private ItemInfoView m_infoView;
     public ulong InventoryId { get; set; }
@@ -55,32 +48,29 @@ public class InventoryView : MonoBehaviour
 
     public bool ShowInfo = true;
 
-
     public ItemInfoView InfoView => m_infoView;
     private void OnItemClicked(int itemId)
     {
+        if (ShowInfo)
+        {
+            if (itemId != -1)
+            {
+                if (m_infoView == null)
+                {
+                    m_infoView = Instantiate(m_itemInfoView, transform.parent);
+                }
+                m_infoView.ShowItemInfo(ItemRegistry.GetItem(itemId));
+            }
+            else
+            {
+                if (m_infoView != null)
+                {
+                    Destroy(m_infoView.gameObject);
+                    m_infoView = null;
+                }
+            }
+        }
         OnItemSelect?.Invoke(itemId);
-        if (!ShowInfo)
-            return;
-
-        if (itemId != -1)
-        {
-            if (m_infoView == null)
-            {
-                m_infoView = Instantiate(m_itemInfoView, transform.parent);
-            }
-
-            m_infoView.ShowItemInfo(ItemRegistry.GetItem(itemId));
-            
-        }
-        else
-        {
-            if (m_infoView != null)
-            {
-                Destroy(m_infoView.gameObject);
-                m_infoView = null;
-            }
-        }
     }
 
     private void OnDisable()
@@ -90,7 +80,7 @@ public class InventoryView : MonoBehaviour
             Destroy(m_itemStackViewParent.GetChild(i).gameObject);
     }
 
-    public void Show(ulong id,ItemStack[] items)
+    public void Show(ulong id, ItemStack[] items)
     {
         this.InventoryId = id;
 
@@ -101,7 +91,6 @@ public class InventoryView : MonoBehaviour
             var item = items[i];
             ItemStackView stackView = Instantiate(m_itemStackTemplate, m_itemStackViewParent);
             stackView.Index = (ushort)i;
-            stackView.InventoryId = id;
 
             if (item == null || item.Id == -1)
             {
@@ -120,6 +109,6 @@ public class InventoryView : MonoBehaviour
 
     public void Show(NetworkInventory networkInventory)
     {
-        Show(networkInventory.Id,networkInventory.Items);
+        Show(networkInventory.Id, networkInventory.Items);
     }
 }
